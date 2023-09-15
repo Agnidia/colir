@@ -1,0 +1,26 @@
+//
+//  test.xcconfig
+//  swemty
+//
+//  Created by Vitalii P on 16.04.2023.
+//  Copyright © 2023 IGR Soft. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+//Build Options
+PRODUCT_BUNDLE_IDENTIFIER = $(APP_DOMAIN).$(APP_NAME)Test
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+
+//Linking
+BUNDLE_LOADER = $(TEST_HOST)
+
+//Localization
+SWIFT_EMIT_LOC_STRINGS = NO
+
+//Testing
+TEST_HOST = $(BUILT_PRODUCTS_DIR)/$(APP_NAME).app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/$(APP_NAME)
+
+//User-Defined
+TEST_TARGET_NAME = $(APP_NAME)

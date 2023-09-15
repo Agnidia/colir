@@ -1,0 +1,22 @@
+//
+//  uitest.xcconfig
+//  swemty
+//
+//  Created by Vitalii P on 16.04.2023.
+//  Copyright © 2023 IGR Soft. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+//Build Options
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+
+//Localization
+SWIFT_EMIT_LOC_STRINGS = NO
+
+//Packaging
+PRODUCT_BUNDLE_IDENTIFIER = $(APP_DOMAIN).$(APP_NAME)UITest
+
+//User-Defined
+TEST_TARGET_NAME = $(APP_NAME)

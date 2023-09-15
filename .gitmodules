@@ -1,0 +1,4 @@
+[submodule "3rdparty/Graphite"]
+	path = 3rdparty/Graphite
+	url = https://github.com/TheDiamondProject/Graphite.git
+	branch = master

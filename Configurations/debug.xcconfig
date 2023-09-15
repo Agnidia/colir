@@ -1,0 +1,36 @@
+//
+//  debug.xcconfig
+//  swemty
+//
+//  Created by Vitalii P on 16.04.2023.
+//  Copyright © 2023 IGR Soft. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "base.xcconfig"
+
+//Architectures
+ONLY_ACTIVE_ARCH = YES
+
+//Build Options
+VALIDATE_PRODUCT = NO
+DEBUG_INFORMATION_FORMAT = dwarf
+
+//Enable Foundation Assertions
+ENABLE_TESTABILITY = YES
+
+//Apple Clang - Preprocessing
+GCC_PREPROCESSOR_DEFINITIONS = DEBUG=1
+
+//Swift Compiler - Code Generation
+SWIFT_OPTIMIZATION_LEVEL = -Onone
+GCC_OPTIMIZATION_LEVEL = 0
+GCC_DYNAMIC_NO_PIC = NO
+
+//Swift Compiler - Custom Flags
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG
+
+//User-Defined
+MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE

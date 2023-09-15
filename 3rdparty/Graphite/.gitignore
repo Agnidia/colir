@@ -1,0 +1,11 @@
+# macOS Specific
+.DS_Store
+
+# Build
+bin/
+build/
+cmake-build-debug/
+
+# IDE Project's
+*.xcodeproj
+.idea/

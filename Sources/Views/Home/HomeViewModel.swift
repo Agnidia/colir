@@ -13,6 +13,7 @@ final class HomeViewModel: ObservableObject {
     private enum Tools: Equatable {
         case colors
         case photos
+        case pictures
         case emojies
         case decals
     }
@@ -43,6 +44,8 @@ final class HomeViewModel: ObservableObject {
             tools = .decals
         case .spacer:
             break
+        case .pictures:
+            tools = .pictures
         }
     }
     
@@ -51,6 +54,7 @@ final class HomeViewModel: ObservableObject {
         switch tools {
         case .colors:
             ToolsColorsView()
+                .environmentObject(ToolsColorsViewModel())
         case .photos:
             ToolsPhotosView()
         case .emojies:
@@ -58,6 +62,9 @@ final class HomeViewModel: ObservableObject {
                 .environmentObject(ToolsEmojisViewModel())
         case .decals:
             ToolsDecalsView()
+        case .pictures:
+            ToolsPicturesView()
+                .environmentObject(ToolsPicturesViewModel(appSettings: AppSettings()))
         }
     }
     
@@ -91,7 +98,7 @@ final class HomeViewModel: ObservableObject {
             
             icon = image
         } else {
-            icon = url.image
+            icon = url.icon
         }
         
         guard let icon else {
@@ -108,7 +115,7 @@ final class HomeViewModel: ObservableObject {
     
     func setupFolders(from urls: [URL]) {
         let folders = urls.filter { $0.isFolder }
-        guard folders.isEmpty == false, let folder = folders.first, let icon = folder.image else {
+        guard folders.isEmpty == false, let folder = folders.first, let icon = folder.icon else {
             return
         }
         

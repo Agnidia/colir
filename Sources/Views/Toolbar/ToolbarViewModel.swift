@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class ToolbarViewModel: ObservableObject {
+final class ToolbarViewModel: ObservableObject {
     
     typealias ToolbarViewModelActionCallback = (ToolbarView.ToolbarViewDomain.Action) -> ()
     
@@ -29,7 +29,7 @@ class ToolbarViewModel: ObservableObject {
     ///
     func item(for action: ToolbarView.ToolbarViewDomain.Action) -> some View {
         switch action {
-        case .colors, .photos, .emojies, .decals:
+        case .colors, .photos, .emojies, .decals, .pictures:
             Button {
                 self.currentToolAction = action
                 self.perform(action)
@@ -69,4 +69,8 @@ class ToolbarViewModel: ObservableObject {
     private func perform(_ action: ToolbarView.ToolbarViewDomain.Action) {
         actionCallback(action)
     }
+}
+
+extension ToolbarViewModel {
+    static var preview: ToolbarViewModel = .init(undoManager: .init()) { _ in }
 }

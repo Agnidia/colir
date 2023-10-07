@@ -14,6 +14,7 @@ extension ToolbarView {
             case redo
             case colors
             case photos
+            case pictures
             case emojies
             case decals
             
@@ -32,6 +33,8 @@ extension ToolbarView {
                 case .colors:
                     return "paintpalette"
                 case .photos:
+                    return "person.crop.rectangle"
+                case .pictures:
                     return "photo"
                 case .emojies:
                     return "face.smiling"
@@ -43,6 +46,7 @@ extension ToolbarView {
                     return "arrow.counterclockwise.circle"
                 case .redo:
                     return "arrow.clockwise.circle"
+                
                 }
             }
             

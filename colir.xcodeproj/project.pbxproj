@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -18,6 +18,9 @@
 		A504B89C2A6D8D5A002A2C8B /* ToolbarViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A504B89B2A6D8D5A002A2C8B /* ToolbarViewDomain.swift */; };
 		A504B89E2A6D9202002A2C8B /* ToolbarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A504B89D2A6D9202002A2C8B /* ToolbarViewModel.swift */; };
 		A504B8A02A6F05CD002A2C8B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A504B89F2A6F05CD002A2C8B /* HomeViewModel.swift */; };
+		A5B68E4F2AB8D9EF003C5FFA /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B68E4E2AB8D9EF003C5FFA /* NSColor+Hex.swift */; };
+		A5B68E512AB8DA08003C5FFA /* NSColor+List.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B68E502AB8DA08003C5FFA /* NSColor+List.swift */; };
+		A5B68E542AB8DBEC003C5FFA /* ToolsColorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B68E532AB8DBEC003C5FFA /* ToolsColorsViewModel.swift */; };
 		A5BA1D1B2A81816E0014E276 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5BA1CDD2A81816E0014E276 /* geometry.cpp */; };
 		A5BA1D1C2A81816E0014E276 /* clut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5BA1CDE2A81816E0014E276 /* clut.cpp */; };
 		A5BA1D1D2A81816E0014E276 /* cicn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5BA1CE02A81816E0014E276 /* cicn.cpp */; };
@@ -48,8 +51,17 @@
 		A5BA1D382A81832A0014E276 /* RSRCFileParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BA1D372A81832A0014E276 /* RSRCFileParser.swift */; };
 		A5BA1D3D2A8186500014E276 /* ResourceFile.mm in Sources */ = {isa = PBXBuildFile; fileRef = A5BA1D3C2A8186500014E276 /* ResourceFile.mm */; };
 		A5BA1D3F2A81872C0014E276 /* RSRCResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BA1D3E2A81872C0014E276 /* RSRCResource.swift */; };
+		A5BF05DB2AD1C35E00A86904 /* PicturesFolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF05DA2AD1C35E00A86904 /* PicturesFolderManager.swift */; };
+		A5BF05DD2AD1C43200A86904 /* FileManager+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF05DC2AD1C43200A86904 /* FileManager+Path.swift */; };
+		A5BF05E02AD1CAFB00A86904 /* ToolsPicturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF05DF2AD1CAFB00A86904 /* ToolsPicturesView.swift */; };
+		A5BF05E22AD1CB6600A86904 /* ToolsPicturesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF05E12AD1CB6600A86904 /* ToolsPicturesViewModel.swift */; };
+		A5BF05E52AD1D81900A86904 /* PictureItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF05E42AD1D81900A86904 /* PictureItem.swift */; };
+		A5BF05E92AD1D98E00A86904 /* PicturesFolderItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF05E82AD1D98E00A86904 /* PicturesFolderItem.swift */; };
+		A5BF05EF2AD1E30400A86904 /* FileAccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF05EE2AD1E30400A86904 /* FileAccessManager.swift */; };
+		A5BF05F22AD1E30D00A86904 /* NSOpenPanel+DirPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF05F02AD1E30C00A86904 /* NSOpenPanel+DirPermissions.swift */; };
+		A5BF05F32AD1E30D00A86904 /* URL+PathPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BF05F12AD1E30C00A86904 /* URL+PathPermission.swift */; };
 		A5CFFDF12AA1197C00D6E7A9 /* URL+Dir.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CFFDF02AA1197C00D6E7A9 /* URL+Dir.swift */; };
-		A5CFFDF32AA1210A00D6E7A9 /* URL+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CFFDF22AA1210A00D6E7A9 /* URL+Image.swift */; };
+		A5CFFDF32AA1210A00D6E7A9 /* URL+Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CFFDF22AA1210A00D6E7A9 /* URL+Icon.swift */; };
 		A5CFFDF62AA12B8800D6E7A9 /* ToolsColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CFFDF52AA12B8800D6E7A9 /* ToolsColorsView.swift */; };
 		A5CFFDF82AA12BA100D6E7A9 /* ToolsPhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CFFDF72AA12BA100D6E7A9 /* ToolsPhotosView.swift */; };
 		A5CFFDFA2AA12BF200D6E7A9 /* ToolsEmojisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CFFDF92AA12BF200D6E7A9 /* ToolsEmojisView.swift */; };
@@ -111,6 +123,9 @@
 		A504B89B2A6D8D5A002A2C8B /* ToolbarViewDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewDomain.swift; sourceTree = "<group>"; };
 		A504B89D2A6D9202002A2C8B /* ToolbarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewModel.swift; sourceTree = "<group>"; };
 		A504B89F2A6F05CD002A2C8B /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		A5B68E4E2AB8D9EF003C5FFA /* NSColor+Hex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
+		A5B68E502AB8DA08003C5FFA /* NSColor+List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+List.swift"; sourceTree = "<group>"; };
+		A5B68E532AB8DBEC003C5FFA /* ToolsColorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsColorsViewModel.swift; sourceTree = "<group>"; };
 		A5BA1CDD2A81816E0014E276 /* geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = geometry.cpp; sourceTree = "<group>"; };
 		A5BA1CDE2A81816E0014E276 /* clut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = clut.cpp; sourceTree = "<group>"; };
 		A5BA1CDF2A81816E0014E276 /* rle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rle.hpp; sourceTree = "<group>"; };
@@ -171,8 +186,17 @@
 		A5BA1D3B2A8186500014E276 /* ResourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceFile.h; sourceTree = "<group>"; };
 		A5BA1D3C2A8186500014E276 /* ResourceFile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourceFile.mm; sourceTree = "<group>"; };
 		A5BA1D3E2A81872C0014E276 /* RSRCResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSRCResource.swift; sourceTree = "<group>"; };
+		A5BF05DA2AD1C35E00A86904 /* PicturesFolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicturesFolderManager.swift; sourceTree = "<group>"; };
+		A5BF05DC2AD1C43200A86904 /* FileManager+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Path.swift"; sourceTree = "<group>"; };
+		A5BF05DF2AD1CAFB00A86904 /* ToolsPicturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsPicturesView.swift; sourceTree = "<group>"; };
+		A5BF05E12AD1CB6600A86904 /* ToolsPicturesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsPicturesViewModel.swift; sourceTree = "<group>"; };
+		A5BF05E42AD1D81900A86904 /* PictureItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureItem.swift; sourceTree = "<group>"; };
+		A5BF05E82AD1D98E00A86904 /* PicturesFolderItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicturesFolderItem.swift; sourceTree = "<group>"; };
+		A5BF05EE2AD1E30400A86904 /* FileAccessManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileAccessManager.swift; path = ../../../../swemty/Source/Managers/FileAccessManager.swift; sourceTree = "<group>"; };
+		A5BF05F02AD1E30C00A86904 /* NSOpenPanel+DirPermissions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSOpenPanel+DirPermissions.swift"; sourceTree = "<group>"; };
+		A5BF05F12AD1E30C00A86904 /* URL+PathPermission.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+PathPermission.swift"; sourceTree = "<group>"; };
 		A5CFFDF02AA1197C00D6E7A9 /* URL+Dir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Dir.swift"; sourceTree = "<group>"; };
-		A5CFFDF22AA1210A00D6E7A9 /* URL+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Image.swift"; sourceTree = "<group>"; };
+		A5CFFDF22AA1210A00D6E7A9 /* URL+Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Icon.swift"; sourceTree = "<group>"; };
 		A5CFFDF52AA12B8800D6E7A9 /* ToolsColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsColorsView.swift; sourceTree = "<group>"; };
 		A5CFFDF72AA12BA100D6E7A9 /* ToolsPhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsPhotosView.swift; sourceTree = "<group>"; };
 		A5CFFDF92AA12BF200D6E7A9 /* ToolsEmojisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsEmojisView.swift; sourceTree = "<group>"; };
@@ -331,6 +355,15 @@
 				A504B89F2A6F05CD002A2C8B /* HomeViewModel.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		A5B68E522AB8DBC5003C5FFA /* ColorsView */ = {
+			isa = PBXGroup;
+			children = (
+				A5CFFDF52AA12B8800D6E7A9 /* ToolsColorsView.swift */,
+				A5B68E532AB8DBEC003C5FFA /* ToolsColorsViewModel.swift */,
+			);
+			path = ColorsView;
 			sourceTree = "<group>";
 		};
 		A5BA1B962A817F8C0014E276 /* 3rdparty */ = {
@@ -494,12 +527,67 @@
 			path = RSRC;
 			sourceTree = "<group>";
 		};
+		A5BF05DE2AD1CAC400A86904 /* Pictures */ = {
+			isa = PBXGroup;
+			children = (
+				A5BF05DF2AD1CAFB00A86904 /* ToolsPicturesView.swift */,
+				A5BF05E12AD1CB6600A86904 /* ToolsPicturesViewModel.swift */,
+			);
+			path = Pictures;
+			sourceTree = "<group>";
+		};
+		A5BF05E32AD1D80E00A86904 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A5BF05E42AD1D81900A86904 /* PictureItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A5BF05E62AD1D95900A86904 /* PicturesFolder */ = {
+			isa = PBXGroup;
+			children = (
+				A5BF05DA2AD1C35E00A86904 /* PicturesFolderManager.swift */,
+				A5BF05E82AD1D98E00A86904 /* PicturesFolderItem.swift */,
+			);
+			path = PicturesFolder;
+			sourceTree = "<group>";
+		};
+		A5BF05E72AD1D97600A86904 /* Emojis */ = {
+			isa = PBXGroup;
+			children = (
+				A5E860F22AA635DF00D2293B /* EmojisManager.swift */,
+			);
+			path = Emojis;
+			sourceTree = "<group>";
+		};
+		A5BF05EA2AD1E28800A86904 /* FileAccess */ = {
+			isa = PBXGroup;
+			children = (
+				A5BF05EE2AD1E30400A86904 /* FileAccessManager.swift */,
+				A5BF05ED2AD1E2A100A86904 /* Extensions */,
+			);
+			path = FileAccess;
+			sourceTree = "<group>";
+		};
+		A5BF05ED2AD1E2A100A86904 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A5BF05F02AD1E30C00A86904 /* NSOpenPanel+DirPermissions.swift */,
+				A5BF05F12AD1E30C00A86904 /* URL+PathPermission.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		A5CFFDEF2AA1190D00D6E7A9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A5B68E4E2AB8D9EF003C5FFA /* NSColor+Hex.swift */,
 				A5CFFDF02AA1197C00D6E7A9 /* URL+Dir.swift */,
-				A5CFFDF22AA1210A00D6E7A9 /* URL+Image.swift */,
+				A5CFFDF22AA1210A00D6E7A9 /* URL+Icon.swift */,
 				A5E860F42AA6508900D2293B /* String+Emoji.swift */,
+				A5B68E502AB8DA08003C5FFA /* NSColor+List.swift */,
+				A5BF05DC2AD1C43200A86904 /* FileManager+Path.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -507,7 +595,9 @@
 		A5CFFDF42AA12B4500D6E7A9 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				A5CFFDF52AA12B8800D6E7A9 /* ToolsColorsView.swift */,
+				A5BF05E32AD1D80E00A86904 /* Model */,
+				A5BF05DE2AD1CAC400A86904 /* Pictures */,
+				A5B68E522AB8DBC5003C5FFA /* ColorsView */,
 				A5CFFDF72AA12BA100D6E7A9 /* ToolsPhotosView.swift */,
 				A5E860EE2AA634F600D2293B /* EmojisView */,
 				A5CFFDFB2AA12C0D00D6E7A9 /* ToolsDecalsView.swift */,
@@ -527,7 +617,9 @@
 		A5E860F12AA635C300D2293B /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				A5E860F22AA635DF00D2293B /* EmojisManager.swift */,
+				A5BF05EA2AD1E28800A86904 /* FileAccess */,
+				A5BF05E72AD1D97600A86904 /* Emojis */,
+				A5BF05E62AD1D95900A86904 /* PicturesFolder */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -666,6 +758,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1500;
+				ORGANIZATIONNAME = "IGR Soft";
 				TargetAttributes = {
 					A5F5CDF42A6D2BFB008AF959 = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -681,7 +774,7 @@
 				};
 			};
 			buildConfigurationList = A5F5CDF02A6D2BFB008AF959 /* Build configuration list for PBXProject "colir" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -737,23 +830,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5BF05E52AD1D81900A86904 /* PictureItem.swift in Sources */,
 				A5BA1D222A81816E0014E276 /* pixmap.cpp in Sources */,
 				A5E860F02AA635AE00D2293B /* ToolsEmojisViewModel.swift in Sources */,
 				A504B89E2A6D9202002A2C8B /* ToolbarViewModel.swift in Sources */,
 				A5E860F52AA6508900D2293B /* String+Emoji.swift in Sources */,
+				A5BF05E02AD1CAFB00A86904 /* ToolsPicturesView.swift in Sources */,
 				A504B8A02A6F05CD002A2C8B /* HomeViewModel.swift in Sources */,
 				A5BA1D232A81816E0014E276 /* rle.cpp in Sources */,
 				A5BA1D272A81816E0014E276 /* raw.cpp in Sources */,
 				A5E860F32AA635DF00D2293B /* EmojisManager.swift in Sources */,
+				A5B68E542AB8DBEC003C5FFA /* ToolsColorsViewModel.swift in Sources */,
 				A5CFFDFA2AA12BF200D6E7A9 /* ToolsEmojisView.swift in Sources */,
 				A5BA1D202A81816E0014E276 /* surface.cpp in Sources */,
 				A5BA1D3F2A81872C0014E276 /* RSRCResource.swift in Sources */,
 				A5BA1D1F2A81816E0014E276 /* packbits.cpp in Sources */,
+				A5B68E512AB8DA08003C5FFA /* NSColor+List.swift in Sources */,
+				A5BF05DB2AD1C35E00A86904 /* PicturesFolderManager.swift in Sources */,
 				A5BA1D2A2A81816E0014E276 /* sound.cpp in Sources */,
 				A5BA1D2E2A81816E0014E276 /* manager.cpp in Sources */,
 				A5BA1D312A81816E0014E276 /* rez.cpp in Sources */,
-				A5CFFDF32AA1210A00D6E7A9 /* URL+Image.swift in Sources */,
+				A5CFFDF32AA1210A00D6E7A9 /* URL+Icon.swift in Sources */,
+				A5B68E4F2AB8D9EF003C5FFA /* NSColor+Hex.swift in Sources */,
 				A5BA1D342A81816E0014E276 /* reader.cpp in Sources */,
+				A5BF05EF2AD1E30400A86904 /* FileAccessManager.swift in Sources */,
 				A5BA1D1D2A81816E0014E276 /* cicn.cpp in Sources */,
 				A5F5CDFB2A6D2BFB008AF959 /* HomeView.swift in Sources */,
 				A5BA1D2D2A81816E0014E276 /* extended.cpp in Sources */,
@@ -762,7 +862,11 @@
 				A5BA1D1B2A81816E0014E276 /* geometry.cpp in Sources */,
 				A5BA1D302A81816E0014E276 /* classic.cpp in Sources */,
 				A5CFFDFC2AA12C0D00D6E7A9 /* ToolsDecalsView.swift in Sources */,
+				A5BF05F22AD1E30D00A86904 /* NSOpenPanel+DirPermissions.swift in Sources */,
+				A5BF05F32AD1E30D00A86904 /* URL+PathPermission.swift in Sources */,
+				A5BF05E92AD1D98E00A86904 /* PicturesFolderItem.swift in Sources */,
 				A5BA1D352A81816E0014E276 /* writer.cpp in Sources */,
+				A5BF05DD2AD1C43200A86904 /* FileManager+Path.swift in Sources */,
 				A504B88E2A6D44EB002A2C8B /* Logger.swift in Sources */,
 				A5BA1D262A81816E0014E276 /* planar.cpp in Sources */,
 				A5CFFDF12AA1197C00D6E7A9 /* URL+Dir.swift in Sources */,
@@ -782,6 +886,7 @@
 				A5BA1D1E2A81816E0014E276 /* color.cpp in Sources */,
 				A5E860F72AA6787000D2293B /* EmojiSkinDto.swift in Sources */,
 				A5F5CDF92A6D2BFB008AF959 /* BaseApp.swift in Sources */,
+				A5BF05E22AD1CB6600A86904 /* ToolsPicturesViewModel.swift in Sources */,
 				A5CFFDF62AA12B8800D6E7A9 /* ToolsColorsView.swift in Sources */,
 				A504B89C2A6D8D5A002A2C8B /* ToolbarViewDomain.swift in Sources */,
 				A5BA1D322A81816E0014E276 /* type.cpp in Sources */,

@@ -13,8 +13,6 @@ struct ToolsPhotosView: View {
     }
 }
 
-struct ToolsPhotosView_Previews: PreviewProvider {
-    static var previews: some View {
-        ToolsPhotosView()
-    }
+#Preview("ToolsPhotosView") {
+    ToolsPhotosView()
 }

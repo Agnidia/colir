@@ -39,6 +39,11 @@ struct ToolbarView: CustomizableToolbarContent {
         }
         .defaultCustomization(.visible)
         
+        ToolbarItem(id: ToolbarViewDomain.Action.pictures.tag, placement: .principal) {
+            viewModel.item(for: .pictures)
+        }
+        .defaultCustomization(.visible)
+        
         ToolbarItem(id: ToolbarViewDomain.Action.emojies.tag, placement: .principal) {
             viewModel.item(for: .emojies)
         }
@@ -54,4 +59,11 @@ struct ToolbarView: CustomizableToolbarContent {
         }
         .defaultCustomization(.visible)
     }
+}
+
+#Preview("ToolbarView") {
+    Rectangle()
+        .toolbar(id: "preview") {
+            ToolbarView(viewModel: .preview)
+        }
 }

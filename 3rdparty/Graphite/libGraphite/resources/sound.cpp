@@ -262,7 +262,7 @@ auto graphite::resources::sound::encode(graphite::data::writer& snd_writer) -> v
 
     // Write the standard sampled sound header fields
     snd_writer.write_long(0); // data pointer
-    snd_writer.write_long(num_samples); // number of samples
+    snd_writer.write_long((uint32_t)num_samples); // number of samples
     snd_writer.write_long(m_sample_rate_int << 16 | m_sample_rate_frac); // sample rate (fixed-point)
     snd_writer.write_long(0); // loop start
     snd_writer.write_long(0); // loop end

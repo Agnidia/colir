@@ -1,5 +1,5 @@
 //
-//  URL+Image.swift
+//  URL+Icon.swift
 //  colir
 //
 //  Created by Vitalii P on 31.08.2023.
@@ -9,7 +9,7 @@ import Foundation
 import AppKit
 
 extension URL {
-    var image: NSImage? {
+    var icon: NSImage? {
         
         let workspace = NSWorkspace.shared
         

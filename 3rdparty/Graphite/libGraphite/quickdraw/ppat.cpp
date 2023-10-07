@@ -118,7 +118,7 @@ auto graphite::qd::ppat::data() -> std::shared_ptr<graphite::data::data>
     m_pat_type = 1;
     m_pmap_base_addr = 28;
     m_pat_base_addr = m_pmap_base_addr + 50;
-    m_pixmap.set_pm_table(m_pat_base_addr + pmap_data->size());
+    m_pixmap.set_pm_table(m_pat_base_addr + (uint32_t)pmap_data->size());
 
     // Write out the image data for the ppat.
     writer.write_short(m_pat_type);

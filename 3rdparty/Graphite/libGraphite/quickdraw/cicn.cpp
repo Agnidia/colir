@@ -227,7 +227,7 @@ auto graphite::qd::cicn::data() -> std::shared_ptr<graphite::data::data>
 
     // Calculate some offsets
     m_mask_base_addr = 4;
-    m_bmap_base_addr = m_mask_base_addr + mask_data.size();
+    m_bmap_base_addr = m_mask_base_addr + (uint32_t)mask_data.size();
 
     // Write out the image data for the cicn.
     m_pixmap.write(writer);

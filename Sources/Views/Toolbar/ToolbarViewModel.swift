@@ -35,6 +35,7 @@ final class ToolbarViewModel: ObservableObject {
                 self.perform(action)
             } label: {
                 Label(action.title, systemImage: action.icon)
+                    .font(.title3)
             }
             .background(RoundedRectangle(cornerRadius: 6)
                 .fill(currentToolAction == action ? Color(white: 0.3) : .clear))
@@ -46,6 +47,7 @@ final class ToolbarViewModel: ObservableObject {
                 Spacer(minLength: 30)
                 Button { self.perform(action) } label: {
                     Label(action.title, systemImage: action.icon)
+                        .font(.title3)
                 }
                 .help(action.helpTitle)
                 .disabled(undoManager.canUndo == false)
@@ -54,6 +56,7 @@ final class ToolbarViewModel: ObservableObject {
             HStack {
                 Button { self.perform(action) } label: {
                     Label(action.title, systemImage: action.icon)
+                        .font(.title3)
                 }
                 .help(action.helpTitle)
                 .disabled(undoManager.canRedo == false)

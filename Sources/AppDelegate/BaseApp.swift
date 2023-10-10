@@ -77,7 +77,7 @@ struct BaseApp: App {
     class Application {
         var appSettings: AppSettingsProtocol
         
-        private let log = Log(category: .application)
+        private let log: LogProtocol = Log(category: .application)
         
         init(appSettings: AppSettingsProtocol) {
             self.appSettings = appSettings

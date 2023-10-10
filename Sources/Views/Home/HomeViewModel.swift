@@ -57,6 +57,7 @@ final class HomeViewModel: ObservableObject {
                 .environmentObject(ToolsColorsViewModel())
         case .photos:
             ToolsPhotosView()
+                .environmentObject(ToolsPhotosViewModel())
         case .emojies:
             ToolsEmojisView()
                 .environmentObject(ToolsEmojisViewModel())

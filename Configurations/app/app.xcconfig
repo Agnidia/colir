@@ -26,3 +26,6 @@ ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon
 
 //Localization
 SWIFT_EMIT_LOC_STRINGS = YES
+
+//Info.plist Values
+INFOPLIST_KEY_NSPhotoLibraryUsageDescription = Choice photo to draw on folder

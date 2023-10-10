@@ -15,10 +15,16 @@ class ToolsEmojisViewModel: ObservableObject {
     
     var emojis: [EmojisGroup : [Character]]
     
+    @Published var expanded: Set<EmojisGroup> = []
+    
     let columnWidth: CGFloat = 128 // The width for each column
     
     init(emojis: [EmojisGroup : [Character]]? = nil) {
         self.emojis = emojis ?? emojisManager.emojies
+        
+        if let firstGroup = self.groups.first {
+            self.expanded.insert(firstGroup)
+        }
     }
 }
 

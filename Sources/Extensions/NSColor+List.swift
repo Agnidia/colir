@@ -2,10 +2,11 @@
 //  NSColor+List.swift
 //  colir
 //
-//  Created by Vitalii P on 18.09.2023.
+//  Created by Vitalii Parovishnyk on 18.09.2023.
 //
 
 import SwiftUI
+import SwiftCommons
 
 extension NSColor {
     /// Slate

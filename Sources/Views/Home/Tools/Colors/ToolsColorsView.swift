@@ -2,7 +2,7 @@
 //  ToolsColorsView.swift
 //  colir
 //
-//  Created by Vitalii P on 31.08.2023.
+//  Created by Vitalii Parovishnyk on 31.08.2023.
 //
 
 import SwiftUI

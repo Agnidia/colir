@@ -2,7 +2,7 @@
 //  RSRCResource.swift
 //  colir
 //
-//  Created by Vitalii P on 07.08.2023.
+//  Created by Vitalii Parovishnyk on 07.08.2023.
 //
 
 import AppKit

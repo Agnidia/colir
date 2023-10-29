@@ -2,7 +2,7 @@
 //  NSOpenPanel+DirPermissions.swift
 //  colir
 //
-//  Created by Vitalii P on 01.05.2023.
+//  Created by Vitalii Parovishnyk on 01.05.2023.
 //
 
 import AppKit

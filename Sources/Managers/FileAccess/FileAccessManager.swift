@@ -2,7 +2,7 @@
 //  FileAccessManager.swift
 //  colir
 //
-//  Created by Vitalii P on 30.04.2023.
+//  Created by Vitalii Parovishnyk on 30.04.2023.
 //
 
 import Foundation

@@ -2,12 +2,13 @@
 //  ToolsPhotosViewModel.swift
 //  colir
 //
-//  Created by Vitalii P on 08.10.2023.
+//  Created by Vitalii Parovishnyk on 08.10.2023.
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
 import SwiftUI
 import Photos
+import SystemSettingsAccess
 
 class ToolsPhotosViewModel: ObservableObject {
     
@@ -19,7 +20,7 @@ class ToolsPhotosViewModel: ObservableObject {
     
     private let photosAppManager: PhotoLibraryAccessManagerProtocol
         
-    var isPhotosLoaded = false
+    @Published var isPhotosLoaded = false
     
     var photoLibraryAlbumManager = PhotoLibraryAlbumManager(smartAlbum: .smartAlbumUserLibrary)
     
@@ -34,15 +35,25 @@ class ToolsPhotosViewModel: ObservableObject {
         self.photosAppManager = PhotoLibraryAccessManager()
     }
     
+    @ViewBuilder
+    var overlay: some View {
+        if isAuthorized == false, let url = SystemSettingsSecurityPrivacy.photos.path {
+                        PermissionsOverlayView()
+                .environmentObject(PermissionsOverlayViewModel(title: "Open Photos permissions", url: url))
+                    }
+    }
+    
     @Sendable
     func fetchImages() async {
         guard !isPhotosLoaded else { return }
         
         let authorized = await photosAppManager.checkAuthorization()
+        
+        Task { @MainActor in
+            isAuthorized = authorized
+        }
+        
         guard authorized else {
-            Task { @MainActor in
-                isAuthorized = false
-            }
             return
         }
         
@@ -52,11 +63,10 @@ class ToolsPhotosViewModel: ObservableObject {
             } catch let error {
                 logger.error("Failed to load photo collection: \(error.localizedDescription)")
             }
-            self.isPhotosLoaded = true
-        }
-        
-        Task { @MainActor in
-            isAuthorized = false
+            
+            Task { @MainActor in
+                self.isPhotosLoaded = true
+            }
         }
     }
 }

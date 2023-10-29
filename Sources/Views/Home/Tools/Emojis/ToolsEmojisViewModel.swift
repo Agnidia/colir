@@ -2,7 +2,7 @@
 //  ToolsEmojisViewModel.swift
 //  colir
 //
-//  Created by Vitalii P on 04.09.2023.
+//  Created by Vitalii Parovishnyk on 04.09.2023.
 //
 
 import Foundation
@@ -20,7 +20,7 @@ class ToolsEmojisViewModel: ObservableObject {
     let columnWidth: CGFloat = 128 // The width for each column
     
     init(emojis: [EmojisGroup : [Character]]? = nil) {
-        self.emojis = emojis ?? emojisManager.emojies
+        self.emojis = emojis ?? emojisManager.emojis
         
         if let firstGroup = self.groups.first {
             self.expanded.insert(firstGroup)

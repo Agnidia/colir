@@ -2,7 +2,7 @@
 //  BaseApp.swift
 //  colir
 //
-//  Created by Vitalii P on 23.07.2023.
+//  Created by Vitalii Parovishnyk on 23.07.2023.
 //
 
 import SwiftUI

@@ -17,6 +17,24 @@
         "revision" : "4461b78e7919871915f39d1a7f91eb27d9eeafa9",
         "version" : "3.1.1"
       }
+    },
+    {
+      "identity" : "swiftcommons",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/IGRSoft/SwiftCommons",
+      "state" : {
+        "branch" : "main",
+        "revision" : "a75218c9b96c9cf3fe693783567bae519ced367e"
+      }
+    },
+    {
+      "identity" : "systemsettingsaccess",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/IGRSoft/SystemSettingsAccess",
+      "state" : {
+        "revision" : "e5a3bc8a33306647e5bdbe883284094cfca2b914",
+        "version" : "1.0.0"
+      }
     }
   ],
   "version" : 2

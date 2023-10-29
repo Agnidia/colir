@@ -2,7 +2,7 @@
 //  ToolsPhotosView.swift
 //  colir
 //
-//  Created by Vitalii P on 31.08.2023.
+//  Created by Vitalii Parovishnyk on 31.08.2023.
 //
 
 import SwiftUI
@@ -39,7 +39,10 @@ struct ToolsPhotosView: View {
             .padding()
         }
         .overlay(content: {
-            viewModel.isAuthorized ? Color.clear : Color.red
+            if viewModel.isAuthorized == false, let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Photos") {
+                PermissionsOverlayView()
+                    .environmentObject(PermissionsOverlayViewModel(title: "Open Photos permissions", url: url))
+            }
         })
         .task(viewModel.fetchImages)
     }

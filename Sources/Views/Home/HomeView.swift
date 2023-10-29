@@ -2,7 +2,7 @@
 //  ContentView.swift
 //  colir
 //
-//  Created by Vitalii P on 23.07.2023.
+//  Created by Vitalii Parovishnyk on 23.07.2023.
 //
 
 import SwiftUI
@@ -17,7 +17,7 @@ struct HomeView: View {
             VStack(alignment: .leading) {
                 DSFDropFilesView.SwiftUI(isEnabled: true,
                                          allowsMultipleDrop: false,
-                                         icon: model.folderImages.first,
+                                         icon: model.folderImage,
                                          iconLabel: "Drop folder here",
                                          selectFilesLabel: "Choose",
                                          selectFilesButtonIsLink: true,

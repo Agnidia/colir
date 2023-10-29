@@ -2,7 +2,7 @@
 //  ToolbarView.swift
 //  colir
 //
-//  Created by Vitalii P on 23.07.2023.
+//  Created by Vitalii Parovishnyk on 23.07.2023.
 //
 
 import SwiftUI
@@ -44,13 +44,18 @@ struct ToolbarView: CustomizableToolbarContent {
         }
         .defaultCustomization(.visible)
         
-        ToolbarItem(id: ToolbarViewDomain.Action.emojies.tag, placement: .principal) {
-            viewModel.item(for: .emojies)
+        ToolbarItem(id: ToolbarViewDomain.Action.emojis.tag, placement: .principal) {
+            viewModel.item(for: .emojis)
         }
         .defaultCustomization(.visible)
         
         ToolbarItem(id: ToolbarViewDomain.Action.decals.tag, placement: .principal) {
             viewModel.item(for: .decals)
+        }
+        .defaultCustomization(.visible)
+        
+        ToolbarItem(id: ToolbarViewDomain.Action.webResources.tag, placement: .principal) {
+            viewModel.item(for: .webResources)
         }
         .defaultCustomization(.visible)
         

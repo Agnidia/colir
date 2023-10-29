@@ -2,7 +2,7 @@
 //  colirUITests.swift
 //  colirUITests
 //
-//  Created by Vitalii P on 23.07.2023.
+//  Created by Vitalii Parovishnyk on 23.07.2023.
 //
 
 import XCTest

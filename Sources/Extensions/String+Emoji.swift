@@ -2,7 +2,7 @@
 //  String+Emoji.swift
 //  colir
 //
-//  Created by Vitalii P on 04.09.2023.
+//  Created by Vitalii Parovishnyk on 04.09.2023.
 //
 
 import Foundation

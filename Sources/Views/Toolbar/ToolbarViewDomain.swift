@@ -2,7 +2,7 @@
 //  ToolbarViewDomain.swift
 //  colir
 //
-//  Created by Vitalii P on 23.07.2023.
+//  Created by Vitalii Parovishnyk on 23.07.2023.
 //
 
 import SwiftUI
@@ -15,8 +15,9 @@ extension ToolbarView {
             case colors
             case photos
             case pictures
-            case emojies
+            case emojis
             case decals
+            case webResources
             
             case spacer
             
@@ -31,22 +32,23 @@ extension ToolbarView {
             var icon: String {
                 switch self {
                 case .colors:
-                    return "paintpalette"
+                    "paintpalette"
                 case .photos:
-                    return "person.crop.rectangle"
+                    "person.crop.rectangle"
                 case .pictures:
-                    return "photo"
-                case .emojies:
-                    return "face.smiling"
+                    "photo"
+                case .emojis:
+                    "face.smiling"
                 case .decals:
-                    return "tag"
+                    "tag"
                 case .spacer:
-                    return ""
+                    ""
                 case .undo:
-                    return "arrow.counterclockwise.circle"
+                    "arrow.counterclockwise.circle"
                 case .redo:
-                    return "arrow.clockwise.circle"
-                
+                    "arrow.clockwise.circle"
+                case .webResources:
+                    "network"
                 }
             }
             

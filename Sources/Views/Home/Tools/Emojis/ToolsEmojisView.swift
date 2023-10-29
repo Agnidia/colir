@@ -2,7 +2,7 @@
 //  ToolsEmojisView.swift
 //  colir
 //
-//  Created by Vitalii P on 31.08.2023.
+//  Created by Vitalii Parovishnyk on 31.08.2023.
 //
 
 import SwiftUI
@@ -70,9 +70,7 @@ struct ToolsEmojisView: View {
     }
 }
 
-struct ToolsEmojiesView_Previews: PreviewProvider {
-    static var previews: some View {
-        ToolsEmojisView()
-            .environmentObject(ToolsEmojisViewModel.preview)
-    }
+#Preview("ToolsEmojisView") {
+    ToolsEmojisView()
+        .environmentObject(ToolsEmojisViewModel.preview)
 }

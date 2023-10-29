@@ -2,7 +2,7 @@
 //  colir-Bridging-Header.h
 //  colir
 //
-//  Created by Vitalii P on 07.08.2023.
+//  Created by Vitalii Parovishnyk on 07.08.2023.
 //
 
 #ifndef colir_Bridging_Header_h

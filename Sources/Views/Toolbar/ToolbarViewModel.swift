@@ -2,7 +2,7 @@
 //  ToolbarViewModel.swift
 //  colir
 //
-//  Created by Vitalii P on 23.07.2023.
+//  Created by Vitalii Parovishnyk on 23.07.2023.
 //
 
 import SwiftUI
@@ -29,7 +29,7 @@ final class ToolbarViewModel: ObservableObject {
     ///
     func item(for action: ToolbarView.ToolbarViewDomain.Action) -> some View {
         switch action {
-        case .colors, .photos, .emojies, .decals, .pictures:
+        case .colors, .photos, .emojis, .decals, .pictures, .webResources:
             Button {
                 self.currentToolAction = action
                 self.perform(action)
@@ -44,7 +44,7 @@ final class ToolbarViewModel: ObservableObject {
             Spacer()
         case .undo:
             HStack {
-                Spacer(minLength: 30)
+                Spacer(minLength: 40)
                 Button { self.perform(action) } label: {
                     Label(action.title, systemImage: action.icon)
                         .font(.title3)
@@ -60,7 +60,7 @@ final class ToolbarViewModel: ObservableObject {
                 }
                 .help(action.helpTitle)
                 .disabled(undoManager.canRedo == false)
-                Spacer(minLength: 30)
+                Spacer(minLength: 46)
                 Divider()
             }
         }

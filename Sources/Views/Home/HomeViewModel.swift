@@ -2,11 +2,12 @@
 //  HomeViewModel.swift
 //  colir
 //
-//  Created by Vitalii P on 24.07.2023.
+//  Created by Vitalii Parovishnyk on 24.07.2023.
 //
 
 import AppKit
 import SwiftUI
+import SwiftCommons
 
 final class HomeViewModel: ObservableObject {
     
@@ -14,8 +15,9 @@ final class HomeViewModel: ObservableObject {
         case colors
         case photos
         case pictures
-        case emojies
+        case emojis
         case decals
+        case webResources
     }
     
     @Published private(set) var undoManager = UndoManager()
@@ -24,7 +26,7 @@ final class HomeViewModel: ObservableObject {
     
     @Published private(set) var foldersUrls: [URL] = .init()
     
-    @Published private(set) var folderImages: [NSImage] = .init()
+    @Published private(set) var folderImage: NSImage = NSImage(systemSymbolName: "folder.badge.plus", accessibilityDescription: nil)!
     
     @Published private var tools: Tools = .colors
     
@@ -38,14 +40,16 @@ final class HomeViewModel: ObservableObject {
             tools = .colors
         case .photos:
             tools = .photos
-        case .emojies:
-            tools = .emojies
+        case .emojis:
+            tools = .emojis
         case .decals:
             tools = .decals
         case .spacer:
             break
         case .pictures:
             tools = .pictures
+        case .webResources:
+            tools = .webResources
         }
     }
     
@@ -58,7 +62,7 @@ final class HomeViewModel: ObservableObject {
         case .photos:
             ToolsPhotosView()
                 .environmentObject(ToolsPhotosViewModel())
-        case .emojies:
+        case .emojis:
             ToolsEmojisView()
                 .environmentObject(ToolsEmojisViewModel())
         case .decals:
@@ -66,6 +70,9 @@ final class HomeViewModel: ObservableObject {
         case .pictures:
             ToolsPicturesView()
                 .environmentObject(ToolsPicturesViewModel(appSettings: AppSettings()))
+        case .webResources:
+            WebResourcesView()
+                .environmentObject(WebResourcesViewModel())
         }
     }
     
@@ -128,14 +135,14 @@ final class HomeViewModel: ObservableObject {
         undoManager.registerUndo(withTarget: self) { this in
             this.remove(image: image)
         }
-        folderImages = [image]
+        folderImage = image
     }
     
     func remove(image: NSImage) {
         undoManager.registerUndo(withTarget: self) { this in
             this.add(image: image)
         }
-        folderImages = [image]
+        folderImage = image
     }
 }
 

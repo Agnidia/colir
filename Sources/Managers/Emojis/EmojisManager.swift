@@ -2,7 +2,7 @@
 //  EmojisManager.swift
 //  colir
 //
-//  Created by Vitalii P on 04.09.2023.
+//  Created by Vitalii Parovishnyk on 04.09.2023.
 //
 
 import Foundation
@@ -27,7 +27,7 @@ class EmojisManager {
         return list
     }()
     
-    var emojies: [EmojisGroup: [Character]] {
+    var emojis: [EmojisGroup: [Character]] {
         guard let emojisList else {
             assert(false, "missed emojibase")
             return [:]

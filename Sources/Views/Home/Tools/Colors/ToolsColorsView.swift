@@ -13,29 +13,11 @@ struct ToolsColorsView: View {
     
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: viewModel.cellWidth))], spacing: 16) {
+            LazyVGrid(columns: viewModel.columns, spacing: 16) {
                 ForEach(viewModel.colorGroups.sorted(by: { $0.key < $1.key }), id: \.key) { groupKey, colors in
                     Section(header: Text(groupKey).font(.headline).padding(.top, 8)) {
                         ForEach(colors, id: \.self) { color in
-                            RoundedRectangle(cornerRadius: viewModel.cellCornerRadius, style: .continuous)
-                                .fill(Color(nsColor: color))
-                                .frame(width: viewModel.cellWidth, height: viewModel.cellHeight)
-                                .cornerRadius(viewModel.cellCornerRadius)
-                                .overlay(
-                                    ZStack(alignment: SwiftUI.Alignment.bottomTrailing) {
-                                        RoundedRectangle(cornerRadius: viewModel.cellCornerRadius)
-                                            .strokeBorder(viewModel.selectedColor == color ? Color.blue : Color.clear, lineWidth: 4)
-                                        if viewModel.selectedColor == color {
-                                            Image(systemName: "checkmark.circle.fill")
-                                                .symbolRenderingMode(.multicolor)
-                                                .font(.title)
-                                                .padding(8)
-                                        }
-                                    }
-                                )
-                                .onTapGesture {
-                                    viewModel.selectedColor = color
-                                }
+                            viewModel.cell(for: color)
                         }
                     }
                 }

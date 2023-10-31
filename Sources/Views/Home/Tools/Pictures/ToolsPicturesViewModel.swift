@@ -5,14 +5,14 @@
 //  Created by Vitalii Parovishnyk on 07.10.2023.
 //
 
-import Foundation
+import SwiftUI
 
 class ToolsPicturesViewModel: ObservableObject {
     private let picturesFolderPath: URL
     
     @Published var images: [PictureItem] = .init()
     
-    @Published var selectedImage: PictureItem? = nil
+    @Published private var selectedImage: PictureItem? = nil
     
     private let picturesFolderManager: PicturesFolderManagerProtocol
     
@@ -22,15 +22,45 @@ class ToolsPicturesViewModel: ObservableObject {
         FileAccessManager(with: appSettings.userPicturesPath, bookmarkData: appSettings.bookmarkData)
     }()
     
-    let cellWidth: CGFloat = 192
-    let cellHeight: CGFloat = 128
+    private let cellWidth: CGFloat = 192
+    private let cellHeight: CGFloat = 128
     
-    let cellCornerRadius: CGFloat = 8
+    private let cellCornerRadius: CGFloat = 8
     
     init(appSettings: AppSettingsProtocol) {
         self.picturesFolderPath = appSettings.userPicturesPath
         self.picturesFolderManager = PicturesFolderManager(picturesDirectory: appSettings.userPicturesPath)
         self.appSettings = appSettings
+    }
+    
+    var columns: [GridItem] {
+        [
+            GridItem(.adaptive(minimum: cellWidth))
+        ]
+    }
+    
+    @ViewBuilder
+    func cell(for item: PictureItem) -> some View {
+        Image(nsImage: item.image)
+            .resizable()
+            .frame(width: cellWidth, height: cellHeight)
+            .cornerRadius(cellCornerRadius)
+            .overlay(
+                ZStack(alignment: .bottomTrailing) {
+                    let isSelected = selectedImage == item
+                    RoundedRectangle(cornerRadius: cellCornerRadius)
+                        .strokeBorder(isSelected ? Color.blue : Color.gray, lineWidth: isSelected ? 4 : 1)
+                    if isSelected {
+                        Image(systemName: "checkmark.circle.fill")
+                            .symbolRenderingMode(.multicolor)
+                            .font(.title)
+                            .padding(8)
+                    }
+                }
+            )
+            .onTapGesture { [weak self] in
+                self?.selectedImage = item
+            }
     }
     
     @Sendable

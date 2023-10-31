@@ -44,7 +44,7 @@ final class ToolbarViewModel: ObservableObject {
             Spacer()
         case .undo:
             HStack {
-                Spacer(minLength: 40)
+                Spacer(minLength: 30)
                 Button { self.perform(action) } label: {
                     Label(action.title, systemImage: action.icon)
                         .font(.title3)
@@ -60,7 +60,7 @@ final class ToolbarViewModel: ObservableObject {
                 }
                 .help(action.helpTitle)
                 .disabled(undoManager.canRedo == false)
-                Spacer(minLength: 46)
+                Spacer(minLength: 42)
                 Divider()
             }
         }

@@ -38,9 +38,34 @@ class ToolsPhotosViewModel: ObservableObject {
     @ViewBuilder
     var overlay: some View {
         if isAuthorized == false, let url = SystemSettingsSecurityPrivacy.photos.path {
-                        PermissionsOverlayView()
+            PermissionsOverlayView()
                 .environmentObject(PermissionsOverlayViewModel(title: "Open Photos permissions", url: url))
+        } else {
+            EmptyView()
+        }
+    }
+    
+    @ViewBuilder
+    func cell(for item: PhotoAsset) -> some View {
+        ToolsPhotosItemView(asset: item, cache: photoLibraryAlbumManager.cache, imageSize: imageSize)
+            .frame(width: cellWidth, height: cellHeight)
+            .cornerRadius(cellCornerRadius)
+            .overlay(
+                ZStack(alignment: .bottomTrailing) {
+                    let isSelected = selectedImage == item
+                    RoundedRectangle(cornerRadius: cellCornerRadius)
+                        .strokeBorder(isSelected ? Color.blue : Color.gray, lineWidth: isSelected ? 4 : 1)
+                    if isSelected {
+                        Image(systemName: "checkmark.circle.fill")
+                            .symbolRenderingMode(.multicolor)
+                            .font(.title)
+                            .padding(8)
                     }
+                }
+            )
+            .onTapGesture { [weak self] in
+                self?.selectedImage = item
+            }
     }
     
     @Sendable

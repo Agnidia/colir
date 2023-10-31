@@ -57,7 +57,7 @@ class PermissionsOverlayViewModel: ObservableObject, DomainViewConstantProtocol 
                 .font(.body)
                 .padding()
         })
-        .buttonStyle(.primary)
+        //.buttonStyle(PrimaryButtonStyle())
     }
     
     //MARK: - Private
@@ -65,6 +65,5 @@ class PermissionsOverlayViewModel: ObservableObject, DomainViewConstantProtocol 
     private func action() {
         let workspace = NSWorkspace.shared
         workspace.open(url)
-        workspace.activateFileViewerSelecting([Bundle.main.bundleURL])
     }
 }

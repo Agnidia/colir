@@ -12,28 +12,9 @@ struct ToolsPicturesView: View {
     
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: viewModel.cellWidth))], spacing: 16) {
+            LazyVGrid(columns: viewModel.columns, spacing: 16) {
                 ForEach(viewModel.images, id: \.self) { item in
-                    Image(nsImage: item.image)
-                        .resizable()
-                        .frame(width: viewModel.cellWidth, height: viewModel.cellHeight)
-                        .cornerRadius(viewModel.cellCornerRadius)
-                        .overlay(
-                            ZStack(alignment: .bottomTrailing) {
-                                let isSelected = viewModel.selectedImage == item
-                                RoundedRectangle(cornerRadius: viewModel.cellCornerRadius)
-                                    .strokeBorder(isSelected ? Color.blue : Color.gray, lineWidth: isSelected ? 4 : 1)
-                                if isSelected {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .symbolRenderingMode(.multicolor)
-                                        .font(.title)
-                                        .padding(8)
-                                }
-                            }
-                        )
-                        .onTapGesture {
-                            viewModel.selectedImage = item
-                        }
+                    viewModel.cell(for: item)
                 }
             }
             .padding()

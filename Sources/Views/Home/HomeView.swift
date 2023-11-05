@@ -6,52 +6,42 @@
 //
 
 import SwiftUI
-import DSFDropFilesView
 
 struct HomeView: View {
     
-    @EnvironmentObject var model: HomeViewModel
+    @EnvironmentObject var viewModel: HomeViewModel
     
     var body: some View {
-        HStack(alignment: .top, spacing: 8) {
-            VStack(alignment: .leading) {
-                DSFDropFilesView.SwiftUI(isEnabled: true,
-                                         allowsMultipleDrop: false,
-                                         icon: model.folderImage,
-                                         iconLabel: "Drop folder here",
-                                         selectFilesLabel: "Choose",
-                                         selectFilesButtonIsLink: true,
-                                         validateFiles: { urls in
-                    return model.urlsHasFolders(urls: urls) ? .copy : NSDragOperation()
-                },
-                                         dropFiles: { urls in
-                    model.setupFolders(from: urls)
-                    
-                    return true
-                },
-                                         selectFiles: {
-                    model.openFolder()
-                })
+        
+        HStack(alignment: .top, spacing: 0) {
+            ZStack {
+                VStack {}
+                    .visualEffect(material: .sidebar)
                 
-                Spacer()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                VStack(alignment: .leading) {
+                    
+                    viewModel.iconFolderView()
+                    
+                    viewModel.appliedStylesView()
+                    
+                    Spacer()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    
+                    viewModel.customizeFolderView()
+                }
             }
-            //.background(.red)
-            .frame(minWidth: 199, maxWidth: 199, maxHeight: .infinity)
-            .padding(4)
+            .frame(minWidth: 236, maxWidth: 236, maxHeight: .infinity)
             
             Divider()
+                .padding(.vertical, 4)
             
             VStack(alignment: .leading) {
-                model.toolsView()
+                viewModel.toolsView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            //.background(.green)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(4)
         }
         .fixedSize(horizontal: false, vertical: false)
-        .padding()
     }
 }
 

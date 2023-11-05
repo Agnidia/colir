@@ -8,49 +8,48 @@
 
 import SwiftUI
 
-struct PrimaryButtonStyle: PrimitiveButtonStyle {
-        
-    private struct PrimaryButtonStyleView<V: View>: View {
+struct PrimaryButtonStyle: ButtonStyle {
+    
+    private struct StyleView<V: View>: View {
         @Environment(\.isEnabled) private var isEnabled: Bool
-                
-        @State private var isOverButton = false
         
-        var cornerRadius: CGFloat = 8
-
+        @State private var isHovered = false
+        
+        var cornerRadius: CGFloat = ButtonStyleConstants.cornerRadius
+        
         let content: () -> V
-
+        
         var body: some View {
             ZStack(alignment: .center) {
                 content()
-                    .buttonStyle(.borderless)
-                    .foregroundColor(isEnabled ? Color.primaryTitleButton : Color.primaryDisabledTitleButton)
+                    .foregroundColor(isEnabled ? ButtonStyleConstants.textColor : ButtonStyleConstants.textDisableColor)
             }
             .background(content: {
                 if isEnabled == false {
                     Rectangle()
-                    .fill(Color.primaryDisabledBackgroundButton)
-                    .cornerRadius(cornerRadius)
+                        .fill(ButtonStyleConstants.backgroundDisabledColor)
+                        .cornerRadius(cornerRadius)
                 } else {
                     Rectangle()
-                    .fill(isOverButton ? Color.primaryHoveredButton : Color.primaryBackgroundButton)
-                    .cornerRadius(cornerRadius)
+                        .fill(isHovered ? ButtonStyleConstants.backgroundHovered : ButtonStyleConstants.backgroundColor)
+                        .cornerRadius(cornerRadius)
                 }
             })
             .onHover { over in
-                self.isOverButton = over
+                self.isHovered = over
             }
         }
     }
-
+    
     func makeBody(configuration: Self.Configuration) -> some View {
-        PrimaryButtonStyleView() {
+        StyleView() {
             configuration.label
         }
     }
 }
 
-extension PrimitiveButtonStyle where Self == PrimaryButtonStyle {
-
+extension ButtonStyle where Self == PrimaryButtonStyle {
+    
     /// A button style that doesn't apply a border.
     ///
     /// To apply this style to a button, or to a view that contains buttons, use

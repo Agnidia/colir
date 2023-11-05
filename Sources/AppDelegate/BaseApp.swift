@@ -19,7 +19,7 @@ struct BaseApp: App {
         WindowGroup {
             HomeView()
                 .environmentObject(homeViewModel)
-                .frame(minWidth: 800, idealWidth: 1024, minHeight: 600, idealHeight: 768)
+                .frame(minWidth: 640, idealWidth: 1024, minHeight: 480, idealHeight: 768)
                 .toolbar(id: "mainToolbar") {
                     ToolbarView(viewModel: ToolbarViewModel(undoManager: homeViewModel.undoManager , actionCallback: { action in
                         homeViewModel.apply(action: action)

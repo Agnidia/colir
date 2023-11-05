@@ -16,7 +16,7 @@ struct ToolsPhotosItemView: View {
     
     @State private var image: Image?
     @State private var imageRequestID: PHImageRequestID?
-
+    
     var body: some View {
         GeometryReader { geo in
             Group {
@@ -26,7 +26,6 @@ struct ToolsPhotosItemView: View {
                         .scaledToFill()
                         .frame(width: geo.size.width, height: geo.size.height)
                         .contentShape( Rectangle()) //fix gesture
-                        
                 } else {
                     ProgressView()
                         .scaleEffect(0.5)

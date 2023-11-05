@@ -1,24 +1,6 @@
 {
   "pins" : [
     {
-      "identity" : "dsfappearancemanager",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/dagronf/DSFAppearanceManager",
-      "state" : {
-        "revision" : "676cfd4e6aaa3cf6422990734c22544373db5c1a",
-        "version" : "3.3.0"
-      }
-    },
-    {
-      "identity" : "dsfdropfilesview",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/dagronf/DSFDropFilesView",
-      "state" : {
-        "revision" : "4461b78e7919871915f39d1a7f91eb27d9eeafa9",
-        "version" : "3.1.1"
-      }
-    },
-    {
       "identity" : "swiftcommons",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/IGRSoft/SwiftCommons",

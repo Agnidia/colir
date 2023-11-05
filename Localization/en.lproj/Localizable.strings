@@ -6,3 +6,12 @@
 
 /* No comment provided by engineer. */
 "permissions.overlay.open-settings" = "Open settings";
+
+/* No comment provided by engineer. */
+"permissions.overlay.open-photo.description" = "Open Photos permissions";
+
+/* No comment provided by engineer. */
+"home.view.drag-and-drop-zone.here" = "Drag & drop folder here";
+
+/* No comment provided by engineer. */
+"home.view.drag-and-drop-zone.choice" = "Tap to choice folder";

@@ -24,11 +24,15 @@ final class HomeViewModel: ObservableObject {
     
     private lazy var rsrcFileParser = RSRCFileParser()
     
-    @Published private(set) var foldersUrls: [URL] = .init()
+    @Published private var foldersUrls: [URL] = .init()
     
-    @Published private(set) var folderImage: NSImage = NSImage(systemSymbolName: "folder.badge.plus", accessibilityDescription: nil)!
+    @Published private var folderImage: NSImage? = DropFolderViewConstants.icon
     
     @Published private var tools: Tools = .colors
+    
+    @Published private var image: ImageDto = .init()
+    
+    @Published private var isHovered = false
     
     public func apply(action: ToolbarView.ToolbarViewDomain.Action) {
         switch action {
@@ -76,6 +80,56 @@ final class HomeViewModel: ObservableObject {
         }
     }
     
+    @ViewBuilder
+    func iconFolderView() -> some View {
+        DropFolderView.SwiftUI(isEnabled: true,
+                               allowsMultipleDrop: false,
+                               icon: image.preview,
+                               validateFiles: { [weak self] urls in
+            return ((self?.urlsHasFolders(urls: urls)) != nil) ? .copy : NSDragOperation()
+        },
+                               dropFiles: { [weak self] urls in
+            self?.setupFolders(from: urls)
+            
+            return true
+        })
+        .overlay(content: {
+            ZStack {
+                Rectangle()
+                    .fill(isHovered ? .dropFolderViewBackgroundActive : .clear)
+                    .cornerRadius(8)
+                if image.state == .preview {
+                    Text(isHovered ? HomeViewDomain.Localization.choice : HomeViewDomain.Localization.here)
+                        .font(.title)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(.secondaryText)
+                        .padding(32)
+                        .offset(y: 22)
+                }
+            }
+        })
+        .onTapGesture { [weak self] in
+            self?.openFolder()
+        }
+        .onHover(perform: { [weak self] hovered in
+            self?.isHovered = hovered
+        })
+        .padding(8)
+        .frame(width: 236, height: 236)
+    }
+    
+    @ViewBuilder
+    func appliedStylesView() -> some View {
+        RoundedRectangle(cornerSize: CGSize(width: 20, height: 10))
+            .fill(Color.red)
+    }
+    
+    @ViewBuilder
+    func customizeFolderView() -> some View {
+        RoundedRectangle(cornerSize: CGSize(width: 20, height: 10))
+            .fill(Color.blue)
+    }
+    
     func openFolder() {
         let panel = NSOpenPanel()
         panel.allowsMultipleSelection = true
@@ -115,6 +169,8 @@ final class HomeViewModel: ObservableObject {
         
         foldersUrls = [url]
         add(image: icon)
+        
+        image = .init(url: url, image: icon)
     }
     
     func urlsHasFolders(urls: [URL]) -> Bool {
@@ -129,6 +185,8 @@ final class HomeViewModel: ObservableObject {
         
         foldersUrls = [folder]
         add(image: icon)
+        
+        image = .init(url: folder, image: icon)
     }
     
     func add(image: NSImage) {

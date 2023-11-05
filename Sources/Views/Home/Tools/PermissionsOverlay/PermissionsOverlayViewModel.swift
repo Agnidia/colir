@@ -18,13 +18,13 @@ class PermissionsOverlayViewModel: ObservableObject, DomainViewConstantProtocol 
     
     //MARK: - Variables
     
-    private var title: String
+    private var title: LocalizedStringKey
     
-    private var description: String
+    private var description: LocalizedStringKey
     
     private var url: URL
     
-    init(title: String, description: String = "", url: URL) {
+    init(title: LocalizedStringKey, description: LocalizedStringKey = "", url: URL) {
         self.title = title
         self.description = description
         self.url = url
@@ -54,16 +54,16 @@ class PermissionsOverlayViewModel: ObservableObject, DomainViewConstantProtocol 
     var actionButton: some View {
         Button(action: action, label: {
             Text(DomainViewConstantType.Localization.openSettings)
-                .font(.body)
-                .padding()
+                .font(ButtonStyleConstants.font)
+                .padding(ButtonStyleConstants.padding)
         })
-        //.buttonStyle(PrimaryButtonStyle())
+        .tint(ButtonStyleConstants.backgroundAccentColor)
+        .buttonStyle(.accent)
     }
     
     //MARK: - Private
     
     private func action() {
-        let workspace = NSWorkspace.shared
-        workspace.open(url)
+        NSWorkspace.shared.open(url)
     }
 }

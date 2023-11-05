@@ -1,8 +1,17 @@
 /* No comment provided by engineer. */
-"toolbar.button.colors" = "Кольори";
+"toolbar.button.colors" = "Colors";
 
 /* No comment provided by engineer. */
-"toolbar.button.colors.help" = "Галерея кольорів";
+"toolbar.button.colors.help" = "Colors gallery";
 
 /* No comment provided by engineer. */
-"permissions.overlay.open-settings" = "Відкрити налаштування";
+"permissions.overlay.open-settings" = "Open settings";
+
+/* No comment provided by engineer. */
+"permissions.overlay.open-photo.description" = "Open Photos permissions";
+
+/* No comment provided by engineer. */
+"home.view.drag-and-drop-zone.here" = "Drag & drop folder here";
+
+/* No comment provided by engineer. */
+"home.view.drag-and-drop-zone.choice" = "Tap to choice folder";

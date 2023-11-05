@@ -9,17 +9,22 @@
 import SwiftUI
 import Photos
 import SystemSettingsAccess
+import SwiftCommons
 
-class ToolsPhotosViewModel: ObservableObject {
+class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
+    
+    typealias DomainViewConstantType = ToolsPhotosViewDomain
+    
+    var viewSettings: ToolsPhotosViewDomain = .init()
     
     private let logger: LogProtocol = Log(category: .toolsPhoto)
-        
+    
     @Published var selectedImage: PhotoAsset? = nil
     
     @Published var isAuthorized: Bool = true
     
     private let photosAppManager: PhotoLibraryAccessManagerProtocol
-        
+    
     @Published var isPhotosLoaded = false
     
     var photoLibraryAlbumManager = PhotoLibraryAlbumManager(smartAlbum: .smartAlbumUserLibrary)
@@ -39,7 +44,7 @@ class ToolsPhotosViewModel: ObservableObject {
     var overlay: some View {
         if isAuthorized == false, let url = SystemSettingsSecurityPrivacy.photos.path {
             PermissionsOverlayView()
-                .environmentObject(PermissionsOverlayViewModel(title: "Open Photos permissions", url: url))
+                .environmentObject(PermissionsOverlayViewModel(title: ToolsPhotosViewDomain.Localization.photoDescription, url: url))
         } else {
             EmptyView()
         }
@@ -56,10 +61,10 @@ class ToolsPhotosViewModel: ObservableObject {
                     RoundedRectangle(cornerRadius: cellCornerRadius)
                         .strokeBorder(isSelected ? Color.blue : Color.gray, lineWidth: isSelected ? 4 : 1)
                     if isSelected {
-                        Image(systemName: "checkmark.circle.fill")
+                        Image(systemName: ToolsPhotosViewDomain.Icon.selection)
                             .symbolRenderingMode(.multicolor)
                             .font(.title)
-                            .padding(8)
+                            .padding(viewSettings.padding)
                     }
                 }
             )

@@ -48,8 +48,11 @@ struct HomeViewDomain: DomainViewConstantType {
     }
     
     enum L: ConstantRawRepresentable {
-        static let here: LocalizedStringKey =
-        "home.view.drag-and-drop-zone.here"
+        static let dragHere: LocalizedStringKey =
+        "home.view.drag-and-drop-zone.drag-here"
+        
+        static let dropHere: LocalizedStringKey =
+        "home.view.drag-and-drop-zone.drop-here"
         
         static let choice: LocalizedStringKey =
         "home.view.drag-and-drop-zone.choice"

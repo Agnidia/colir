@@ -12,18 +12,43 @@ struct CustomizingActionView: View {
     @EnvironmentObject var viewModel: CustomizingActionViewModel
     
     var body: some View {
-        VStack(spacing: viewModel.viewSettings.spacing) {
+        VStack(spacing:0) {
             
-            viewModel.titleText
-            
-            viewModel.descriptionText
+            viewModel.progressView
             
             viewModel.actionButton
         }
+        .padding(.horizontal, 16)
     }
 }
 
 #Preview("CustomizingActionView") {
-    CustomizingActionView()
-        .environmentObject(CustomizingActionViewModel())
+    VStack {
+        CustomizingActionView()
+            .environmentObject(CustomizingActionViewModel(state: .none))
+        
+        Divider()
+        
+        CustomizingActionView()
+            .environmentObject(CustomizingActionViewModel(state: .ready))
+        
+        Divider()
+        
+        CustomizingActionView()
+            .environmentObject(CustomizingActionViewModel(state: .preview))
+        
+        Divider()
+        
+        CustomizingActionView()
+            .environmentObject(CustomizingActionViewModel(state: .processing(value: 30)))
+        
+        Divider()
+        
+        CustomizingActionView()
+            .environmentObject(CustomizingActionViewModel(state: .error))
+        
+        Divider()
+        Spacer()
+    }
+    .frame(width: 236, height: 450)
 }

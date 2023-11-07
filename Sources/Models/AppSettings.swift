@@ -10,7 +10,7 @@ import SwiftUI
 
 /// User and application settings model
 /// 
-protocol AppSettingsProtocol {
+public protocol AppSettingsProtocol {
     
     var bookmarkData: Data { get set }
     var userPicturesPath: URL { get set }

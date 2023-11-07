@@ -7,13 +7,14 @@
 //
 
 import AppKit
+import SwiftUI
 
-class ImageDto: ObservableObject {
+final class ImageDto: ObservableObject {
     
     enum ImageState: Equatable {
         case none
         case ready
-        case processing(value: Int)
+        case processing(value: Float)
         case error
         case preview
     }
@@ -62,46 +63,92 @@ class ImageDto: ObservableObject {
     
     private(set) var i512x2: NSImage = .init()
     
-    @Published var preview: NSImage = .init()
+    @ViewBuilder
+    var preview: some View {
+        switch state {
+        case .none:
+            EmptyView()
+        case .ready, .preview:
+            Image(nsImage: o256)
+                .resizable()
+        case .processing:
+            Image(nsImage: o256)
+                .resizable()
+            ProgressView()
+                .progressViewStyle(.circular)
+        case .error:
+            EmptyView()
+        }
+    }
     
-    var url: URL?
+    private(set) var url: URL?
     
-    var state: ImageState = .none
+    @Published private(set) var state: ImageState = .none
+    @Published private(set) var progressValue: Float = 0 {
+        didSet {
+            state = .processing(value: progressValue)
+        }
+    }
+    
+    private(set) lazy var stateBinding = Binding<ImageState>(
+        get: { [weak self] in self?.state ?? .none },
+        set: { [weak self] newState in
+            self?.state = newState
+        }
+    )
     
     var isValid: Bool {
         url != nil && state == .ready
     }
     
     convenience init() {
-        let folderIcon: NSImage!
-        let image: NSImage = NSWorkspace.shared.icon(for: .folder)
-        do {
-            folderIcon = try image.alpha(0.3)
-        } catch {
-            folderIcon = image
-        }
-        
-        self.init(url: nil, image: folderIcon)
-        
-        self.state = .preview
+        self.init(url: nil, image: .init())
     }
     
     init(url: URL? = nil, image: NSImage) {
-        updateOriginal(url: url, image: image)
+        if image.isValid {
+            Task {
+                await updateOriginal(url: url, image: image)
+            }
+        }
     }
     
-    func updateOriginal(url: URL?, image: NSImage) {
+    func prepareForUpdate() {
+        progressValue = 0
+    }
+    
+    func updateOriginal(url: URL?, image: NSImage) async {
+        
+        let delay: useconds_t = 500000 //1000000 = 1s
+        
         self.url = url
                 
         let images = image.representations
         
-        var size: CGFloat = 16
+        var size: CGFloat = 256
+        if let image = images.first(where: { $0.size.width == size }) {
+            o128x2 = NSImage(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: .init(width: size, height: size))
+            o256 = o128x2
+        } else {
+            o128x2 = .init()
+            o256 = .init()
+        }
+        i128x2 = o128x2
+        i256 = o256
+        state = .preview
+        progressValue = 20
+        
+        usleep(delay)
+        
+        size = 16
         if let image = images.first(where: { $0.size.width == size }) {
             o16 = NSImage(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: .init(width: size, height: size))
         } else {
             o16 = .init()
         }
         i16 = o16
+        progressValue = 30
+        usleep(delay)
         
         size = 32
         if let image = images.first(where: { $0.size.width == size }) {
@@ -113,6 +160,8 @@ class ImageDto: ObservableObject {
         }
         i16x2 = o16x2
         i32 = o32
+        progressValue = 40
+        usleep(delay)
         
         size = 64
         if let image = images.first(where: { $0.size.width == size }) {
@@ -121,6 +170,8 @@ class ImageDto: ObservableObject {
             o32x2 = .init()
         }
         i32x2 = o32x2
+        progressValue = 50
+        usleep(delay)
         
         size = 128
         if let image = images.first(where: { $0.size.width == size }) {
@@ -129,17 +180,8 @@ class ImageDto: ObservableObject {
             o128 = .init()
         }
         i128 = o128
-        
-        size = 256
-        if let image = images.first(where: { $0.size.width == size }) {
-            o128x2 = NSImage(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: .init(width: size, height: size))
-            o256 = o128x2
-        } else {
-            o128x2 = .init()
-            o256 = .init()
-        }
-        i128x2 = o128x2
-        i256 = o256
+        progressValue = 60
+        usleep(delay)
         
         size = 512
         if let image = images.first(where: { $0.size.width == size }) {
@@ -152,6 +194,9 @@ class ImageDto: ObservableObject {
         i256x2 = o256x2
         i512 = o512
         
+        progressValue = 80
+        usleep(delay)
+        
         size = 1024
         if let image = images.first(where: { $0.size.width == size }) {
             o512x2 = NSImage(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: .init(width: size, height: size))
@@ -160,8 +205,10 @@ class ImageDto: ObservableObject {
         }
         i512x2 = o512x2
         
-        preview = i256
+        progressValue = 100
+        usleep(delay)
         
         state = .ready
+        usleep(delay)
     }
 }

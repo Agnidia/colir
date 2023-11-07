@@ -28,7 +28,7 @@ struct CustomizingActionViewDomain: DomainViewConstantType {
     }
     
     var spacing: CGFloat? {
-        32
+        16
     }
     
     var border: CGFloat? {
@@ -48,8 +48,8 @@ struct CustomizingActionViewDomain: DomainViewConstantType {
     }
     
     enum L: ConstantRawRepresentable {
-        static let openSettings: LocalizedStringKey =
-        "permissions.overlay.open-settings"
+        static let customize: LocalizedStringKey =
+        "customizing.view.button.customize"
     }
     
     enum I: ConstantRawRepresentable {

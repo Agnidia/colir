@@ -63,3 +63,25 @@ extension ButtonStyle where Self == PrimaryButtonStyle {
         .init()
     }
 }
+
+#Preview("PrimaryButtonStyle") {
+    HStack {
+        Button(action: {}, label: {
+            Text("test")
+                .font(ButtonStyleConstants.font)
+                .padding(ButtonStyleConstants.padding)
+        })
+        .buttonStyle(.primary)
+        .padding()
+        .disabled(false)
+        
+        Button(action: {}, label: {
+            Text("test")
+                .font(ButtonStyleConstants.font)
+                .padding(ButtonStyleConstants.padding)
+        })
+        .buttonStyle(.primary)
+        .padding()
+        .disabled(true)
+    }
+}

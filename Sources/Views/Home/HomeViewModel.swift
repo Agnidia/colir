@@ -8,10 +8,11 @@
 import AppKit
 import SwiftUI
 import SwiftCommons
+import Combine
 
 final class HomeViewModel: ObservableObject {
     
-    private enum Tools: Equatable {
+    enum Tools: Equatable {
         case colors
         case photos
         case pictures
@@ -20,19 +21,29 @@ final class HomeViewModel: ObservableObject {
         case webResources
     }
     
-    @Published private(set) var undoManager = UndoManager()
+    @Published private(set) var undoManager: UndoManager
+    
+    private var appSettings: AppSettingsProtocol
     
     private lazy var rsrcFileParser = RSRCFileParser()
     
-    @Published private var foldersUrls: [URL] = .init()
+    private var foldersUrls: [URL]
     
-    @Published private var folderImage: NSImage? = DropFolderViewConstants.icon
+    private var folderImage: NSImage?
     
-    @Published private var tools: Tools = .colors
+    @Published private var tools: Tools
     
-    @Published private var image: ImageDto = .init()
-    
-    @Published private var isHovered = false
+    init(undoManager: UndoManager = .init(),
+         appSettings: AppSettingsProtocol = AppSettings(),
+         foldersUrls: [URL] = [],
+         folderImage: NSImage? = nil,
+         tools: Tools = .colors) {
+        self.undoManager = undoManager
+        self.appSettings = appSettings
+        self.foldersUrls = foldersUrls
+        self.folderImage = folderImage
+        self.tools = tools
+    }
     
     public func apply(action: ToolbarView.ToolbarViewDomain.Action) {
         switch action {
@@ -57,65 +68,50 @@ final class HomeViewModel: ObservableObject {
         }
     }
     
+    private lazy var toolsColorsViewModel: ToolsColorsViewModel = .init()
+    private lazy var toolsPhotosViewModel: ToolsPhotosViewModel = .init()
+    private lazy var toolsEmojisViewModel: ToolsEmojisViewModel = .init()
+    private lazy var toolsPicturesViewModel: ToolsPicturesViewModel = .init(appSettings: appSettings)
+    private lazy var webResourcesViewModel: WebResourcesViewModel = .init()
+    
     @ViewBuilder
     func toolsView() -> some View {
         switch tools {
         case .colors:
             ToolsColorsView()
-                .environmentObject(ToolsColorsViewModel())
+                .environmentObject(toolsColorsViewModel)
         case .photos:
             ToolsPhotosView()
-                .environmentObject(ToolsPhotosViewModel())
+                .environmentObject(toolsPhotosViewModel)
         case .emojis:
             ToolsEmojisView()
-                .environmentObject(ToolsEmojisViewModel())
+                .environmentObject(toolsEmojisViewModel)
         case .decals:
             ToolsDecalsView()
         case .pictures:
             ToolsPicturesView()
-                .environmentObject(ToolsPicturesViewModel(appSettings: AppSettings()))
+                .environmentObject(toolsPicturesViewModel)
         case .webResources:
             WebResourcesView()
-                .environmentObject(WebResourcesViewModel())
+                .environmentObject(webResourcesViewModel)
         }
     }
     
+    private lazy var dropZoneViewModel: DropZoneViewModel = .init { [weak self] urls in
+        self?.setupFolders(from: urls)
+    } updateStateClosure: { [weak self] state in
+        print("Set state to: \(state)")
+        self?.customizingActionViewModel.update(state: state)
+    }
+
+    private lazy var dropZone: DropZoneView = DropZoneView()
+    
     @ViewBuilder
     func iconFolderView() -> some View {
-        DropFolderView.SwiftUI(isEnabled: true,
-                               allowsMultipleDrop: false,
-                               icon: image.preview,
-                               validateFiles: { [weak self] urls in
-            return ((self?.urlsHasFolders(urls: urls)) != nil) ? .copy : NSDragOperation()
-        },
-                               dropFiles: { [weak self] urls in
-            self?.setupFolders(from: urls)
-            
-            return true
-        })
-        .overlay(content: {
-            ZStack {
-                Rectangle()
-                    .fill(isHovered ? .dropFolderViewBackgroundActive : .clear)
-                    .cornerRadius(8)
-                if image.state == .preview {
-                    Text(isHovered ? HomeViewDomain.Localization.choice : HomeViewDomain.Localization.here)
-                        .font(.title)
-                        .multilineTextAlignment(.center)
-                        .foregroundStyle(.secondaryText)
-                        .padding(32)
-                        .offset(y: 22)
-                }
-            }
-        })
-        .onTapGesture { [weak self] in
-            self?.openFolder()
-        }
-        .onHover(perform: { [weak self] hovered in
-            self?.isHovered = hovered
-        })
-        .padding(8)
-        .frame(width: 236, height: 236)
+        dropZone
+            .environmentObject(dropZoneViewModel)
+            .padding(8)
+            .frame(width: 236, height: 236)
     }
     
     @ViewBuilder
@@ -124,69 +120,59 @@ final class HomeViewModel: ObservableObject {
             .fill(Color.red)
     }
     
+    private lazy var customizingActionViewModel: CustomizingActionViewModel = .init()
     @ViewBuilder
     func customizeFolderView() -> some View {
-        RoundedRectangle(cornerSize: CGSize(width: 20, height: 10))
-            .fill(Color.blue)
+        CustomizingActionView()
+            .environmentObject(customizingActionViewModel)
+            .frame(maxWidth: .infinity)
     }
     
-    func openFolder() {
-        let panel = NSOpenPanel()
-        panel.allowsMultipleSelection = true
-        panel.canChooseDirectories = true
-        panel.canChooseFiles = false
-        panel.prompt = NSLocalizedString("Choose", comment: "")
-        panel.message = NSLocalizedString("Choose folder to colorise it", comment: "")
-        let response = panel.runModal()
-        
-        guard let url = response == .OK ? panel.url : nil else {
-            return
-        }
-        
-        var icon: NSImage?
-        
-        let rsrcFile = url.appendingPathComponent("Icon\r/..namedfork/rsrc")
-        if FileManager.default.fileExists(atPath: rsrcFile.path()) {
-            var resource: RSRCResource?
-            do {
-                resource = try rsrcFileParser.parse(url: rsrcFile).first
-            } catch {
-                print(error.localizedDescription)
-            }
-            
-            guard let resource, let image = resource.image else {
-                return
-            }
-            
-            icon = image
-        } else {
-            icon = url.icon
-        }
-        
-        guard let icon else {
-            return
-        }
-        
-        foldersUrls = [url]
-        add(image: icon)
-        
-        image = .init(url: url, image: icon)
-    }
-    
-    func urlsHasFolders(urls: [URL]) -> Bool {
-        !urls.filter { $0.isFolder }.isEmpty
+    public func openFolder() {
+        dropZoneViewModel.openFolder()
     }
     
     func setupFolders(from urls: [URL]) {
         let folders = urls.filter { $0.isFolder }
-        guard folders.isEmpty == false, let folder = folders.first, let icon = folder.icon else {
+        
+        guard folders.isEmpty == false, let url = folders.first else {
             return
         }
         
-        foldersUrls = [folder]
-        add(image: icon)
+        dropZoneViewModel.image.prepareForUpdate()
         
-        image = .init(url: folder, image: icon)
+        Task {
+            var icon: NSImage?
+            
+            let rsrcFile = url.appendingPathComponent("Icon\r/..namedfork/rsrc")
+            if FileManager.default.fileExists(atPath: rsrcFile.path()) {
+                var resource: RSRCResource?
+                do {
+                    resource = try rsrcFileParser.parse(url: rsrcFile).first
+                } catch {
+                    print(error.localizedDescription)
+                }
+                
+                guard let resource, let image = resource.image else {
+                    return
+                }
+                
+                icon = image
+            } else {
+                icon = url.icon
+            }
+            
+            guard let icon else {
+                return
+            }
+            
+            await dropZoneViewModel.image.updateOriginal(url: url, image: icon)
+            
+            Task { @MainActor in
+                foldersUrls = [url]
+                add(image: icon)
+            }
+        }
     }
     
     func add(image: NSImage) {

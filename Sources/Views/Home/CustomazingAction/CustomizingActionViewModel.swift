@@ -12,46 +12,46 @@ import SwiftCommons
 class CustomizingActionViewModel: ObservableObject, DomainViewConstantProtocol {
     
     //MARK: - DomainViewConstantProtocol
-    typealias DomainViewConstantType = PermissionsOverlayDomain
+    typealias DomainViewConstantType = CustomizingActionViewDomain
     
     var viewSettings: DomainViewConstantType = .init()
     
+    @Published var state: ImageDto.ImageState
+    
     //MARK: - Variables
     
-    init() {
+    init(state: ImageDto.ImageState = .none) {
+        self.state = state
+    }
+    
+    func update(state: ImageDto.ImageState) {
+        self.state = state
     }
     
     //MARK: - Views
     
     @ViewBuilder
-    var backgroundView: some View {
-        RoundedRectangle(cornerRadius: viewSettings.cornerRadius!)
-            .fill(viewSettings.background)
-    }
-    
-    @ViewBuilder
-    var titleText: some View {
-        EmptyView()
-        //Text(title)
-        //    .font(.title)
-    }
-    
-    @ViewBuilder
-    var descriptionText: some View {
-        EmptyView()
-        //Text(description)
-        //    .font(.body)
+    var progressView: some View {
+        switch state {
+        case .processing(let progress):
+            ProgressView("", value: progress, total: 100)
+                .frame(height: 8)
+                .progressViewStyle(.primary)
+        default:
+            EmptyView()
+        }
     }
     
     @ViewBuilder
     var actionButton: some View {
         Button(action: action, label: {
-            Text(DomainViewConstantType.Localization.openSettings)
+            Text(DomainViewConstantType.Localization.customize)
                 .font(ButtonStyleConstants.font)
                 .padding(ButtonStyleConstants.padding)
         })
-        .tint(ButtonStyleConstants.backgroundAccentColor)
-        .buttonStyle(.accent)
+        .buttonStyle(.primary)
+        .padding()
+        .disabled(state != .ready)
     }
     
     //MARK: - Private

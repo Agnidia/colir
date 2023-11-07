@@ -23,7 +23,7 @@ enum ButtonStyleConstants {
     
     static let backgroundAccentColor: Color = Color.accentBackgroundButton
     
-    static let backgroundDisabledColor: Color = Color.primaryDisabledTitleButton
+    static let backgroundDisabledColor: Color = Color.primaryDisabledBackgroundButton
     
     static let backgroundHovered: Color = Color.primaryHoveredButton
     

@@ -13,6 +13,11 @@ struct HomeView: View {
     
     var body: some View {
         
+#if DEBUG
+        // Prints changes for debug purposes.
+        let _ = Self._printChanges()
+#endif
+        
         HStack(alignment: .top, spacing: 0) {
             ZStack {
                 VStack {}
@@ -28,6 +33,7 @@ struct HomeView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     
                     viewModel.customizeFolderView()
+                    
                 }
             }
             .frame(minWidth: 236, maxWidth: 236, maxHeight: .infinity)

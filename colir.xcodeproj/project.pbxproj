@@ -17,9 +17,9 @@
 		A504B89C2A6D8D5A002A2C8B /* ToolbarViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A504B89B2A6D8D5A002A2C8B /* ToolbarViewDomain.swift */; };
 		A504B89E2A6D9202002A2C8B /* ToolbarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A504B89D2A6D9202002A2C8B /* ToolbarViewModel.swift */; };
 		A504B8A02A6F05CD002A2C8B /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A504B89F2A6F05CD002A2C8B /* HomeViewModel.swift */; };
-		A50AF9622AF67704000C18AB /* DropFolderView+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AF9612AF67704000C18AB /* DropFolderView+SwiftUI.swift */; };
-		A50AF9642AF67749000C18AB /* DropFolderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AF9632AF67749000C18AB /* DropFolderView.swift */; };
-		A50AF9662AF67776000C18AB /* DropFolderViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AF9652AF67776000C18AB /* DropFolderViewProtocol.swift */; };
+		A50AF9622AF67704000C18AB /* DropZoneNSView+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AF9612AF67704000C18AB /* DropZoneNSView+SwiftUI.swift */; };
+		A50AF9642AF67749000C18AB /* DropZoneNSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AF9632AF67749000C18AB /* DropZoneNSView.swift */; };
+		A50AF9662AF67776000C18AB /* DropZoneViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AF9652AF67776000C18AB /* DropZoneViewProtocol.swift */; };
 		A50AF9682AF67865000C18AB /* DropFolderViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AF9672AF67865000C18AB /* DropFolderViewConstants.swift */; };
 		A515FF042AF6BAC1000F0C3B /* ButtonStyleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A515FF032AF6BAC1000F0C3B /* ButtonStyleConstants.swift */; };
 		A515FF082AF6CA9B000F0C3B /* AccentButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A515FF072AF6CA9B000F0C3B /* AccentButtonStyle.swift */; };
@@ -38,6 +38,7 @@
 		A536DF152AD5A09700B423EE /* PhotoLibraryAlbumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF142AD5A09700B423EE /* PhotoLibraryAlbumManager.swift */; };
 		A536DF172AD5A0F400B423EE /* PhotoAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF162AD5A0F400B423EE /* PhotoAssetCollection.swift */; };
 		A536DF192AD5C92600B423EE /* ToolsPhotosItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF182AD5C92600B423EE /* ToolsPhotosItemView.swift */; };
+		A567602A2AF97D8200AD3008 /* ViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56760292AF97D8200AD3008 /* ViewConstants.swift */; };
 		A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D7E2AEEFA8D0063FE06 /* SwiftCommons */; };
 		A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */; };
 		A5A00D842AEF011D0063FE06 /* PermissionsOverlayDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A00D832AEF011D0063FE06 /* PermissionsOverlayDomain.swift */; };
@@ -92,6 +93,9 @@
 		A5DA67902AD452E100B3E8C9 /* LogProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA678F2AD452E100B3E8C9 /* LogProtocol.swift */; };
 		A5DA67922AD45EE300B3E8C9 /* PhotoLibraryCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA67912AD45EE300B3E8C9 /* PhotoLibraryCacheManager.swift */; };
 		A5DA67942AD45F4100B3E8C9 /* PhotoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5DA67932AD45F4100B3E8C9 /* PhotoAsset.swift */; };
+		A5E115AD2AFA76650023A70C /* DropZoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115AC2AFA76650023A70C /* DropZoneView.swift */; };
+		A5E115AF2AFA7F770023A70C /* DropZoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115AE2AFA7F770023A70C /* DropZoneViewModel.swift */; };
+		A5E115B22AFA9C060023A70C /* PrimaryProgressViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115B12AFA9C060023A70C /* PrimaryProgressViewStyle.swift */; };
 		A5E860F02AA635AE00D2293B /* ToolsEmojisViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860EF2AA635AE00D2293B /* ToolsEmojisViewModel.swift */; };
 		A5E860F32AA635DF00D2293B /* EmojisManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860F22AA635DF00D2293B /* EmojisManager.swift */; };
 		A5E860F52AA6508900D2293B /* String+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860F42AA6508900D2293B /* String+Emoji.swift */; };
@@ -153,9 +157,9 @@
 		A504B89B2A6D8D5A002A2C8B /* ToolbarViewDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewDomain.swift; sourceTree = "<group>"; };
 		A504B89D2A6D9202002A2C8B /* ToolbarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewModel.swift; sourceTree = "<group>"; };
 		A504B89F2A6F05CD002A2C8B /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		A50AF9612AF67704000C18AB /* DropFolderView+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DropFolderView+SwiftUI.swift"; sourceTree = "<group>"; };
-		A50AF9632AF67749000C18AB /* DropFolderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropFolderView.swift; sourceTree = "<group>"; };
-		A50AF9652AF67776000C18AB /* DropFolderViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropFolderViewProtocol.swift; sourceTree = "<group>"; };
+		A50AF9612AF67704000C18AB /* DropZoneNSView+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DropZoneNSView+SwiftUI.swift"; sourceTree = "<group>"; };
+		A50AF9632AF67749000C18AB /* DropZoneNSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneNSView.swift; sourceTree = "<group>"; };
+		A50AF9652AF67776000C18AB /* DropZoneViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneViewProtocol.swift; sourceTree = "<group>"; };
 		A50AF9672AF67865000C18AB /* DropFolderViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropFolderViewConstants.swift; sourceTree = "<group>"; };
 		A515FF032AF6BAC1000F0C3B /* ButtonStyleConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleConstants.swift; sourceTree = "<group>"; };
 		A515FF072AF6CA9B000F0C3B /* AccentButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccentButtonStyle.swift; sourceTree = "<group>"; };
@@ -174,6 +178,7 @@
 		A536DF142AD5A09700B423EE /* PhotoLibraryAlbumManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryAlbumManager.swift; sourceTree = "<group>"; };
 		A536DF162AD5A0F400B423EE /* PhotoAssetCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAssetCollection.swift; sourceTree = "<group>"; };
 		A536DF182AD5C92600B423EE /* ToolsPhotosItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsPhotosItemView.swift; sourceTree = "<group>"; };
+		A56760292AF97D8200AD3008 /* ViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConstants.swift; sourceTree = "<group>"; };
 		A5A00D832AEF011D0063FE06 /* PermissionsOverlayDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsOverlayDomain.swift; sourceTree = "<group>"; };
 		A5A00D872AEF0CDE0063FE06 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		A5B68E502AB8DA08003C5FFA /* NSColor+List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+List.swift"; sourceTree = "<group>"; };
@@ -256,6 +261,9 @@
 		A5DA678F2AD452E100B3E8C9 /* LogProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogProtocol.swift; sourceTree = "<group>"; };
 		A5DA67912AD45EE300B3E8C9 /* PhotoLibraryCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryCacheManager.swift; sourceTree = "<group>"; };
 		A5DA67932AD45F4100B3E8C9 /* PhotoAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAsset.swift; sourceTree = "<group>"; };
+		A5E115AC2AFA76650023A70C /* DropZoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneView.swift; sourceTree = "<group>"; };
+		A5E115AE2AFA7F770023A70C /* DropZoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneViewModel.swift; sourceTree = "<group>"; };
+		A5E115B12AFA9C060023A70C /* PrimaryProgressViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryProgressViewStyle.swift; sourceTree = "<group>"; };
 		A5E860EF2AA635AE00D2293B /* ToolsEmojisViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsEmojisViewModel.swift; sourceTree = "<group>"; };
 		A5E860F22AA635DF00D2293B /* EmojisManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojisManager.swift; sourceTree = "<group>"; };
 		A5E860F42AA6508900D2293B /* String+Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Emoji.swift"; sourceTree = "<group>"; };
@@ -371,6 +379,7 @@
 				A5A00D852AEF0CB40063FE06 /* Styles */,
 				A504B8A12A6F05D5002A2C8B /* Home */,
 				A504B89A2A6D8D41002A2C8B /* Toolbar */,
+				A56760292AF97D8200AD3008 /* ViewConstants.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -427,10 +436,12 @@
 		A50AF9602AF676DA000C18AB /* DropFolderView */ = {
 			isa = PBXGroup;
 			children = (
-				A50AF9612AF67704000C18AB /* DropFolderView+SwiftUI.swift */,
-				A50AF9632AF67749000C18AB /* DropFolderView.swift */,
-				A50AF9652AF67776000C18AB /* DropFolderViewProtocol.swift */,
+				A50AF9612AF67704000C18AB /* DropZoneNSView+SwiftUI.swift */,
+				A50AF9632AF67749000C18AB /* DropZoneNSView.swift */,
+				A50AF9652AF67776000C18AB /* DropZoneViewProtocol.swift */,
 				A50AF9672AF67865000C18AB /* DropFolderViewConstants.swift */,
+				A5E115AC2AFA76650023A70C /* DropZoneView.swift */,
+				A5E115AE2AFA7F770023A70C /* DropZoneViewModel.swift */,
 			);
 			path = DropFolderView;
 			sourceTree = "<group>";
@@ -464,6 +475,7 @@
 		A5A00D852AEF0CB40063FE06 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
+				A5E115B02AFA9BF10023A70C /* Progress */,
 				A5A00D862AEF0CDE0063FE06 /* Button */,
 			);
 			path = Styles;
@@ -753,6 +765,14 @@
 			path = Tools;
 			sourceTree = "<group>";
 		};
+		A5E115B02AFA9BF10023A70C /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				A5E115B12AFA9C060023A70C /* PrimaryProgressViewStyle.swift */,
+			);
+			path = Progress;
+			sourceTree = "<group>";
+		};
 		A5E860EE2AA634F600D2293B /* Emojis */ = {
 			isa = PBXGroup;
 			children = (
@@ -1012,13 +1032,14 @@
 				A5BA1D232A81816E0014E276 /* rle.cpp in Sources */,
 				A5BF05F52AD2919300A86904 /* FileAccessManager.swift in Sources */,
 				A5BA1D272A81816E0014E276 /* raw.cpp in Sources */,
+				A5E115AF2AFA7F770023A70C /* DropZoneViewModel.swift in Sources */,
 				A5DA67902AD452E100B3E8C9 /* LogProtocol.swift in Sources */,
 				A5E860F32AA635DF00D2293B /* EmojisManager.swift in Sources */,
 				A5B68E542AB8DBEC003C5FFA /* ToolsColorsViewModel.swift in Sources */,
 				A5CFFDFA2AA12BF200D6E7A9 /* ToolsEmojisView.swift in Sources */,
 				A515FF182AF6EE9D000F0C3B /* VisualEffectView.swift in Sources */,
 				A515FF1E2AF80BC6000F0C3B /* RGBA32.swift in Sources */,
-				A50AF9662AF67776000C18AB /* DropFolderViewProtocol.swift in Sources */,
+				A50AF9662AF67776000C18AB /* DropZoneViewProtocol.swift in Sources */,
 				A5BA1D202A81816E0014E276 /* surface.cpp in Sources */,
 				A5BA1D3F2A81872C0014E276 /* RSRCResource.swift in Sources */,
 				A5BA1D1F2A81816E0014E276 /* packbits.cpp in Sources */,
@@ -1042,6 +1063,7 @@
 				A5BF05E92AD1D98E00A86904 /* PicturesFolderItem.swift in Sources */,
 				A5BA1D352A81816E0014E276 /* writer.cpp in Sources */,
 				A5A00D8A2AEF0CDE0063FE06 /* PrimaryButtonStyle.swift in Sources */,
+				A5E115B22AFA9C060023A70C /* PrimaryProgressViewStyle.swift in Sources */,
 				A504B88E2A6D44EB002A2C8B /* Logger.swift in Sources */,
 				A5BF05FD2AD2954300A86904 /* PhotoAppItem.swift in Sources */,
 				A5BA1D262A81816E0014E276 /* planar.cpp in Sources */,
@@ -1058,10 +1080,12 @@
 				A515FF0D2AF6CC5D000F0C3B /* CustomizingActionViewModel.swift in Sources */,
 				A5DA67922AD45EE300B3E8C9 /* PhotoLibraryCacheManager.swift in Sources */,
 				A5FD59B52ADBDF48008503D3 /* PermissionsOverlayViewModel.swift in Sources */,
+				A5E115AD2AFA76650023A70C /* DropZoneView.swift in Sources */,
 				A5BA1D2C2A81816E0014E276 /* resource.cpp in Sources */,
+				A567602A2AF97D8200AD3008 /* ViewConstants.swift in Sources */,
 				A504B8992A6D7AA7002A2C8B /* ToolbarView.swift in Sources */,
 				A5BA1D242A81816E0014E276 /* ppat.cpp in Sources */,
-				A50AF9622AF67704000C18AB /* DropFolderView+SwiftUI.swift in Sources */,
+				A50AF9622AF67704000C18AB /* DropZoneNSView+SwiftUI.swift in Sources */,
 				A515FF0B2AF6CBE6000F0C3B /* CustomizingActionView.swift in Sources */,
 				A5BA1D282A81816E0014E276 /* animation.cpp in Sources */,
 				A5BA1D2F2A81816E0014E276 /* file.cpp in Sources */,
@@ -1086,7 +1110,7 @@
 				A5BA1D322A81816E0014E276 /* type.cpp in Sources */,
 				A5DA67942AD45F4100B3E8C9 /* PhotoAsset.swift in Sources */,
 				A515FF212AF80EE3000F0C3B /* IconMananager.swift in Sources */,
-				A50AF9642AF67749000C18AB /* DropFolderView.swift in Sources */,
+				A50AF9642AF67749000C18AB /* DropZoneNSView.swift in Sources */,
 				A5FD59B32ADBDF41008503D3 /* PermissionsOverlayView.swift in Sources */,
 				A515FF1A2AF80B94000F0C3B /* NSImage+Alpha.swift in Sources */,
 				A515FF0F2AF6CC8B000F0C3B /* CustomizingActionViewDomain.swift in Sources */,

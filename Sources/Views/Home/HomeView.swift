@@ -36,7 +36,7 @@ struct HomeView: View {
                     
                 }
             }
-            .frame(minWidth: 236, maxWidth: 236, maxHeight: .infinity)
+            .frame(minWidth: viewModel.width, maxWidth: viewModel.width, maxHeight: .infinity)
             
             Divider()
                 .padding(.vertical, 4)

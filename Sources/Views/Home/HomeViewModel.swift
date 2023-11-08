@@ -31,7 +31,18 @@ final class HomeViewModel: ObservableObject {
     
     private var folderImage: NSImage?
     
+    var width: CGFloat {
+        236
+    }
+    
     @Published private var tools: Tools
+    
+    @Published var wrongAttempt: Int = 0
+    
+    private var customizationTask: Task<(), Never>?
+    
+    /// Collection of cancellable publishers to clean up when done.
+    private var cancellables = Set<AnyCancellable>()
     
     init(undoManager: UndoManager = .init(),
          appSettings: AppSettingsProtocol = AppSettings(),
@@ -43,6 +54,52 @@ final class HomeViewModel: ObservableObject {
         self.foldersUrls = foldersUrls
         self.folderImage = folderImage
         self.tools = tools
+        
+        addPublishers()
+    }
+    
+    deinit {
+        
+    }
+    
+    public func apply(color: NSColor?) {
+        guard dropZoneViewModel.image.state != .none else {
+            withAnimation(.default) {
+                wrongAttempt += 1
+            }
+            return
+        }
+        
+        dropZoneViewModel.customizations.selectedColor = color
+        
+        customizationTask?.cancel()
+        
+        customizationTask = Task {
+            do {
+                try await dropZoneViewModel.image.updateCustomization(customizations: dropZoneViewModel.customizations)
+            } catch {
+                print("task canceled")
+            }
+        }
+    }
+    
+    public func apply(image: NSImage?) {
+        guard dropZoneViewModel.image.state != .none else {
+            wrongAttempt += 1
+            return
+        }
+        
+        dropZoneViewModel.customizations.selectedImage = image
+        customizationTask?.cancel()
+        
+        customizationTask = Task {
+            do {
+                try await dropZoneViewModel.image.updateCustomization(customizations: dropZoneViewModel.customizations)
+            } catch {
+                print("task canceled")
+            }
+            
+        }
     }
     
     public func apply(action: ToolbarView.ToolbarViewDomain.Action) {
@@ -66,6 +123,19 @@ final class HomeViewModel: ObservableObject {
         case .webResources:
             tools = .webResources
         }
+    }
+    
+    private func addPublishers() {
+        toolsColorsViewModel.$selectedColor
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] color in
+                self?.apply(color: color)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func removePublishers() {
+        cancellables.removeAll()
     }
     
     private lazy var toolsColorsViewModel: ToolsColorsViewModel = .init()
@@ -103,24 +173,27 @@ final class HomeViewModel: ObservableObject {
         print("Set state to: \(state)")
         self?.customizingActionViewModel.update(state: state)
     }
-
-    private lazy var dropZone: DropZoneView = DropZoneView()
     
     @ViewBuilder
     func iconFolderView() -> some View {
-        dropZone
+        DropZoneView()
             .environmentObject(dropZoneViewModel)
             .padding(8)
-            .frame(width: 236, height: 236)
+            .frame(width: width, height: width)
+            .modifier(Shake(animatableData: CGFloat(wrongAttempt)))
     }
+    
+    private lazy var appliedStylesViewModel: AppliedStylesViewModel = .init()
     
     @ViewBuilder
     func appliedStylesView() -> some View {
-        RoundedRectangle(cornerSize: CGSize(width: 20, height: 10))
-            .fill(Color.red)
+        AppliedStylesView()
+            .environmentObject(appliedStylesViewModel)
+            .frame(maxWidth: .infinity)
     }
     
     private lazy var customizingActionViewModel: CustomizingActionViewModel = .init()
+    
     @ViewBuilder
     func customizeFolderView() -> some View {
         CustomizingActionView()

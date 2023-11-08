@@ -63,24 +63,6 @@ final class ImageDto: ObservableObject {
     
     private(set) var i512x2: NSImage = .init()
     
-    @ViewBuilder
-    var preview: some View {
-        switch state {
-        case .none:
-            EmptyView()
-        case .ready, .preview:
-            Image(nsImage: o256)
-                .resizable()
-        case .processing:
-            Image(nsImage: o256)
-                .resizable()
-            ProgressView()
-                .progressViewStyle(.circular)
-        case .error:
-            EmptyView()
-        }
-    }
-    
     private(set) var url: URL?
     
     @Published private(set) var state: ImageState = .none
@@ -101,11 +83,15 @@ final class ImageDto: ObservableObject {
         url != nil && state == .ready
     }
     
+    private(set) var customizations: ImageCustomizationDto
+    
     convenience init() {
-        self.init(url: nil, image: .init())
+        self.init(url: nil, image: .init(), customizations: .init())
     }
     
-    init(url: URL? = nil, image: NSImage) {
+    init(url: URL? = nil, image: NSImage, customizations: ImageCustomizationDto) {
+        self.customizations = customizations
+        
         if image.isValid {
             Task {
                 await updateOriginal(url: url, image: image)
@@ -115,6 +101,56 @@ final class ImageDto: ObservableObject {
     
     func prepareForUpdate() {
         progressValue = 0
+    }
+    
+    func updateCustomization(customizations: ImageCustomizationDto) async throws {
+        
+        self.customizations = customizations
+        
+        let delay: useconds_t = 500000 //1000000 = 1s
+        
+        i128x2 = await customizations.update(image: o128x2)
+        i256 = i128x2
+        state = .preview
+        progressValue = 20
+        try Task.checkCancellation()
+        usleep(delay)
+        
+        i16 = await customizations.update(image: o16)
+        progressValue = 30
+        try Task.checkCancellation()
+        usleep(delay)
+        
+        i16x2 = await customizations.update(image: o16x2)
+        i32 = i16x2
+        progressValue = 40
+        try Task.checkCancellation()
+        usleep(delay)
+        
+        i32x2 = await customizations.update(image: o32x2)
+        progressValue = 50
+        try Task.checkCancellation()
+        usleep(delay)
+        
+        i128 = await customizations.update(image: o128)
+        progressValue = 60
+        try Task.checkCancellation()
+        usleep(delay)
+        
+        i256x2 = await customizations.update(image: o256x2)
+        i512 = i256x2
+        progressValue = 80
+        try Task.checkCancellation()
+        usleep(delay)
+        
+        i512x2 = await customizations.update(image: o512x2)
+        progressValue = 100
+        try Task.checkCancellation()
+        usleep(delay)
+        
+        state = .ready
+        try Task.checkCancellation()
+        usleep(delay)
     }
     
     func updateOriginal(url: URL?, image: NSImage) async {
@@ -133,8 +169,8 @@ final class ImageDto: ObservableObject {
             o128x2 = .init()
             o256 = .init()
         }
-        i128x2 = o128x2
-        i256 = o256
+        i128x2 = await customizations.update(image: o128x2)
+        i256 = i128x2
         state = .preview
         progressValue = 20
         
@@ -146,7 +182,7 @@ final class ImageDto: ObservableObject {
         } else {
             o16 = .init()
         }
-        i16 = o16
+        i16 = await customizations.update(image: o16)
         progressValue = 30
         usleep(delay)
         
@@ -158,8 +194,8 @@ final class ImageDto: ObservableObject {
             o16x2 = .init()
             o32 = .init()
         }
-        i16x2 = o16x2
-        i32 = o32
+        i16x2 = await customizations.update(image: o16x2)
+        i32 = i16x2
         progressValue = 40
         usleep(delay)
         
@@ -169,17 +205,17 @@ final class ImageDto: ObservableObject {
         } else {
             o32x2 = .init()
         }
-        i32x2 = o32x2
+        i32x2 = await customizations.update(image: o32x2)
         progressValue = 50
         usleep(delay)
         
         size = 128
         if let image = images.first(where: { $0.size.width == size }) {
-            o128 = NSImage(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: .init(width: size, height: size))
+            i128 = NSImage(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: .init(width: size, height: size))
         } else {
             o128 = .init()
         }
-        i128 = o128
+        i128 = await customizations.update(image: o128)
         progressValue = 60
         usleep(delay)
         
@@ -191,9 +227,8 @@ final class ImageDto: ObservableObject {
             o256x2 = .init()
             o512 = .init()
         }
-        i256x2 = o256x2
-        i512 = o512
-        
+        i256x2 = await customizations.update(image: o256x2)
+        i512 = i256x2
         progressValue = 80
         usleep(delay)
         
@@ -203,12 +238,35 @@ final class ImageDto: ObservableObject {
         } else {
             o512x2 = .init()
         }
-        i512x2 = o512x2
-        
+        i512x2 = await customizations.update(image: o512x2)
         progressValue = 100
         usleep(delay)
         
         state = .ready
         usleep(delay)
+    }
+    
+    @ViewBuilder
+    var preview: some View {
+        switch state {
+        case .none:
+            EmptyView()
+        case .ready, .preview:
+            Image(nsImage: o256)
+                .resizable()
+        case .processing(let progress):
+            if progress < 20 {
+                Image(nsImage: o256)
+                    .resizable()
+                    .blur(radius: 5.0)
+                ProgressView()
+                    .progressViewStyle(.circular)
+            } else {
+                Image(nsImage: o256)
+                    .resizable()
+            }
+        case .error:
+            EmptyView()
+        }
     }
 }

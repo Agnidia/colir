@@ -96,6 +96,11 @@
 		A5E115AD2AFA76650023A70C /* DropZoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115AC2AFA76650023A70C /* DropZoneView.swift */; };
 		A5E115AF2AFA7F770023A70C /* DropZoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115AE2AFA7F770023A70C /* DropZoneViewModel.swift */; };
 		A5E115B22AFA9C060023A70C /* PrimaryProgressViewStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115B12AFA9C060023A70C /* PrimaryProgressViewStyle.swift */; };
+		A5E115B52AFAAE940023A70C /* AppliedStylesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115B42AFAAE940023A70C /* AppliedStylesView.swift */; };
+		A5E115B72AFAAEA90023A70C /* AppliedStylesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115B62AFAAEA90023A70C /* AppliedStylesViewModel.swift */; };
+		A5E115B92AFAAEB10023A70C /* AppliedStylesViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115B82AFAAEB10023A70C /* AppliedStylesViewDomain.swift */; };
+		A5E115BC2AFAAF840023A70C /* ImageCustomizationDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115BB2AFAAF840023A70C /* ImageCustomizationDto.swift */; };
+		A5E115BF2AFACFD40023A70C /* ShakeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115BE2AFACFD40023A70C /* ShakeModifier.swift */; };
 		A5E860F02AA635AE00D2293B /* ToolsEmojisViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860EF2AA635AE00D2293B /* ToolsEmojisViewModel.swift */; };
 		A5E860F32AA635DF00D2293B /* EmojisManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860F22AA635DF00D2293B /* EmojisManager.swift */; };
 		A5E860F52AA6508900D2293B /* String+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860F42AA6508900D2293B /* String+Emoji.swift */; };
@@ -264,6 +269,11 @@
 		A5E115AC2AFA76650023A70C /* DropZoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneView.swift; sourceTree = "<group>"; };
 		A5E115AE2AFA7F770023A70C /* DropZoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneViewModel.swift; sourceTree = "<group>"; };
 		A5E115B12AFA9C060023A70C /* PrimaryProgressViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryProgressViewStyle.swift; sourceTree = "<group>"; };
+		A5E115B42AFAAE940023A70C /* AppliedStylesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppliedStylesView.swift; sourceTree = "<group>"; };
+		A5E115B62AFAAEA90023A70C /* AppliedStylesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppliedStylesViewModel.swift; sourceTree = "<group>"; };
+		A5E115B82AFAAEB10023A70C /* AppliedStylesViewDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppliedStylesViewDomain.swift; sourceTree = "<group>"; };
+		A5E115BB2AFAAF840023A70C /* ImageCustomizationDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCustomizationDto.swift; sourceTree = "<group>"; };
+		A5E115BE2AFACFD40023A70C /* ShakeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeModifier.swift; sourceTree = "<group>"; };
 		A5E860EF2AA635AE00D2293B /* ToolsEmojisViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsEmojisViewModel.swift; sourceTree = "<group>"; };
 		A5E860F22AA635DF00D2293B /* EmojisManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojisManager.swift; sourceTree = "<group>"; };
 		A5E860F42AA6508900D2293B /* String+Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Emoji.swift"; sourceTree = "<group>"; };
@@ -374,6 +384,7 @@
 		A504B88B2A6D4434002A2C8B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A5E115BD2AFACFB90023A70C /* Modifiers */,
 				A515FF162AF6EE93000F0C3B /* VisualEffect */,
 				A50AF9602AF676DA000C18AB /* DropFolderView */,
 				A5A00D852AEF0CB40063FE06 /* Styles */,
@@ -398,7 +409,6 @@
 			children = (
 				A504B8902A6D4503002A2C8B /* AppSettings.swift */,
 				A5E860F62AA6787000D2293B /* EmojiSkinDto.swift */,
-				A515FF122AF6D02B000F0C3B /* ImageDto.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -424,6 +434,7 @@
 		A504B8A12A6F05D5002A2C8B /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				A5E115B32AFAAE860023A70C /* AppliedStyles */,
 				A515FF092AF6CBD0000F0C3B /* CustomazingAction */,
 				A5CFFDF42AA12B4500D6E7A9 /* Tools */,
 				A5F5CDFA2A6D2BFB008AF959 /* HomeView.swift */,
@@ -436,6 +447,7 @@
 		A50AF9602AF676DA000C18AB /* DropFolderView */ = {
 			isa = PBXGroup;
 			children = (
+				A5E115BA2AFAAF6C0023A70C /* Models */,
 				A50AF9612AF67704000C18AB /* DropZoneNSView+SwiftUI.swift */,
 				A50AF9632AF67749000C18AB /* DropZoneNSView.swift */,
 				A50AF9652AF67776000C18AB /* DropZoneViewProtocol.swift */,
@@ -773,6 +785,33 @@
 			path = Progress;
 			sourceTree = "<group>";
 		};
+		A5E115B32AFAAE860023A70C /* AppliedStyles */ = {
+			isa = PBXGroup;
+			children = (
+				A5E115B42AFAAE940023A70C /* AppliedStylesView.swift */,
+				A5E115B62AFAAEA90023A70C /* AppliedStylesViewModel.swift */,
+				A5E115B82AFAAEB10023A70C /* AppliedStylesViewDomain.swift */,
+			);
+			path = AppliedStyles;
+			sourceTree = "<group>";
+		};
+		A5E115BA2AFAAF6C0023A70C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A515FF122AF6D02B000F0C3B /* ImageDto.swift */,
+				A5E115BB2AFAAF840023A70C /* ImageCustomizationDto.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A5E115BD2AFACFB90023A70C /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				A5E115BE2AFACFD40023A70C /* ShakeModifier.swift */,
+			);
+			path = Modifiers;
+			sourceTree = "<group>";
+		};
 		A5E860EE2AA634F600D2293B /* Emojis */ = {
 			isa = PBXGroup;
 			children = (
@@ -1027,6 +1066,7 @@
 				A504B89E2A6D9202002A2C8B /* ToolbarViewModel.swift in Sources */,
 				A5E860F52AA6508900D2293B /* String+Emoji.swift in Sources */,
 				A5BF05E02AD1CAFB00A86904 /* ToolsPicturesView.swift in Sources */,
+				A5E115B72AFAAEA90023A70C /* AppliedStylesViewModel.swift in Sources */,
 				A504B8A02A6F05CD002A2C8B /* HomeViewModel.swift in Sources */,
 				A5BF05F82AD293F400A86904 /* ToolsPhotosViewModel.swift in Sources */,
 				A5BA1D232A81816E0014E276 /* rle.cpp in Sources */,
@@ -1055,6 +1095,7 @@
 				A5BA1D2D2A81816E0014E276 /* extended.cpp in Sources */,
 				A5CFFDF82AA12BA100D6E7A9 /* ToolsPhotosView.swift in Sources */,
 				A5BA1D382A81832A0014E276 /* RSRCFileParser.swift in Sources */,
+				A5E115BC2AFAAF840023A70C /* ImageCustomizationDto.swift in Sources */,
 				A5BA1D1B2A81816E0014E276 /* geometry.cpp in Sources */,
 				A5BA1D302A81816E0014E276 /* classic.cpp in Sources */,
 				A5CFFDFC2AA12C0D00D6E7A9 /* ToolsDecalsView.swift in Sources */,
@@ -1075,6 +1116,7 @@
 				A536DF172AD5A0F400B423EE /* PhotoAssetCollection.swift in Sources */,
 				A536DF152AD5A09700B423EE /* PhotoLibraryAlbumManager.swift in Sources */,
 				A5BA1D2B2A81816E0014E276 /* macroman.cpp in Sources */,
+				A5E115B92AFAAEB10023A70C /* AppliedStylesViewDomain.swift in Sources */,
 				A5BA1D252A81816E0014E276 /* imagedesc.cpp in Sources */,
 				A5BF05FB2AD2946100A86904 /* PhotoLibraryAccessManager.swift in Sources */,
 				A515FF0D2AF6CC5D000F0C3B /* CustomizingActionViewModel.swift in Sources */,
@@ -1091,6 +1133,7 @@
 				A5BA1D2F2A81816E0014E276 /* file.cpp in Sources */,
 				A5BA1D292A81816E0014E276 /* string.cpp in Sources */,
 				A5FD59AE2ADBD935008503D3 /* WebResourcesView.swift in Sources */,
+				A5E115B52AFAAE940023A70C /* AppliedStylesView.swift in Sources */,
 				A5FD59B02ADBD942008503D3 /* WebResourcesViewModel.swift in Sources */,
 				A50AF9682AF67865000C18AB /* DropFolderViewConstants.swift in Sources */,
 				A504B8942A6D49D5002A2C8B /* AppCommons.swift in Sources */,
@@ -1100,6 +1143,7 @@
 				A515FF112AF6CD8E000F0C3B /* ToolsPhotosViewDomain.swift in Sources */,
 				A5BA1D1E2A81816E0014E276 /* color.cpp in Sources */,
 				A5E860F72AA6787000D2293B /* EmojiSkinDto.swift in Sources */,
+				A5E115BF2AFACFD40023A70C /* ShakeModifier.swift in Sources */,
 				A515FF082AF6CA9B000F0C3B /* AccentButtonStyle.swift in Sources */,
 				A515FF1C2AF80BAB000F0C3B /* NSImage+Tint.swift in Sources */,
 				A5F5CDF92A6D2BFB008AF959 /* BaseApp.swift in Sources */,

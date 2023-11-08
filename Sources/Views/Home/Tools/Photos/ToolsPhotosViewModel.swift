@@ -19,7 +19,9 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
     
     private let logger: LogProtocol = Log(category: .toolsPhoto)
     
-    @Published var selectedImage: PhotoAsset? = nil
+    @Published var selectedAsset: PhotoAsset? = nil
+    
+    var selectedImage: NSImage? = nil
     
     @Published var isAuthorized: Bool = true
     
@@ -57,9 +59,9 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
             .cornerRadius(cellCornerRadius)
             .overlay(
                 ZStack(alignment: .bottomTrailing) {
-                    let isSelected = selectedImage == item
+                    let isSelected = selectedAsset == item
                     RoundedRectangle(cornerRadius: cellCornerRadius)
-                        .strokeBorder(isSelected ? Color.blue : Color.gray, lineWidth: isSelected ? 4 : 1)
+                        .strokeBorder(isSelected ? Color.selectedView : Color.gray, lineWidth: isSelected ? 4 : 1)
                     if isSelected {
                         Image(systemName: ToolsPhotosViewDomain.Icon.selection)
                             .symbolRenderingMode(.multicolor)
@@ -69,7 +71,24 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
                 }
             )
             .onTapGesture { [weak self] in
-                self?.selectedImage = item
+                if self?.selectedAsset == item {
+                    self?.selectedAsset = nil
+                } else {
+                    self?.selectedAsset = item
+                }
+                
+                if let selectedAsset = self?.selectedAsset, let imageSize = self?.imageSize, let cache = self?.photoLibraryAlbumManager.cache {
+                    
+                    Task {
+                        _ = await cache.requestImage(for: selectedAsset, targetSize: imageSize) { result in
+                            
+                            if let image = result?.image {
+                                print(image)
+                                //self?.selectedImage = image
+                            }
+                        }
+                    }
+                }
             }
     }
     

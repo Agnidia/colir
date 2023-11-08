@@ -17,6 +17,7 @@ final class DropZoneViewModel: ObservableObject {
     typealias UpdateStateClosure = (ImageDto.ImageState) -> ()
     
     @Published private(set) var image: ImageDto = .init()
+    @Published var customizations: ImageCustomizationDto = .init()
     @Published private var imageUpdateHack = false
     
     private var fileClosure: FilesClosure

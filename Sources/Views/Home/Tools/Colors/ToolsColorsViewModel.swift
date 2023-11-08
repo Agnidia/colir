@@ -9,10 +9,10 @@ import SwiftUI
 
 class ToolsColorsViewModel: ObservableObject {
     
-    @Published private var selectedColor: NSColor? = nil
+    @Published private(set) var selectedColor: NSColor? = nil
     
     var colorGroups: [String : [NSColor]] = NSColor.groupsByType
-        
+    
     private let cellWidth: CGFloat = 128
     private let cellHeight: CGFloat = 48
     
@@ -33,7 +33,7 @@ class ToolsColorsViewModel: ObservableObject {
             .overlay(
                 ZStack(alignment: .bottomTrailing) {
                     RoundedRectangle(cornerRadius: cellCornerRadius)
-                        .strokeBorder(selectedColor == color ? Color.blue : Color.clear, lineWidth: 4)
+                        .strokeBorder(selectedColor == color ? Color.selectedView : Color.clear, lineWidth: 4)
                     if selectedColor == color {
                         Image(systemName: "checkmark.circle.fill")
                             .symbolRenderingMode(.multicolor)
@@ -43,7 +43,11 @@ class ToolsColorsViewModel: ObservableObject {
                 }
             )
             .onTapGesture { [weak self] in
-                self?.selectedColor = color
+                if self?.selectedColor == color {
+                    self?.selectedColor = nil
+                } else {
+                    self?.selectedColor = color
+                }
             }
     }
 }

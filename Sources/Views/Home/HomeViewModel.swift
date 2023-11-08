@@ -89,7 +89,14 @@ final class HomeViewModel: ObservableObject {
             return
         }
         
-        dropZoneViewModel.customizations.selectedImage = image
+        var updateImage = image
+        
+        if let realImage = updateImage {
+            let picture = realImage.scaled(to: .init(width: 1024, height: 1024))
+            updateImage = picture.cutImage(by: .folderCenterFrame)
+        }
+        
+        dropZoneViewModel.customizations.selectedImage = updateImage
         customizationTask?.cancel()
         
         customizationTask = Task {
@@ -125,11 +132,30 @@ final class HomeViewModel: ObservableObject {
         }
     }
     
+    private var skipFirstSelectedColor = true
+    private var skipFirstSelectedImage = true
+    
     private func addPublishers() {
         toolsColorsViewModel.$selectedColor
             .receive(on: DispatchQueue.main)
             .sink { [weak self] color in
+                guard self?.skipFirstSelectedColor == false else {
+                    self?.skipFirstSelectedColor = false
+                    return
+                }
+                
                 self?.apply(color: color)
+            }
+            .store(in: &cancellables)
+        
+        toolsPhotosViewModel.$selectedImage
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] image in
+                guard self?.skipFirstSelectedImage == false else {
+                    self?.skipFirstSelectedImage = false
+                    return
+                }
+                self?.apply(image: image)
             }
             .store(in: &cancellables)
     }

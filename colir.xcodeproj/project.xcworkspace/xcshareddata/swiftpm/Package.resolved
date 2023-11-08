@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "dominantcolor",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/indragiek/DominantColor",
+      "state" : {
+        "revision" : "aadc3d48c1f7f8abc7d03561d42c19188b1d4625",
+        "version" : "0.2.2"
+      }
+    },
+    {
       "identity" : "swiftcommons",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/IGRSoft/SwiftCommons",

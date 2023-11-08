@@ -106,140 +106,151 @@ final class ImageDto: ObservableObject {
     func updateCustomization(customizations: ImageCustomizationDto) async throws {
         
         self.customizations = customizations
+                
+        let delay: useconds_t = 10000 //1000000 = 1s
+                        
+        i256 = await customizations.update(image: o256)
+        state = .preview
+        progressValue = 10
         
-        let delay: useconds_t = 500000 //1000000 = 1s
+        usleep(delay)
         
         i128x2 = await customizations.update(image: o128x2)
-        i256 = i128x2
-        state = .preview
         progressValue = 20
-        try Task.checkCancellation()
+        
         usleep(delay)
         
         i16 = await customizations.update(image: o16)
-        progressValue = 30
-        try Task.checkCancellation()
+        progressValue = 25
+        
         usleep(delay)
         
         i16x2 = await customizations.update(image: o16x2)
-        i32 = i16x2
+        progressValue = 30
+        
+        usleep(delay)
+        
+        i32 = await customizations.update(image: o32)
         progressValue = 40
-        try Task.checkCancellation()
+        
         usleep(delay)
         
         i32x2 = await customizations.update(image: o32x2)
         progressValue = 50
-        try Task.checkCancellation()
+        
         usleep(delay)
         
         i128 = await customizations.update(image: o128)
         progressValue = 60
-        try Task.checkCancellation()
+        
+        usleep(delay)
+        
+        i128x2 = await customizations.update(image: o128x2)
+        progressValue = 70
+        
         usleep(delay)
         
         i256x2 = await customizations.update(image: o256x2)
-        i512 = i256x2
         progressValue = 80
-        try Task.checkCancellation()
+        
+        usleep(delay)
+        
+        i512 = await customizations.update(image: o512)
+        progressValue = 90
+        
         usleep(delay)
         
         i512x2 = await customizations.update(image: o512x2)
         progressValue = 100
-        try Task.checkCancellation()
+        
         usleep(delay)
         
         state = .ready
-        try Task.checkCancellation()
         usleep(delay)
     }
     
     func updateOriginal(url: URL?, image: NSImage) async {
         
-        let delay: useconds_t = 500000 //1000000 = 1s
-        
         self.url = url
+        
+        func imageFor(size: CGFloat, pixel: any BinaryInteger, in images: [NSImageRep]) -> NSImage {
+            if let imageRep = images.first(where: { $0.size.width == size && $0.pixelsWide == pixel }), let cgImage = imageRep.cgImage(forProposedRect: nil, context: nil, hints: nil) {
+                return NSImage(cgImage: cgImage, size: .init(width: size, height: size))
+            } else {
+                assert(false, "wrong image for size: \(size), pixels: \(pixel)")
+                return .init()
+            }
+        }
+        
+        let delay: useconds_t = 10000 //1000000 = 1s
                 
         let images = image.representations
         
-        var size: CGFloat = 256
-        if let image = images.first(where: { $0.size.width == size }) {
-            o128x2 = NSImage(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: .init(width: size, height: size))
-            o256 = o128x2
-        } else {
-            o128x2 = .init()
-            o256 = .init()
-        }
-        i128x2 = await customizations.update(image: o128x2)
-        i256 = i128x2
+        o256 = imageFor(size: 256, pixel: 256, in: images)
+        i256 = await customizations.update(image: o256)
         state = .preview
+        progressValue = 10
+        
+        usleep(delay)
+        
+        o128x2 = imageFor(size: 128, pixel: 256, in: images)
+        i128x2 = await customizations.update(image: o128x2)
         progressValue = 20
         
         usleep(delay)
         
-        size = 16
-        if let image = images.first(where: { $0.size.width == size }) {
-            o16 = NSImage(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: .init(width: size, height: size))
-        } else {
-            o16 = .init()
-        }
+        o16 = imageFor(size: 16, pixel: 16, in: images)
         i16 = await customizations.update(image: o16)
-        progressValue = 30
+        progressValue = 25
+        
         usleep(delay)
         
-        size = 32
-        if let image = images.first(where: { $0.size.width == size }) {
-            o16x2 = NSImage(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: .init(width: size, height: size))
-            o32 = o16x2
-        } else {
-            o16x2 = .init()
-            o32 = .init()
-        }
+        o16x2 = imageFor(size: 16, pixel: 32, in: images)
         i16x2 = await customizations.update(image: o16x2)
-        i32 = i16x2
-        progressValue = 40
+        progressValue = 30
+        
         usleep(delay)
         
-        size = 64
-        if let image = images.first(where: { $0.size.width == size }) {
-            o32x2 = NSImage(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: .init(width: size, height: size))
-        } else {
-            o32x2 = .init()
-        }
+        o32 = imageFor(size: 32, pixel: 32, in: images)
+        i32 = await customizations.update(image: o32)
+        progressValue = 40
+        
+        usleep(delay)
+        
+        o32x2 = imageFor(size: 32, pixel: 64, in: images)
         i32x2 = await customizations.update(image: o32x2)
         progressValue = 50
+        
         usleep(delay)
         
-        size = 128
-        if let image = images.first(where: { $0.size.width == size }) {
-            i128 = NSImage(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: .init(width: size, height: size))
-        } else {
-            o128 = .init()
-        }
+        o128 = imageFor(size: 128, pixel: 128, in: images)
         i128 = await customizations.update(image: o128)
         progressValue = 60
+        
         usleep(delay)
         
-        size = 512
-        if let image = images.first(where: { $0.size.width == size }) {
-            o256x2 = NSImage(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: .init(width: size, height: size))
-            o512 = o256x2
-        } else {
-            o256x2 = .init()
-            o512 = .init()
-        }
+        o128x2 = imageFor(size: 128, pixel: 256, in: images)
+        i128x2 = await customizations.update(image: o128x2)
+        progressValue = 70
+        
+        usleep(delay)
+        
+        o256x2 = imageFor(size: 256, pixel: 512, in: images)
         i256x2 = await customizations.update(image: o256x2)
-        i512 = i256x2
         progressValue = 80
+        
         usleep(delay)
         
-        size = 1024
-        if let image = images.first(where: { $0.size.width == size }) {
-            o512x2 = NSImage(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: .init(width: size, height: size))
-        } else {
-            o512x2 = .init()
-        }
+        o512 = imageFor(size: 512, pixel: 512, in: images)
+        i512 = await customizations.update(image: o512)
+        progressValue = 90
+        
+        usleep(delay)
+        
+        o512x2 = imageFor(size: 512, pixel: 1024, in: images)
         i512x2 = await customizations.update(image: o512x2)
         progressValue = 100
+        
         usleep(delay)
         
         state = .ready
@@ -252,17 +263,17 @@ final class ImageDto: ObservableObject {
         case .none:
             EmptyView()
         case .ready, .preview:
-            Image(nsImage: o256)
+            Image(nsImage: i256)
                 .resizable()
         case .processing(let progress):
             if progress < 20 {
-                Image(nsImage: o256)
+                Image(nsImage: i256)
                     .resizable()
                     .blur(radius: 5.0)
                 ProgressView()
                     .progressViewStyle(.circular)
             } else {
-                Image(nsImage: o256)
+                Image(nsImage: i256)
                     .resizable()
             }
         case .error:

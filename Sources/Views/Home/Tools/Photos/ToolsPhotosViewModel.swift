@@ -20,9 +20,8 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
     private let logger: LogProtocol = Log(category: .toolsPhoto)
     
     @Published var selectedAsset: PhotoAsset? = nil
-    
-    var selectedImage: NSImage? = nil
-    
+    @Published private(set) var selectedImage: NSImage? = nil
+        
     @Published var isAuthorized: Bool = true
     
     private let photosAppManager: PhotoLibraryAccessManagerProtocol
@@ -79,12 +78,15 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
                 
                 if let selectedAsset = self?.selectedAsset, let imageSize = self?.imageSize, let cache = self?.photoLibraryAlbumManager.cache {
                     
+                    guard let self = self else { return }
+                    
                     Task {
                         _ = await cache.requestImage(for: selectedAsset, targetSize: imageSize) { result in
                             
                             if let image = result?.image {
-                                print(image)
-                                //self?.selectedImage = image
+                                Task { @MainActor in
+                                    self.selectedImage = image
+                                }
                             }
                         }
                     }

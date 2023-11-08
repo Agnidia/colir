@@ -101,6 +101,11 @@
 		A5E115B92AFAAEB10023A70C /* AppliedStylesViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115B82AFAAEB10023A70C /* AppliedStylesViewDomain.swift */; };
 		A5E115BC2AFAAF840023A70C /* ImageCustomizationDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115BB2AFAAF840023A70C /* ImageCustomizationDto.swift */; };
 		A5E115BF2AFACFD40023A70C /* ShakeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115BE2AFACFD40023A70C /* ShakeModifier.swift */; };
+		A5E115C52AFBDBB50023A70C /* DominantColor in Frameworks */ = {isa = PBXBuildFile; productRef = A5E115C42AFBDBB50023A70C /* DominantColor */; };
+		A5E115C72AFBFB140023A70C /* NSImage+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115C62AFBFB140023A70C /* NSImage+Scale.swift */; };
+		A5E115C92AFBFEFC0023A70C /* NSImage+Draw.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115C82AFBFEFC0023A70C /* NSImage+Draw.swift */; };
+		A5E115E82AFC10190023A70C /* NSBezierPath+Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115E72AFC10190023A70C /* NSBezierPath+Folder.swift */; };
+		A5E115EA2AFC105B0023A70C /* NSImage+CutPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115E92AFC105B0023A70C /* NSImage+CutPath.swift */; };
 		A5E860F02AA635AE00D2293B /* ToolsEmojisViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860EF2AA635AE00D2293B /* ToolsEmojisViewModel.swift */; };
 		A5E860F32AA635DF00D2293B /* EmojisManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860F22AA635DF00D2293B /* EmojisManager.swift */; };
 		A5E860F52AA6508900D2293B /* String+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860F42AA6508900D2293B /* String+Emoji.swift */; };
@@ -274,6 +279,10 @@
 		A5E115B82AFAAEB10023A70C /* AppliedStylesViewDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppliedStylesViewDomain.swift; sourceTree = "<group>"; };
 		A5E115BB2AFAAF840023A70C /* ImageCustomizationDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCustomizationDto.swift; sourceTree = "<group>"; };
 		A5E115BE2AFACFD40023A70C /* ShakeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeModifier.swift; sourceTree = "<group>"; };
+		A5E115C62AFBFB140023A70C /* NSImage+Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Scale.swift"; sourceTree = "<group>"; };
+		A5E115C82AFBFEFC0023A70C /* NSImage+Draw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Draw.swift"; sourceTree = "<group>"; };
+		A5E115E72AFC10190023A70C /* NSBezierPath+Folder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+Folder.swift"; sourceTree = "<group>"; };
+		A5E115E92AFC105B0023A70C /* NSImage+CutPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+CutPath.swift"; sourceTree = "<group>"; };
 		A5E860EF2AA635AE00D2293B /* ToolsEmojisViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsEmojisViewModel.swift; sourceTree = "<group>"; };
 		A5E860F22AA635DF00D2293B /* EmojisManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojisManager.swift; sourceTree = "<group>"; };
 		A5E860F42AA6508900D2293B /* String+Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Emoji.swift"; sourceTree = "<group>"; };
@@ -298,6 +307,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5E115C52AFBDBB50023A70C /* DominantColor in Frameworks */,
 				A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */,
 				A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */,
 			);
@@ -752,12 +762,16 @@
 		A5CFFDEF2AA1190D00D6E7A9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				A515FF192AF80B94000F0C3B /* NSImage+Alpha.swift */,
-				A515FF1B2AF80BAB000F0C3B /* NSImage+Tint.swift */,
-				A515FF142AF6D821000F0C3B /* NSImage+Data.swift */,
-				A5E860F42AA6508900D2293B /* String+Emoji.swift */,
+				A5E115E72AFC10190023A70C /* NSBezierPath+Folder.swift */,
 				A5B68E502AB8DA08003C5FFA /* NSColor+List.swift */,
+				A515FF192AF80B94000F0C3B /* NSImage+Alpha.swift */,
+				A515FF142AF6D821000F0C3B /* NSImage+Data.swift */,
+				A5E115C82AFBFEFC0023A70C /* NSImage+Draw.swift */,
+				A5E115C62AFBFB140023A70C /* NSImage+Scale.swift */,
+				A515FF1B2AF80BAB000F0C3B /* NSImage+Tint.swift */,
 				A515FF1D2AF80BC6000F0C3B /* RGBA32.swift */,
+				A5E860F42AA6508900D2293B /* String+Emoji.swift */,
+				A5E115E92AFC105B0023A70C /* NSImage+CutPath.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -937,6 +951,7 @@
 			packageProductDependencies = (
 				A5A00D7E2AEEFA8D0063FE06 /* SwiftCommons */,
 				A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */,
+				A5E115C42AFBDBB50023A70C /* DominantColor */,
 			);
 			productName = colir;
 			productReference = A5F5CDF52A6D2BFB008AF959 /* colir.app */;
@@ -1015,6 +1030,7 @@
 			packageReferences = (
 				A5A00D7D2AEEFA8D0063FE06 /* XCRemoteSwiftPackageReference "SwiftCommons" */,
 				A5A00D802AEEFC7E0063FE06 /* XCRemoteSwiftPackageReference "SystemSettingsAccess" */,
+				A5E115C32AFBDBB50023A70C /* XCRemoteSwiftPackageReference "DominantColor" */,
 			);
 			productRefGroup = A5F5CDF62A6D2BFB008AF959 /* Products */;
 			projectDirPath = "";
@@ -1061,6 +1077,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5BF05E52AD1D81900A86904 /* PictureItem.swift in Sources */,
+				A5E115C72AFBFB140023A70C /* NSImage+Scale.swift in Sources */,
 				A5BA1D222A81816E0014E276 /* pixmap.cpp in Sources */,
 				A5E860F02AA635AE00D2293B /* ToolsEmojisViewModel.swift in Sources */,
 				A504B89E2A6D9202002A2C8B /* ToolbarViewModel.swift in Sources */,
@@ -1131,13 +1148,16 @@
 				A515FF0B2AF6CBE6000F0C3B /* CustomizingActionView.swift in Sources */,
 				A5BA1D282A81816E0014E276 /* animation.cpp in Sources */,
 				A5BA1D2F2A81816E0014E276 /* file.cpp in Sources */,
+				A5E115EA2AFC105B0023A70C /* NSImage+CutPath.swift in Sources */,
 				A5BA1D292A81816E0014E276 /* string.cpp in Sources */,
+				A5E115C92AFBFEFC0023A70C /* NSImage+Draw.swift in Sources */,
 				A5FD59AE2ADBD935008503D3 /* WebResourcesView.swift in Sources */,
 				A5E115B52AFAAE940023A70C /* AppliedStylesView.swift in Sources */,
 				A5FD59B02ADBD942008503D3 /* WebResourcesViewModel.swift in Sources */,
 				A50AF9682AF67865000C18AB /* DropFolderViewConstants.swift in Sources */,
 				A504B8942A6D49D5002A2C8B /* AppCommons.swift in Sources */,
 				A515FF232AF82992000F0C3B /* HomeViewDomain.swift in Sources */,
+				A5E115E82AFC10190023A70C /* NSBezierPath+Folder.swift in Sources */,
 				A504B8912A6D4503002A2C8B /* AppSettings.swift in Sources */,
 				A536DF192AD5C92600B423EE /* ToolsPhotosItemView.swift in Sources */,
 				A515FF112AF6CD8E000F0C3B /* ToolsPhotosViewDomain.swift in Sources */,
@@ -1334,6 +1354,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		A5E115C32AFBDBB50023A70C /* XCRemoteSwiftPackageReference "DominantColor" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/indragiek/DominantColor";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1346,6 +1374,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A5A00D802AEEFC7E0063FE06 /* XCRemoteSwiftPackageReference "SystemSettingsAccess" */;
 			productName = SystemSettingsAccess;
+		};
+		A5E115C42AFBDBB50023A70C /* DominantColor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5E115C32AFBDBB50023A70C /* XCRemoteSwiftPackageReference "DominantColor" */;
+			productName = DominantColor;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -23,6 +23,8 @@ final class HomeViewModel: ObservableObject {
     
     @Published private(set) var undoManager: UndoManager
     
+    let picturesFolderManager: PicturesFolderManagerProtocol
+    
     private var appSettings: AppSettingsProtocol
     
     private lazy var rsrcFileParser = RSRCFileParser()
@@ -51,9 +53,17 @@ final class HomeViewModel: ObservableObject {
          tools: Tools = .colors) {
         self.undoManager = undoManager
         self.appSettings = appSettings
+        self.picturesFolderManager = PicturesFolderManager(picturesDirectory: appSettings.userPicturesPath)
+        #if DEBUG
+        self.foldersUrls = [picturesFolderManager.picturesDirectory]
+        #else
         self.foldersUrls = foldersUrls
+        #endif
+        
         self.folderImage = folderImage
         self.tools = tools
+        
+        self.setupFolders(from: self.foldersUrls)
         
         addPublishers()
     }
@@ -105,7 +115,6 @@ final class HomeViewModel: ObservableObject {
             } catch {
                 print("task canceled")
             }
-            
         }
     }
     
@@ -133,6 +142,7 @@ final class HomeViewModel: ObservableObject {
     }
     
     private var skipFirstSelectedColor = true
+    private var skipFirstSelectedPhoto = true
     private var skipFirstSelectedImage = true
     
     private func addPublishers() {
@@ -151,11 +161,32 @@ final class HomeViewModel: ObservableObject {
         toolsPhotosViewModel.$selectedImage
             .receive(on: DispatchQueue.main)
             .sink { [weak self] image in
+                guard self?.skipFirstSelectedPhoto == false else {
+                    self?.skipFirstSelectedPhoto = false
+                    return
+                }
+                if self?.toolsPicturesViewModel.selectedImage != nil {
+                    self?.toolsPicturesViewModel.selectedImage = nil
+                }
+                
+                self?.apply(image: image)
+            }
+            .store(in: &cancellables)
+        
+        toolsPicturesViewModel.$selectedImage
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] image in
                 guard self?.skipFirstSelectedImage == false else {
                     self?.skipFirstSelectedImage = false
                     return
                 }
-                self?.apply(image: image)
+                
+                if self?.toolsPhotosViewModel.selectedImage != nil {
+                    self?.toolsPhotosViewModel.selectedImage = nil
+                }
+                
+                self?.apply(image: image?.image)
+                
             }
             .store(in: &cancellables)
     }
@@ -167,7 +198,7 @@ final class HomeViewModel: ObservableObject {
     private lazy var toolsColorsViewModel: ToolsColorsViewModel = .init()
     private lazy var toolsPhotosViewModel: ToolsPhotosViewModel = .init()
     private lazy var toolsEmojisViewModel: ToolsEmojisViewModel = .init()
-    private lazy var toolsPicturesViewModel: ToolsPicturesViewModel = .init(appSettings: appSettings)
+    private lazy var toolsPicturesViewModel: ToolsPicturesViewModel = .init(appSettings: appSettings, picturesFolderManager: picturesFolderManager)
     private lazy var webResourcesViewModel: WebResourcesViewModel = .init()
     
     @ViewBuilder

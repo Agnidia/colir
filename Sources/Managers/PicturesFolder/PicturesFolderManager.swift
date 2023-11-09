@@ -10,6 +10,8 @@ import AppKit
 /// A protocol that defines methods for managing images in the "Pictures" folder.
 protocol PicturesFolderManagerProtocol {
     
+    var picturesDirectory: URL { get }
+    
     /// Reads and returns an array of NSImage objects from the "Pictures" folder.
     ///
     /// - Returns: An array of NSImage objects representing images found in the "Pictures" folder.
@@ -19,7 +21,7 @@ protocol PicturesFolderManagerProtocol {
 
 class PicturesFolderManager: PicturesFolderManagerProtocol {
     
-    private let picturesDirectory: URL
+    let picturesDirectory: URL
     
     private let supportedTypes: [String] = ["jpg", "jpeg", "png", "gif", "bmp"]
     

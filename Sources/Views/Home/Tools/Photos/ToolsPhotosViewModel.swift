@@ -20,7 +20,15 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
     private let logger: LogProtocol = Log(category: .toolsPhoto)
     
     @Published var selectedAsset: PhotoAsset? = nil
-    @Published private(set) var selectedImage: NSImage? = nil
+    
+    //TODO: set it private(set)
+    @Published var selectedImage: NSImage? = nil {
+        didSet {
+            if selectedImage == nil {
+                selectedAsset = nil
+            }
+        }
+    }
         
     @Published var isAuthorized: Bool = true
     
@@ -90,6 +98,8 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
                             }
                         }
                     }
+                } else {
+                    self?.selectedImage = nil
                 }
             }
     }

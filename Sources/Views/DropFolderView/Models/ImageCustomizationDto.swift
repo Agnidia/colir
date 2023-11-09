@@ -44,6 +44,13 @@ class ImageCustomizationDto {
     }
     
     private func update(image: NSImage, with img: NSImage) -> NSImage {
-        image.draw(image: img)
+        var point: CGPoint = .zero
+        
+        // magic offset for small images
+        if img.size.width < 255 {
+            point = .init(x: .zero, y: -1)
+        }
+        
+        return image.draw(image: img, at: point)
     }
 }

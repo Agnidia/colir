@@ -12,7 +12,8 @@ class ToolsPicturesViewModel: ObservableObject {
     
     @Published var images: [PictureItem] = .init()
     
-    @Published private var selectedImage: PictureItem? = nil
+    //TODO: set it private(set)
+    @Published var selectedImage: PictureItem? = nil
     
     private let picturesFolderManager: PicturesFolderManagerProtocol
     
@@ -27,9 +28,9 @@ class ToolsPicturesViewModel: ObservableObject {
     
     private let cellCornerRadius: CGFloat = 8
     
-    init(appSettings: AppSettingsProtocol) {
+    init(appSettings: AppSettingsProtocol, picturesFolderManager: PicturesFolderManagerProtocol) {
         self.picturesFolderPath = appSettings.userPicturesPath
-        self.picturesFolderManager = PicturesFolderManager(picturesDirectory: appSettings.userPicturesPath)
+        self.picturesFolderManager = picturesFolderManager
         self.appSettings = appSettings
     }
     
@@ -59,7 +60,11 @@ class ToolsPicturesViewModel: ObservableObject {
                 }
             )
             .onTapGesture { [weak self] in
-                self?.selectedImage = item
+                if self?.selectedImage == item {
+                    self?.selectedImage = nil
+                } else {
+                    self?.selectedImage = item
+                }
             }
     }
     
@@ -104,5 +109,5 @@ class ToolsPicturesViewModel: ObservableObject {
 }
 
 extension ToolsPicturesViewModel {
-    static var preview: ToolsPicturesViewModel = .init(appSettings: AppSettings.preview)
+    static var preview: ToolsPicturesViewModel = .init(appSettings: AppSettings.preview, picturesFolderManager: PicturesFolderManager(picturesDirectory: URL(string: "")!))
 }

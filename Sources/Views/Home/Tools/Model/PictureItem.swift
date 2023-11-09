@@ -16,3 +16,9 @@ struct PictureItem: Identifiable, Hashable {
     
     let image: NSImage
 }
+
+extension PictureItem: Equatable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.name == rhs.name && lhs.tags == rhs.tags
+    }
+}

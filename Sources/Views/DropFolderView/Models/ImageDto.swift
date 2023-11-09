@@ -106,67 +106,42 @@ final class ImageDto: ObservableObject {
     func updateCustomization(customizations: ImageCustomizationDto) async throws {
         
         self.customizations = customizations
-                
-        let delay: useconds_t = 10000 //1000000 = 1s
-                        
+                                        
         i256 = await customizations.update(image: o256)
         state = .preview
         progressValue = 10
         
-        usleep(delay)
-        
         i128x2 = await customizations.update(image: o128x2)
         progressValue = 20
-        
-        usleep(delay)
         
         i16 = await customizations.update(image: o16)
         progressValue = 25
         
-        usleep(delay)
-        
         i16x2 = await customizations.update(image: o16x2)
         progressValue = 30
-        
-        usleep(delay)
         
         i32 = await customizations.update(image: o32)
         progressValue = 40
         
-        usleep(delay)
-        
         i32x2 = await customizations.update(image: o32x2)
         progressValue = 50
-        
-        usleep(delay)
         
         i128 = await customizations.update(image: o128)
         progressValue = 60
         
-        usleep(delay)
-        
         i128x2 = await customizations.update(image: o128x2)
         progressValue = 70
-        
-        usleep(delay)
         
         i256x2 = await customizations.update(image: o256x2)
         progressValue = 80
         
-        usleep(delay)
-        
         i512 = await customizations.update(image: o512)
         progressValue = 90
-        
-        usleep(delay)
         
         i512x2 = await customizations.update(image: o512x2)
         progressValue = 100
         
-        usleep(delay)
-        
         state = .ready
-        usleep(delay)
     }
     
     func updateOriginal(url: URL?, image: NSImage) async {
@@ -181,9 +156,7 @@ final class ImageDto: ObservableObject {
                 return .init()
             }
         }
-        
-        let delay: useconds_t = 10000 //1000000 = 1s
-                
+                        
         let images = image.representations
         
         o256 = imageFor(size: 256, pixel: 256, in: images)
@@ -191,70 +164,47 @@ final class ImageDto: ObservableObject {
         state = .preview
         progressValue = 10
         
-        usleep(delay)
-        
         o128x2 = imageFor(size: 128, pixel: 256, in: images)
         i128x2 = await customizations.update(image: o128x2)
         progressValue = 20
-        
-        usleep(delay)
         
         o16 = imageFor(size: 16, pixel: 16, in: images)
         i16 = await customizations.update(image: o16)
         progressValue = 25
         
-        usleep(delay)
-        
         o16x2 = imageFor(size: 16, pixel: 32, in: images)
         i16x2 = await customizations.update(image: o16x2)
         progressValue = 30
-        
-        usleep(delay)
         
         o32 = imageFor(size: 32, pixel: 32, in: images)
         i32 = await customizations.update(image: o32)
         progressValue = 40
         
-        usleep(delay)
-        
         o32x2 = imageFor(size: 32, pixel: 64, in: images)
         i32x2 = await customizations.update(image: o32x2)
         progressValue = 50
-        
-        usleep(delay)
         
         o128 = imageFor(size: 128, pixel: 128, in: images)
         i128 = await customizations.update(image: o128)
         progressValue = 60
         
-        usleep(delay)
-        
         o128x2 = imageFor(size: 128, pixel: 256, in: images)
         i128x2 = await customizations.update(image: o128x2)
         progressValue = 70
-        
-        usleep(delay)
         
         o256x2 = imageFor(size: 256, pixel: 512, in: images)
         i256x2 = await customizations.update(image: o256x2)
         progressValue = 80
         
-        usleep(delay)
-        
         o512 = imageFor(size: 512, pixel: 512, in: images)
         i512 = await customizations.update(image: o512)
         progressValue = 90
-        
-        usleep(delay)
         
         o512x2 = imageFor(size: 512, pixel: 1024, in: images)
         i512x2 = await customizations.update(image: o512x2)
         progressValue = 100
         
-        usleep(delay)
-        
         state = .ready
-        usleep(delay)
     }
     
     @ViewBuilder

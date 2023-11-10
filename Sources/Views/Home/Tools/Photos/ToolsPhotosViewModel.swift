@@ -10,6 +10,7 @@ import SwiftUI
 import Photos
 import SystemSettingsAccess
 import SwiftCommons
+import Throttler
 
 class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
     
@@ -29,7 +30,7 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
             }
         }
     }
-        
+    
     @Published var isAuthorized: Bool = true
     
     private let photosAppManager: PhotoLibraryAccessManagerProtocol
@@ -38,10 +39,11 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
     
     var photoLibraryAlbumManager = PhotoLibraryAlbumManager(smartAlbum: .smartAlbumUserLibrary)
     
-    var imageSize = CGSize(width: 1024, height: 1024)
-    
     let cellWidth: CGFloat = 192
     let cellHeight: CGFloat = 128
+    
+    var imageSize = CGSize(width: 1024, height: 1024)
+    var thumbnailSize = CGSize(width: 512, height: 512)
     
     let cellCornerRadius: CGFloat = 8
     
@@ -61,7 +63,7 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
     
     @ViewBuilder
     func cell(for item: PhotoAsset) -> some View {
-        ToolsPhotosItemView(asset: item, cache: photoLibraryAlbumManager.cache, imageSize: imageSize)
+        ToolsPhotosItemView(asset: item, cache: photoLibraryAlbumManager.cache, imageSize: thumbnailSize)
             .frame(width: cellWidth, height: cellHeight)
             .cornerRadius(cellCornerRadius)
             .overlay(
@@ -93,7 +95,9 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
                             
                             if let image = result?.image {
                                 Task { @MainActor in
-                                    self.selectedImage = image
+                                    debounce(.milliseconds(100)) { [weak self] in
+                                        self?.selectedImage = image
+                                    }
                                 }
                             }
                         }

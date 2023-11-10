@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Throttler
 
 class ToolsPicturesViewModel: ObservableObject {
     private let picturesFolderPath: URL
@@ -18,6 +19,8 @@ class ToolsPicturesViewModel: ObservableObject {
     private let picturesFolderManager: PicturesFolderManagerProtocol
     
     private var appSettings: AppSettingsProtocol
+    
+    private var isFetching: Bool = false
     
     private lazy var fileAccessManager: FileAccessManagerProtocol = {
         FileAccessManager(with: appSettings.userPicturesPath, bookmarkData: appSettings.bookmarkData)
@@ -69,19 +72,39 @@ class ToolsPicturesViewModel: ObservableObject {
     }
     
     @Sendable
-    func fetchImages() async {
+    func fetchImages() {
+        debounce(.milliseconds(100)) { [weak self] in
+            Task { [weak self] in
+                await self?._fetchImages()
+            }
+        }
+    }
+    
+    private func _fetchImages() async {
         if appSettings.userPicturesPath.hasAccess {
+            guard isFetching == false else { return }
+            
+            isFetching = true
+            
             do {
                 let images = try await picturesFolderManager.readImages()
+                let pictures = images.map { PictureItem(name: $0.name, tags: [$0.name], image: $0.image) }
                 
-                DispatchQueue.main.async { [weak self] in
-                    self?.images = images.map({ PictureItem(name: $0.name, tags: [], image: $0.image) })
+                if self.images != pictures {
+                    Task { @MainActor [weak self] in
+                        self?.images.removeAll()
+                        debounce(.milliseconds(100)) { [weak self] in
+                            self?.images.append(contentsOf: pictures)
+                            
+                            self?.isFetching = false
+                        }
+                    }
                 }
             } catch {
                 print(error.localizedDescription)
             }
         } else {
-            DispatchQueue.main.async { [weak self] in
+            Task { @MainActor [weak self] in
                 self?.setupAccess()
             }
         }
@@ -95,9 +118,7 @@ class ToolsPicturesViewModel: ObservableObject {
             appSettings.bookmarkData = accessData.bookmark
             appSettings.userPicturesPath = accessData.path
             
-            Task {
-                await fetchImages()
-            }
+            fetchImages()
             
             //log.info("setup success")
         } catch {

@@ -21,3 +21,9 @@ struct PicturesFolderItem {
         }
     }
 }
+
+extension PicturesFolderItem: Equatable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.name == rhs.name
+    }
+}

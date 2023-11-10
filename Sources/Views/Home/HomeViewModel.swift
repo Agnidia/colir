@@ -145,6 +145,10 @@ final class HomeViewModel: ObservableObject {
     private var skipFirstSelectedPhoto = true
     private var skipFirstSelectedImage = true
     
+    private var isApplyingSelectedColor = false
+    private var isApplyingSelectedPhoto = false
+    private var isApplyingSelectedImage = false
+    
     private func addPublishers() {
         toolsColorsViewModel.$selectedColor
             .receive(on: DispatchQueue.main)
@@ -154,7 +158,9 @@ final class HomeViewModel: ObservableObject {
                     return
                 }
                 
+                self?.isApplyingSelectedColor = true
                 self?.apply(color: color)
+                self?.isApplyingSelectedColor = false
             }
             .store(in: &cancellables)
         
@@ -165,10 +171,14 @@ final class HomeViewModel: ObservableObject {
                     self?.skipFirstSelectedPhoto = false
                     return
                 }
-                if self?.toolsPicturesViewModel.selectedImage != nil {
-                    self?.toolsPicturesViewModel.selectedImage = nil
+                
+                guard self?.isApplyingSelectedImage == false else {
+                    self?.isApplyingSelectedImage = false
+                    return
                 }
                 
+                self?.isApplyingSelectedPhoto = true
+                self?.toolsPicturesViewModel.selectedImage = nil
                 self?.apply(image: image)
             }
             .store(in: &cancellables)
@@ -181,12 +191,14 @@ final class HomeViewModel: ObservableObject {
                     return
                 }
                 
-                if self?.toolsPhotosViewModel.selectedImage != nil {
-                    self?.toolsPhotosViewModel.selectedImage = nil
+                guard self?.isApplyingSelectedPhoto == false else {
+                    self?.isApplyingSelectedPhoto = false
+                    return
                 }
                 
+                self?.isApplyingSelectedImage = true
+                self?.toolsPhotosViewModel.selectedImage = nil
                 self?.apply(image: image?.image)
-                
             }
             .store(in: &cancellables)
     }

@@ -13,6 +13,9 @@ class ImageCustomizationDto {
     
     var selectedColor: NSColor? = nil
     
+    private let folderLines = NSImage(resource: .imgFolderLines)
+    private let folderBottomShadow = NSImage(resource: .imgFolderBottomShadow)
+    
     var selectedImage: NSImage? = nil
     
     func update(image: NSImage) async -> NSImage {
@@ -24,6 +27,12 @@ class ImageCustomizationDto {
         
         if let img = selectedImage?.scaled(to: image.size) {
             newImage = update(image: newImage, with: img)
+            
+            let lines = folderLines.scaled(to: image.size)
+            newImage = update(image: newImage, with: lines)
+            
+            let shadow = folderLines.scaled(to: image.size)
+            newImage = update(image: newImage, with: shadow)
         }
         
         return newImage

@@ -14,7 +14,7 @@ struct ToolsPhotosItemView: View {
     var cache: PhotoLibraryCacheManager
     var imageSize: CGSize
     
-    @State private var image: Image?
+    @State private(set) var image: Image?
     @State private var imageRequestID: PHImageRequestID?
     
     var body: some View {

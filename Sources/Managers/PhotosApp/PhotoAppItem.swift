@@ -22,3 +22,9 @@ struct PhotoAppItem {
         }
     }
 }
+
+extension PhotoAppItem: Equatable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.name == rhs.name
+    }
+}

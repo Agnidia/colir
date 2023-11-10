@@ -106,6 +106,7 @@
 		A5E115C92AFBFEFC0023A70C /* NSImage+Draw.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115C82AFBFEFC0023A70C /* NSImage+Draw.swift */; };
 		A5E115E82AFC10190023A70C /* NSBezierPath+Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115E72AFC10190023A70C /* NSBezierPath+Folder.swift */; };
 		A5E115EA2AFC105B0023A70C /* NSImage+CutPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115E92AFC105B0023A70C /* NSImage+CutPath.swift */; };
+		A5E115EF2AFEA7760023A70C /* Throttler in Frameworks */ = {isa = PBXBuildFile; productRef = A5E115EE2AFEA7760023A70C /* Throttler */; };
 		A5E860F02AA635AE00D2293B /* ToolsEmojisViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860EF2AA635AE00D2293B /* ToolsEmojisViewModel.swift */; };
 		A5E860F32AA635DF00D2293B /* EmojisManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860F22AA635DF00D2293B /* EmojisManager.swift */; };
 		A5E860F52AA6508900D2293B /* String+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860F42AA6508900D2293B /* String+Emoji.swift */; };
@@ -308,6 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5E115C52AFBDBB50023A70C /* DominantColor in Frameworks */,
+				A5E115EF2AFEA7760023A70C /* Throttler in Frameworks */,
 				A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */,
 				A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */,
 			);
@@ -952,6 +954,7 @@
 				A5A00D7E2AEEFA8D0063FE06 /* SwiftCommons */,
 				A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */,
 				A5E115C42AFBDBB50023A70C /* DominantColor */,
+				A5E115EE2AFEA7760023A70C /* Throttler */,
 			);
 			productName = colir;
 			productReference = A5F5CDF52A6D2BFB008AF959 /* colir.app */;
@@ -1031,6 +1034,7 @@
 				A5A00D7D2AEEFA8D0063FE06 /* XCRemoteSwiftPackageReference "SwiftCommons" */,
 				A5A00D802AEEFC7E0063FE06 /* XCRemoteSwiftPackageReference "SystemSettingsAccess" */,
 				A5E115C32AFBDBB50023A70C /* XCRemoteSwiftPackageReference "DominantColor" */,
+				A5E115ED2AFEA7760023A70C /* XCRemoteSwiftPackageReference "Throttler" */,
 			);
 			productRefGroup = A5F5CDF62A6D2BFB008AF959 /* Products */;
 			projectDirPath = "";
@@ -1362,6 +1366,14 @@
 				minimumVersion = 0.2.2;
 			};
 		};
+		A5E115ED2AFEA7760023A70C /* XCRemoteSwiftPackageReference "Throttler" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/boraseoksoon/Throttler.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1379,6 +1391,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A5E115C32AFBDBB50023A70C /* XCRemoteSwiftPackageReference "DominantColor" */;
 			productName = DominantColor;
+		};
+		A5E115EE2AFEA7760023A70C /* Throttler */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5E115ED2AFEA7760023A70C /* XCRemoteSwiftPackageReference "Throttler" */;
+			productName = Throttler;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

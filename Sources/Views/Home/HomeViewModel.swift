@@ -27,7 +27,13 @@ final class HomeViewModel: ObservableObject {
     
     private var appSettings: AppSettingsProtocol
     
+    private var exportIconManager: ExportIconManagerProtocol
+    
+    private var appStoreService: AppStoreProtocol
+    
     private lazy var rsrcFileParser = RSRCFileParser()
+    
+    private let log: LogProtocol
     
     private var foldersUrls: [URL]
     
@@ -48,12 +54,18 @@ final class HomeViewModel: ObservableObject {
     
     init(undoManager: UndoManager = .init(),
          appSettings: AppSettingsProtocol = AppSettings(),
+         appStoreService: AppStoreProtocol = AppStoreService(),
+         logger: LogProtocol = Log(category: .home),
          foldersUrls: [URL] = [],
          folderImage: NSImage? = nil,
          tools: Tools = .colors) {
         self.undoManager = undoManager
         self.appSettings = appSettings
+        self.appStoreService = appStoreService
         self.picturesFolderManager = PicturesFolderManager(picturesDirectory: appSettings.userPicturesPath)
+        self.exportIconManager = ExportIconManager(appSettings: appSettings, appStoreService: appStoreService)
+        self.log = logger
+        
         #if DEBUG
         self.foldersUrls = [picturesFolderManager.picturesDirectory]
         #else
@@ -66,6 +78,10 @@ final class HomeViewModel: ObservableObject {
         self.setupFolders(from: self.foldersUrls)
         
         addPublishers()
+        
+        Task {
+            await setupAppStoreService()
+        }
     }
     
     deinit {
@@ -261,13 +277,45 @@ final class HomeViewModel: ObservableObject {
             .frame(maxWidth: .infinity)
     }
     
-    private lazy var customizingActionViewModel: CustomizingActionViewModel = .init()
+    private lazy var customizingActionViewModel: CustomizingActionViewModel = .init(actionClosure: { [weak self] in
+        if self?.exportIconManager.canExport == true {
+        
+        } else {
+        self?.showingExportAlert.toggle()
+    }
+    })
+    
+    @Published private var showingExportAlert = false
+    @Published private var showingAppStoreSheet = false
+    
+    private lazy var appStoreViewModel: AppStoreViewModel = .init(appStoreService: appStoreService)
     
     @ViewBuilder
     func customizeFolderView() -> some View {
         CustomizingActionView()
             .environmentObject(customizingActionViewModel)
             .frame(maxWidth: .infinity)
+            .alert(isPresented: Binding<Bool>(
+                get: { self.showingExportAlert },
+                set: { newState in
+                    self.showingExportAlert = newState
+                }
+            )) {
+                Alert(title: Text("Alert"),
+                      message: Text("This is an alert!"),
+                      primaryButton: .default(Text("Purchase"), action: {
+                    self.showingAppStoreSheet.toggle()
+                }), secondaryButton: .cancel(Text("Cancel")))
+            }
+            .sheet(isPresented: Binding<Bool>(
+                get: { self.showingAppStoreSheet },
+                set: { newState in
+                    self.showingAppStoreSheet = newState
+                }
+            )) {
+                AppStoreView()
+                    .environmentObject(self.appStoreViewModel)
+            }
     }
     
     public func openFolder() {
@@ -330,10 +378,32 @@ final class HomeViewModel: ObservableObject {
         }
         folderImage = image
     }
+    
+    /// main setup of base objects
+    ///
+    func setupAppStoreService() async {
+        log.info("setup")
+        
+        do {
+            try await appStoreService.syncStoreData()
+            
+            let products = try await appStoreService.getProducts()
+            
+            log.info("fetched products: \(products.map({ "\($0.displayName): \($0.displayPrice)" }))")
+            
+            try await appStoreService.restorePurchases()
+            
+            let purchased = appStoreService.purchased()
+            
+            log.info("purchased products: \(String(describing: purchased.map({ "\($0)"} )))")
+        } catch {
+            log.info("products fetch error: \(error.localizedDescription)")
+        }
+    }
 }
 
 extension HomeViewModel {
     static var preview: HomeViewModel {
-        HomeViewModel()
+        HomeViewModel(appStoreService: AppStorePreview())
     }
 }

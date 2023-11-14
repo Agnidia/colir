@@ -107,6 +107,14 @@
 		A5E115E82AFC10190023A70C /* NSBezierPath+Folder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115E72AFC10190023A70C /* NSBezierPath+Folder.swift */; };
 		A5E115EA2AFC105B0023A70C /* NSImage+CutPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115E92AFC105B0023A70C /* NSImage+CutPath.swift */; };
 		A5E115EF2AFEA7760023A70C /* Throttler in Frameworks */ = {isa = PBXBuildFile; productRef = A5E115EE2AFEA7760023A70C /* Throttler */; };
+		A5E115F22AFFD6EA0023A70C /* AppStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115F12AFFD6EA0023A70C /* AppStoreService.swift */; };
+		A5E115F52AFFD70A0023A70C /* StoreKitPlus in Frameworks */ = {isa = PBXBuildFile; productRef = A5E115F42AFFD70A0023A70C /* StoreKitPlus */; };
+		A5E115F72B0001E20023A70C /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115F62B0001E20023A70C /* Application.swift */; };
+		A5E115FA2B00E6C60023A70C /* SecureDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = A5E115F92B00E6C60023A70C /* SecureDefaults */; };
+		A5E115FE2B014BC90023A70C /* ExportIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115FD2B014BC90023A70C /* ExportIconManager.swift */; };
+		A5E116012B0222B20023A70C /* AppStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E116002B0222B20023A70C /* AppStoreView.swift */; };
+		A5E116032B0222C10023A70C /* AppStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E116022B0222C10023A70C /* AppStoreViewModel.swift */; };
+		A5E116052B0222C70023A70C /* AppStoreViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E116042B0222C70023A70C /* AppStoreViewDomain.swift */; };
 		A5E860F02AA635AE00D2293B /* ToolsEmojisViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860EF2AA635AE00D2293B /* ToolsEmojisViewModel.swift */; };
 		A5E860F32AA635DF00D2293B /* EmojisManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860F22AA635DF00D2293B /* EmojisManager.swift */; };
 		A5E860F52AA6508900D2293B /* String+Emoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E860F42AA6508900D2293B /* String+Emoji.swift */; };
@@ -284,6 +292,12 @@
 		A5E115C82AFBFEFC0023A70C /* NSImage+Draw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Draw.swift"; sourceTree = "<group>"; };
 		A5E115E72AFC10190023A70C /* NSBezierPath+Folder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+Folder.swift"; sourceTree = "<group>"; };
 		A5E115E92AFC105B0023A70C /* NSImage+CutPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+CutPath.swift"; sourceTree = "<group>"; };
+		A5E115F12AFFD6EA0023A70C /* AppStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreService.swift; sourceTree = "<group>"; };
+		A5E115F62B0001E20023A70C /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
+		A5E115FD2B014BC90023A70C /* ExportIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportIconManager.swift; sourceTree = "<group>"; };
+		A5E116002B0222B20023A70C /* AppStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreView.swift; sourceTree = "<group>"; };
+		A5E116022B0222C10023A70C /* AppStoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreViewModel.swift; sourceTree = "<group>"; };
+		A5E116042B0222C70023A70C /* AppStoreViewDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreViewDomain.swift; sourceTree = "<group>"; };
 		A5E860EF2AA635AE00D2293B /* ToolsEmojisViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsEmojisViewModel.swift; sourceTree = "<group>"; };
 		A5E860F22AA635DF00D2293B /* EmojisManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojisManager.swift; sourceTree = "<group>"; };
 		A5E860F42AA6508900D2293B /* String+Emoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Emoji.swift"; sourceTree = "<group>"; };
@@ -311,7 +325,9 @@
 				A5E115C52AFBDBB50023A70C /* DominantColor in Frameworks */,
 				A5E115EF2AFEA7760023A70C /* Throttler in Frameworks */,
 				A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */,
+				A5E115F52AFFD70A0023A70C /* StoreKitPlus in Frameworks */,
 				A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */,
+				A5E115FA2B00E6C60023A70C /* SecureDefaults in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +405,7 @@
 			isa = PBXGroup;
 			children = (
 				A5F5CDF82A6D2BFB008AF959 /* BaseApp.swift */,
+				A5E115F62B0001E20023A70C /* Application.swift */,
 			);
 			path = AppDelegate;
 			sourceTree = "<group>";
@@ -396,6 +413,7 @@
 		A504B88B2A6D4434002A2C8B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A5E115FF2B0222A40023A70C /* AppStore */,
 				A5E115BD2AFACFB90023A70C /* Modifiers */,
 				A515FF162AF6EE93000F0C3B /* VisualEffect */,
 				A50AF9602AF676DA000C18AB /* DropFolderView */,
@@ -828,6 +846,40 @@
 			path = Modifiers;
 			sourceTree = "<group>";
 		};
+		A5E115F02AFFD6DC0023A70C /* AppStore */ = {
+			isa = PBXGroup;
+			children = (
+				A5E115F12AFFD6EA0023A70C /* AppStoreService.swift */,
+			);
+			path = AppStore;
+			sourceTree = "<group>";
+		};
+		A5E115FB2B0149250023A70C /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A5E115F02AFFD6DC0023A70C /* AppStore */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A5E115FC2B014BB60023A70C /* ExportManager */ = {
+			isa = PBXGroup;
+			children = (
+				A5E115FD2B014BC90023A70C /* ExportIconManager.swift */,
+			);
+			path = ExportManager;
+			sourceTree = "<group>";
+		};
+		A5E115FF2B0222A40023A70C /* AppStore */ = {
+			isa = PBXGroup;
+			children = (
+				A5E116002B0222B20023A70C /* AppStoreView.swift */,
+				A5E116022B0222C10023A70C /* AppStoreViewModel.swift */,
+				A5E116042B0222C70023A70C /* AppStoreViewDomain.swift */,
+			);
+			path = AppStore;
+			sourceTree = "<group>";
+		};
 		A5E860EE2AA634F600D2293B /* Emojis */ = {
 			isa = PBXGroup;
 			children = (
@@ -840,6 +892,7 @@
 		A5E860F12AA635C300D2293B /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				A5E115FC2B014BB60023A70C /* ExportManager */,
 				A515FF1F2AF80ECB000F0C3B /* IconManager */,
 				A5BF05F92AD2943D00A86904 /* PhotosApp */,
 				A5BF05EA2AD1E28800A86904 /* FileAccess */,
@@ -876,6 +929,7 @@
 		A5F5CDF72A6D2BFB008AF959 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				A5E115FB2B0149250023A70C /* Services */,
 				A5CFFDEF2AA1190D00D6E7A9 /* Extensions */,
 				A5BA1D362A8182FE0014E276 /* Parsers */,
 				A504B88C2A6D44EB002A2C8B /* Logger */,
@@ -955,6 +1009,8 @@
 				A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */,
 				A5E115C42AFBDBB50023A70C /* DominantColor */,
 				A5E115EE2AFEA7760023A70C /* Throttler */,
+				A5E115F42AFFD70A0023A70C /* StoreKitPlus */,
+				A5E115F92B00E6C60023A70C /* SecureDefaults */,
 			);
 			productName = colir;
 			productReference = A5F5CDF52A6D2BFB008AF959 /* colir.app */;
@@ -1035,6 +1091,8 @@
 				A5A00D802AEEFC7E0063FE06 /* XCRemoteSwiftPackageReference "SystemSettingsAccess" */,
 				A5E115C32AFBDBB50023A70C /* XCRemoteSwiftPackageReference "DominantColor" */,
 				A5E115ED2AFEA7760023A70C /* XCRemoteSwiftPackageReference "Throttler" */,
+				A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreKitPlus" */,
+				A5E115F82B00E6C60023A70C /* XCRemoteSwiftPackageReference "SecureDefaults" */,
 			);
 			productRefGroup = A5F5CDF62A6D2BFB008AF959 /* Products */;
 			projectDirPath = "";
@@ -1095,6 +1153,7 @@
 				A5BA1D272A81816E0014E276 /* raw.cpp in Sources */,
 				A5E115AF2AFA7F770023A70C /* DropZoneViewModel.swift in Sources */,
 				A5DA67902AD452E100B3E8C9 /* LogProtocol.swift in Sources */,
+				A5E115F72B0001E20023A70C /* Application.swift in Sources */,
 				A5E860F32AA635DF00D2293B /* EmojisManager.swift in Sources */,
 				A5B68E542AB8DBEC003C5FFA /* ToolsColorsViewModel.swift in Sources */,
 				A5CFFDFA2AA12BF200D6E7A9 /* ToolsEmojisView.swift in Sources */,
@@ -1116,6 +1175,7 @@
 				A5BA1D2D2A81816E0014E276 /* extended.cpp in Sources */,
 				A5CFFDF82AA12BA100D6E7A9 /* ToolsPhotosView.swift in Sources */,
 				A5BA1D382A81832A0014E276 /* RSRCFileParser.swift in Sources */,
+				A5E116052B0222C70023A70C /* AppStoreViewDomain.swift in Sources */,
 				A5E115BC2AFAAF840023A70C /* ImageCustomizationDto.swift in Sources */,
 				A5BA1D1B2A81816E0014E276 /* geometry.cpp in Sources */,
 				A5BA1D302A81816E0014E276 /* classic.cpp in Sources */,
@@ -1127,8 +1187,10 @@
 				A5A00D8A2AEF0CDE0063FE06 /* PrimaryButtonStyle.swift in Sources */,
 				A5E115B22AFA9C060023A70C /* PrimaryProgressViewStyle.swift in Sources */,
 				A504B88E2A6D44EB002A2C8B /* Logger.swift in Sources */,
+				A5E116032B0222C10023A70C /* AppStoreViewModel.swift in Sources */,
 				A5BF05FD2AD2954300A86904 /* PhotoAppItem.swift in Sources */,
 				A5BA1D262A81816E0014E276 /* planar.cpp in Sources */,
+				A5E115FE2B014BC90023A70C /* ExportIconManager.swift in Sources */,
 				A5BA1D1C2A81816E0014E276 /* clut.cpp in Sources */,
 				A515FF132AF6D02B000F0C3B /* ImageDto.swift in Sources */,
 				A5A00D842AEF011D0063FE06 /* PermissionsOverlayDomain.swift in Sources */,
@@ -1145,6 +1207,7 @@
 				A5FD59B52ADBDF48008503D3 /* PermissionsOverlayViewModel.swift in Sources */,
 				A5E115AD2AFA76650023A70C /* DropZoneView.swift in Sources */,
 				A5BA1D2C2A81816E0014E276 /* resource.cpp in Sources */,
+				A5E115F22AFFD6EA0023A70C /* AppStoreService.swift in Sources */,
 				A567602A2AF97D8200AD3008 /* ViewConstants.swift in Sources */,
 				A504B8992A6D7AA7002A2C8B /* ToolbarView.swift in Sources */,
 				A5BA1D242A81816E0014E276 /* ppat.cpp in Sources */,
@@ -1165,6 +1228,7 @@
 				A504B8912A6D4503002A2C8B /* AppSettings.swift in Sources */,
 				A536DF192AD5C92600B423EE /* ToolsPhotosItemView.swift in Sources */,
 				A515FF112AF6CD8E000F0C3B /* ToolsPhotosViewDomain.swift in Sources */,
+				A5E116012B0222B20023A70C /* AppStoreView.swift in Sources */,
 				A5BA1D1E2A81816E0014E276 /* color.cpp in Sources */,
 				A5E860F72AA6787000D2293B /* EmojiSkinDto.swift in Sources */,
 				A5E115BF2AFACFD40023A70C /* ShakeModifier.swift in Sources */,
@@ -1374,6 +1438,22 @@
 				minimumVersion = 2.1.3;
 			};
 		};
+		A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreKitPlus" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielsaidi/StoreKitPlus";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+		A5E115F82B00E6C60023A70C /* XCRemoteSwiftPackageReference "SecureDefaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vpeschenkov/SecureDefaults";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1396,6 +1476,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A5E115ED2AFEA7760023A70C /* XCRemoteSwiftPackageReference "Throttler" */;
 			productName = Throttler;
+		};
+		A5E115F42AFFD70A0023A70C /* StoreKitPlus */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreKitPlus" */;
+			productName = StoreKitPlus;
+		};
+		A5E115F92B00E6C60023A70C /* SecureDefaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5E115F82B00E6C60023A70C /* XCRemoteSwiftPackageReference "SecureDefaults" */;
+			productName = SecureDefaults;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -9,7 +9,7 @@
 import AppKit
 import SwiftUI
 
-final class ImageDto: ObservableObject {
+final public class ImageDto: ObservableObject {
     
     enum ImageState: Equatable {
         case none

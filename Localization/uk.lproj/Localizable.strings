@@ -21,3 +21,9 @@
 
 /* No comment provided by engineer. */
 "customizing.view.button.customize" = "Customize folder";
+
+/* No comment provided by engineer. */
+"app.store.view.title.subscribe" = "Subscribe to unlock export feature";
+
+/* No comment provided by engineer. */
+"app.store.view.title.inapp" = "or get extra export actions";

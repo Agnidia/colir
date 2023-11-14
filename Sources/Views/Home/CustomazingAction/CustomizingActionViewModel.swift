@@ -16,12 +16,17 @@ class CustomizingActionViewModel: ObservableObject, DomainViewConstantProtocol {
     
     var viewSettings: DomainViewConstantType = .init()
     
-    @Published var state: ImageDto.ImageState
+    typealias ButtonAction = Commons.EmptyClosure
+    
+    private let buttonAction: ButtonAction
+    
+    @Published private var state: ImageDto.ImageState
     
     //MARK: - Variables
     
-    init(state: ImageDto.ImageState = .none) {
+    init(state: ImageDto.ImageState = .none, actionClosure: @escaping ButtonAction) {
         self.state = state
+        self.buttonAction = actionClosure
     }
     
     func update(state: ImageDto.ImageState) {
@@ -57,6 +62,6 @@ class CustomizingActionViewModel: ObservableObject, DomainViewConstantProtocol {
     //MARK: - Private
     
     private func action() {
-        //NSWorkspace.shared.open(url)
+        buttonAction()
     }
 }

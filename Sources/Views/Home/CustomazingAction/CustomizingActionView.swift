@@ -25,27 +25,27 @@ struct CustomizingActionView: View {
 #Preview("CustomizingActionView") {
     VStack {
         CustomizingActionView()
-            .environmentObject(CustomizingActionViewModel(state: .none))
+            .environmentObject(CustomizingActionViewModel(state: .none, actionClosure: {}))
         
         Divider()
         
         CustomizingActionView()
-            .environmentObject(CustomizingActionViewModel(state: .ready))
+            .environmentObject(CustomizingActionViewModel(state: .ready, actionClosure: {}))
         
         Divider()
         
         CustomizingActionView()
-            .environmentObject(CustomizingActionViewModel(state: .preview))
+            .environmentObject(CustomizingActionViewModel(state: .preview, actionClosure: {}))
         
         Divider()
         
         CustomizingActionView()
-            .environmentObject(CustomizingActionViewModel(state: .processing(value: 30)))
+            .environmentObject(CustomizingActionViewModel(state: .processing(value: 30), actionClosure: {}))
         
         Divider()
         
         CustomizingActionView()
-            .environmentObject(CustomizingActionViewModel(state: .error))
+            .environmentObject(CustomizingActionViewModel(state: .error, actionClosure: {}))
         
         Divider()
         Spacer()

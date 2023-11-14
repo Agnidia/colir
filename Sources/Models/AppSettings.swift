@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SecureDefaults
 
 /// User and application settings model
 /// 
@@ -16,6 +17,8 @@ public protocol AppSettingsProtocol {
     var userPicturesPath: URL { get set }
     
     var isTestMode: Bool { get }
+    
+    var exportCount: Int { get }
 }
 
 class AppSettings: AppSettingsProtocol, ObservableObject {
@@ -24,6 +27,7 @@ class AppSettings: AppSettingsProtocol, ObservableObject {
         // Access Data
         static let bookmarkData = "BookmarkData"
         static let userPicturesPath = "UserPicturesPath"
+        static let exportCount = "Bookmark"
         
         static let isTestMode = "IsTestMode"
     }
@@ -37,19 +41,30 @@ class AppSettings: AppSettingsProtocol, ObservableObject {
     
     // MARK: - Dependency Injection
     
-    private static var userDefaults: UserDefaults!
+    private static var userDefaults: SecureDefaults!
     
     // MARK: - Init
     
-    init(store: UserDefaults = .init(suiteName: Secrets.userDefaultsId)!) {
+    init(store: SecureDefaults = .init(suiteName: Secrets.userDefaultsId)!) {
+        
+        if !store.isKeyCreated {
+            store.password = "tHYXZ{'SZ-wNx1KL#e@Io"
+        }
+        
         AppSettings.userDefaults = store
     }
     
     // MARK: - Variables
     
     // access data for Xcode data folder
-    @AppStorage(Key.bookmarkData, store: userDefaults) var bookmarkData: Data = Data()
-    @AppStorage(Key.userPicturesPath, store: userDefaults) var userPicturesPath: URL = K.userPicturesUrl
+    @AppStorage(Key.bookmarkData, store: userDefaults) 
+    var bookmarkData: Data = Data()
+    
+    @AppStorage(Key.userPicturesPath, store: userDefaults)
+    var userPicturesPath: URL = K.userPicturesUrl
+    
+    @AppStorage(Key.exportCount, store: userDefaults)
+    var exportCount: Int = 1
     
     var hasAccessToXcodeData: Bool {
         bookmarkData.isEmpty == false
@@ -70,5 +85,5 @@ class AppSettings: AppSettingsProtocol, ObservableObject {
 }
 
 extension AppSettings {
-    static var preview: AppSettings = .init(store: UserDefaults(suiteName: Secrets.userDefaultsId + ".preview")!)
+    static var preview: AppSettings = .init(store: SecureDefaults(suiteName: Secrets.userDefaultsId + ".preview")!)
 }

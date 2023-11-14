@@ -58,13 +58,18 @@ struct BaseApp: App {
         /// base Application settings
         /// need init once and send as param to another instances
         ///
-        fileprivate var appSettings: AppSettingsProtocol = AppSettings()
+        private var appSettings: AppSettingsProtocol = AppSettings()
+        
+        /// base App Store Manager
+        /// need init once and send as param to another instances
+        ///
+        fileprivate var appStoreService: AppStoreProtocol = AppStoreService()
         
         /// base application object
         /// need setup everything inside that object to allow aadd unit tests
         ///
-        private lazy var app: Application = {
-            .init(appSettings: appSettings)
+        private(set) lazy var app: Application = {
+            .init()
         }()
         
         func applicationDidFinishLaunching(_ notification: Notification) {
@@ -72,23 +77,5 @@ struct BaseApp: App {
         }
         
         func applicationDidBecomeActive(_ notification: Notification) {}
-    }
-    
-    class Application {
-        var appSettings: AppSettingsProtocol
-        
-        private let log: LogProtocol = Log(category: .application)
-        
-        init(appSettings: AppSettingsProtocol) {
-            self.appSettings = appSettings
-            
-            log.info("init")
-        }
-        
-        /// main setup of base objects
-        ///
-        fileprivate func setup() {
-            
-        }
     }
 }

@@ -28,6 +28,8 @@ struct Log {
         case photoAppAccess
         case photoLibrary
         case toolsPhoto
+        case home
+        case appStore
     }
     
     /// The subsystem for the logs, which utilizes the main bundle identifier
@@ -65,11 +67,13 @@ private extension Log {
     /// whether logging is enabled or disabled for each category.
     var enabledList: [Category : Bool] {
         [
-            .application: false,
+            .application: true,
             .fileStorage: false,
             .photoAppAccess: false,
             .photoLibrary: true,
-            .toolsPhoto: false
+            .toolsPhoto: false,
+            .home: false,
+            .appStore: true
         ]
     }
 }

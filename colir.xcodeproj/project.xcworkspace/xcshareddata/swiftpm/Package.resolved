@@ -10,6 +10,24 @@
       }
     },
     {
+      "identity" : "securedefaults",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vpeschenkov/SecureDefaults",
+      "state" : {
+        "revision" : "049c116ff512d22347405ed2d10b4a65bf9fb546",
+        "version" : "1.2.0"
+      }
+    },
+    {
+      "identity" : "storekitplus",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/danielsaidi/StoreKitPlus",
+      "state" : {
+        "revision" : "6c592da317443a53f99e20f731d9fca2c6f41cb3",
+        "version" : "0.2.0"
+      }
+    },
+    {
       "identity" : "swiftcommons",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/IGRSoft/SwiftCommons",

@@ -2,7 +2,7 @@
 //  ButtonStyleConstants.swift
 //  colir
 //
-//  Created by Vitalii P on 04.11.2023.
+//  Created by Vitalii Parovishnyk on 04.11.2023.
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
@@ -21,11 +21,15 @@ enum ButtonStyleConstants {
     
     static let backgroundColor: Color = Color.primaryBackgroundButton
     
-    static let backgroundAccentColor: Color = Color.accentBackgroundButton
-    
     static let backgroundDisabledColor: Color = Color.primaryDisabledBackgroundButton
     
-    static let backgroundHovered: Color = Color.primaryHoveredButton
+    static let backgroundHoveredColor: Color = Color.primaryHoveredButton
     
-    static let backgroundAccentHovered: Color = Color.accentHoveredButton
+    static let backgroundAccentHoveredColor: Color = Color.accentHoveredButton
+    
+    static let backgroundAccentColor: Color = Color.accentBackgroundButton
+    
+    static let backgroundAppStoreHoveredColor: Color = Color.appStoreHoveredButton
+    
+    static let backgroundAppStoreColor: Color = Color.appStoreBackgroundButton
 }

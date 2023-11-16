@@ -3,6 +3,7 @@
 //  colir
 //
 //  Created by Vitalii Parovishnyk on 24.07.2023.
+//  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
 import AppKit
@@ -10,7 +11,10 @@ import SwiftUI
 import SwiftCommons
 import Combine
 
-final class HomeViewModel: ObservableObject {
+final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
+    let viewSettings: HomeViewDomain = .init()
+    
+    typealias DomainViewConstantType = HomeViewDomain
     
     enum Tools: Equatable {
         case colors
@@ -288,7 +292,9 @@ final class HomeViewModel: ObservableObject {
     @Published private var showingExportAlert = false
     @Published private var showingAppStoreSheet = false
     
-    private lazy var appStoreViewModel: AppStoreViewModel = .init(appStoreService: appStoreService)
+    private lazy var appStoreViewModel: AppStoreViewModel = .init(appStoreService: appStoreService) { [weak self] in
+        self?.showingAppStoreSheet.toggle()
+    }
     
     @ViewBuilder
     func customizeFolderView() -> some View {
@@ -301,11 +307,11 @@ final class HomeViewModel: ObservableObject {
                     self.showingExportAlert = newState
                 }
             )) {
-                Alert(title: Text("Alert"),
-                      message: Text("This is an alert!"),
-                      primaryButton: .default(Text("Purchase"), action: {
+                Alert(title: Text(DomainViewConstantType.Localization.alertPurchaseTitle),
+                      message: Text(DomainViewConstantType.Localization.alertPurchaseDescription),
+                      primaryButton: .default(Text(DomainViewConstantType.Localization.alertPurchaseAction), action: {
                     self.showingAppStoreSheet.toggle()
-                }), secondaryButton: .cancel(Text("Cancel")))
+                }), secondaryButton: .cancel(Text(DomainViewConstantType.Localization.alertPurchaseCancel)))
             }
             .sheet(isPresented: Binding<Bool>(
                 get: { self.showingAppStoreSheet },

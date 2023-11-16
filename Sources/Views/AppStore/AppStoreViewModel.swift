@@ -2,12 +2,13 @@
 //  AppStoreViewModel.swift
 //  colir
 //
-//  Created by Vitalii P on 13.11.2023.
+//  Created by Vitalii Parovishnyk on 13.11.2023.
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
 import SwiftUI
 import SwiftCommons
+import StoreKit
 
 final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
     
@@ -16,10 +17,13 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
     
     var viewSettings: DomainViewConstantType = .init()
     
-    private var appStoreService: AppStoreProtocol
+    private let appStoreService: AppStoreProtocol
     
-    init(appStoreService: AppStoreProtocol) {
+    private let completionHandler: Commons.EmptyClosure
+    
+    init(appStoreService: AppStoreProtocol, completion: @escaping Commons.EmptyClosure ) {
         self.appStoreService = appStoreService
+        self.completionHandler = completion
     }
     
     @ViewBuilder
@@ -60,7 +64,7 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
                     Task {
                         do {
                             let result = try await self.appStoreService.purchase(item)
-                            print(result)
+                            self.process(purchase: result)
                         } catch {
                             print(error.localizedDescription)
                         }
@@ -82,7 +86,7 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
                     .padding()
                     .frame(width: AppStoreViewModel.buttonSize, height: AppStoreViewModel.buttonSize)
                 }
-                .buttonStyle(.accent)
+                .buttonStyle(.appStore)
             }
         }
         .frame(height: AppStoreViewModel.buttonSize)
@@ -90,13 +94,29 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
     
     @ViewBuilder
     var closeButton: some View {
-        Button {
-            
+        Button { [weak self] in
+            self?.completionHandler()
         } label: {
             Text("Done")
                 .padding(.init(top: 8, leading: 16, bottom: 8, trailing: 16))
         }
         .buttonStyle(.primary)
         .padding(.init(top: 16, leading: 0, bottom: 32, trailing: 0))
+    }
+    
+    private func process(purchase: Product.PurchaseResult) {
+        switch purchase {
+        case .success(let verificationResult):
+            print(verificationResult)
+            Task { @MainActor in
+                completionHandler()
+            }
+        case .userCancelled:
+            break
+        case .pending:
+            break
+        @unknown default:
+            break
+        }
     }
 }

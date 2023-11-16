@@ -2,7 +2,7 @@
 //  AppStoreViewDomain.swift
 //  colir
 //
-//  Created by Vitalii P on 13.11.2023.
+//  Created by Vitalii Parovishnyk on 13.11.2023.
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 

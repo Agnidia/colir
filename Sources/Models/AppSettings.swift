@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SecureDefaults
 
 /// User and application settings model
 /// 
@@ -41,16 +40,11 @@ class AppSettings: AppSettingsProtocol, ObservableObject {
     
     // MARK: - Dependency Injection
     
-    private static var userDefaults: SecureDefaults!
+    private static var userDefaults: UserDefaults!
     
     // MARK: - Init
     
-    init(store: SecureDefaults = .init(suiteName: Secrets.userDefaultsId)!) {
-        
-        if !store.isKeyCreated {
-            store.password = "tHYXZ{'SZ-wNx1KL#e@Io"
-        }
-        
+    init(store: UserDefaults = .init(suiteName: Secrets.userDefaultsId)!) {
         AppSettings.userDefaults = store
     }
     
@@ -66,14 +60,6 @@ class AppSettings: AppSettingsProtocol, ObservableObject {
     @AppStorage(Key.exportCount, store: userDefaults)
     var exportCount: Int = 1
     
-    var hasAccessToXcodeData: Bool {
-        bookmarkData.isEmpty == false
-    }
-    
-    var hasValidPathToXcodeData: Bool {
-        userPicturesPath == K.userPicturesUrl
-    }
-    
     // test mode switcher
     var isTestMode: Bool {
 #if DEBUG
@@ -85,5 +71,5 @@ class AppSettings: AppSettingsProtocol, ObservableObject {
 }
 
 extension AppSettings {
-    static var preview: AppSettings = .init(store: SecureDefaults(suiteName: Secrets.userDefaultsId + ".preview")!)
+    static var preview: AppSettings = .init(store: UserDefaults(suiteName: Secrets.userDefaultsId + ".preview")!)
 }

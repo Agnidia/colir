@@ -38,6 +38,7 @@
 		A536DF152AD5A09700B423EE /* PhotoLibraryAlbumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF142AD5A09700B423EE /* PhotoLibraryAlbumManager.swift */; };
 		A536DF172AD5A0F400B423EE /* PhotoAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF162AD5A0F400B423EE /* PhotoAssetCollection.swift */; };
 		A536DF192AD5C92600B423EE /* ToolsPhotosItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF182AD5C92600B423EE /* ToolsPhotosItemView.swift */; };
+		A54850782B06570C0020A3FB /* AppStoreButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54850772B06570C0020A3FB /* AppStoreButtonStyle.swift */; };
 		A567602A2AF97D8200AD3008 /* ViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56760292AF97D8200AD3008 /* ViewConstants.swift */; };
 		A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D7E2AEEFA8D0063FE06 /* SwiftCommons */; };
 		A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */; };
@@ -110,7 +111,6 @@
 		A5E115F22AFFD6EA0023A70C /* AppStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115F12AFFD6EA0023A70C /* AppStoreService.swift */; };
 		A5E115F52AFFD70A0023A70C /* StoreKitPlus in Frameworks */ = {isa = PBXBuildFile; productRef = A5E115F42AFFD70A0023A70C /* StoreKitPlus */; };
 		A5E115F72B0001E20023A70C /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115F62B0001E20023A70C /* Application.swift */; };
-		A5E115FA2B00E6C60023A70C /* SecureDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = A5E115F92B00E6C60023A70C /* SecureDefaults */; };
 		A5E115FE2B014BC90023A70C /* ExportIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115FD2B014BC90023A70C /* ExportIconManager.swift */; };
 		A5E116012B0222B20023A70C /* AppStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E116002B0222B20023A70C /* AppStoreView.swift */; };
 		A5E116032B0222C10023A70C /* AppStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E116022B0222C10023A70C /* AppStoreViewModel.swift */; };
@@ -197,6 +197,7 @@
 		A536DF142AD5A09700B423EE /* PhotoLibraryAlbumManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryAlbumManager.swift; sourceTree = "<group>"; };
 		A536DF162AD5A0F400B423EE /* PhotoAssetCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAssetCollection.swift; sourceTree = "<group>"; };
 		A536DF182AD5C92600B423EE /* ToolsPhotosItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsPhotosItemView.swift; sourceTree = "<group>"; };
+		A54850772B06570C0020A3FB /* AppStoreButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreButtonStyle.swift; sourceTree = "<group>"; };
 		A56760292AF97D8200AD3008 /* ViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConstants.swift; sourceTree = "<group>"; };
 		A5A00D832AEF011D0063FE06 /* PermissionsOverlayDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsOverlayDomain.swift; sourceTree = "<group>"; };
 		A5A00D872AEF0CDE0063FE06 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
@@ -327,7 +328,6 @@
 				A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */,
 				A5E115F52AFFD70A0023A70C /* StoreKitPlus in Frameworks */,
 				A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */,
-				A5E115FA2B00E6C60023A70C /* SecureDefaults in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +529,7 @@
 				A515FF072AF6CA9B000F0C3B /* AccentButtonStyle.swift */,
 				A5A00D872AEF0CDE0063FE06 /* PrimaryButtonStyle.swift */,
 				A515FF032AF6BAC1000F0C3B /* ButtonStyleConstants.swift */,
+				A54850772B06570C0020A3FB /* AppStoreButtonStyle.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -1010,7 +1011,6 @@
 				A5E115C42AFBDBB50023A70C /* DominantColor */,
 				A5E115EE2AFEA7760023A70C /* Throttler */,
 				A5E115F42AFFD70A0023A70C /* StoreKitPlus */,
-				A5E115F92B00E6C60023A70C /* SecureDefaults */,
 			);
 			productName = colir;
 			productReference = A5F5CDF52A6D2BFB008AF959 /* colir.app */;
@@ -1061,7 +1061,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 1500;
-				ORGANIZATIONNAME = "IGR Soft";
+				ORGANIZATIONNAME = "IGR Software";
 				TargetAttributes = {
 					A5F5CDF42A6D2BFB008AF959 = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -1092,7 +1092,6 @@
 				A5E115C32AFBDBB50023A70C /* XCRemoteSwiftPackageReference "DominantColor" */,
 				A5E115ED2AFEA7760023A70C /* XCRemoteSwiftPackageReference "Throttler" */,
 				A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreKitPlus" */,
-				A5E115F82B00E6C60023A70C /* XCRemoteSwiftPackageReference "SecureDefaults" */,
 			);
 			productRefGroup = A5F5CDF62A6D2BFB008AF959 /* Products */;
 			projectDirPath = "";
@@ -1235,6 +1234,7 @@
 				A515FF082AF6CA9B000F0C3B /* AccentButtonStyle.swift in Sources */,
 				A515FF1C2AF80BAB000F0C3B /* NSImage+Tint.swift in Sources */,
 				A5F5CDF92A6D2BFB008AF959 /* BaseApp.swift in Sources */,
+				A54850782B06570C0020A3FB /* AppStoreButtonStyle.swift in Sources */,
 				A515FF042AF6BAC1000F0C3B /* ButtonStyleConstants.swift in Sources */,
 				A5BF05E22AD1CB6600A86904 /* ToolsPicturesViewModel.swift in Sources */,
 				A5CFFDF62AA12B8800D6E7A9 /* ToolsColorsView.swift in Sources */,
@@ -1446,14 +1446,6 @@
 				minimumVersion = 0.2.0;
 			};
 		};
-		A5E115F82B00E6C60023A70C /* XCRemoteSwiftPackageReference "SecureDefaults" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/vpeschenkov/SecureDefaults";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1481,11 +1473,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreKitPlus" */;
 			productName = StoreKitPlus;
-		};
-		A5E115F92B00E6C60023A70C /* SecureDefaults */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A5E115F82B00E6C60023A70C /* XCRemoteSwiftPackageReference "SecureDefaults" */;
-			productName = SecureDefaults;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

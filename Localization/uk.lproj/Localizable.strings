@@ -27,3 +27,15 @@
 
 /* No comment provided by engineer. */
 "app.store.view.title.inapp" = "or get extra export actions";
+
+/* No comment provided by engineer. */
+"alert.purchase.title" = "The limit has been reached";
+
+/* No comment provided by engineer. */
+"alert.purchase.description" = "Are you want to subscribe or add additional exports";
+
+/* No comment provided by engineer. */
+"alert.purchase.action" = "Purchase";
+
+/* No comment provided by engineer. */
+"alert.purchase.cancel" = "Cancel";

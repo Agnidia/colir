@@ -1,9 +1,9 @@
 //
 //  PrimaryButtonStyle.swift
-//  VideoScripterRecorder
+//  colir
 //
 //  Created by Vitalii Parovishnyk 23.10.2023.
-//  Copyright © 2023 VideoScripter Kft. All rights reserved.
+//  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
 import SwiftUI
@@ -31,7 +31,7 @@ struct PrimaryButtonStyle: ButtonStyle {
                         .cornerRadius(cornerRadius)
                 } else {
                     Rectangle()
-                        .fill(isHovered ? ButtonStyleConstants.backgroundHovered : ButtonStyleConstants.backgroundColor)
+                        .fill(isHovered ? ButtonStyleConstants.backgroundHoveredColor : ButtonStyleConstants.backgroundColor)
                         .cornerRadius(cornerRadius)
                 }
             })
@@ -53,12 +53,7 @@ extension ButtonStyle where Self == PrimaryButtonStyle {
     /// A button style that doesn't apply a border.
     ///
     /// To apply this style to a button, or to a view that contains buttons, use
-    /// the ``View/buttonStyle(_:)-66fbx`` modifier.
-    ///
-    /// On tvOS, this button style adds a default hover effect to the first
-    /// image of the button's content, if one exists. You can supply a different
-    /// hover effect by using the ``View/hoverEffect(_:)`` modifier in the
-    /// button's label.
+    /// the ``View().buttonStyle(.primary)`` modifier.
     static var primary: PrimaryButtonStyle {
         .init()
     }

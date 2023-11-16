@@ -3,11 +3,12 @@
 //  colirUITests
 //
 //  Created by Vitalii Parovishnyk on 23.07.2023.
+//  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
 import XCTest
 
-final class colirUITests: XCTestCase {
+final class ColirUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -31,11 +32,8 @@ final class colirUITests: XCTestCase {
     }
 
     func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
+        measure(metrics: [XCTApplicationLaunchMetric()]) {
+            XCUIApplication().launch()
         }
     }
 }

@@ -2,7 +2,7 @@
 //  HomeViewDomain.swift
 //  colir
 //
-//  Created by Vitalii P on 05.11.2023.
+//  Created by Vitalii Parovishnyk on 05.11.2023.
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
@@ -56,6 +56,18 @@ struct HomeViewDomain: DomainViewConstantType {
         
         static let choice: LocalizedStringKey =
         "home.view.drag-and-drop-zone.choice"
+        
+        static let alertPurchaseTitle: LocalizedStringKey =
+        "alert.purchase.title"
+        
+        static let alertPurchaseDescription: LocalizedStringKey =
+        "alert.purchase.description"
+        
+        static let alertPurchaseAction: LocalizedStringKey =
+        "alert.purchase.action"
+        
+        static let alertPurchaseCancel: LocalizedStringKey =
+        "alert.purchase.cancel"
     }
     
     enum I: ConstantRawRepresentable {

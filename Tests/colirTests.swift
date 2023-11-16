@@ -3,12 +3,13 @@
 //  colirTests
 //
 //  Created by Vitalii Parovishnyk on 23.07.2023.
+//  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
 import XCTest
 @testable import colir
 
-final class colirTests: XCTestCase {
+final class ColirTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

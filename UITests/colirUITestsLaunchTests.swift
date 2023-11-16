@@ -3,11 +3,12 @@
 //  colirUITests
 //
 //  Created by Vitalii Parovishnyk on 23.07.2023.
+//  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
 import XCTest
 
-final class colirUITestsLaunchTests: XCTestCase {
+final class ColirUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

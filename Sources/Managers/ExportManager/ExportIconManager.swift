@@ -17,7 +17,7 @@ public protocol ExportIconManagerProtocol {
 
 final class ExportIconManager: ExportIconManagerProtocol {
     
-    let appSettings: AppSettingsProtocol
+    var appSettings: AppSettingsProtocol
     
     let appStoreService: AppStoreProtocol
     
@@ -27,11 +27,16 @@ final class ExportIconManager: ExportIconManagerProtocol {
     }
     
     var canExport: Bool {
-        false//self.appSettings.exportCount > 0 || appStoreService.hasFullAccess
+        Int(appSettings.exportCount.value) ?? 0 > 0 || appStoreService.hasFullAccess
     }
     
     func export(image: ImageDto) {
         
+        
+        if appStoreService.hasFullAccess == false {
+            let exportCount = (Int(appSettings.exportCount.value) ?? 1) - 1
+            appSettings.exportCount = CryptoModel(value: "\(exportCount)")
+        }
     }
 }
 

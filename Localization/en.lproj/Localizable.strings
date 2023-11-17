@@ -32,7 +32,7 @@
 "alert.purchase.title" = "The limit has been reached";
 
 /* No comment provided by engineer. */
-"alert.purchase.description" = "Are you want to subscribe or add additional exports";
+"alert.purchase.description" = "Are you want to subscribe or add an additional exports actions?";
 
 /* No comment provided by engineer. */
 "alert.purchase.action" = "Purchase";

@@ -12,12 +12,14 @@ import SwiftUI
 /// 
 public protocol AppSettingsProtocol {
     
+    func setup(uuid: String)
+    
     var bookmarkData: Data { get set }
     var userPicturesPath: URL { get set }
     
     var isTestMode: Bool { get }
     
-    var exportCount: Int { get }
+    var exportCount: CryptoModel { get set }
 }
 
 class AppSettings: AppSettingsProtocol, ObservableObject {
@@ -48,6 +50,10 @@ class AppSettings: AppSettingsProtocol, ObservableObject {
         AppSettings.userDefaults = store
     }
     
+    func setup(uuid: String) {
+        
+    }
+    
     // MARK: - Variables
     
     // access data for Xcode data folder
@@ -58,7 +64,7 @@ class AppSettings: AppSettingsProtocol, ObservableObject {
     var userPicturesPath: URL = K.userPicturesUrl
     
     @AppStorage(Key.exportCount, store: userDefaults)
-    var exportCount: Int = 1
+    var exportCount: CryptoModel = CryptoModel(value: "1")
     
     // test mode switcher
     var isTestMode: Bool {

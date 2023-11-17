@@ -8,7 +8,6 @@
 
 import SwiftUI
 import SwiftCommons
-import StoreKit
 
 final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
     
@@ -19,9 +18,12 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
     
     private let appStoreService: AppStoreProtocol
     
+    private var appSettings: AppSettingsProtocol
+    
     private let completionHandler: Commons.EmptyClosure
     
-    init(appStoreService: AppStoreProtocol, completion: @escaping Commons.EmptyClosure ) {
+    init(appStoreService: AppStoreProtocol, appSettings: AppSettingsProtocol, completion: @escaping Commons.EmptyClosure ) {
+        self.appSettings = appSettings
         self.appStoreService = appStoreService
         self.completionHandler = completion
     }
@@ -93,6 +95,20 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
     }
     
     @ViewBuilder
+    var restoreButton: some View {
+        Button {
+            Task {
+                try await self.appStoreService.syncStoreData()
+            }
+        } label: {
+            Text("Restore")
+                .padding(.init(top: 8, leading: 16, bottom: 8, trailing: 16))
+        }
+        .buttonStyle(.primary)
+        .padding(.init(top: 16, leading: 0, bottom: 32, trailing: 0))
+    }
+    
+    @ViewBuilder
     var closeButton: some View {
         Button { [weak self] in
             self?.completionHandler()
@@ -104,10 +120,26 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
         .padding(.init(top: 16, leading: 0, bottom: 32, trailing: 0))
     }
     
-    private func process(purchase: Product.PurchaseResult) {
+    private func process(purchase: PurchaseResult) {
         switch purchase {
-        case .success(let verificationResult):
-            print(verificationResult)
+        case .success(let product):
+            switch product {
+            case .add1Folder:
+                addExports(count: 1)
+            case .add5Folder:
+                addExports(count: 5)
+            case .add15Folder:
+                addExports(count: 15)
+            case .fullAccessLifetime:
+                break
+            case .fullAccess1Month:
+                break
+            case .fullAccess3Month:
+                break
+            case .fullAccessYear:
+                break
+            }
+            
             Task { @MainActor in
                 completionHandler()
             }
@@ -115,8 +147,11 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
             break
         case .pending:
             break
-        @unknown default:
-            break
         }
+    }
+    
+    private func addExports(count: Int) {
+        let exportCount = (Int(appSettings.exportCount.value) ?? 0) + count
+        appSettings.exportCount = CryptoModel(value: "\(exportCount)")
     }
 }

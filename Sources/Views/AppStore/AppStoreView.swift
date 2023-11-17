@@ -22,6 +22,8 @@ struct AppStoreView: View {
             
             viewModel.inAppPurchasesList
             
+            viewModel.restoreButton
+            
             viewModel.closeButton
         }
         .padding(16)
@@ -31,7 +33,7 @@ struct AppStoreView: View {
 #Preview("AppStoreView") {
     VStack {
         AppStoreView()
-            .environmentObject(AppStoreViewModel(appStoreService: AppStorePreview(), completion: {}))
+            .environmentObject(AppStoreViewModel(appStoreService: AppStorePreview(), appSettings: AppSettings.preview, completion: {}))
     }
     .frame(width: 236, height: 450)
 }

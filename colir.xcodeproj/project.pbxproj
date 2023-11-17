@@ -39,6 +39,9 @@
 		A536DF172AD5A0F400B423EE /* PhotoAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF162AD5A0F400B423EE /* PhotoAssetCollection.swift */; };
 		A536DF192AD5C92600B423EE /* ToolsPhotosItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF182AD5C92600B423EE /* ToolsPhotosItemView.swift */; };
 		A54850782B06570C0020A3FB /* AppStoreButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54850772B06570C0020A3FB /* AppStoreButtonStyle.swift */; };
+		A548507B2B077E9C0020A3FB /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507A2B077E9C0020A3FB /* TokenManager.swift */; };
+		A548507D2B0789610020A3FB /* String+Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507C2B0789610020A3FB /* String+Crypto.swift */; };
+		A548507F2B07C58F0020A3FB /* CryptoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507E2B07C58F0020A3FB /* CryptoModel.swift */; };
 		A567602A2AF97D8200AD3008 /* ViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56760292AF97D8200AD3008 /* ViewConstants.swift */; };
 		A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D7E2AEEFA8D0063FE06 /* SwiftCommons */; };
 		A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */; };
@@ -198,6 +201,9 @@
 		A536DF162AD5A0F400B423EE /* PhotoAssetCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAssetCollection.swift; sourceTree = "<group>"; };
 		A536DF182AD5C92600B423EE /* ToolsPhotosItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsPhotosItemView.swift; sourceTree = "<group>"; };
 		A54850772B06570C0020A3FB /* AppStoreButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreButtonStyle.swift; sourceTree = "<group>"; };
+		A548507A2B077E9C0020A3FB /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		A548507C2B0789610020A3FB /* String+Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Crypto.swift"; sourceTree = "<group>"; };
+		A548507E2B07C58F0020A3FB /* CryptoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoModel.swift; sourceTree = "<group>"; };
 		A56760292AF97D8200AD3008 /* ViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConstants.swift; sourceTree = "<group>"; };
 		A5A00D832AEF011D0063FE06 /* PermissionsOverlayDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsOverlayDomain.swift; sourceTree = "<group>"; };
 		A5A00D872AEF0CDE0063FE06 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
@@ -439,6 +445,7 @@
 			children = (
 				A504B8902A6D4503002A2C8B /* AppSettings.swift */,
 				A5E860F62AA6787000D2293B /* EmojiSkinDto.swift */,
+				A548507E2B07C58F0020A3FB /* CryptoModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -512,6 +519,14 @@
 				A515FF202AF80EE3000F0C3B /* IconMananager.swift */,
 			);
 			path = IconManager;
+			sourceTree = "<group>";
+		};
+		A54850792B077E910020A3FB /* Token */ = {
+			isa = PBXGroup;
+			children = (
+				A548507A2B077E9C0020A3FB /* TokenManager.swift */,
+			);
+			path = Token;
 			sourceTree = "<group>";
 		};
 		A5A00D852AEF0CB40063FE06 /* Styles */ = {
@@ -793,6 +808,7 @@
 				A515FF1D2AF80BC6000F0C3B /* RGBA32.swift */,
 				A5E860F42AA6508900D2293B /* String+Emoji.swift */,
 				A5E115E92AFC105B0023A70C /* NSImage+CutPath.swift */,
+				A548507C2B0789610020A3FB /* String+Crypto.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -893,6 +909,7 @@
 		A5E860F12AA635C300D2293B /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				A54850792B077E910020A3FB /* Token */,
 				A5E115FC2B014BB60023A70C /* ExportManager */,
 				A515FF1F2AF80ECB000F0C3B /* IconManager */,
 				A5BF05F92AD2943D00A86904 /* PhotosApp */,
@@ -1171,6 +1188,7 @@
 				A5BA1D1D2A81816E0014E276 /* cicn.cpp in Sources */,
 				A515FF152AF6D821000F0C3B /* NSImage+Data.swift in Sources */,
 				A5F5CDFB2A6D2BFB008AF959 /* HomeView.swift in Sources */,
+				A548507B2B077E9C0020A3FB /* TokenManager.swift in Sources */,
 				A5BA1D2D2A81816E0014E276 /* extended.cpp in Sources */,
 				A5CFFDF82AA12BA100D6E7A9 /* ToolsPhotosView.swift in Sources */,
 				A5BA1D382A81832A0014E276 /* RSRCFileParser.swift in Sources */,
@@ -1200,7 +1218,9 @@
 				A5BA1D2B2A81816E0014E276 /* macroman.cpp in Sources */,
 				A5E115B92AFAAEB10023A70C /* AppliedStylesViewDomain.swift in Sources */,
 				A5BA1D252A81816E0014E276 /* imagedesc.cpp in Sources */,
+				A548507F2B07C58F0020A3FB /* CryptoModel.swift in Sources */,
 				A5BF05FB2AD2946100A86904 /* PhotoLibraryAccessManager.swift in Sources */,
+				A548507D2B0789610020A3FB /* String+Crypto.swift in Sources */,
 				A515FF0D2AF6CC5D000F0C3B /* CustomizingActionViewModel.swift in Sources */,
 				A5DA67922AD45EE300B3E8C9 /* PhotoLibraryCacheManager.swift in Sources */,
 				A5FD59B52ADBDF48008503D3 /* PermissionsOverlayViewModel.swift in Sources */,

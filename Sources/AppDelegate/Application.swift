@@ -8,13 +8,6 @@
 
 import Foundation
 
-protocol ApplicationProtocol {
-    
-    var appSettings: AppSettingsProtocol { get }
-    
-    var appStoreService: AppStoreProtocol { get }
-}
-
 class Application {
     
     private let log: LogProtocol = Log(category: .application)

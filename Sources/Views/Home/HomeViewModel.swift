@@ -282,17 +282,17 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     }
     
     private lazy var customizingActionViewModel: CustomizingActionViewModel = .init(actionClosure: { [weak self] in
-        if self?.exportIconManager.canExport == true {
-        
+        if self?.exportIconManager.canExport == true, let image = self?.dropZoneViewModel.image {
+            self?.exportIconManager.export(image: image)
         } else {
-        self?.showingExportAlert.toggle()
-    }
+            self?.showingExportAlert.toggle()
+        }
     })
     
     @Published private var showingExportAlert = false
     @Published private var showingAppStoreSheet = false
     
-    private lazy var appStoreViewModel: AppStoreViewModel = .init(appStoreService: appStoreService) { [weak self] in
+    private lazy var appStoreViewModel: AppStoreViewModel = .init(appStoreService: appStoreService, appSettings: appSettings) { [weak self] in
         self?.showingAppStoreSheet.toggle()
     }
     
@@ -392,16 +392,6 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         
         do {
             try await appStoreService.syncStoreData()
-            
-            let products = try await appStoreService.getProducts()
-            
-            log.info("fetched products: \(products.map({ "\($0.displayName): \($0.displayPrice)" }))")
-            
-            try await appStoreService.restorePurchases()
-            
-            let purchased = appStoreService.purchased()
-            
-            log.info("purchased products: \(String(describing: purchased.map({ "\($0)"} )))")
         } catch {
             log.info("products fetch error: \(error.localizedDescription)")
         }

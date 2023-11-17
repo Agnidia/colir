@@ -41,18 +41,27 @@ public struct AppStoreProductInfo {
     let price: String
 }
 
+public enum PurchaseResult {
+
+    /// The purchase succeeded with a `Transaction`.
+    case success(AppProduct)
+
+    /// The user cancelled the purchase.
+    case userCancelled
+
+    /// The purchase is pending some user action.
+    ///
+    /// These purchases may succeed in the future, and the resulting `Transaction` will be
+    /// delivered via `Transaction.updates`
+    case pending
+}
+
 public protocol AppStoreProtocol {
     
     func syncStoreData() async throws
-    
-    func restorePurchases() async throws
-    
-    func getProducts() async throws -> [Product]
-    
-    func purchase(_ product: AppProduct) async throws -> Product.PurchaseResult
-    
-    func purchased() -> Set<AppProduct>?
-    
+            
+    func purchase(_ product: AppProduct) async throws -> PurchaseResult
+        
     func info(for product: AppProduct) throws -> AppStoreProductInfo
     
     var hasFullAccess: Bool { get }
@@ -90,10 +99,16 @@ final class AppStoreService: AppStoreProtocol {
         log.debug("sync Store Data")
         
         try await storeService.syncStoreData()
+        
+        fillProducts()
+        
+        fillPurchased()
+        
+        log.debug("restored Purchases")
     }
     
-    func getProducts() async throws -> [Product] {
-        let products = try await storeService.getProducts()
+    private func fillProducts() {
+        let products = context.products
         
         self.products = products.reduce(into: [AppProduct: Product](), { partialResult, product in
             if let id = AppProduct(rawValue: product.id) {
@@ -102,23 +117,32 @@ final class AppStoreService: AppStoreProtocol {
         })
         
         log.debug("got products: \(products)")
-        
-        return products
     }
     
-    func restorePurchases() async throws {
-        try await storeService.restorePurchases()
-        log.debug("restored Purchases")
-    }
-    
-    func purchase(_ product: AppProduct) async throws -> Product.PurchaseResult {
+    func purchase(_ product: AppProduct) async throws -> PurchaseResult {
         guard let appStoreProduct = products?[product] else {
             throw AppStoreServiceError.missedProduct
         }
         
         log.debug("purchase product: \(appStoreProduct)")
         
-        return try await storeService.purchase(appStoreProduct)
+        let result = try await storeService.purchase(appStoreProduct)
+        
+        switch result {
+        case .success(let verificationResult):
+            let productId = try verificationResult.payloadValue.productID
+            guard let appProduct = AppProduct(rawValue: productId) else {
+                return .pending
+            }
+            purchasedProducts?.insert(appProduct)
+            return .success(appProduct)
+        case .userCancelled:
+            return .userCancelled
+        case .pending:
+            return .pending
+        @unknown default:
+            return .userCancelled
+        }
     }
     
     func info(for product: AppProduct) throws -> AppStoreProductInfo {
@@ -129,7 +153,7 @@ final class AppStoreService: AppStoreProtocol {
         return .init(name: appStoreProduct.displayName, description: appStoreProduct.description, price: appStoreProduct.displayPrice)
     }
     
-    func purchased() -> Set<AppProduct>? {
+    private func fillPurchased() {
         let products = AppProduct.allCases
         let purchased = products.purchased(in: context)
         
@@ -142,27 +166,15 @@ final class AppStoreService: AppStoreProtocol {
         self.purchasedProducts = purchasedProducts.isEmpty ? nil : purchasedProducts
         
         log.debug("got purchased products: \(purchasedProducts)")
-        
-        return self.purchasedProducts
     }
 }
 
 final class AppStorePreview: AppStoreProtocol {
-    func purchase(_ product: AppProduct) async throws -> Product.PurchaseResult {
+    func purchase(_ product: AppProduct) async throws -> PurchaseResult {
         return .userCancelled
     }
     
     func syncStoreData() async throws {}
-    
-    func restorePurchases() async throws {}
-    
-    func getProducts() async throws -> [Product] {
-        []
-    }
-    
-    func purchased() -> Set<AppProduct>? {
-        []
-    }
     
     func info(for product: AppProduct) throws -> AppStoreProductInfo {
         .init(name: "Preview", description: "test", price: "$9.99")

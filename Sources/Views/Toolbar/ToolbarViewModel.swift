@@ -18,9 +18,34 @@ final class ToolbarViewModel: ObservableObject {
     
     private var currentToolAction = ToolbarView.ToolbarViewDomain.Action.colors
     
+    @Published var updateHack = true
+    
     init(undoManager: UndoManager, actionCallback: @escaping ToolbarViewModelActionCallback) {
         self.undoManager = undoManager
         self.actionCallback = actionCallback
+        
+        addObservers()
+    }
+    
+    deinit {
+        removeObservers()
+    }
+    
+    private func addObservers() {
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(undoManagerUpdated), name: .NSUndoManagerDidUndoChange, object: undoManager)
+        
+        nc.addObserver(self, selector: #selector(undoManagerUpdated), name: .NSUndoManagerDidRedoChange, object: undoManager)
+    }
+    
+    private func removeObservers() {
+        let nc = NotificationCenter.default
+        nc.removeObserver(self, name: .NSUndoManagerDidUndoChange, object: undoManager)
+        nc.removeObserver(self, name: .NSUndoManagerDidRedoChange, object: undoManager)
+    }
+    
+    @objc private func undoManagerUpdated(_ notification: Foundation.Notification) {
+        updateHack.toggle()
     }
     
     @ViewBuilder
@@ -29,6 +54,10 @@ final class ToolbarViewModel: ObservableObject {
     /// - Returns: SwiftUI view
     ///
     func item(for action: ToolbarView.ToolbarViewDomain.Action) -> some View {
+        if updateHack {
+            EmptyView()
+        }
+        
         switch action {
         case .colors, .photos, .emojis, .decals, .pictures, .webResources:
             Button {

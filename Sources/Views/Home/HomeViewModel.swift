@@ -25,7 +25,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         case webResources
     }
     
-    @Published private(set) var undoManager: UndoManager
+    private(set) var undoManager: UndoManager
     
     let picturesFolderManager: PicturesFolderManagerProtocol
     
@@ -40,9 +40,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     private let log: LogProtocol
     
     private var foldersUrls: [URL]
-    
-    private var folderImage: NSImage?
-    
+        
     var width: CGFloat {
         236
     }
@@ -50,6 +48,8 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     @Published private var tools: Tools
     
     @Published var wrongAttempt: Int = 0
+    
+    @Published var updateHack = true
     
     private var customizationTask: Task<(), Never>?
     
@@ -76,7 +76,6 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         self.foldersUrls = foldersUrls
         #endif
         
-        self.folderImage = folderImage
         self.tools = tools
         
         self.setupFolders(from: self.foldersUrls)
@@ -99,14 +98,14 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
             }
             return
         }
-        
-        dropZoneViewModel.customizations.selectedColor = color
-        
+                
         customizationTask?.cancel()
         
         customizationTask = Task {
+            await dropZoneViewModel.image.customizations.apply(color: color)
+            
             do {
-                try await dropZoneViewModel.image.updateCustomization(customizations: dropZoneViewModel.customizations)
+                try await dropZoneViewModel.image.update(customizations: dropZoneViewModel.image.customizations)
             } catch {
                 print("task canceled")
             }
@@ -126,12 +125,13 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
             updateImage = picture.cutImage(by: .folderCenterFrame)
         }
         
-        dropZoneViewModel.customizations.selectedImage = updateImage
         customizationTask?.cancel()
         
-        customizationTask = Task {
+        customizationTask = Task { [updateImage] in
+            await dropZoneViewModel.image.customizations.apply(picture: updateImage)
+            
             do {
-                try await dropZoneViewModel.image.updateCustomization(customizations: dropZoneViewModel.customizations)
+                try await dropZoneViewModel.image.update(customizations: dropZoneViewModel.image.customizations)
             } catch {
                 print("task canceled")
             }
@@ -261,6 +261,11 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     } updateStateClosure: { [weak self] state in
         print("Set state to: \(state)")
         self?.customizingActionViewModel.update(state: state)
+        if state == .ready, let dropZone = self?.dropZoneViewModel, let index = self?.currentUndoItem, let undoItems = self?.undoItems.prefix(index + 1) {
+            self?.undoItems = Array(undoItems)
+            self?.undoItems.append(dropZone.image.undoItems)
+            self?.add(index: index + 1)
+        }
     }
     
     @ViewBuilder
@@ -364,25 +369,42 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
             
             await dropZoneViewModel.image.updateOriginal(url: url, image: icon)
             
+            undoItems.append(dropZoneViewModel.image.undoItems)
+            currentUndoItem = 0
+            
             Task { @MainActor in
                 foldersUrls = [url]
-                add(image: icon)
             }
         }
     }
     
-    func add(image: NSImage) {
+    private var undoItems: [ImageUndoDto] = .init()
+    private var currentUndoItem: Int = 0
+    
+    func add(index: Int) {
+        self.currentUndoItem = index
+        
         undoManager.registerUndo(withTarget: self) { this in
-            this.remove(image: image)
+            this.remove(index: index)
         }
-        folderImage = image
+        
+        let image = undoItems[currentUndoItem]
+        dropZoneViewModel.update(from: image)
+        
+        updateHack.toggle()
     }
     
-    func remove(image: NSImage) {
+    func remove(index: Int) {
+        currentUndoItem = index - 1
+        
         undoManager.registerUndo(withTarget: self) { this in
-            this.add(image: image)
+            this.add(index: index)
         }
-        folderImage = image
+        
+        let image = undoItems[currentUndoItem]
+        dropZoneViewModel.update(from: image)
+        
+        updateHack.toggle()
     }
     
     /// main setup of base objects

@@ -103,7 +103,7 @@
 		A5E115B52AFAAE940023A70C /* AppliedStylesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115B42AFAAE940023A70C /* AppliedStylesView.swift */; };
 		A5E115B72AFAAEA90023A70C /* AppliedStylesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115B62AFAAEA90023A70C /* AppliedStylesViewModel.swift */; };
 		A5E115B92AFAAEB10023A70C /* AppliedStylesViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115B82AFAAEB10023A70C /* AppliedStylesViewDomain.swift */; };
-		A5E115BC2AFAAF840023A70C /* ImageCustomizationDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115BB2AFAAF840023A70C /* ImageCustomizationDto.swift */; };
+		A5E115BC2AFAAF840023A70C /* ImageCustomization.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115BB2AFAAF840023A70C /* ImageCustomization.swift */; };
 		A5E115BF2AFACFD40023A70C /* ShakeModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115BE2AFACFD40023A70C /* ShakeModifier.swift */; };
 		A5E115C52AFBDBB50023A70C /* DominantColor in Frameworks */ = {isa = PBXBuildFile; productRef = A5E115C42AFBDBB50023A70C /* DominantColor */; };
 		A5E115C72AFBFB140023A70C /* NSImage+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115C62AFBFB140023A70C /* NSImage+Scale.swift */; };
@@ -293,7 +293,7 @@
 		A5E115B42AFAAE940023A70C /* AppliedStylesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppliedStylesView.swift; sourceTree = "<group>"; };
 		A5E115B62AFAAEA90023A70C /* AppliedStylesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppliedStylesViewModel.swift; sourceTree = "<group>"; };
 		A5E115B82AFAAEB10023A70C /* AppliedStylesViewDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppliedStylesViewDomain.swift; sourceTree = "<group>"; };
-		A5E115BB2AFAAF840023A70C /* ImageCustomizationDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCustomizationDto.swift; sourceTree = "<group>"; };
+		A5E115BB2AFAAF840023A70C /* ImageCustomization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCustomization.swift; sourceTree = "<group>"; };
 		A5E115BE2AFACFD40023A70C /* ShakeModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeModifier.swift; sourceTree = "<group>"; };
 		A5E115C62AFBFB140023A70C /* NSImage+Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Scale.swift"; sourceTree = "<group>"; };
 		A5E115C82AFBFEFC0023A70C /* NSImage+Draw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImage+Draw.swift"; sourceTree = "<group>"; };
@@ -850,7 +850,7 @@
 			isa = PBXGroup;
 			children = (
 				A515FF122AF6D02B000F0C3B /* ImageDto.swift */,
-				A5E115BB2AFAAF840023A70C /* ImageCustomizationDto.swift */,
+				A5E115BB2AFAAF840023A70C /* ImageCustomization.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1193,7 +1193,7 @@
 				A5CFFDF82AA12BA100D6E7A9 /* ToolsPhotosView.swift in Sources */,
 				A5BA1D382A81832A0014E276 /* RSRCFileParser.swift in Sources */,
 				A5E116052B0222C70023A70C /* AppStoreViewDomain.swift in Sources */,
-				A5E115BC2AFAAF840023A70C /* ImageCustomizationDto.swift in Sources */,
+				A5E115BC2AFAAF840023A70C /* ImageCustomization.swift in Sources */,
 				A5BA1D1B2A81816E0014E276 /* geometry.cpp in Sources */,
 				A5BA1D302A81816E0014E276 /* classic.cpp in Sources */,
 				A5CFFDFC2AA12C0D00D6E7A9 /* ToolsDecalsView.swift in Sources */,

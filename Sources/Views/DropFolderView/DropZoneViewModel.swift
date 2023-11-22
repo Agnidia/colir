@@ -16,9 +16,9 @@ final class DropZoneViewModel: ObservableObject {
     
     typealias UpdateStateClosure = (ImageDto.ImageState) -> ()
     
-    @Published private(set) var image: ImageDto = .init()
-    @Published var customizations: ImageCustomizationDto = .init()
-    @Published private var imageUpdateHack = false
+    @Published var image: ImageDto = .init()
+    
+    @Published private var updateHack = false
     
     private var fileClosure: FilesClosure
     
@@ -29,7 +29,6 @@ final class DropZoneViewModel: ObservableObject {
     
     var isWaitingDropping: Bool = false
     @Published var isEnterZone: Bool = false
-    @Published var isEnterZoneAnimation: Bool = false
     @Published private var enterZoneAnimationTextScale = 1.0
     @Published private var enterZoneAnimationImageScale = 1.0
     @Published private var enterZoneAnimationBackgroundOpacity = 0.0
@@ -41,12 +40,19 @@ final class DropZoneViewModel: ObservableObject {
         addPublishers()
     }
     
+    func update(from imageUndoItems: ImageUndoDto) {
+        image.update(from: imageUndoItems)
+        image.customizations.update(from: imageUndoItems.customizations)
+        
+        updateHack.toggle()
+    }
+    
     private func addPublishers() {
         image.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.updateStateClosure(state)
-                self?.imageUpdateHack.toggle()
+                self?.updateHack.toggle()
             }
             .store(in: &cancellables)
     }
@@ -72,26 +78,14 @@ final class DropZoneViewModel: ObservableObject {
                 .cornerRadius(8)
             
             if image.state == .none {
-                
-                if #available(macOS 14, *) {
-                    Image(systemName: "folder.badge.plus")
-                        .resizable()
-                        .symbolEffect(.bounce, value: isEnterZoneAnimation)
-                        .symbolRenderingMode(.multicolor)
-                        .foregroundStyle(.secondaryText, .green)
-                        .aspectRatio(contentMode: .fit)
-                        .fontWeight(.thin)
-                        .padding(.init(top: 8, leading: 8, bottom: 8, trailing: 4))
-                } else {
-                    Image(systemName: "folder.badge.plus")
-                        .resizable()
-                        .symbolRenderingMode(.multicolor)
-                        .scaleEffect(enterZoneAnimationImageScale)
-                        .animation(.spring(duration: ViewConstants.animation, bounce: 0.5), value: enterZoneAnimationImageScale)
-                        .fontWeight(.thin)
-                        .aspectRatio(contentMode: .fit)
-                        .padding(.init(top: 8, leading: 8, bottom: 8, trailing: 4))
-                }
+                Image(systemName: "folder.badge.plus")
+                    .resizable()
+                    .symbolRenderingMode(.multicolor)
+                    .scaleEffect(enterZoneAnimationImageScale)
+                    .animation(.spring(duration: ViewConstants.animation, bounce: 0.5), value: enterZoneAnimationImageScale)
+                    .fontWeight(.thin)
+                    .aspectRatio(contentMode: .fit)
+                    .padding(.init(top: 8, leading: 8, bottom: 8, trailing: 4))
             } else {
                 image.preview
                     .scaleEffect(enterZoneAnimationImageScale)
@@ -155,16 +149,18 @@ final class DropZoneViewModel: ObservableObject {
         
         withAnimation {
             isEnterZone = true
-            
-            isEnterZoneAnimation.toggle()
-            
+                        
             enterZoneAnimationTextScale += 0.1
             enterZoneAnimationImageScale += 0.1
             enterZoneAnimationBackgroundOpacity += 0.1
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + ViewConstants.animation) { [weak self] in
-                self?.enterZoneAnimationTextScale = 1
-                DispatchQueue.main.asyncAfter(deadline: .now() + ViewConstants.animation / 2) {
+            let animationDuration = ViewConstants.animation / 2
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) { [weak self] in
+                self?.enterZoneAnimationTextScale -= 0.17
+                self?.enterZoneAnimationImageScale -= 0.17
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
                     if self?.enterZoneAnimationImageScale != 1 {
                         self?.enterZoneAnimationImageScale = 1
                     }

@@ -18,7 +18,7 @@ public extension NSImage {
             
             let newImage = NSImage(cgImage: icon.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: iconSize)
             
-            let img = newImage.tint(color: NSColor(hex: "#7dcdfa"), withColor: color, tolerance: 0.5)!
+            let img = newImage.tint(color: NSColor(hex: "#7dcdfa"), withColor: color)!
             
             icons.append(img)
         }
@@ -29,10 +29,13 @@ public extension NSImage {
     // color - source color, which is must be replaced
     // withColor - target color
     // tolerance - value in range from 0 to 1
-    func tint(color: NSColor, withColor: NSColor, tolerance: CGFloat) -> NSImage? {
+    func tint(color: NSColor, withColor: NSColor, tolerance: CGFloat = 0.6) -> NSImage? {
         guard let imageRef = self.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
             return nil
         }
+        
+        let logger = Log(category: .imageProcessing)
+        let startAt = CFAbsoluteTimeGetCurrent()
         
         let searchColorRGB = RGBA32(color: color)
         let (searchColorMin, searchColorMax) = searchColorRGB.colors(tolerance: UInt8(255 * tolerance))
@@ -59,7 +62,7 @@ public extension NSImage {
                                          bitmapInfo: bitmapInfo)
         
         guard let dataBackImage = contextBackImage?.data else {
-            print("replaceColor: Unable to get back image buffer")
+            logger.debug("Unable to get back image buffer")
             return nil
         }
         let bufferBackImage = dataBackImage.bindMemory(to: RGBA32.self, capacity: width * height)
@@ -69,29 +72,46 @@ public extension NSImage {
         
         // Prepare to iterate over image pixels
         
+        var updatedColors: [RGBA32: RGBA32] = .init(minimumCapacity: backImagePixelCount)
+        
         for offset in 0..<backImagePixelCount {
             let color = bufferBackImage[offset]
             
-            // Compare two colors using given tolerance value
-            
-            if color.between(searchColorMin, searchColorMax) {
-                let offsetC = color.colorDiff(otherColor: searchColorRGB)
+            guard let updatedColor = updatedColors[color] else {
                 
-                bufferBackImage[offset] = replacementColorRGB.colors(tolerance: offsetC).0
+                // Compare two colors using given tolerance value
+                
+                if color.between(searchColorMin, searchColorMax) {
+                    let offsetC = color.colorDiff(otherColor: searchColorRGB)
+                    
+                    let newColor = replacementColorRGB.colors(tolerance: offsetC).0
+                    bufferBackImage[offset] = newColor
+                    updatedColors[color] = newColor
+                }
+                
+                continue
             }
+            
+            bufferBackImage[offset] = updatedColor
         }
         
         // Retrieve image from memory context
         
-        let img = CGContext(data: bufferBackImage,
-                            width: width,
-                            height: height,
-                            bitsPerComponent: bitsPerComponent,
-                            bytesPerRow: backImageBytesPerRow,
-                            space: colorspace,
-                            bitmapInfo: bitmapInfo)
+        guard let img = CGContext(data: bufferBackImage,
+                                  width: width,
+                                  height: height,
+                                  bitsPerComponent: bitsPerComponent,
+                                  bytesPerRow: backImageBytesPerRow,
+                                  space: colorspace,
+                                  bitmapInfo: bitmapInfo), let cgImage = img.makeImage() else {
+            logger.debug("Unable create image from buffer")
+            return nil
+        }
         
-        let finalImage = NSImage(cgImage: (img?.makeImage()!)!, size: .init(width: width, height: height))
+        let finalImage = NSImage(cgImage: cgImage, size: .init(width: width, height: height))
+        
+        logger.elapsedTime(startAt: startAt)
+        
         return finalImage
     }
 }

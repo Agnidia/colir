@@ -8,7 +8,7 @@
 
 import AppKit
 
-public struct RGBA32: Equatable {
+public struct RGBA32: Equatable, Hashable {
     private var color: UInt32
     
     var redComponent: UInt8 {

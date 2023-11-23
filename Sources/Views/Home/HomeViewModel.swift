@@ -381,28 +381,32 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     private var undoItems: [ImageUndoDto] = .init()
     private var currentUndoItem: Int = 0
     
-    func add(index: Int) {
+    private func add(index: Int) {
         self.currentUndoItem = index
         
         undoManager.registerUndo(withTarget: self) { this in
             this.remove(index: index)
         }
         
-        let image = undoItems[currentUndoItem]
-        dropZoneViewModel.update(from: image)
-        
-        updateHack.toggle()
+        setupItemsForCurrentIndex()
     }
     
-    func remove(index: Int) {
+    private func remove(index: Int) {
         currentUndoItem = index - 1
         
         undoManager.registerUndo(withTarget: self) { this in
             this.add(index: index)
         }
         
+        setupItemsForCurrentIndex()
+    }
+    
+    private func setupItemsForCurrentIndex() {
         let image = undoItems[currentUndoItem]
         dropZoneViewModel.update(from: image)
+        
+        skipFirstSelectedColor = true
+        toolsColorsViewModel.selectedColor = image.customizations.selectedColor
         
         updateHack.toggle()
     }

@@ -147,7 +147,7 @@ final class ImageCustomization {
             return image
         }
         
-        guard let newImage = image.tint(color: mainColor, withColor: color, tolerance: 0.6) else {
+        guard let newImage = image.tint(color: mainColor, withColor: color) else {
             return image
         }
         

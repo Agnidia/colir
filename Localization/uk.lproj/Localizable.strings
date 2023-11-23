@@ -39,3 +39,6 @@
 
 /* No comment provided by engineer. */
 "alert.purchase.cancel" = "Cancel";
+
+/* No comment provided by engineer. */
+"color.tool.view.color-picker.title" = "Custom color:";

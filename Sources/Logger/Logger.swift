@@ -30,6 +30,7 @@ struct Log {
         case toolsPhoto
         case home
         case appStore
+        case imageProcessing
     }
     
     /// The subsystem for the logs, which utilizes the main bundle identifier
@@ -57,7 +58,7 @@ struct Log {
             path = String(fileName)
         }
         
-        logger.info("[\(path): \(function)] execution took: \((finishAt - startAt) * 1000)s")
+        logger.info("[\(path): \(function)] execution took: \((finishAt - startAt))s")
     }
 }
 
@@ -73,7 +74,8 @@ private extension Log {
             .photoLibrary: true,
             .toolsPhoto: false,
             .home: false,
-            .appStore: true
+            .appStore: false,
+            .imageProcessing: true
         ]
     }
 }

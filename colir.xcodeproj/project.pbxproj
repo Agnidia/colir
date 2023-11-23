@@ -43,6 +43,11 @@
 		A548507D2B0789610020A3FB /* String+Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507C2B0789610020A3FB /* String+Crypto.swift */; };
 		A548507F2B07C58F0020A3FB /* CryptoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507E2B07C58F0020A3FB /* CryptoModel.swift */; };
 		A567602A2AF97D8200AD3008 /* ViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56760292AF97D8200AD3008 /* ViewConstants.swift */; };
+		A56811302B0FAFC600236EA8 /* ToolsColorsViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A568112F2B0FAFC600236EA8 /* ToolsColorsViewDomain.swift */; };
+		A56811332B0FD0E900236EA8 /* ColorWheelNSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56811322B0FD0E900236EA8 /* ColorWheelNSView.swift */; };
+		A56811352B0FD17400236EA8 /* NSBezierPath+CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56811342B0FD17400236EA8 /* NSBezierPath+CGPath.swift */; };
+		A56811372B0FD1F300236EA8 /* ColorWheelUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56811362B0FD1F300236EA8 /* ColorWheelUtility.swift */; };
+		A56811392B0FD55400236EA8 /* ColorWheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56811382B0FD55400236EA8 /* ColorWheelView.swift */; };
 		A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D7E2AEEFA8D0063FE06 /* SwiftCommons */; };
 		A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */; };
 		A5A00D842AEF011D0063FE06 /* PermissionsOverlayDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A00D832AEF011D0063FE06 /* PermissionsOverlayDomain.swift */; };
@@ -205,6 +210,11 @@
 		A548507C2B0789610020A3FB /* String+Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Crypto.swift"; sourceTree = "<group>"; };
 		A548507E2B07C58F0020A3FB /* CryptoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoModel.swift; sourceTree = "<group>"; };
 		A56760292AF97D8200AD3008 /* ViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConstants.swift; sourceTree = "<group>"; };
+		A568112F2B0FAFC600236EA8 /* ToolsColorsViewDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsColorsViewDomain.swift; sourceTree = "<group>"; };
+		A56811322B0FD0E900236EA8 /* ColorWheelNSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheelNSView.swift; sourceTree = "<group>"; };
+		A56811342B0FD17400236EA8 /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
+		A56811362B0FD1F300236EA8 /* ColorWheelUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheelUtility.swift; sourceTree = "<group>"; };
+		A56811382B0FD55400236EA8 /* ColorWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheelView.swift; sourceTree = "<group>"; };
 		A5A00D832AEF011D0063FE06 /* PermissionsOverlayDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsOverlayDomain.swift; sourceTree = "<group>"; };
 		A5A00D872AEF0CDE0063FE06 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		A5B68E502AB8DA08003C5FFA /* NSColor+List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+List.swift"; sourceTree = "<group>"; };
@@ -419,6 +429,7 @@
 		A504B88B2A6D4434002A2C8B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A56811312B0FD0C700236EA8 /* ColorWheel */,
 				A5E115FF2B0222A40023A70C /* AppStore */,
 				A5E115BD2AFACFB90023A70C /* Modifiers */,
 				A515FF162AF6EE93000F0C3B /* VisualEffect */,
@@ -529,6 +540,17 @@
 			path = Token;
 			sourceTree = "<group>";
 		};
+		A56811312B0FD0C700236EA8 /* ColorWheel */ = {
+			isa = PBXGroup;
+			children = (
+				A56811322B0FD0E900236EA8 /* ColorWheelNSView.swift */,
+				A56811342B0FD17400236EA8 /* NSBezierPath+CGPath.swift */,
+				A56811362B0FD1F300236EA8 /* ColorWheelUtility.swift */,
+				A56811382B0FD55400236EA8 /* ColorWheelView.swift */,
+			);
+			path = ColorWheel;
+			sourceTree = "<group>";
+		};
 		A5A00D852AEF0CB40063FE06 /* Styles */ = {
 			isa = PBXGroup;
 			children = (
@@ -554,6 +576,7 @@
 			children = (
 				A5CFFDF52AA12B8800D6E7A9 /* ToolsColorsView.swift */,
 				A5B68E532AB8DBEC003C5FFA /* ToolsColorsViewModel.swift */,
+				A568112F2B0FAFC600236EA8 /* ToolsColorsViewDomain.swift */,
 			);
 			path = Colors;
 			sourceTree = "<group>";
@@ -1179,6 +1202,7 @@
 				A5BA1D202A81816E0014E276 /* surface.cpp in Sources */,
 				A5BA1D3F2A81872C0014E276 /* RSRCResource.swift in Sources */,
 				A5BA1D1F2A81816E0014E276 /* packbits.cpp in Sources */,
+				A56811352B0FD17400236EA8 /* NSBezierPath+CGPath.swift in Sources */,
 				A5B68E512AB8DA08003C5FFA /* NSColor+List.swift in Sources */,
 				A5BF05DB2AD1C35E00A86904 /* PicturesFolderManager.swift in Sources */,
 				A5BA1D2A2A81816E0014E276 /* sound.cpp in Sources */,
@@ -1210,6 +1234,7 @@
 				A5E115FE2B014BC90023A70C /* ExportIconManager.swift in Sources */,
 				A5BA1D1C2A81816E0014E276 /* clut.cpp in Sources */,
 				A515FF132AF6D02B000F0C3B /* ImageDto.swift in Sources */,
+				A56811372B0FD1F300236EA8 /* ColorWheelUtility.swift in Sources */,
 				A5A00D842AEF011D0063FE06 /* PermissionsOverlayDomain.swift in Sources */,
 				A5BA1D212A81816E0014E276 /* pict.cpp in Sources */,
 				A5BA1D332A81816E0014E276 /* data.cpp in Sources */,
@@ -1240,6 +1265,7 @@
 				A5FD59AE2ADBD935008503D3 /* WebResourcesView.swift in Sources */,
 				A5E115B52AFAAE940023A70C /* AppliedStylesView.swift in Sources */,
 				A5FD59B02ADBD942008503D3 /* WebResourcesViewModel.swift in Sources */,
+				A56811302B0FAFC600236EA8 /* ToolsColorsViewDomain.swift in Sources */,
 				A50AF9682AF67865000C18AB /* DropFolderViewConstants.swift in Sources */,
 				A504B8942A6D49D5002A2C8B /* AppCommons.swift in Sources */,
 				A515FF232AF82992000F0C3B /* HomeViewDomain.swift in Sources */,
@@ -1247,11 +1273,13 @@
 				A504B8912A6D4503002A2C8B /* AppSettings.swift in Sources */,
 				A536DF192AD5C92600B423EE /* ToolsPhotosItemView.swift in Sources */,
 				A515FF112AF6CD8E000F0C3B /* ToolsPhotosViewDomain.swift in Sources */,
+				A56811392B0FD55400236EA8 /* ColorWheelView.swift in Sources */,
 				A5E116012B0222B20023A70C /* AppStoreView.swift in Sources */,
 				A5BA1D1E2A81816E0014E276 /* color.cpp in Sources */,
 				A5E860F72AA6787000D2293B /* EmojiSkinDto.swift in Sources */,
 				A5E115BF2AFACFD40023A70C /* ShakeModifier.swift in Sources */,
 				A515FF082AF6CA9B000F0C3B /* AccentButtonStyle.swift in Sources */,
+				A56811332B0FD0E900236EA8 /* ColorWheelNSView.swift in Sources */,
 				A515FF1C2AF80BAB000F0C3B /* NSImage+Tint.swift in Sources */,
 				A5F5CDF92A6D2BFB008AF959 /* BaseApp.swift in Sources */,
 				A54850782B06570C0020A3FB /* AppStoreButtonStyle.swift in Sources */,

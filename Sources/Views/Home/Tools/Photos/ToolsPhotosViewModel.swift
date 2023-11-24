@@ -16,7 +16,7 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
     
     typealias DomainViewConstantType = ToolsPhotosViewDomain
     
-    var viewSettings: ToolsPhotosViewDomain = .init()
+    let viewSettings: ToolsPhotosViewDomain = .init()
     
     private let logger: LogProtocol = Log(category: .toolsPhoto)
     

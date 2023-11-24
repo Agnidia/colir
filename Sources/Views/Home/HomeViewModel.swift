@@ -138,6 +138,25 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         }
     }
     
+    public func apply(emoji: Character?) {
+        guard dropZoneViewModel.image.state != .none else {
+            wrongAttempt += 1
+            return
+        }
+        
+        customizationTask?.cancel()
+        
+        customizationTask = Task { [emoji] in
+            await dropZoneViewModel.image.customizations.apply(emoji: emoji)
+            
+            do {
+                try await dropZoneViewModel.image.update(customizations: dropZoneViewModel.image.customizations)
+            } catch {
+                print("task canceled")
+            }
+        }
+    }
+    
     public func apply(action: ToolbarView.ToolbarViewDomain.Action) {
         switch action {
         case .undo:
@@ -164,10 +183,12 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     private var skipSelectedColor = true
     private var skipSelectedPhoto = true
     private var skipSelectedPicture = true
+    private var skipSelectedEmoji = true
     
     private var isApplyingSelectedColor = false
     private var isApplyingSelectedPhoto = false
     private var isApplyingSelectedPicture = false
+    private var isApplyingSelectedEmoji = false
     
     private func addPublishers() {
         toolsColorsViewModel.$selectedColor
@@ -219,6 +240,20 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
                 self?.isApplyingSelectedPicture = true
                 self?.toolsPhotosViewModel.selectedImage = nil
                 self?.apply(image: image?.image, item: image)
+            }
+            .store(in: &cancellables)
+        
+        toolsEmojisViewModel.$selectedEmoji
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] emoji in
+                guard self?.skipSelectedEmoji == false else {
+                    self?.skipSelectedEmoji = false
+                    return
+                }
+                
+                self?.isApplyingSelectedEmoji = true
+                self?.apply(emoji: emoji)
+                self?.isApplyingSelectedEmoji = false
             }
             .store(in: &cancellables)
     }

@@ -76,7 +76,7 @@ public struct RGBA32: Equatable, Hashable {
         let r = pow(Double(redComponent) - Double(otherColor.redComponent), 2)
         let g = pow(Double(greenComponent) - Double(otherColor.greenComponent), 2)
         let b = pow(Double(blueComponent) - Double(otherColor.blueComponent), 2)
-        let result = sqrt(r + g + b)
+        let result = min(sqrt(r + g + b), 255)
         
         return UInt8(result)
     }

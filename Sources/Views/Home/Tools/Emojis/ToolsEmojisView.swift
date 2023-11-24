@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftCommons
 
 struct ToolsEmojisView: View {
     
@@ -48,7 +49,26 @@ struct ToolsEmojisView: View {
                                         .padding()
                                         .background(Color.accentColor.opacity(0.1))
                                         .foregroundColor(.white)
-                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                        .clipShape(RoundedRectangle(cornerRadius: model.cellCornerRadius))
+                                        .overlay(
+                                            ZStack(alignment: .bottomTrailing) {
+                                                RoundedRectangle(cornerRadius: model.cellCornerRadius)
+                                                    .strokeBorder(model.selectedEmoji == char ? Color.selectedView : Color.clear, lineWidth: 4)
+                                                if model.selectedEmoji == char {
+                                                    Image(systemName: "checkmark.circle.fill")
+                                                        .symbolRenderingMode(.multicolor)
+                                                        .font(.title)
+                                                        .padding(model.viewSettings.padding)
+                                                }
+                                            }
+                                        )
+                                        .onTapGesture {
+                                            if model.selectedEmoji == char {
+                                                model.selectedEmoji = nil
+                                            } else {
+                                                model.selectedEmoji = char
+                                            }
+                                        }
                                 }
                             }
                         } label: {

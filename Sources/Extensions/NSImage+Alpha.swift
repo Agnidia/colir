@@ -9,22 +9,6 @@
 import AppKit
 
 public extension NSImage {
-    //TODO: create icns from images
-    func alpha(_ value: CGFloat) throws -> NSImage {
-        
-        var icons = [NSImage]()
-        for icon in representations {
-            let iconSize = icon.size
-            
-            let newImage = NSImage(cgImage: icon.cgImage(forProposedRect: nil, context: nil, hints: nil)!, size: iconSize)
-            
-            let img = newImage.alpha(value: UInt8(value * 255))!
-            
-            icons.append(img)
-        }
-        
-        return try NSImage(data: IconManager().convertImagesToIcns(icons))!
-    }
     
     // alpha - source color, which is must be replaced
     // value - value in range from 0 to 255

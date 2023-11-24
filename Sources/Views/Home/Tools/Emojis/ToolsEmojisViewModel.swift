@@ -7,20 +7,29 @@
 //
 
 import Foundation
+import SwiftCommons
 
-class ToolsEmojisViewModel: ObservableObject {
+class ToolsEmojisViewModel: ObservableObject, DomainViewConstantProtocol {
+    
+    typealias DomainViewConstantType = ToolsEmojisViewDomain
+    
+    let viewSettings: ToolsEmojisViewDomain = .init()
     
     private let emojisManager: EmojisManager = .init()
     
     var groups: [EmojisGroup] = EmojisGroup.allCases
     
-    var emojis: [EmojisGroup : [Character]]
+    var emojis: [EmojisGroup: [Character]]
+    
+    @Published var selectedEmoji: Character? = nil
     
     @Published var expanded: Set<EmojisGroup> = []
     
     let columnWidth: CGFloat = 128 // The width for each column
     
-    init(emojis: [EmojisGroup : [Character]]? = nil) {
+    lazy var cellCornerRadius: CGFloat = viewSettings.cornerRadius!
+    
+    init(emojis: [EmojisGroup: [Character]]? = nil) {
         self.emojis = emojis ?? emojisManager.emojis
         
         if let firstGroup = self.groups.first {

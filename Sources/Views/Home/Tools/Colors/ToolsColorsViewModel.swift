@@ -13,7 +13,7 @@ import Throttler
 class ToolsColorsViewModel: ObservableObject, DomainViewConstantProtocol {
     typealias DomainViewConstantType = ToolsColorsViewDomain
     
-    var viewSettings: ToolsColorsViewDomain = .init()
+    let viewSettings: ToolsColorsViewDomain = .init()
     
     @Published var selectedColor: NSColor? = nil
     
@@ -60,7 +60,7 @@ class ToolsColorsViewModel: ObservableObject, DomainViewConstantProtocol {
     var colorsList: some View {
         LazyVGrid(columns: columns, spacing: viewSettings.spacing) {
             ForEach(colorGroups.sorted(by: { $0.key < $1.key }), id: \.key) { groupKey, colors in
-                Section(header: Text(groupKey)
+                Section(header: Text(groupKey.capitalized)
                     .font(.headline)
                     .padding(.top, 8)) {
                         ForEach(colors, id: \.self) { color in

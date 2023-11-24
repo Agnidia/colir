@@ -21,9 +21,12 @@ final class ExportIconManager: ExportIconManagerProtocol {
     
     let appStoreService: AppStoreProtocol
     
-    init(appSettings: AppSettingsProtocol, appStoreService: AppStoreProtocol) {
+    let iconManager: IconManager
+    
+    init(appSettings: AppSettingsProtocol, appStoreService: AppStoreProtocol, iconManager: IconManager = .init()) {
         self.appSettings = appSettings
         self.appStoreService = appStoreService
+        self.iconManager = iconManager
     }
     
     var canExport: Bool {
@@ -32,10 +35,20 @@ final class ExportIconManager: ExportIconManagerProtocol {
     
     func export(image: ImageDto) {
         
+        guard let url = image.url else {
+            return
+        }
+        
+        do {
+            let icnsData = try iconManager.convertImagesToIcns(image.outputImages)
+            try iconManager.setIcon(data: icnsData, to: url)
+        } catch {
+            return
+        }
         
         if appStoreService.hasFullAccess == false {
-            let exportCount = (Int(appSettings.exportCount.value) ?? 1) - 1
-            appSettings.exportCount = CryptoModel(value: "\(exportCount)")
+            let exportCount = (Int(appSettings.exportCount.value) ?? 0)
+            appSettings.exportCount = CryptoModel(value: "\(exportCount - 1)")
         }
     }
 }

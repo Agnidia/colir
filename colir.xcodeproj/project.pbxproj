@@ -44,6 +44,7 @@
 		A548507F2B07C58F0020A3FB /* CryptoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507E2B07C58F0020A3FB /* CryptoModel.swift */; };
 		A567602A2AF97D8200AD3008 /* ViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56760292AF97D8200AD3008 /* ViewConstants.swift */; };
 		A56811302B0FAFC600236EA8 /* ToolsColorsViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A568112F2B0FAFC600236EA8 /* ToolsColorsViewDomain.swift */; };
+		A568113B2B1109F200236EA8 /* ToolsEmojisViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A568113A2B1109F200236EA8 /* ToolsEmojisViewDomain.swift */; };
 		A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D7E2AEEFA8D0063FE06 /* SwiftCommons */; };
 		A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */; };
 		A5A00D842AEF011D0063FE06 /* PermissionsOverlayDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A00D832AEF011D0063FE06 /* PermissionsOverlayDomain.swift */; };
@@ -211,6 +212,7 @@
 		A56811342B0FD17400236EA8 /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
 		A56811362B0FD1F300236EA8 /* ColorWheelUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheelUtility.swift; sourceTree = "<group>"; };
 		A56811382B0FD55400236EA8 /* ColorWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheelView.swift; sourceTree = "<group>"; };
+		A568113A2B1109F200236EA8 /* ToolsEmojisViewDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsEmojisViewDomain.swift; sourceTree = "<group>"; };
 		A5A00D832AEF011D0063FE06 /* PermissionsOverlayDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsOverlayDomain.swift; sourceTree = "<group>"; };
 		A5A00D872AEF0CDE0063FE06 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
 		A5B68E502AB8DA08003C5FFA /* NSColor+List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+List.swift"; sourceTree = "<group>"; };
@@ -921,6 +923,7 @@
 			children = (
 				A5CFFDF92AA12BF200D6E7A9 /* ToolsEmojisView.swift */,
 				A5E860EF2AA635AE00D2293B /* ToolsEmojisViewModel.swift */,
+				A568113A2B1109F200236EA8 /* ToolsEmojisViewDomain.swift */,
 			);
 			path = Emojis;
 			sourceTree = "<group>";
@@ -1196,6 +1199,7 @@
 				A515FF1E2AF80BC6000F0C3B /* RGBA32.swift in Sources */,
 				A50AF9662AF67776000C18AB /* DropZoneViewProtocol.swift in Sources */,
 				A5BA1D202A81816E0014E276 /* surface.cpp in Sources */,
+				A568113B2B1109F200236EA8 /* ToolsEmojisViewDomain.swift in Sources */,
 				A5BA1D3F2A81872C0014E276 /* RSRCResource.swift in Sources */,
 				A5BA1D1F2A81816E0014E276 /* packbits.cpp in Sources */,
 				A5B68E512AB8DA08003C5FFA /* NSColor+List.swift in Sources */,

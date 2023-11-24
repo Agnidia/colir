@@ -46,7 +46,9 @@ final public class ImageDto: ObservableObject {
         case s512
         case s512x2
         
-        static var allCases: [ImageDto.ImageSize] = [.s256, .s16, .s16x2, .s32, .s32x2, .s128, .s128x2, .s256x2, .s512, .s512x2]
+        static var processingCases: [ImageDto.ImageSize] = [.s256, .s16, .s16x2, .s32, .s32x2, .s128, .s128x2, .s256x2, .s512, .s512x2]
+        
+        static var allCases: [ImageDto.ImageSize] = [.s16, .s16x2, .s32, .s32x2, .s128, .s128x2, .s256, .s256x2, .s512, .s512x2]
         
         var dimension: CGFloat {
             switch self {
@@ -110,7 +112,7 @@ final public class ImageDto: ObservableObject {
     
     // original images
     
-    private static var dummyImages = ImageSize.allCases.reduce([ImageSize: NSImage]()) {
+    private static var dummyImages = ImageSize.processingCases.reduce([ImageSize: NSImage]()) {
         var result = $0
         result[$1] = NSImage()
         return result
@@ -125,6 +127,10 @@ final public class ImageDto: ObservableObject {
     private lazy var emojiedImage: [ImageSize: NSImage] = ImageDto.dummyImages
     
     private lazy var outputImage: [ImageSize: NSImage] = ImageDto.dummyImages
+    
+    var outputImages: [NSImage] {
+        ImageSize.allCases.compactMap { outputImage[$0] }
+    }
     
     var undoItems: ImageUndoDto {
         ImageUndoDto(originalImage: originalImage, colorizedImage: colorizedImage, picturedImage: picturedImage, emojiedImage: emojiedImage, outputImage: outputImage, customizations: customizations.undoItems)
@@ -184,7 +190,7 @@ final public class ImageDto: ObservableObject {
         
         self.customizations = customizations
         
-        for size in ImageSize.allCases {
+        for size in ImageSize.processingCases {
             await process(original: originalImage[size]!, with: size)
         }
     }
@@ -230,7 +236,7 @@ final public class ImageDto: ObservableObject {
         
         let images = image.representations
         
-        for size in ImageSize.allCases {
+        for size in ImageSize.processingCases {
             let oImage = imageFor(size: size, in: images)
             originalImage[size] = oImage
             

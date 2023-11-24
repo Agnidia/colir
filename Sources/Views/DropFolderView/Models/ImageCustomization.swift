@@ -14,9 +14,9 @@ struct ImageCustomizationUndoDto {
     let selectedPicture: NSImage?
     let selectedAsset: PhotoAsset?
     let selectedPictureItem: PictureItem?
-    let selectedEmoji: String?
+    let selectedEmoji: Character?
     
-    init(selectedColor: NSColor? = nil, selectedPicture: NSImage? = nil, selectedAsset: PhotoAsset? = nil, selectedPictureItem: PictureItem? = nil, selectedEmoji: String? = nil) {
+    init(selectedColor: NSColor? = nil, selectedPicture: NSImage? = nil, selectedAsset: PhotoAsset? = nil, selectedPictureItem: PictureItem? = nil, selectedEmoji: Character? = nil) {
         self.selectedColor = selectedColor
         self.selectedPicture = selectedPicture
         self.selectedAsset = selectedAsset
@@ -51,7 +51,7 @@ final class ImageCustomization {
     private var selectedPictureItem: PictureItem? = nil
     
     private var emojiedImageState: [ImageDto.ImageSize: ImageState] = dummyImages
-    private var selectedEmoji: String? = nil
+    private var selectedEmoji: Character? = nil
     
     var undoItems: ImageCustomizationUndoDto {
         .init(selectedColor: selectedColor, selectedPicture: selectedPicture, selectedAsset: selectedAsset, selectedPictureItem: selectedPictureItem, selectedEmoji: selectedEmoji)
@@ -126,7 +126,7 @@ final class ImageCustomization {
         }
     }
     
-    func apply(emoji: String?) async {
+    func apply(emoji: Character?) async {
         selectedEmoji = emoji
         
         let newState: ImageState = emoji != nil ? .dirty : .empty
@@ -173,9 +173,9 @@ final class ImageCustomization {
         return image.draw(image: img, at: point)
     }
     
-    private func update(image: NSImage, with emoji: String) -> NSImage {
+    private func update(image: NSImage, with emoji: Character) -> NSImage {
         //TODO: add logic
         
-        return image
+        return image.draw(emoji: emoji)
     }
 }

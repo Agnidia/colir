@@ -50,7 +50,7 @@ struct ToolbarView: CustomizableToolbarContent {
         }
         .defaultCustomization(.visible)
         
-        ToolbarItem(id: ToolbarViewDomain.Action.decals.tag, placement: .principal) {
+        /*ToolbarItem(id: ToolbarViewDomain.Action.decals.tag, placement: .principal) {
             viewModel.item(for: .decals)
         }
         .defaultCustomization(.visible)
@@ -63,7 +63,7 @@ struct ToolbarView: CustomizableToolbarContent {
         ToolbarItem(id: ToolbarViewDomain.Action.spacer.tag, placement: .principal) {
             viewModel.item(for: .spacer)
         }
-        .defaultCustomization(.visible)
+        .defaultCustomization(.visible)*/
     }
 }
 

@@ -1,8 +1,44 @@
 /* No comment provided by engineer. */
+"toolbar.button.undo" = "Undo";
+
+/* No comment provided by engineer. */
+"toolbar.button.undo.help" = "Undo previous action";
+
+/* No comment provided by engineer. */
+"toolbar.button.redo" = "Undo";
+
+/* No comment provided by engineer. */
+"toolbar.button.redo.help" = "Redo last action";
+
+/* No comment provided by engineer. */
 "toolbar.button.colors" = "Colors";
 
 /* No comment provided by engineer. */
 "toolbar.button.colors.help" = "Colors gallery";
+
+/* No comment provided by engineer. */
+"toolbar.button.photos" = "Photos";
+
+/* No comment provided by engineer. */
+"toolbar.button.photos.help" = "Photos app gallery";
+
+/* No comment provided by engineer. */
+"toolbar.button.pictures" = "Pictures";
+
+/* No comment provided by engineer. */
+"toolbar.button.pictures.help" = "Pictures folder gallery";
+
+/* No comment provided by engineer. */
+"toolbar.button.emojis" = "Emojis";
+
+/* No comment provided by engineer. */
+"toolbar.button.emojis.help" = "Emojis gallery";
+
+/* No comment provided by engineer. */
+"toolbar.button.decals" = "Decals";
+
+/* No comment provided by engineer. */
+"toolbar.button.decals.help" = "Decals gallery";
 
 /* No comment provided by engineer. */
 "permissions.overlay.open-settings" = "Open settings";

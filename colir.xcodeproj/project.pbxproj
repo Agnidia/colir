@@ -44,10 +44,6 @@
 		A548507F2B07C58F0020A3FB /* CryptoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507E2B07C58F0020A3FB /* CryptoModel.swift */; };
 		A567602A2AF97D8200AD3008 /* ViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56760292AF97D8200AD3008 /* ViewConstants.swift */; };
 		A56811302B0FAFC600236EA8 /* ToolsColorsViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A568112F2B0FAFC600236EA8 /* ToolsColorsViewDomain.swift */; };
-		A56811332B0FD0E900236EA8 /* ColorWheelNSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56811322B0FD0E900236EA8 /* ColorWheelNSView.swift */; };
-		A56811352B0FD17400236EA8 /* NSBezierPath+CGPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56811342B0FD17400236EA8 /* NSBezierPath+CGPath.swift */; };
-		A56811372B0FD1F300236EA8 /* ColorWheelUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56811362B0FD1F300236EA8 /* ColorWheelUtility.swift */; };
-		A56811392B0FD55400236EA8 /* ColorWheelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56811382B0FD55400236EA8 /* ColorWheelView.swift */; };
 		A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D7E2AEEFA8D0063FE06 /* SwiftCommons */; };
 		A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */; };
 		A5A00D842AEF011D0063FE06 /* PermissionsOverlayDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A00D832AEF011D0063FE06 /* PermissionsOverlayDomain.swift */; };
@@ -1202,7 +1198,6 @@
 				A5BA1D202A81816E0014E276 /* surface.cpp in Sources */,
 				A5BA1D3F2A81872C0014E276 /* RSRCResource.swift in Sources */,
 				A5BA1D1F2A81816E0014E276 /* packbits.cpp in Sources */,
-				A56811352B0FD17400236EA8 /* NSBezierPath+CGPath.swift in Sources */,
 				A5B68E512AB8DA08003C5FFA /* NSColor+List.swift in Sources */,
 				A5BF05DB2AD1C35E00A86904 /* PicturesFolderManager.swift in Sources */,
 				A5BA1D2A2A81816E0014E276 /* sound.cpp in Sources */,
@@ -1234,7 +1229,6 @@
 				A5E115FE2B014BC90023A70C /* ExportIconManager.swift in Sources */,
 				A5BA1D1C2A81816E0014E276 /* clut.cpp in Sources */,
 				A515FF132AF6D02B000F0C3B /* ImageDto.swift in Sources */,
-				A56811372B0FD1F300236EA8 /* ColorWheelUtility.swift in Sources */,
 				A5A00D842AEF011D0063FE06 /* PermissionsOverlayDomain.swift in Sources */,
 				A5BA1D212A81816E0014E276 /* pict.cpp in Sources */,
 				A5BA1D332A81816E0014E276 /* data.cpp in Sources */,
@@ -1273,13 +1267,11 @@
 				A504B8912A6D4503002A2C8B /* AppSettings.swift in Sources */,
 				A536DF192AD5C92600B423EE /* ToolsPhotosItemView.swift in Sources */,
 				A515FF112AF6CD8E000F0C3B /* ToolsPhotosViewDomain.swift in Sources */,
-				A56811392B0FD55400236EA8 /* ColorWheelView.swift in Sources */,
 				A5E116012B0222B20023A70C /* AppStoreView.swift in Sources */,
 				A5BA1D1E2A81816E0014E276 /* color.cpp in Sources */,
 				A5E860F72AA6787000D2293B /* EmojiSkinDto.swift in Sources */,
 				A5E115BF2AFACFD40023A70C /* ShakeModifier.swift in Sources */,
 				A515FF082AF6CA9B000F0C3B /* AccentButtonStyle.swift in Sources */,
-				A56811332B0FD0E900236EA8 /* ColorWheelNSView.swift in Sources */,
 				A515FF1C2AF80BAB000F0C3B /* NSImage+Tint.swift in Sources */,
 				A5F5CDF92A6D2BFB008AF959 /* BaseApp.swift in Sources */,
 				A54850782B06570C0020A3FB /* AppStoreButtonStyle.swift in Sources */,

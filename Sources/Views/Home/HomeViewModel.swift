@@ -112,7 +112,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         }
     }
     
-    public func apply(image: NSImage?) {
+    public func apply(image: NSImage?, asset: PhotoAsset? = nil, item: PictureItem? = nil) {
         guard dropZoneViewModel.image.state != .none else {
             wrongAttempt += 1
             return
@@ -128,7 +128,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         customizationTask?.cancel()
         
         customizationTask = Task { [updateImage] in
-            await dropZoneViewModel.image.customizations.apply(picture: updateImage)
+            await dropZoneViewModel.image.customizations.apply(picture: updateImage, asset: asset, item: item)
             
             do {
                 try await dropZoneViewModel.image.update(customizations: dropZoneViewModel.image.customizations)
@@ -161,20 +161,20 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         }
     }
     
-    private var skipFirstSelectedColor = true
-    private var skipFirstSelectedPhoto = true
-    private var skipFirstSelectedImage = true
+    private var skipSelectedColor = true
+    private var skipSelectedPhoto = true
+    private var skipSelectedPicture = true
     
     private var isApplyingSelectedColor = false
     private var isApplyingSelectedPhoto = false
-    private var isApplyingSelectedImage = false
+    private var isApplyingSelectedPicture = false
     
     private func addPublishers() {
         toolsColorsViewModel.$selectedColor
             .receive(on: DispatchQueue.main)
             .sink { [weak self] color in
-                guard self?.skipFirstSelectedColor == false else {
-                    self?.skipFirstSelectedColor = false
+                guard self?.skipSelectedColor == false else {
+                    self?.skipSelectedColor = false
                     return
                 }
                 
@@ -187,27 +187,27 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         toolsPhotosViewModel.$selectedImage
             .receive(on: DispatchQueue.main)
             .sink { [weak self] image in
-                guard self?.skipFirstSelectedPhoto == false else {
-                    self?.skipFirstSelectedPhoto = false
+                guard self?.skipSelectedPhoto == false else {
+                    self?.skipSelectedPhoto = false
                     return
                 }
                 
-                guard self?.isApplyingSelectedImage == false else {
-                    self?.isApplyingSelectedImage = false
+                guard self?.isApplyingSelectedPicture == false else {
+                    self?.isApplyingSelectedPicture = false
                     return
                 }
                 
                 self?.isApplyingSelectedPhoto = true
                 self?.toolsPicturesViewModel.selectedImage = nil
-                self?.apply(image: image)
+                self?.apply(image: image, asset: self?.toolsPhotosViewModel.selectedAsset)
             }
             .store(in: &cancellables)
         
         toolsPicturesViewModel.$selectedImage
             .receive(on: DispatchQueue.main)
             .sink { [weak self] image in
-                guard self?.skipFirstSelectedImage == false else {
-                    self?.skipFirstSelectedImage = false
+                guard self?.skipSelectedPicture == false else {
+                    self?.skipSelectedPicture = false
                     return
                 }
                 
@@ -216,9 +216,9 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
                     return
                 }
                 
-                self?.isApplyingSelectedImage = true
+                self?.isApplyingSelectedPicture = true
                 self?.toolsPhotosViewModel.selectedImage = nil
-                self?.apply(image: image?.image)
+                self?.apply(image: image?.image, item: image)
             }
             .store(in: &cancellables)
     }
@@ -229,8 +229,8 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     
     private lazy var toolsColorsViewModel: ToolsColorsViewModel = .init()
     private lazy var toolsPhotosViewModel: ToolsPhotosViewModel = .init()
-    private lazy var toolsEmojisViewModel: ToolsEmojisViewModel = .init()
     private lazy var toolsPicturesViewModel: ToolsPicturesViewModel = .init(appSettings: appSettings, picturesFolderManager: picturesFolderManager)
+    private lazy var toolsEmojisViewModel: ToolsEmojisViewModel = .init()
     private lazy var webResourcesViewModel: WebResourcesViewModel = .init()
     
     @ViewBuilder
@@ -405,8 +405,15 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         let image = undoItems[currentUndoItem]
         dropZoneViewModel.update(from: image)
         
-        skipFirstSelectedColor = true
+        skipSelectedColor = true
         toolsColorsViewModel.selectedColor = image.customizations.selectedColor
+        
+        skipSelectedPhoto = true
+        toolsPhotosViewModel.selectedImage = image.customizations.selectedPicture
+        toolsPhotosViewModel.selectedAsset = image.customizations.selectedAsset
+        
+        skipSelectedPicture = true
+        toolsPicturesViewModel.selectedImage = image.customizations.selectedPictureItem
         
         updateHack.toggle()
     }

@@ -12,11 +12,15 @@ import DominantColor
 struct ImageCustomizationUndoDto {
     let selectedColor: NSColor?
     let selectedPicture: NSImage?
+    let selectedAsset: PhotoAsset?
+    let selectedPictureItem: PictureItem?
     let selectedEmoji: String?
     
-    init(selectedColor: NSColor? = nil, selectedPicture: NSImage? = nil, selectedEmoji: String? = nil) {
+    init(selectedColor: NSColor? = nil, selectedPicture: NSImage? = nil, selectedAsset: PhotoAsset? = nil, selectedPictureItem: PictureItem? = nil, selectedEmoji: String? = nil) {
         self.selectedColor = selectedColor
         self.selectedPicture = selectedPicture
+        self.selectedAsset = selectedAsset
+        self.selectedPictureItem = selectedPictureItem
         self.selectedEmoji = selectedEmoji
     }
 }
@@ -43,12 +47,14 @@ final class ImageCustomization {
     
     private var picturedImageState: [ImageDto.ImageSize: ImageState] = dummyImages
     private var selectedPicture: NSImage? = nil
+    private var selectedAsset: PhotoAsset? = nil
+    private var selectedPictureItem: PictureItem? = nil
     
     private var emojiedImageState: [ImageDto.ImageSize: ImageState] = dummyImages
     private var selectedEmoji: String? = nil
     
     var undoItems: ImageCustomizationUndoDto {
-        .init(selectedColor: selectedColor, selectedPicture: selectedPicture, selectedEmoji: selectedEmoji)
+        .init(selectedColor: selectedColor, selectedPicture: selectedPicture, selectedAsset: selectedAsset, selectedPictureItem: selectedPictureItem, selectedEmoji: selectedEmoji)
     }
     
     func update(from undoItem: ImageCustomizationUndoDto) {
@@ -82,8 +88,10 @@ final class ImageCustomization {
         }
     }
     
-    func apply(picture: NSImage?) async {
+    func apply(picture: NSImage?, asset: PhotoAsset? = nil, item: PictureItem? = nil) async {
         selectedPicture = picture
+        selectedAsset = asset
+        selectedPictureItem = item
         
         let newState: ImageState = picture != nil ? .dirty : .empty
         

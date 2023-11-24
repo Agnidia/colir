@@ -45,7 +45,7 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
     var imageSize = CGSize(width: 1024, height: 1024)
     var thumbnailSize = CGSize(width: 512, height: 512)
     
-    let cellCornerRadius: CGFloat = 8
+    private lazy var cellCornerRadius: CGFloat = viewSettings.cornerRadius!
     
     init() {
         self.photosAppManager = PhotoLibraryAccessManager()

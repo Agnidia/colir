@@ -40,7 +40,7 @@ struct ToolsPhotosViewDomain: DomainViewConstantType {
     }
     
     var cornerRadius: CGFloat? {
-        6
+        8
     }
     
     var background: Color {

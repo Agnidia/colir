@@ -40,18 +40,18 @@ final class ImageCustomization {
     }
     
     private var coloredImageState: [ImageDto.ImageSize: ImageState] = dummyImages
-    private var selectedColor: NSColor? = nil
+    private(set) var selectedColor: NSColor? = nil
     
     private let folderLines = NSImage(resource: .imgFolderLines)
     private let folderBottomShadow = NSImage(resource: .imgFolderBottomShadow)
     
     private var picturedImageState: [ImageDto.ImageSize: ImageState] = dummyImages
-    private var selectedPicture: NSImage? = nil
-    private var selectedAsset: PhotoAsset? = nil
-    private var selectedPictureItem: PictureItem? = nil
+    private(set) var selectedPicture: NSImage? = nil
+    private(set) var selectedAsset: PhotoAsset? = nil
+    private(set) var selectedPictureItem: PictureItem? = nil
     
     private var emojiedImageState: [ImageDto.ImageSize: ImageState] = dummyImages
-    private var selectedEmoji: Character? = nil
+    private(set) var selectedEmoji: Character? = nil
     
     var undoItems: ImageCustomizationUndoDto {
         .init(selectedColor: selectedColor, selectedPicture: selectedPicture, selectedAsset: selectedAsset, selectedPictureItem: selectedPictureItem, selectedEmoji: selectedEmoji)

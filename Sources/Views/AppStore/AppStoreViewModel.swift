@@ -22,6 +22,8 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
     
     private let completionHandler: Commons.EmptyClosure
     
+    @Published private(set) var displayOverlay = false
+    
     init(appStoreService: AppStoreProtocol, appSettings: AppSettingsProtocol, completion: @escaping Commons.EmptyClosure ) {
         self.appSettings = appSettings
         self.appStoreService = appStoreService
@@ -63,12 +65,17 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
         LazyHGrid(rows: rows, alignment: .center) {
             ForEach(products, id: \.self) { item in
                 Button {
+                    self.displayOverlay = true
                     Task {
                         do {
                             let result = try await self.appStoreService.purchase(item)
                             self.process(purchase: result)
                         } catch {
                             print(error.localizedDescription)
+                        }
+                        
+                        Task { @MainActor in
+                            self.displayOverlay = false
                         }
                     }
                 } label: {
@@ -102,10 +109,10 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
             }
         } label: {
             Text("Restore")
-                .padding(.init(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .padding(.init(top: 8, leading: 0, bottom: 8, trailing: 0))
+                .frame(width: AppStoreViewModel.buttonSize)
         }
-        .buttonStyle(.primary)
-        .padding(.init(top: 16, leading: 0, bottom: 32, trailing: 0))
+        .buttonStyle(.accent)
     }
     
     @ViewBuilder
@@ -114,10 +121,10 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
             self?.completionHandler()
         } label: {
             Text("Done")
-                .padding(.init(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .padding(.init(top: 8, leading: 0, bottom: 8, trailing: 0))
+                .frame(width: AppStoreViewModel.buttonSize)
         }
-        .buttonStyle(.primary)
-        .padding(.init(top: 16, leading: 0, bottom: 32, trailing: 0))
+        .buttonStyle(.accent)
     }
     
     private func process(purchase: PurchaseResult) {
@@ -133,8 +140,6 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
             case .fullAccessLifetime:
                 break
             case .fullAccess1Month:
-                break
-            case .fullAccess3Month:
                 break
             case .fullAccessYear:
                 break

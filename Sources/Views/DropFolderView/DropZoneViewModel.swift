@@ -75,7 +75,7 @@ final class DropZoneViewModel: ObservableObject {
             Rectangle()
                 .fill(.dropFolderViewBackgroundActive)
                 .opacity(enterZoneAnimationBackgroundOpacity)
-                .cornerRadius(8)
+                .cornerRadius(.radiusThin)
             
             if image.state == .none {
                 Image(systemName: "folder.badge.plus")
@@ -90,7 +90,7 @@ final class DropZoneViewModel: ObservableObject {
                 image.preview
                     .scaleEffect(enterZoneAnimationImageScale)
                     .animation(.spring(duration: ViewConstants.animation, bounce: 0.5), value: enterZoneAnimationImageScale)
-                    .padding(8)
+                    .padding(.paddingSmall)
             }
         }
     }
@@ -115,7 +115,7 @@ final class DropZoneViewModel: ObservableObject {
                 .animation(.spring(duration: ViewConstants.animation, bounce: 0.5), value: enterZoneAnimationTextScale)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondaryText)
-                .padding(40)
+                .padding(.paddingLarge)
                 .offset(x: -20, y: 24)
         }
     }

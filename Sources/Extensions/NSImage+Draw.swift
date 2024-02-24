@@ -22,7 +22,7 @@ extension NSImage {
     }
     
     func draw(emoji: Character) -> NSImage {
-        var fontScale: CGFloat = 1.8
+        var fontScale: CGFloat = 1.86
         var xOffset: CGFloat = (24 * size.width / 512)
         var yScale = 4.6
         if size.width == 32 {

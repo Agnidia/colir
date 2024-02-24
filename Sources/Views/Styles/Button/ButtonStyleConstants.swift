@@ -29,7 +29,7 @@ enum ButtonStyleConstants {
     
     static let backgroundAccentColor: Color = Color.accentBackgroundButton
     
-    static let backgroundAppStoreHoveredColor: Color = Color.appStoreHoveredButton
+    static let backgroundAppStoreHoveredColor: Color = Color.secondaryHoveredButton
     
-    static let backgroundAppStoreColor: Color = Color.appStoreBackgroundButton
+    static let backgroundAppStoreColor: Color = Color.secondaryBackgroundButton
 }

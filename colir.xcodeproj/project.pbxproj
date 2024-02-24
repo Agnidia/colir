@@ -45,10 +45,14 @@
 		A567602A2AF97D8200AD3008 /* ViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56760292AF97D8200AD3008 /* ViewConstants.swift */; };
 		A56811302B0FAFC600236EA8 /* ToolsColorsViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A568112F2B0FAFC600236EA8 /* ToolsColorsViewDomain.swift */; };
 		A568113B2B1109F200236EA8 /* ToolsEmojisViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A568113A2B1109F200236EA8 /* ToolsEmojisViewDomain.swift */; };
+		A56893292B8A6699001C0B94 /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56893282B8A6699001C0B94 /* NSColor+Hex.swift */; };
 		A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D7E2AEEFA8D0063FE06 /* SwiftCommons */; };
 		A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */; };
 		A5A00D842AEF011D0063FE06 /* PermissionsOverlayDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A00D832AEF011D0063FE06 /* PermissionsOverlayDomain.swift */; };
 		A5A00D8A2AEF0CDE0063FE06 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A00D872AEF0CDE0063FE06 /* PrimaryButtonStyle.swift */; };
+		A5A557BA2B8A50970092386B /* SwiftUICustomTagListView in Frameworks */ = {isa = PBXBuildFile; productRef = A5A557B92B8A50970092386B /* SwiftUICustomTagListView */; };
+		A5A557BD2B8A59C10092386B /* Double+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A557BB2B8A59C10092386B /* Double+Constants.swift */; };
+		A5A557BE2B8A59C10092386B /* CGFloat+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A557BC2B8A59C10092386B /* CGFloat+Constants.swift */; };
 		A5B68E512AB8DA08003C5FFA /* NSColor+List.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B68E502AB8DA08003C5FFA /* NSColor+List.swift */; };
 		A5B68E542AB8DBEC003C5FFA /* ToolsColorsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B68E532AB8DBEC003C5FFA /* ToolsColorsViewModel.swift */; };
 		A5BA1D1B2A81816E0014E276 /* geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A5BA1CDD2A81816E0014E276 /* geometry.cpp */; };
@@ -213,8 +217,11 @@
 		A56811362B0FD1F300236EA8 /* ColorWheelUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheelUtility.swift; sourceTree = "<group>"; };
 		A56811382B0FD55400236EA8 /* ColorWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheelView.swift; sourceTree = "<group>"; };
 		A568113A2B1109F200236EA8 /* ToolsEmojisViewDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsEmojisViewDomain.swift; sourceTree = "<group>"; };
+		A56893282B8A6699001C0B94 /* NSColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
 		A5A00D832AEF011D0063FE06 /* PermissionsOverlayDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsOverlayDomain.swift; sourceTree = "<group>"; };
 		A5A00D872AEF0CDE0063FE06 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
+		A5A557BB2B8A59C10092386B /* Double+Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Constants.swift"; sourceTree = "<group>"; };
+		A5A557BC2B8A59C10092386B /* CGFloat+Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Constants.swift"; sourceTree = "<group>"; };
 		A5B68E502AB8DA08003C5FFA /* NSColor+List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+List.swift"; sourceTree = "<group>"; };
 		A5B68E532AB8DBEC003C5FFA /* ToolsColorsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsColorsViewModel.swift; sourceTree = "<group>"; };
 		A5BA1CDD2A81816E0014E276 /* geometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = geometry.cpp; sourceTree = "<group>"; };
@@ -342,6 +349,7 @@
 				A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */,
 				A5E115F52AFFD70A0023A70C /* StoreKitPlus in Frameworks */,
 				A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */,
+				A5A557BA2B8A50970092386B /* SwiftUICustomTagListView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +470,8 @@
 		A504B8922A6D4920002A2C8B /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				A5A557BC2B8A59C10092386B /* CGFloat+Constants.swift */,
+				A5A557BB2B8A59C10092386B /* Double+Constants.swift */,
 				A504B8932A6D49D5002A2C8B /* AppCommons.swift */,
 			);
 			path = Constants;
@@ -830,6 +840,7 @@
 				A5E860F42AA6508900D2293B /* String+Emoji.swift */,
 				A5E115E92AFC105B0023A70C /* NSImage+CutPath.swift */,
 				A548507C2B0789610020A3FB /* String+Crypto.swift */,
+				A56893282B8A6699001C0B94 /* NSColor+Hex.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1050,6 +1061,7 @@
 				A5E115C42AFBDBB50023A70C /* DominantColor */,
 				A5E115EE2AFEA7760023A70C /* Throttler */,
 				A5E115F42AFFD70A0023A70C /* StoreKitPlus */,
+				A5A557B92B8A50970092386B /* SwiftUICustomTagListView */,
 			);
 			productName = colir;
 			productReference = A5F5CDF52A6D2BFB008AF959 /* colir.app */;
@@ -1131,6 +1143,7 @@
 				A5E115C32AFBDBB50023A70C /* XCRemoteSwiftPackageReference "DominantColor" */,
 				A5E115ED2AFEA7760023A70C /* XCRemoteSwiftPackageReference "Throttler" */,
 				A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreKitPlus" */,
+				A5A557B82B8A50970092386B /* XCRemoteSwiftPackageReference "SwiftUICustomTagListView" */,
 			);
 			productRefGroup = A5F5CDF62A6D2BFB008AF959 /* Products */;
 			projectDirPath = "";
@@ -1194,6 +1207,7 @@
 				A5E115F72B0001E20023A70C /* Application.swift in Sources */,
 				A5E860F32AA635DF00D2293B /* EmojisManager.swift in Sources */,
 				A5B68E542AB8DBEC003C5FFA /* ToolsColorsViewModel.swift in Sources */,
+				A56893292B8A6699001C0B94 /* NSColor+Hex.swift in Sources */,
 				A5CFFDFA2AA12BF200D6E7A9 /* ToolsEmojisView.swift in Sources */,
 				A515FF182AF6EE9D000F0C3B /* VisualEffectView.swift in Sources */,
 				A515FF1E2AF80BC6000F0C3B /* RGBA32.swift in Sources */,
@@ -1236,6 +1250,7 @@
 				A5A00D842AEF011D0063FE06 /* PermissionsOverlayDomain.swift in Sources */,
 				A5BA1D212A81816E0014E276 /* pict.cpp in Sources */,
 				A5BA1D332A81816E0014E276 /* data.cpp in Sources */,
+				A5A557BD2B8A59C10092386B /* Double+Constants.swift in Sources */,
 				A536DF172AD5A0F400B423EE /* PhotoAssetCollection.swift in Sources */,
 				A536DF152AD5A09700B423EE /* PhotoLibraryAlbumManager.swift in Sources */,
 				A5BA1D2B2A81816E0014E276 /* macroman.cpp in Sources */,
@@ -1259,6 +1274,7 @@
 				A5BA1D2F2A81816E0014E276 /* file.cpp in Sources */,
 				A5E115EA2AFC105B0023A70C /* NSImage+CutPath.swift in Sources */,
 				A5BA1D292A81816E0014E276 /* string.cpp in Sources */,
+				A5A557BE2B8A59C10092386B /* CGFloat+Constants.swift in Sources */,
 				A5E115C92AFBFEFC0023A70C /* NSImage+Draw.swift in Sources */,
 				A5FD59AE2ADBD935008503D3 /* WebResourcesView.swift in Sources */,
 				A5E115B52AFAAE940023A70C /* AppliedStylesView.swift in Sources */,
@@ -1466,6 +1482,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		A5A557B82B8A50970092386B /* XCRemoteSwiftPackageReference "SwiftUICustomTagListView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/IGRSoft/SwiftUICustomTagListView";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		A5E115C32AFBDBB50023A70C /* XCRemoteSwiftPackageReference "DominantColor" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/indragiek/DominantColor";
@@ -1502,6 +1526,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A5A00D802AEEFC7E0063FE06 /* XCRemoteSwiftPackageReference "SystemSettingsAccess" */;
 			productName = SystemSettingsAccess;
+		};
+		A5A557B92B8A50970092386B /* SwiftUICustomTagListView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5A557B82B8A50970092386B /* XCRemoteSwiftPackageReference "SwiftUICustomTagListView" */;
+			productName = SwiftUICustomTagListView;
 		};
 		A5E115C42AFBDBB50023A70C /* DominantColor */ = {
 			isa = XCSwiftPackageProductDependency;

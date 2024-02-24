@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "swiftuicustomtaglistview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/IGRSoft/SwiftUICustomTagListView",
+      "state" : {
+        "branch" : "main",
+        "revision" : "febb7ff4c2b0bb953cdf82627d85cad030f4407b"
+      }
+    },
+    {
       "identity" : "systemsettingsaccess",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/IGRSoft/SystemSettingsAccess",

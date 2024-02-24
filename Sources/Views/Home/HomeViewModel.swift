@@ -296,6 +296,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     } updateStateClosure: { [weak self] state in
         print("Set state to: \(state)")
         self?.customizingActionViewModel.update(state: state)
+        self?.appliedStylesViewModel.update(state: state, imageCustomization: (self?.dropZoneViewModel.image.customizations)!)
         if state == .ready, let dropZone = self?.dropZoneViewModel, let index = self?.currentUndoItem, let undoItems = self?.undoItems.prefix(index + 1) {
             self?.undoItems = Array(undoItems)
             self?.undoItems.append(dropZone.image.undoItems)
@@ -312,7 +313,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
             .modifier(Shake(animatableData: CGFloat(wrongAttempt)))
     }
     
-    private lazy var appliedStylesViewModel: AppliedStylesViewModel = .init()
+    private lazy var appliedStylesViewModel: AppliedStylesViewModel = .init(toolsColorsViewModel: toolsColorsViewModel, toolsPhotosViewModel: toolsPhotosViewModel, toolsPicturesViewModel: toolsPicturesViewModel, toolsEmojisViewModel: toolsEmojisViewModel)
     
     @ViewBuilder
     func appliedStylesView() -> some View {
@@ -361,6 +362,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
             )) {
                 AppStoreView()
                     .environmentObject(self.appStoreViewModel)
+                    .frame(height: 544)
             }
     }
     
@@ -449,6 +451,8 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         
         skipSelectedPicture = true
         toolsPicturesViewModel.selectedImage = image.customizations.selectedPictureItem
+        
+        appliedStylesViewModel.update(state: .none, imageCustomization: dropZoneViewModel.image.customizations)
         
         updateHack.toggle()
     }

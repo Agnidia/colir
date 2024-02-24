@@ -17,19 +17,17 @@ public enum AppProduct: String, CaseIterable, Equatable, ProductRepresentable {
     case add15Folder = "com.igrsoft.colir.15.folders.inapp"
     
     case fullAccessLifetime = "com.igrsoft.full.access.inapp"
-    
     case fullAccess1Month = "com.igrsoft.colir.full.access.month.subs"
-    case fullAccess3Month = "com.igrsoft.colir.full.access.3month.subs"
     case fullAccessYear = "com.igrsoft.colir.full.access.year.subs"
 
     public var id: String { rawValue }
     
     static var inAppPurchases: [AppProduct] {
-        [.fullAccessLifetime, .add1Folder, .add5Folder, .add15Folder]
+        [.add1Folder, .add5Folder, .add15Folder]
     }
     
     static var subscriptions: [AppProduct] {
-        [.fullAccessLifetime, .fullAccess1Month, .fullAccess3Month, .fullAccessYear]
+        [.fullAccessLifetime, .fullAccess1Month, .fullAccessYear]
     }
 }
 

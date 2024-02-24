@@ -14,9 +14,7 @@ struct AppliedStylesView: View {
     var body: some View {
         VStack(spacing:0) {
             
-            viewModel.progressView
-            
-            viewModel.actionButton
+            viewModel.tagsView
         }
         .padding(.horizontal, 16)
     }
@@ -25,7 +23,7 @@ struct AppliedStylesView: View {
 #Preview("AppliedStylesView") {
     VStack {
         AppliedStylesView()
-            .environmentObject(AppliedStylesViewModel(state: .none))
+            .environmentObject(AppliedStylesViewModel(state: .none, toolsColorsViewModel: ToolsColorsViewModel(), toolsPhotosViewModel: ToolsPhotosViewModel(), toolsPicturesViewModel: ToolsPicturesViewModel(appSettings: AppSettings.preview, picturesFolderManager: PicturesFolderManager.init(picturesDirectory: URL(string: "")!)), toolsEmojisViewModel: ToolsEmojisViewModel()))
         
         Divider()
         

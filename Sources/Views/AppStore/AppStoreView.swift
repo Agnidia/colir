@@ -22,11 +22,28 @@ struct AppStoreView: View {
             
             viewModel.inAppPurchasesList
             
-            viewModel.restoreButton
+            HStack {
+                viewModel.restoreButton
+                
+                Spacer()
+                
+                viewModel.closeButton
+            }
+            .padding(.init(top: 16, leading: 0, bottom: 0, trailing: 0))
             
-            viewModel.closeButton
+            Spacer()
         }
-        .padding(16)
+        .padding(.horizontal, 32)
+        .overlay {
+            if viewModel.displayOverlay {
+                ZStack {
+                    Rectangle()
+                        .fill(.background.opacity(0.8))
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                }
+            }
+        }
     }
 }
 

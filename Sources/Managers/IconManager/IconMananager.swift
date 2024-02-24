@@ -103,12 +103,15 @@ set theImage to (current application's NSImage's alloc()'s initWithContentsOfFil
 """
         var error: NSDictionary?
         if let scriptObject = NSAppleScript(source: myAppleScript) {
-            serialQueue.sync {
+            let semaphore = DispatchSemaphore(value: 0)
+            serialQueue.async {
                 let value = scriptObject.executeAndReturnError(&error).stringValue
                 if value != "true" {
-                    error = NSDictionary(object: K.scriptNotCreatedKey, forKey: NSAppleScript.errorMessage as NSCopying)
+                    error = NSDictionary(object: K.scriptNotExecutedKey, forKey: NSAppleScript.errorMessage as NSCopying)
                 }
+                semaphore.signal()
             }
+            semaphore.wait()
         } else {
             error = NSDictionary(object: K.scriptNotExecutedKey, forKey: NSAppleScript.errorMessage as NSCopying)
         }

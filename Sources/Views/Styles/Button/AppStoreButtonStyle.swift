@@ -67,7 +67,7 @@ extension ButtonStyle where Self == AppStoreButtonStyle {
                 .padding(ButtonStyleConstants.padding)
         })
         .buttonStyle(.appStore)
-        .padding()
+        .padding(.paddingDefault)
         .disabled(false)
         
         Button(action: {}, label: {
@@ -76,7 +76,7 @@ extension ButtonStyle where Self == AppStoreButtonStyle {
                 .padding(ButtonStyleConstants.padding)
         })
         .buttonStyle(.appStore)
-        .padding()
+        .padding(.paddingDefault)
         .disabled(true)
     }
 }

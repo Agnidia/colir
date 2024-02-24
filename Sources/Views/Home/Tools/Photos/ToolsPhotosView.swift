@@ -20,7 +20,7 @@ struct ToolsPhotosView: View {
                     viewModel.cell(for: item)
                 }
             }
-            .padding()
+            .padding(.paddingDefault)
         }
         .overlay(content: {
             viewModel.overlay

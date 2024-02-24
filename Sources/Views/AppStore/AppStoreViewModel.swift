@@ -92,7 +92,7 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
                         Text(info?.price ?? "")
                             .font(.body)
                     }
-                    .padding()
+                    .padding(.paddingDefault)
                     .frame(width: AppStoreViewModel.buttonSize, height: AppStoreViewModel.buttonSize)
                 }
                 .buttonStyle(.appStore)

@@ -18,7 +18,7 @@ struct ToolsPicturesView: View {
                     viewModel.cell(for: item)
                 }
             }
-            .padding()
+            .padding(.paddingDefault)
         }
         .task(viewModel.fetchImages)
     }

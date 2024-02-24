@@ -55,7 +55,7 @@ class CustomizingActionViewModel: ObservableObject, DomainViewConstantProtocol {
                 .padding(ButtonStyleConstants.padding)
         })
         .buttonStyle(.primary)
-        .padding()
+        .padding(.paddingDefault)
         .disabled(state != .ready)
     }
     

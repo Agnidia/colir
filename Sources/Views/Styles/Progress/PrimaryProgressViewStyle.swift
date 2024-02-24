@@ -126,5 +126,5 @@ extension ProgressViewStyle where Self == PrimaryProgressViewStyle {
         
     }
     .frame(width: 200)
-    .padding()
+    .padding(.paddingDefault)
 }

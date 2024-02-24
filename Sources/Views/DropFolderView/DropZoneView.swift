@@ -51,5 +51,5 @@ struct DropZoneView: View {
     DropZoneView()
         .environmentObject(DropZoneViewModel(fileClosure: {_ in}, updateStateClosure: {_ in}))
         .frame(width: 300, height: 300)
-        .padding()
+        .padding(.paddingDefault)
 }

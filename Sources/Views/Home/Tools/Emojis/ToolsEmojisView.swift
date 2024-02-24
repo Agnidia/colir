@@ -46,7 +46,7 @@ struct ToolsEmojisView: View {
                                     Text(String(char))
                                         .font(.system(size: fontSize))
                                         .frame(width: model.columnWidth, height: model.columnWidth, alignment: .center)
-                                        .padding()
+                                        .padding(.paddingDefault)
                                         .background(Color.accentColor.opacity(0.1))
                                         .foregroundColor(.white)
                                         .clipShape(RoundedRectangle(cornerRadius: model.cellCornerRadius))

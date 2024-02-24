@@ -30,25 +30,22 @@ struct PrimaryProgressViewStyle: ProgressViewStyle {
  
         GeometryReader { geometry in
  
-            HStack() {
-                
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .fill(Color(.systemGray))
-                    .frame(height: geometry.size.height)
-                    .frame(width: geometry.size.width)
-                    .overlay(alignment: .leading) {
-                        RoundedRectangle(cornerRadius: cornerRadius)
-                            .fill(gradient)
-                            .frame(width: geometry.size.width * progress)
-                            .overlay {
-                                if let currentValueLabel = configuration.currentValueLabel {
-                                    currentValueLabel
-                                        .font(labelFontStyle)
-                                        .foregroundColor(.white)
-                                }
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .fill(Color(.systemGray))
+                .frame(height: geometry.size.height)
+                .frame(width: geometry.size.width)
+                .overlay(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .fill(gradient)
+                        .frame(width: geometry.size.width * progress)
+                        .overlay {
+                            if let currentValueLabel = configuration.currentValueLabel {
+                                currentValueLabel
+                                    .font(labelFontStyle)
+                                    .foregroundColor(.white)
                             }
-                    }
-            }
+                        }
+                }
         }
     }
 }

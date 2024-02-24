@@ -71,7 +71,7 @@ class IconManager {
         process.launch()
         process.waitUntilExit()
         
-        if process.terminationStatus != 0 {
+        if process.terminationStatus != .zero {
             print("FAILED")
         }
         

@@ -99,7 +99,7 @@ internal class ColorWheelNSView: NSView {
         let point = CGPoint(x: abs(dirtyPoint.x), y: abs(dirtyPoint.y)) //convert for SwiftUI
         let indicator = getIndicatorCoordinate(point)
         let point2 = indicator.point
-        var color = (hue: CGFloat(0), saturation: CGFloat(0))
+        var color = (hue: .zero, saturation: .zero)
         if !indicator.isCenter  {
             color = hueSaturationAtPoint(CGPoint(x: point2.x * scale, y: point2.y * scale))
         }
@@ -133,21 +133,21 @@ internal class ColorWheelNSView: NSView {
         CFDataSetLength(bitmapData, CFIndex(bufferLength))
         let bitmap = CFDataGetMutableBytePtr(bitmapData)
         
-        for y in stride(from: CGFloat(0), to: dimension, by: CGFloat(1)) {
-            for x in stride(from: CGFloat(0), to: dimension, by: CGFloat(1)) {
-                var hsv: HSV = (hue: 0, saturation: 0, brightness: 0, alpha: 0)
-                var rgb: RGB = (red: 0, green: 0, blue: 0, alpha: 0)
+        for y in stride(from: CGFloat.zero, to: dimension, by: CGFloat(1)) {
+            for x in stride(from: CGFloat.zero, to: dimension, by: CGFloat(1)) {
+                var hsv: HSV = (hue: .zero, saturation: .zero, brightness: .zero, alpha: .zero)
+                var rgb: RGB = (red: .zero, green: .zero, blue: .zero, alpha: .zero)
                 
                 let color = hueSaturationAtPoint(CGPoint(x: x, y: y))
                 let hue = color.hue
                 let saturation = color.saturation
-                var a: CGFloat = 0.0
+                var a: CGFloat = .zero
                 if (saturation < 1.0) {
                     // Antialias the edge of the circle.
                     if (saturation > 0.99) {
                         a = (1.0 - saturation) * 100
                     } else {
-                        a = 1.0;
+                        a = 1.0
                     }
                     
                     hsv.hue = hue

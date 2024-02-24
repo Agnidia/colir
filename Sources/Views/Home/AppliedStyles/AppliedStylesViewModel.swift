@@ -127,7 +127,7 @@ struct SampleTagView: View {
         .foregroundColor(.white)
         .padding(.horizontal, .paddingSmall)
         .padding(.vertical, .paddingThin)
-        .background(.accent)
+        .background(.accentBackgroundButton.opacity(0.8))
         .cornerRadius(.radiusThin)
     }
 }

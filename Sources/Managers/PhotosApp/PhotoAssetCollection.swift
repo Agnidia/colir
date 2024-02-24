@@ -10,11 +10,11 @@ import Photos
 
 class PhotoAssetCollection: RandomAccessCollection {
     private(set) var fetchResult: PHFetchResult<PHAsset>
-    private var iteratorIndex: Int = 0
+    private var iteratorIndex: Int = .zero
     
     private var cache = [Int : PhotoAsset]()
     
-    var startIndex: Int { 0 }
+    var startIndex: Int { .zero }
     var endIndex: Int { fetchResult.count }
     
     init(_ fetchResult: PHFetchResult<PHAsset>) {

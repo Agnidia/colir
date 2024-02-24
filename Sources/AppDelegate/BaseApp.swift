@@ -25,7 +25,7 @@ struct BaseApp: App {
                         homeViewModel.apply(action: action)
                     }))
                 }
-                .searchable(text: $searchText)
+                //.searchable(text: $searchText)
         }
         .windowToolbarStyle(.unified(showsTitle: false))
         .commands {

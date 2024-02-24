@@ -15,20 +15,20 @@ extension NSBezierPath {
         let path = CGMutablePath()
         let points = UnsafeMutablePointer<NSPoint>.allocate(capacity: 3)
         
-        if elementCount > 0 {
+        if elementCount > .zero {
             var didClosePath = true
             
-            for index in 0..<elementCount {
+            for index in .zero..<elementCount {
                 let pathType = element(at: index, associatedPoints: points)
                 
                 switch pathType {
                 case .moveTo:
-                    path.move(to: points[0])
+                    path.move(to: points[.zero])
                 case .lineTo:
-                    path.addLine(to: points[0])
+                    path.addLine(to: points[.zero])
                     didClosePath = false
                 case .curveTo:
-                    path.addCurve(to: points[2], control1: points[0], control2: points[1])
+                    path.addCurve(to: points[2], control1: points[.zero], control2: points[1])
                     didClosePath = false
                 case .closePath:
                     path.closeSubpath()

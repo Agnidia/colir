@@ -47,7 +47,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     
     @Published private var tools: Tools
     
-    @Published var wrongAttempt: Int = 0
+    @Published var wrongAttempt: Int = .zero
     
     @Published var updateHack = true
     
@@ -308,7 +308,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     func iconFolderView() -> some View {
         DropZoneView()
             .environmentObject(dropZoneViewModel)
-            .padding(8)
+            .padding(.paddingSmall)
             .frame(width: width, height: width)
             .modifier(Shake(animatableData: CGFloat(wrongAttempt)))
     }
@@ -407,7 +407,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
             await dropZoneViewModel.image.updateOriginal(url: url, image: icon)
             
             undoItems.append(dropZoneViewModel.image.undoItems)
-            currentUndoItem = 0
+            currentUndoItem = .zero
             
             Task { @MainActor in
                 foldersUrls = [url]
@@ -416,7 +416,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     }
     
     private var undoItems: [ImageUndoDto] = .init()
-    private var currentUndoItem: Int = 0
+    private var currentUndoItem: Int = .zero
     
     private func add(index: Int) {
         self.currentUndoItem = index

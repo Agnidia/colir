@@ -30,7 +30,7 @@ struct ColorWheelView: NSViewRepresentable {
         colorWheel.delegate = context.coordinator
         context.coordinator.colorWheel = colorWheel
         
-        colorWheel.updateContents(hue: 0, saturation: 0, brightness: 1)
+        colorWheel.updateContents(hue: .zero, saturation: .zero, brightness: 1)
         
         return colorWheel
     }

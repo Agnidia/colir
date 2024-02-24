@@ -26,4 +26,8 @@ extension Double {
     // -- Animation ------------------------------------------
     
     static var animationDurationDefault: Self   { 0.3 }
+    
+    static var animationDurationFast: Self      { 0.15 }
+    
+    static var animationDurationSlow: Self      { 0.5 }
 }

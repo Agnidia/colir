@@ -19,7 +19,7 @@ struct HomeView: View {
         let _ = Self._printChanges()
 #endif
         
-        HStack(alignment: .top, spacing: 0) {
+        HStack(alignment: .top, spacing: .zero) {
             ZStack {
                 VStack {}
                     .visualEffect(material: .sidebar)
@@ -40,7 +40,7 @@ struct HomeView: View {
             .frame(minWidth: viewModel.width, maxWidth: viewModel.width, maxHeight: .infinity)
             
             Divider()
-                .padding(.vertical, 4)
+                .padding(.vertical, .paddingThin)
             
             VStack(alignment: .leading) {
                 viewModel.toolsView()

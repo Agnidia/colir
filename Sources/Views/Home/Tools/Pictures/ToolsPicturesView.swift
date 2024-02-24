@@ -13,7 +13,7 @@ struct ToolsPicturesView: View {
     
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: viewModel.columns, spacing: 16) {
+            LazyVGrid(columns: viewModel.columns, spacing: .spacingHeight) {
                 ForEach(viewModel.images, id: \.self) { item in
                     viewModel.cell(for: item)
                 }

@@ -149,7 +149,7 @@ final public class ImageDto: ObservableObject {
     private(set) var url: URL?
     
     @Published private(set) var state: ImageState = .none
-    @Published private(set) var progressValue: Float = 0 {
+    @Published private(set) var progressValue: Float = .zero {
         didSet {
             state = .processing(value: progressValue)
         }
@@ -183,7 +183,7 @@ final public class ImageDto: ObservableObject {
     }
     
     func prepareForUpdate() {
-        progressValue = 0
+        progressValue = .zero
     }
     
     func update(customizations: ImageCustomization) async throws {

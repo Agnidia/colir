@@ -49,6 +49,8 @@ extension CGFloat {
     
     static var spacingHeight: Self              { 16 }
     
+    static var spacingLarge: Self               { 32 }
+    
     // -- Opacity --------------------------------------------
     
     static var opacity100: Self                 { 1.0 }
@@ -58,6 +60,10 @@ extension CGFloat {
     // -- Animation ------------------------------------------
     
     static var animationDurationDefault: Self   { 0.3 }
+    
+    static var animationDurationFast: Self      { 0.15 }
+    
+    static var animationDurationSlow: Self      { 0.5 }
     
     // -- Frame ----------------------------------------------
     

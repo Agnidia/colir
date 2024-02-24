@@ -12,7 +12,7 @@ struct AppStoreView: View {
     @EnvironmentObject var viewModel: AppStoreViewModel
     
     var body: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: .spacingHeight) {
             
             viewModel.titleSubscription
             
@@ -29,11 +29,11 @@ struct AppStoreView: View {
                 
                 viewModel.closeButton
             }
-            .padding(.init(top: 16, leading: 0, bottom: 0, trailing: 0))
+            .padding(.init(top: .paddingDefault, leading: .zero, bottom: .zero, trailing: .zero))
             
             Spacer()
         }
-        .padding(.horizontal, 32)
+        .padding(.horizontal, .paddingLarge)
         .overlay {
             if viewModel.displayOverlay {
                 ZStack {

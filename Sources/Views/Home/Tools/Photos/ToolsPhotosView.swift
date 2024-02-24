@@ -15,7 +15,7 @@ struct ToolsPhotosView: View {
     
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: viewModel.cellWidth))], spacing: 16) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: viewModel.cellWidth))], spacing: .spacingHeight) {
                 ForEach(viewModel.photoLibraryAlbumManager.photoAssets) { item in
                     viewModel.cell(for: item)
                 }

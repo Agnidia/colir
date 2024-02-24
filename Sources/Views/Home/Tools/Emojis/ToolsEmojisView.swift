@@ -14,7 +14,7 @@ struct ToolsEmojisView: View {
     @EnvironmentObject var model: ToolsEmojisViewModel
     
     var body: some View {
-        let spacing: CGFloat = 8
+        let spacing: CGFloat = .spacingDefault
         let magicWidthOffset = model.columnWidth * 0.25
         let fontSize = model.columnWidth * 0.6
         

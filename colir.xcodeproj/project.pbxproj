@@ -42,7 +42,6 @@
 		A548507B2B077E9C0020A3FB /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507A2B077E9C0020A3FB /* TokenManager.swift */; };
 		A548507D2B0789610020A3FB /* String+Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507C2B0789610020A3FB /* String+Crypto.swift */; };
 		A548507F2B07C58F0020A3FB /* CryptoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507E2B07C58F0020A3FB /* CryptoModel.swift */; };
-		A567602A2AF97D8200AD3008 /* ViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56760292AF97D8200AD3008 /* ViewConstants.swift */; };
 		A56811302B0FAFC600236EA8 /* ToolsColorsViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A568112F2B0FAFC600236EA8 /* ToolsColorsViewDomain.swift */; };
 		A568113B2B1109F200236EA8 /* ToolsEmojisViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A568113A2B1109F200236EA8 /* ToolsEmojisViewDomain.swift */; };
 		A56893292B8A6699001C0B94 /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56893282B8A6699001C0B94 /* NSColor+Hex.swift */; };
@@ -210,7 +209,6 @@
 		A548507A2B077E9C0020A3FB /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		A548507C2B0789610020A3FB /* String+Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Crypto.swift"; sourceTree = "<group>"; };
 		A548507E2B07C58F0020A3FB /* CryptoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoModel.swift; sourceTree = "<group>"; };
-		A56760292AF97D8200AD3008 /* ViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConstants.swift; sourceTree = "<group>"; };
 		A568112F2B0FAFC600236EA8 /* ToolsColorsViewDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsColorsViewDomain.swift; sourceTree = "<group>"; };
 		A56811322B0FD0E900236EA8 /* ColorWheelNSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheelNSView.swift; sourceTree = "<group>"; };
 		A56811342B0FD17400236EA8 /* NSBezierPath+CGPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBezierPath+CGPath.swift"; sourceTree = "<group>"; };
@@ -443,7 +441,6 @@
 				A5A00D852AEF0CB40063FE06 /* Styles */,
 				A504B8A12A6F05D5002A2C8B /* Home */,
 				A504B89A2A6D8D41002A2C8B /* Toolbar */,
-				A56760292AF97D8200AD3008 /* ViewConstants.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1265,7 +1262,6 @@
 				A5E115AD2AFA76650023A70C /* DropZoneView.swift in Sources */,
 				A5BA1D2C2A81816E0014E276 /* resource.cpp in Sources */,
 				A5E115F22AFFD6EA0023A70C /* AppStoreService.swift in Sources */,
-				A567602A2AF97D8200AD3008 /* ViewConstants.swift in Sources */,
 				A504B8992A6D7AA7002A2C8B /* ToolbarView.swift in Sources */,
 				A5BA1D242A81816E0014E276 /* ppat.cpp in Sources */,
 				A50AF9622AF67704000C18AB /* DropZoneNSView+SwiftUI.swift in Sources */,

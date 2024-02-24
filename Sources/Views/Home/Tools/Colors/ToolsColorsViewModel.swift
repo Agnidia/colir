@@ -62,14 +62,14 @@ class ToolsColorsViewModel: ObservableObject, DomainViewConstantProtocol {
             ForEach(colorGroups.sorted(by: { $0.key < $1.key }), id: \.key) { groupKey, colors in
                 Section(header: Text(groupKey.capitalized)
                     .font(.headline)
-                    .padding(.top, 8)) {
+                    .padding(.top, .paddingSmall)) {
                         ForEach(colors, id: \.self) { color in
                             self.cell(for: color)
                         }
                     }
             }
         }
-        .padding(EdgeInsets(top: 0, leading: 16, bottom: 16, trailing: 16))
+        .padding(EdgeInsets(top: .zero, leading: .paddingDefault, bottom: .paddingDefault, trailing: .paddingDefault))
     }
     
     @ViewBuilder

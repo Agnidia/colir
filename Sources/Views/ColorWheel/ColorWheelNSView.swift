@@ -182,11 +182,11 @@ internal class ColorWheelNSView: NSView {
         let saturation: CGFloat = d
         
         var hue: CGFloat
-        if (d == 0) {
-            hue = 0;
+        if (d == .zero) {
+            hue = .zero;
         } else {
             hue = atan2(dy, dx) / Double.pi / 2.0
-            if hue < 0 {
+            if hue < .zero {
                 hue = hue + 1.0
             }
         }

@@ -22,19 +22,16 @@ struct PrimaryProgressViewStyle: ProgressViewStyle {
     
     var labelFontStyle: Font = .caption
     
-    var cornerRadius: CGFloat = 8
+    var cornerRadius: CGFloat = .radiusSmall
  
     func makeBody(configuration: Configuration) -> some View {
  
-        let progress = configuration.fractionCompleted ?? 0.0
+        let progress = configuration.fractionCompleted ?? .zero
  
         GeometryReader { geometry in
  
             HStack() {
- 
-                //configuration.label
-                    //.font(labelFontStyle)
- 
+                
                 RoundedRectangle(cornerRadius: cornerRadius)
                     .fill(Color(.systemGray))
                     .frame(height: geometry.size.height)

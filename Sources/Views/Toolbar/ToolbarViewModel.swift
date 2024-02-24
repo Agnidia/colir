@@ -67,7 +67,7 @@ final class ToolbarViewModel: ObservableObject {
                 Label(action.title, systemImage: action.icon)
                     .font(.title3)
             }
-            .background(RoundedRectangle(cornerRadius: 6)
+            .background(RoundedRectangle(cornerRadius: .radiusThin)
                 .fill(currentToolAction == action ? Color.accent.opacity(0.4) : .clear))
             .help(action.helpTitle)
         case .spacer:

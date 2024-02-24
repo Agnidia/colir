@@ -16,7 +16,7 @@ internal typealias HSV = (hue: Double, saturation: Double, brightness: Double, a
 
 internal func hsv2rgb(_ hsv: HSV) -> RGB {
     // Converts HSV to a RGB color
-    var rgb: RGB = (red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+    var rgb: RGB = (red: .zero, green: .zero, blue: .zero, alpha: .zero)
     var r: CGFloat
     var g: CGFloat
     var b: CGFloat
@@ -51,7 +51,7 @@ internal func hsv2rgb(_ hsv: HSV) -> RGB {
 
 internal func rgb2hsv(_ rgb: RGB) -> HSV {
     // Converts RGB to a HSV color
-    var hsb: HSV = (hue: 0.0, saturation: 0.0, brightness: 0.0, alpha: 0.0)
+    var hsb: HSV = (hue: .zero, saturation: .zero, brightness: .zero, alpha: .zero)
     
     let rd: CGFloat = rgb.red
     let gd: CGFloat = rgb.green
@@ -59,19 +59,19 @@ internal func rgb2hsv(_ rgb: RGB) -> HSV {
 
     let maxV: CGFloat = max(rd, max(gd, bd))
     let minV: CGFloat = min(rd, min(gd, bd))
-    var h: CGFloat = 0
-    var s: CGFloat = 0
+    var h: CGFloat = .zero
+    var s: CGFloat = .zero
     let b: CGFloat = maxV
     
     let d: CGFloat = maxV - minV
     
-    s = maxV == 0 ? 0 : d / minV;
+    s = maxV == .zero ? .zero : d / minV;
     
     if (maxV == minV) {
-        h = 0
+        h = .zero
     } else {
         if (maxV == rd) {
-            h = (gd - bd) / d + (gd < bd ? 6 : 0)
+            h = (gd - bd) / d + (gd < bd ? 6 : .zero)
         } else if (maxV == gd) {
             h = (bd - rd) / d + 2
         } else if (maxV == bd) {

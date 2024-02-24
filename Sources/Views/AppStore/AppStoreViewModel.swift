@@ -34,7 +34,7 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
     var titleSubscription: some View {
         Text(DomainViewConstantType.Localization.titleSubscription)
             .font(.title)
-            .padding(.top, 32)
+            .padding(.top, .paddingLarge)
     }
     
     private static var buttonSize: CGFloat = 150
@@ -52,7 +52,7 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
     var titleInAppPurchase: some View {
         Text(DomainViewConstantType.Localization.titleInAppPurchase)
             .font(.title)
-            .padding(.top, 16)
+            .padding(.top, .paddingDefault)
     }
     
     @ViewBuilder
@@ -87,7 +87,7 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
                         Text(info?.description ?? "")
                             .font(.body)
                             .multilineTextAlignment(.center)
-                            .padding(4)
+                            .padding(.paddingThin)
                         Spacer()
                         Text(info?.price ?? "")
                             .font(.body)
@@ -109,7 +109,7 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
             }
         } label: {
             Text("Restore")
-                .padding(.init(top: 8, leading: 0, bottom: 8, trailing: 0))
+                .padding(.init(top: .paddingSmall, leading: .zero, bottom: .paddingSmall, trailing: .zero))
                 .frame(width: AppStoreViewModel.buttonSize)
         }
         .buttonStyle(.accent)
@@ -121,7 +121,7 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
             self?.completionHandler()
         } label: {
             Text("Done")
-                .padding(.init(top: 8, leading: 0, bottom: 8, trailing: 0))
+                .padding(.init(top: .paddingSmall, leading: .zero, bottom: .paddingSmall, trailing: .zero))
                 .frame(width: AppStoreViewModel.buttonSize)
         }
         .buttonStyle(.accent)
@@ -156,7 +156,7 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
     }
     
     private func addExports(count: Int) {
-        let exportCount = (Int(appSettings.exportCount.value) ?? 0) + count
+        let exportCount = (Int(appSettings.exportCount.value) ?? .zero) + count
         appSettings.exportCount = CryptoModel(value: "\(exportCount)")
     }
 }

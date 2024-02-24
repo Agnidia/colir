@@ -30,7 +30,7 @@ class ToolsPicturesViewModel: ObservableObject {
     private let cellWidth: CGFloat = 192
     private let cellHeight: CGFloat = 128
     
-    private let cellCornerRadius: CGFloat = 8
+    private let cellCornerRadius: CGFloat = .radiusSmall
     
     init(appSettings: AppSettingsProtocol, picturesFolderManager: PicturesFolderManagerProtocol) {
         self.picturesFolderPath = appSettings.userPicturesPath
@@ -59,7 +59,7 @@ class ToolsPicturesViewModel: ObservableObject {
                         Image(systemName: "checkmark.circle.fill")
                             .symbolRenderingMode(.multicolor)
                             .font(.title)
-                            .padding(8)
+                            .padding(.paddingSmall)
                     }
                 }
             )

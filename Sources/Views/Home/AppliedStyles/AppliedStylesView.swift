@@ -12,11 +12,11 @@ struct AppliedStylesView: View {
     @EnvironmentObject var viewModel: AppliedStylesViewModel
     
     var body: some View {
-        VStack(spacing:0) {
+        VStack(spacing: .zero) {
             
             viewModel.tagsView
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, .paddingDefault)
     }
 }
 
@@ -26,7 +26,6 @@ struct AppliedStylesView: View {
             .environmentObject(AppliedStylesViewModel(state: .none, toolsColorsViewModel: ToolsColorsViewModel(), toolsPhotosViewModel: ToolsPhotosViewModel(), toolsPicturesViewModel: ToolsPicturesViewModel(appSettings: AppSettings.preview, picturesFolderManager: PicturesFolderManager.init(picturesDirectory: URL(string: "")!)), toolsEmojisViewModel: ToolsEmojisViewModel()))
         
         Divider()
-        
         
         Spacer()
     }

@@ -24,11 +24,11 @@ struct ToolsPhotosViewDomain: DomainViewConstantType {
     }
     
     var padding: EdgeInsets {
-        .init(top: 8, leading: 8, bottom: 8, trailing: 8)
+        .init(top: .paddingSmall, leading: .paddingSmall, bottom: .paddingSmall, trailing: .paddingSmall)
     }
     
     var spacing: CGFloat? {
-        32
+        .spacingLarge
     }
     
     var border: CGFloat? {
@@ -40,7 +40,7 @@ struct ToolsPhotosViewDomain: DomainViewConstantType {
     }
     
     var cornerRadius: CGFloat? {
-        8
+        .radiusThin
     }
     
     var background: Color {

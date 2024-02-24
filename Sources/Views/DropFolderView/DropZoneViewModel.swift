@@ -31,7 +31,7 @@ final class DropZoneViewModel: ObservableObject {
     @Published var isEnterZone: Bool = false
     @Published private var enterZoneAnimationTextScale = 1.0
     @Published private var enterZoneAnimationImageScale = 1.0
-    @Published private var enterZoneAnimationBackgroundOpacity = 0.0
+    @Published private var enterZoneAnimationBackgroundOpacity: CGFloat = .opacity0
     
     init(fileClosure: @escaping FilesClosure, updateStateClosure: @escaping UpdateStateClosure) {
         self.fileClosure = fileClosure
@@ -82,14 +82,14 @@ final class DropZoneViewModel: ObservableObject {
                     .resizable()
                     .symbolRenderingMode(.multicolor)
                     .scaleEffect(enterZoneAnimationImageScale)
-                    .animation(.spring(duration: ViewConstants.animation, bounce: 0.5), value: enterZoneAnimationImageScale)
+                    .animation(.spring(duration: .animationDurationDefault, bounce: 0.5), value: enterZoneAnimationImageScale)
                     .fontWeight(.thin)
                     .aspectRatio(contentMode: .fit)
-                    .padding(.init(top: 8, leading: 8, bottom: 8, trailing: 4))
+                    .padding(.init(top: .paddingSmall, leading: .paddingSmall, bottom: .paddingSmall, trailing: .paddingThin))
             } else {
                 image.preview
                     .scaleEffect(enterZoneAnimationImageScale)
-                    .animation(.spring(duration: ViewConstants.animation, bounce: 0.5), value: enterZoneAnimationImageScale)
+                    .animation(.spring(duration: .animationDurationDefault, bounce: 0.5), value: enterZoneAnimationImageScale)
                     .padding(.paddingSmall)
             }
         }
@@ -112,7 +112,7 @@ final class DropZoneViewModel: ObservableObject {
             Text(overlayText)
                 .font(.title)
                 .scaleEffect(enterZoneAnimationTextScale)
-                .animation(.spring(duration: ViewConstants.animation, bounce: 0.5), value: enterZoneAnimationTextScale)
+                .animation(.spring(duration: .animationDurationDefault, bounce: 0.5), value: enterZoneAnimationTextScale)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondaryText)
                 .padding(.paddingLarge)
@@ -142,7 +142,7 @@ final class DropZoneViewModel: ObservableObject {
             
             enterZoneAnimationTextScale = 1
             enterZoneAnimationImageScale = 1
-            enterZoneAnimationBackgroundOpacity = 0
+            enterZoneAnimationBackgroundOpacity = .zero
             
             return
         }
@@ -154,7 +154,7 @@ final class DropZoneViewModel: ObservableObject {
             enterZoneAnimationImageScale += 0.1
             enterZoneAnimationBackgroundOpacity += 0.1
             
-            let animationDuration = ViewConstants.animation / 2
+            let animationDuration: Double = .animationDurationFast
             
             DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) { [weak self] in
                 self?.enterZoneAnimationTextScale -= 0.17
@@ -164,7 +164,7 @@ final class DropZoneViewModel: ObservableObject {
                     if self?.enterZoneAnimationImageScale != 1 {
                         self?.enterZoneAnimationImageScale = 1
                     }
-                    if self?.enterZoneAnimationBackgroundOpacity != 0 {
+                    if self?.enterZoneAnimationBackgroundOpacity != .zero {
                         self?.enterZoneAnimationBackgroundOpacity = 1
                     }
                 }

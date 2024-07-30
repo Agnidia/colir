@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+/// A SwiftUI view that presents the app store interface for subscriptions and in-app purchases.
 struct AppStoreView: View {
     @EnvironmentObject var viewModel: AppStoreViewModel
     
@@ -42,6 +43,7 @@ struct AppStoreView: View {
                     ProgressView()
                         .progressViewStyle(.circular)
                 }
+                .edgesIgnoringSafeArea(.all) // Ensure overlay covers the entire view
             }
         }
     }
@@ -50,7 +52,11 @@ struct AppStoreView: View {
 #Preview("AppStoreView") {
     VStack {
         AppStoreView()
-            .environmentObject(AppStoreViewModel(appStoreService: AppStorePreview(), appSettings: AppSettings.preview, completion: {}))
+            .environmentObject(AppStoreViewModel(
+                appStoreService: AppStorePreview(),
+                appSettings: AppSettings.preview,
+                completion: {}
+            ))
     }
     .frame(width: 236, height: 450)
 }

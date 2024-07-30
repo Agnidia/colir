@@ -8,22 +8,30 @@
 
 import SwiftUI
 
+/// A custom `ProgressViewStyle` that displays a progress bar with a gradient and customizable styling.
 struct PrimaryProgressViewStyle: ProgressViewStyle {
     
+    /// Colors used for the gradient of the progress bar.
     private static let hueColors = stride(from: 0, to: 1, by: 0.1).map {
         Color(hue: $0, saturation: 1, brightness: 1)
     }
     
+    /// Gradient used for the progress bar fill.
     private var gradient = LinearGradient(
         gradient: Gradient(colors: hueColors),
         startPoint: .leading,
         endPoint: .trailing
     )
     
+    /// The font style used for the progress label.
     var labelFontStyle: Font = .caption
     
+    /// The corner radius of the progress bar.
     var cornerRadius: CGFloat = .radiusSmall
  
+    /// Creates and configures the body of the progress view.
+    /// - Parameter configuration: The configuration for the progress view.
+    /// - Returns: A view representing the progress bar with a gradient fill.
     func makeBody(configuration: Configuration) -> some View {
  
         let progress = configuration.fractionCompleted ?? .zero
@@ -52,15 +60,18 @@ struct PrimaryProgressViewStyle: ProgressViewStyle {
 
 extension ProgressViewStyle where Self == PrimaryProgressViewStyle {
     
-    /// A button style that doesn't apply a border.
+    /// A static instance of `PrimaryProgressViewStyle` for use with `ProgressView`.
     ///
-    /// To apply this style to a button, or to a view that contains buttons, use
-    /// the ``View/buttonStyle(_:)-66fbx`` modifier.
+    /// This style applies a gradient to the progress bar and provides default settings
+    /// for the progress view's appearance.
     ///
-    /// On tvOS, this button style adds a default hover effect to the first
-    /// image of the button's content, if one exists. You can supply a different
-    /// hover effect by using the ``View/hoverEffect(_:)`` modifier in the
-    /// button's label.
+    /// To apply this style to a progress view, use the `progressViewStyle(_:)` modifier.
+    ///
+    /// Example:
+    /// ```swift
+    /// ProgressView(value: 0.5, total: 1.0)
+    ///     .progressViewStyle(.primary)
+    /// ```
     static var primary: PrimaryProgressViewStyle {
         .init()
     }

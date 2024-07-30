@@ -13,6 +13,11 @@ extension NSOpenPanel {
         static let promptButton = "Choose"
     }
     
+    /// Prompts the user to grant access to a specific directory.
+    /// - Parameters:
+    ///   - dir: The initial URL of the directory to prompt for access.
+    ///   - message: The message to display in the open panel.
+    /// - Returns: The URL of the directory if access is granted; otherwise, `nil`.
     static func promptPermission(to dir: URL, message: String) -> URL? {
         let openPanel = NSOpenPanel()
         openPanel.message = message

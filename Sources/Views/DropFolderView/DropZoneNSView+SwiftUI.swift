@@ -9,50 +9,52 @@
 import SwiftUI
 
 public extension DropZoneNSView {
-    /// A SwiftUI wrapper for DropFolderView
+    /// A SwiftUI wrapper for DropZoneNSView
     struct SwiftUI {
         public typealias NSViewType = DropZoneNSView
         
-        // MARK: Types
+        // MARK: - Types
         
-        /// User has dragged files into the view and require drop validation. Return the drag operation supported for the dragged files,
-        /// or [] to disallow the drag.
+        /// Closure for validating files being dragged into the view.
+        /// - Parameter urls: The dragged file URLs.
+        /// - Returns: The drag operation supported for the dragged files.
         public typealias ValidateFuncType = (([URL]) -> NSDragOperation)
         
-        /// Files dropped callback block. Return true if the block has successfully handled the drop, false otherwise.
+        /// Closure for handling files dropped on the view.
+        /// - Parameter urls: The dropped file URLs.
+        /// - Returns: `true` if the drop was successfully handled, `false` otherwise.
         public typealias DropFuncType = (([URL]) -> Bool)
         
-        /// Select files callback type
+        /// Closure for handling the 'select files' button click.
         public typealias SelectFuncType = (() -> Void)
         
-        /// Select files callback type
+        /// Closure for handling entry/exit of the drop zone.
+        /// - Parameter isEntering: `true` if entering the zone, `false` if exiting.
         public typealias ZoneFuncType = ((Bool) -> Void)
         
         // MARK: - Properties
         
-        /// Enable or disable the control
+        /// Determines if the control is enabled.
         public let isEnabled: Bool
         
-        /// Allow dropping multiple files
+        /// Allows dropping multiple files.
         public let allowsMultipleDrop: Bool
         
         // MARK: - Callbacks
         
-        /// Called when the user drags some files into the view.
+        /// Callback for when files are dragged into the view.
         public let validateFiles: ValidateFuncType?
         
-        /// Called when the user drops files on the view
+        /// Callback for when files are dropped on the view.
         public let dropFiles: DropFuncType?
         
-        /// Called when the user clicks the 'select files' button
+        /// Callback for the 'select files' button click.
         public let selectFiles: SelectFuncType?
         
-        /// Called when the user clicks the 'select files' button
+        /// Callback for when the drop zone is entered or exited.
         public let enterZone: ZoneFuncType?
         
-        /// Initializer
-        ///
-        /// Needs to be provided as (by default) a default initializer is marked as internal
+        /// Initializer for setting up the SwiftUI wrapper.
         public init(
             isEnabled: Bool = true,
             allowsMultipleDrop: Bool = true,
@@ -73,10 +75,7 @@ public extension DropZoneNSView {
 
 // MARK: - Coordinator
 
-/// Convenience function for optionally updating a value
-/// - Parameters:
-///   - result: The property to optionally update if 'val' is not equal to its value
-///   - val: The value to check against
+/// Convenience function for updating a value if it differs from the existing value.
 @inlinable internal func UpdateIfNotEqual<T>(_ result: inout T, _ val: T) where T: Equatable {
     guard result != val else { return }
     result = val
@@ -95,27 +94,28 @@ extension DropZoneNSView.SwiftUI: NSViewRepresentable {
         return view
     }
     
-    public func updateNSView(_ nsView: DropZoneNSView, context _: Context) {
+    public func updateNSView(_ nsView: DropZoneNSView, context: Context) {
         UpdateIfNotEqual(&nsView.isEnabled, self.isEnabled)
         UpdateIfNotEqual(&nsView.allowsMultipleDrop, self.allowsMultipleDrop)
     }
 }
 
-// MARK: - Delegate handling
+// MARK: - Delegate Handling
 
 public extension DropZoneNSView.SwiftUI {
     class Coordinator: NSObject, DropZoneViewProtocol {
+        let parent: DropZoneNSView.SwiftUI
+        
+        init(_ dropView: DropZoneNSView.SwiftUI) {
+            self.parent = dropView
+        }
+        
         public func dropFilesViewEnterZone(_ sender: DropZoneNSView) {
             self.parent.enterZone?(true)
         }
         
         public func dropFilesViewExitZone(_ sender: DropZoneNSView) {
             self.parent.enterZone?(false)
-        }
-        
-        let parent: DropZoneNSView.SwiftUI
-        init(_ dropView: DropZoneNSView.SwiftUI) {
-            self.parent = dropView
         }
         
         public func dropFilesView(_: DropZoneNSView, validateFiles: [URL]) -> NSDragOperation {

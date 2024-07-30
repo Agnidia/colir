@@ -10,61 +10,70 @@ import AppKit
 
 public extension NSImage {
     
-    // alpha - source color, which is must be replaced
-    // value - value in range from 0 to 255
+    /// Adjusts the alpha value of the image's pixels.
+    ///
+    /// - Parameter value: The new alpha value, ranging from 0 to 255.
+    /// - Returns: A new `NSImage` instance with the adjusted alpha values, or `nil` if the image could not be processed.
     func alpha(value: UInt8) -> NSImage? {
         guard let imageRef = self.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
             return nil
         }
         
         /// Graphics context parameters
-        
         let bitsPerComponent = 8
         let colorspace = CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = RGBA32.bitmapInfo
         let width = imageRef.width
         let height = imageRef.height
         
-        // back image
+        // Back image
         
         let backImageBytesPerRow = width * 4
         let backImagePixelCount = width * height
-        let contextBackImage = CGContext(data: nil,
+        guard let contextBackImage = CGContext(data: nil,
+                                               width: width,
+                                               height: height,
+                                               bitsPerComponent: bitsPerComponent,
+                                               bytesPerRow: backImageBytesPerRow,
+                                               space: colorspace,
+                                               bitmapInfo: bitmapInfo) else {
+            return nil
+        }
+        
+        guard let dataBackImage = contextBackImage.data else {
+            print("alpha: Unable to get back image buffer")
+            return nil
+        }
+        
+        let bufferBackImage = dataBackImage.bindMemory(to: RGBA32.self, capacity: backImagePixelCount)
+        contextBackImage.draw(imageRef, in: CGRect(x: .zero, y: .zero, width: width, height: height))
+        
+        // Adjust alpha values in the image
+        
+        for offset in .zero..<backImagePixelCount {
+            let color = bufferBackImage[offset]
+            bufferBackImage[offset] = RGBA32(
+                red: color.redComponent,
+                green: color.greenComponent,
+                blue: color.blueComponent,
+                alpha: UInt8(Float(color.alphaComponent) * Float(value) / 255)
+            )
+        }
+        
+        // Retrieve image from memory context
+        
+        guard let imgContext = CGContext(data: bufferBackImage,
                                          width: width,
                                          height: height,
                                          bitsPerComponent: bitsPerComponent,
                                          bytesPerRow: backImageBytesPerRow,
                                          space: colorspace,
-                                         bitmapInfo: bitmapInfo)
-        
-        guard let dataBackImage = contextBackImage?.data else {
-            print("replaceColor: Unable to get back image buffer")
+                                         bitmapInfo: bitmapInfo),
+              let finalCGImage = imgContext.makeImage() else {
             return nil
         }
-        let bufferBackImage = dataBackImage.bindMemory(to: RGBA32.self, capacity: width * height)
-        contextBackImage!.draw(imageRef, in: CGRect(x: 0, y: 0, width: width, height: height))
         
-        // front image
-        
-        // Prepare to iterate over image pixels
-        
-        for offset in 0..<backImagePixelCount {
-            let color = bufferBackImage[offset]
-            
-            bufferBackImage[offset] = RGBA32(red: color.redComponent, green: color.greenComponent, blue: color.blueComponent, alpha: UInt8(Float(color.alphaComponent) * Float(value) / 255) )
-        }
-        
-        // Retrieve image from memory context
-        
-        let img = CGContext(data: bufferBackImage,
-                            width: width,
-                            height: height,
-                            bitsPerComponent: bitsPerComponent,
-                            bytesPerRow: backImageBytesPerRow,
-                            space: colorspace,
-                            bitmapInfo: bitmapInfo)
-        
-        let finalImage = NSImage(cgImage: (img?.makeImage()!)!, size: .init(width: width, height: height))
+        let finalImage = NSImage(cgImage: finalCGImage, size: .init(width: width, height: height))
         return finalImage
     }
 }

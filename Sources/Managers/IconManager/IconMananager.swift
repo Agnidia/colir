@@ -9,6 +9,7 @@
 import AppKit
 import CoreServices
 
+/// Errors that may occur in the `IconManager` class.
 enum IconManagerError: Error {
     case missedData
     case dummyFileNotCreated
@@ -17,7 +18,9 @@ enum IconManagerError: Error {
     case scriptError(String)
 }
 
+/// Manages the creation and setting of application icons.
 class IconManager {
+    
     private enum K {
         static let iconsetName = "icon.iconset"
         static let icnsName = "icon.icns"
@@ -32,6 +35,11 @@ class IconManager {
     private lazy var fs = FileManager.default
     private let serialQueue = DispatchQueue.global()
     
+    /// Creates an icon set directory and writes out all the icon files.
+    /// - Parameters:
+    ///   - images: An array of `NSImage` objects to be used for creating the icon set.
+    ///   - url: The URL where the icon set directory will be created.
+    /// - Throws: An error if the directory or files could not be created.
     private func createIconSet(for images: [NSImage], to url: URL) throws {
         // Create the iconset directory
         try fs.createDirectory(at: url, withIntermediateDirectories: true)
@@ -50,6 +58,10 @@ class IconManager {
         }
     }
     
+    /// Converts an array of images into ICNS format.
+    /// - Parameter images: An array of `NSImage` objects to be converted.
+    /// - Returns: A `Data` object representing the ICNS file.
+    /// - Throws: An error if the conversion process fails.
     func convertImagesToIcns(_ images: [NSImage]) throws -> Data {
         let tmpDir = fs.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         let iconSetURL = tmpDir.appendingPathComponent(K.iconsetName)
@@ -58,7 +70,7 @@ class IconManager {
         // Get the iconset of all the sized images
         try self.createIconSet(for: images, to: iconSetURL)
         
-        // Now we need to convert to an icns
+        // Convert to an ICNS file
         let process = Process()
         let pipe = Pipe()
         
@@ -80,6 +92,11 @@ class IconManager {
         return data
     }
     
+    /// Sets the provided icon data to the specified file path.
+    /// - Parameters:
+    ///   - data: A `Data` object containing the ICNS data to be set as the icon.
+    ///   - path: The URL of the file to which the icon will be applied.
+    /// - Throws: An error if the icon file could not be created or if the AppleScript failed.
     func setIcon(data: Data, to path: URL) throws {
         let filePath = fs.temporaryDirectory.appendingPathComponent(K.icnsName)
         

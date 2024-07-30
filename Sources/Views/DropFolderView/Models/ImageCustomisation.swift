@@ -9,7 +9,8 @@
 import AppKit
 import DominantColor
 
-struct ImageCustomizationUndoDto {
+/// A data transfer object for storing the state of image customizations for undo functionality.
+struct ImageCustomisationUndoDto {
     let selectedColor: NSColor?
     let selectedPicture: NSImage?
     let selectedAsset: PhotoAsset?
@@ -25,8 +26,9 @@ struct ImageCustomizationUndoDto {
     }
 }
 
-final class ImageCustomization {
+final class ImageCustomisation {
     
+    /// Represents the different states an image can be in during customization.
     enum ImageState {
         case empty
         case dirty
@@ -53,16 +55,23 @@ final class ImageCustomization {
     private var emojiedImageState: [ImageDto.ImageSize: ImageState] = dummyImages
     private(set) var selectedEmoji: Character? = nil
     
-    var undoItems: ImageCustomizationUndoDto {
+    /// Returns the current state of customizations for undo functionality.
+    var undoItems: ImageCustomisationUndoDto {
         .init(selectedColor: selectedColor, selectedPicture: selectedPicture, selectedAsset: selectedAsset, selectedPictureItem: selectedPictureItem, selectedEmoji: selectedEmoji)
     }
     
-    func update(from undoItem: ImageCustomizationUndoDto) {
+    /// Updates the customization properties from the provided undo item.
+    ///
+    /// - Parameter undoItem: The undo data to apply.
+    func update(from undoItem: ImageCustomisationUndoDto) {
         selectedColor = undoItem.selectedColor
         selectedPicture = undoItem.selectedPicture
         selectedEmoji = undoItem.selectedEmoji
     }
     
+    /// Applies a color to the image customizations.
+    ///
+    /// - Parameter color: The color to apply.
     func apply(color: NSColor?) async {
         selectedColor = color
         
@@ -73,6 +82,13 @@ final class ImageCustomization {
         emojiedImageState.keys.forEach { emojiedImageState[$0] = .dirty }
     }
     
+    /// Updates the color of the image based on the selected color.
+    ///
+    /// - Parameters:
+    ///   - image: The original image to be updated.
+    ///   - size: The size of the image being processed.
+    ///   - updatedImage: The previously updated image.
+    /// - Returns: The updated image with the applied color.
     func updateColor(for image: NSImage, size: ImageDto.ImageSize, updatedImage: NSImage) async -> NSImage {
         switch coloredImageState[size] {
         case .empty:
@@ -88,6 +104,12 @@ final class ImageCustomization {
         }
     }
     
+    /// Applies a picture, asset, and item to the image customizations.
+    ///
+    /// - Parameters:
+    ///   - picture: The picture to apply.
+    ///   - asset: An optional photo asset to associate with the picture.
+    ///   - item: An optional picture item to associate with the picture.
     func apply(picture: NSImage?, asset: PhotoAsset? = nil, item: PictureItem? = nil) async {
         selectedPicture = picture
         selectedAsset = asset
@@ -99,6 +121,13 @@ final class ImageCustomization {
         emojiedImageState.keys.forEach { emojiedImageState[$0] = .dirty }
     }
     
+    /// Updates the picture of the image based on the selected picture.
+    ///
+    /// - Parameters:
+    ///   - image: The original image to be updated.
+    ///   - size: The size of the image being processed.
+    ///   - updatedImage: The previously updated image.
+    /// - Returns: The updated image with the applied picture.
     func updatePicture(for image: NSImage, size: ImageDto.ImageSize, updatedImage: NSImage) async -> NSImage {
         switch picturedImageState[size] {
         case .empty:
@@ -115,7 +144,7 @@ final class ImageCustomization {
             let lines = folderLines.scaled(to: scaleSize)
             newImage = update(image: newImage, with: lines)
             
-            let shadow = folderLines.scaled(to: scaleSize)
+            let shadow = folderBottomShadow.scaled(to: scaleSize)
             newImage = update(image: newImage, with: shadow)
             
             return newImage
@@ -126,6 +155,9 @@ final class ImageCustomization {
         }
     }
     
+    /// Applies an emoji to the image customizations.
+    ///
+    /// - Parameter emoji: The emoji to apply.
     func apply(emoji: Character?) async {
         selectedEmoji = emoji
         
@@ -133,6 +165,13 @@ final class ImageCustomization {
         emojiedImageState.keys.forEach { emojiedImageState[$0] = newState }
     }
     
+    /// Updates the image with the selected emoji.
+    ///
+    /// - Parameters:
+    ///   - image: The original image to be updated.
+    ///   - size: The size of the image being processed.
+    ///   - updatedImage: The previously updated image.
+    /// - Returns: The updated image with the applied emoji.
     func updateEmoji(for image: NSImage, size: ImageDto.ImageSize, updatedImage: NSImage) async -> NSImage {
         switch emojiedImageState[size] {
         case .empty:
@@ -148,8 +187,13 @@ final class ImageCustomization {
         }
     }
     
+    /// Applies a color tint to the image.
+    ///
+    /// - Parameters:
+    ///   - color: The color to apply.
+    ///   - image: The original image to be updated.
+    /// - Returns: The image with the applied color tint.
     private func update(color: NSColor, for image: NSImage) -> NSImage {
-        
         let dominantColors = image.dominantColors()
         guard let mainColor = dominantColors.first else {
             return image
@@ -162,10 +206,16 @@ final class ImageCustomization {
         return newImage
     }
     
+    /// Draws an image on top of another image.
+    ///
+    /// - Parameters:
+    ///   - image: The original image.
+    ///   - img: The image to draw on top.
+    /// - Returns: The combined image.
     private func update(image: NSImage, with img: NSImage) -> NSImage {
         var point: CGPoint = .zero
         
-        // magic offset for small images
+        // Adjust offset for small images
         if img.size.width < 255 {
             point = .init(x: .zero, y: -1)
         }
@@ -173,9 +223,14 @@ final class ImageCustomization {
         return image.draw(image: img, at: point)
     }
     
+    /// Draws an emoji on top of an image.
+    ///
+    /// - Parameters:
+    ///   - image: The original image.
+    ///   - emoji: The emoji to draw.
+    /// - Returns: The image with the applied emoji.
     private func update(image: NSImage, with emoji: Character) -> NSImage {
-        //TODO: add logic
-        
+        // TODO: Add logic for drawing emoji
         return image.draw(emoji: emoji)
     }
 }

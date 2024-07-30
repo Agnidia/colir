@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+///The Shake struct you’ve provided is a custom GeometryEffect in SwiftUI used to create a shaking animation effect.
+///This effect translates a view horizontally based on a sinusoidal function, creating the appearance of a shake.
 struct Shake: GeometryEffect {
     var amount: CGFloat = 10
     var shakesPerUnit = 3

@@ -9,44 +9,58 @@
 import AppKit
 import SwiftUI
 
+/// An `EnvironmentKey` for specifying the material type of a visual effect view.
 struct VisualEffectMaterialKey: EnvironmentKey {
     typealias Value = NSVisualEffectView.Material?
     static var defaultValue: Value = nil
 }
 
+/// An `EnvironmentKey` for specifying the blending mode of a visual effect view.
 struct VisualEffectBlendingKey: EnvironmentKey {
     typealias Value = NSVisualEffectView.BlendingMode?
     static var defaultValue: Value = nil
 }
 
+/// An `EnvironmentKey` for specifying whether the visual effect view is emphasized.
 struct VisualEffectEmphasizedKey: EnvironmentKey {
     typealias Value = Bool?
     static var defaultValue: Bool? = nil
 }
 
 extension EnvironmentValues {
+    /// The material type for the visual effect view.
     var visualEffectMaterial: NSVisualEffectView.Material? {
         get { self[VisualEffectMaterialKey.self] }
         set { self[VisualEffectMaterialKey.self] = newValue }
     }
     
+    /// The blending mode for the visual effect view.
     var visualEffectBlending: NSVisualEffectView.BlendingMode? {
         get { self[VisualEffectBlendingKey.self] }
         set { self[VisualEffectBlendingKey.self] = newValue }
     }
     
+    /// Indicates if the visual effect view is emphasized.
     var visualEffectEmphasized: Bool? {
         get { self[VisualEffectEmphasizedKey.self] }
         set { self[VisualEffectEmphasizedKey.self] = newValue }
     }
 }
 
+/// A SwiftUI view that wraps an `NSVisualEffectView` to apply visual effects.
 struct VisualEffectView<Content: View>: NSViewRepresentable {
     private let material: NSVisualEffectView.Material
     private let blendingMode: NSVisualEffectView.BlendingMode
     private let isEmphasized: Bool
     private let content: Content
     
+    /// Initializes a `VisualEffectView` with the specified visual effect properties and content.
+    ///
+    /// - Parameters:
+    ///   - content: The content view to be displayed within the visual effect view.
+    ///   - material: The material type of the visual effect view.
+    ///   - blendingMode: The blending mode of the visual effect view. Defaults to `.behindWindow`.
+    ///   - emphasized: A Boolean value indicating whether the visual effect view is emphasized. Defaults to `false`.
     fileprivate init(
         content: Content,
         material: NSVisualEffectView.Material,
@@ -58,6 +72,10 @@ struct VisualEffectView<Content: View>: NSViewRepresentable {
         self.isEmphasized = emphasized
     }
     
+    /// Creates and configures the `NSVisualEffectView` for use in the SwiftUI view hierarchy.
+    ///
+    /// - Parameter context: The context containing the state and environment values.
+    /// - Returns: A configured `NSVisualEffectView` instance.
     func makeNSView(context: Context) -> NSVisualEffectView {
         let view = NSVisualEffectView()
         let wrapper = NSHostingView(rootView: content)
@@ -72,6 +90,11 @@ struct VisualEffectView<Content: View>: NSViewRepresentable {
         return view
     }
     
+    /// Updates the `NSVisualEffectView` with new properties from the environment.
+    ///
+    /// - Parameters:
+    ///   - nsView: The `NSVisualEffectView` to be updated.
+    ///   - context: The context containing the state and environment values.
     func updateNSView(_ nsView: NSVisualEffectView, context: Context) {
         nsView.material = context.environment.visualEffectMaterial ?? material
         nsView.blendingMode = context.environment.visualEffectBlending ?? blendingMode
@@ -80,6 +103,13 @@ struct VisualEffectView<Content: View>: NSViewRepresentable {
 }
 
 extension View {
+    /// Applies a visual effect to a view using `NSVisualEffectView`.
+    ///
+    /// - Parameters:
+    ///   - material: The material type of the visual effect view.
+    ///   - blendingMode: The blending mode of the visual effect view. Defaults to `.behindWindow`.
+    ///   - emphasized: A Boolean value indicating whether the visual effect view is emphasized. Defaults to `false`.
+    /// - Returns: A view with the specified visual effect applied.
     func visualEffect(
         material: NSVisualEffectView.Material,
         blendingMode: NSVisualEffectView.BlendingMode = .behindWindow,

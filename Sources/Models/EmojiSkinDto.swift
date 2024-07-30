@@ -7,49 +7,37 @@
 
 import Foundation
 
+/// Enum defining various emoji groups.
 enum EmojisGroup: CaseIterable {
     case people, nature, foods, places, activity, objects, symbols, flags
-    static var allCases: [EmojisGroup] = [people, nature, foods, places, activity, objects, symbols, flags]
-}
 
-extension EmojisGroup {
     var name: String {
         String(describing: self)
     }
 }
 
-extension EmojisGroup: Hashable {
-}
-
-// MARK: - EmojisListDto
+/// Struct representing a list of emojis categorized by different groups.
 struct EmojisListDto: Decodable {
     let people, nature, foods, places, activity, objects, symbols, flags: [EmojiDto]
-}
 
-extension EmojisListDto {
+    /// Returns the list of emojis for a given group.
+    /// - Parameter group: The `EmojisGroup` for which emojis are required.
+    /// - Returns: An array of `EmojiDto` for the specified group.
     func emojis(in group: EmojisGroup) -> [EmojiDto] {
         switch group {
-        case .people:
-            return people
-        case .nature:
-            return nature
-        case .foods:
-            return foods
-        case .places:
-            return places
-        case .activity:
-            return activity
-        case .objects:
-            return objects
-        case .symbols:
-            return symbols
-        case .flags:
-            return flags
+        case .people: people
+        case .nature: nature
+        case .foods: foods
+        case .places: places
+        case .activity: activity
+        case .objects: objects
+        case .symbols: symbols
+        case .flags: flags
         }
     }
 }
 
-// MARK: - Activity
+/// Struct representing an individual emoji with various attributes.
 struct EmojiDto: Decodable {
     let group: Int?
     let hexcode, label: String
@@ -61,35 +49,34 @@ struct EmojiDto: Decodable {
     let skins: [EmojiSkinDto]?
 }
 
+/// Enum representing the emoticon of an emoji, which can be a single string or an array of strings.
 enum EmojiEmoticonDto: Decodable {
     case string(String)
     case stringArray([String])
 
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        if let x = try? container.decode([String].self) {
-            self = .stringArray(x)
-            return
+        if let array = try? container.decode([String].self) {
+            self = .stringArray(array)
+        } else if let string = try? container.decode(String.self) {
+            self = .string(string)
+        } else {
+            throw DecodingError.typeMismatch(EmojiEmoticonDto.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Expected a string or an array of strings for EmojiEmoticonDto"))
         }
-        if let x = try? container.decode(String.self) {
-            self = .string(x)
-            return
-        }
-        throw DecodingError.typeMismatch(EmojiEmoticonDto.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for Emoticon"))
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        case .string(let x):
-            try container.encode(x)
-        case .stringArray(let x):
-            try container.encode(x)
+        case .string(let value):
+            try container.encode(value)
+        case .stringArray(let values):
+            try container.encode(values)
         }
     }
 }
 
-// MARK: - EmojiDto
+/// Struct representing the skin variations of an emoji.
 struct EmojiSkinDto: Decodable {
     let group: Int
     let hexcode, label: String

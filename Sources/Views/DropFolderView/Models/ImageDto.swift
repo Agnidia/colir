@@ -9,27 +9,30 @@
 import AppKit
 import SwiftUI
 
+/// A data transfer object for storing the state of various image types for undo functionality.
 struct ImageUndoDto {
     let originalImage: [ImageDto.ImageSize: NSImage]
-    let colorizedImage: [ImageDto.ImageSize: NSImage]
+    let colorisedImage: [ImageDto.ImageSize: NSImage]
     let picturedImage: [ImageDto.ImageSize: NSImage]
     let emojiedImage: [ImageDto.ImageSize: NSImage]
     let outputImage: [ImageDto.ImageSize: NSImage]
     
-    let customizations: ImageCustomizationUndoDto
+    let customisations: ImageCustomisationUndoDto
 }
 
 final public class ImageDto: ObservableObject {
     
+    /// Represents the current state of the image processing.
     enum ImageState: Equatable {
         case none
-        case initieted
+        case initiated
         case ready
         case processing(value: Float)
         case error
         case preview
     }
     
+    /// Represents different image sizes and their properties.
     enum ImageSize: CaseIterable {
         case s16
         case s16x2
@@ -50,111 +53,96 @@ final public class ImageDto: ObservableObject {
         
         static var allCases: [ImageDto.ImageSize] = [.s16, .s16x2, .s32, .s32x2, .s128, .s128x2, .s256, .s256x2, .s512, .s512x2]
         
+        /// Returns the dimension (size) of the image for this `ImageSize`.
         var dimension: CGFloat {
             switch self {
-            case .s16, .s16x2:
-                16
-            case .s32, .s32x2:
-                32
-            case .s128, .s128x2:
-                128
-            case .s256, .s256x2:
-                256
-            case .s512, .s512x2:
-                512
+            case .s16, .s16x2: 16
+            case .s32, .s32x2: 32
+            case .s128, .s128x2: 128
+            case .s256, .s256x2: 256
+            case .s512, .s512x2: 512
             }
         }
         
+        /// Returns the pixel count of the image for this `ImageSize`.
         var pixel: CGFloat {
             switch self {
-            case .s16:
-                16
-            case .s16x2, .s32:
-                32
-            case .s32x2:
-                64
-            case .s128:
-                128
-            case .s128x2, .s256:
-                256
-            case .s256x2, .s512:
-                512
-            case .s512x2:
-                1024
+            case .s16: 16
+            case .s16x2, .s32: 32
+            case .s32x2: 64
+            case .s128: 128
+            case .s128x2, .s256: 256
+            case .s256x2, .s512: 512
+            case .s512x2: 1024
             }
         }
         
+        /// Returns the processing progress associated with this `ImageSize`.
         var progress: Float {
             switch self {
-            case .s16:
-                20
-            case .s16x2:
-                30
-            case .s32:
-                40
-            case .s32x2:
-                50
-            case .s128:
-                60
-            case .s128x2:
-                70
-            case .s256:
-                10
-            case .s256x2:
-                80
-            case .s512:
-                90
-            case .s512x2:
-                100
+            case .s16: 20
+            case .s16x2: 30
+            case .s32: 40
+            case .s32x2: 50
+            case .s128: 60
+            case .s128x2: 70
+            case .s256: 10
+            case .s256x2: 80
+            case .s512: 90
+            case .s512x2: 100
             }
         }
     }
     
-    // original images
-    
+    // Placeholder images for initialization.
     private static var dummyImages = ImageSize.processingCases.reduce([ImageSize: NSImage]()) {
         var result = $0
         result[$1] = NSImage()
         return result
     }
     
+    // Various image states.
     private lazy var originalImage: [ImageSize: NSImage] = ImageDto.dummyImages
-    
-    private lazy var colorizedImage: [ImageSize: NSImage] = ImageDto.dummyImages
-    
+    private lazy var colorisedImage: [ImageSize: NSImage] = ImageDto.dummyImages
     private lazy var picturedImage: [ImageSize: NSImage] = ImageDto.dummyImages
-    
     private lazy var emojiedImage: [ImageSize: NSImage] = ImageDto.dummyImages
-    
     private lazy var outputImage: [ImageSize: NSImage] = ImageDto.dummyImages
     
+    /// Array of output images.
     var outputImages: [NSImage] {
         ImageSize.allCases.compactMap { outputImage[$0] }
     }
     
+    /// Provides undo data for the images and customizations.
     var undoItems: ImageUndoDto {
-        ImageUndoDto(originalImage: originalImage, colorizedImage: colorizedImage, picturedImage: picturedImage, emojiedImage: emojiedImage, outputImage: outputImage, customizations: customizations.undoItems)
+        ImageUndoDto(originalImage: originalImage, colorisedImage: colorisedImage, picturedImage: picturedImage, emojiedImage: emojiedImage, outputImage: outputImage, customisations: customisations.undoItems)
     }
     
+    /// Updates the image data from the provided undo items.
     func update(from undoItems: ImageUndoDto) {
         originalImage = undoItems.originalImage
-        colorizedImage = undoItems.colorizedImage
+        colorisedImage = undoItems.colorisedImage
         picturedImage = undoItems.picturedImage
         emojiedImage = undoItems.emojiedImage
         outputImage = undoItems.outputImage
         
-        customizations.update(from: undoItems.customizations)
+        customisations.update(from: undoItems.customisations)
     }
     
+    /// URL of the image file.
     private(set) var url: URL?
     
+    /// Current state of image processing.
     @Published private(set) var state: ImageState = .none
+    
+    /// Progress value of the image processing.
     @Published private(set) var progressValue: Float = .zero {
         didSet {
             state = .processing(value: progressValue)
         }
     }
     
+    /// Binding for observing and setting the image state.
     private(set) lazy var stateBinding = Binding<ImageState>(
         get: { [weak self] in self?.state ?? .none },
         set: { [weak self] newState in
@@ -162,18 +150,27 @@ final public class ImageDto: ObservableObject {
         }
     )
     
+    /// Indicates whether the image processing is complete and the image is valid.
     var isValid: Bool {
         url != nil && state == .ready
     }
     
-    private(set) var customizations: ImageCustomization
+    /// Customizations applied to the image.
+    private(set) var customisations: ImageCustomisation
     
+    /// Initializes a new `ImageDto` instance with default values.
     convenience init() {
-        self.init(url: nil, image: .init(), customizations: .init())
+        self.init(url: nil, image: .init(), customisations: .init())
     }
     
-    init(url: URL? = nil, image: NSImage, customizations: ImageCustomization) {
-        self.customizations = customizations
+    /// Initializes a new `ImageDto` instance with specified URL, image, and customizations.
+    ///
+    /// - Parameters:
+    ///   - url: The URL of the image file.
+    ///   - image: The initial image.
+    ///   - customisations: The customizations applied to the image.
+    init(url: URL? = nil, image: NSImage, customisations: ImageCustomisation) {
+        self.customisations = customisations
         
         if image.isValid {
             Task {
@@ -182,27 +179,37 @@ final public class ImageDto: ObservableObject {
         }
     }
     
+    /// Prepares the instance for an update by resetting the progress value.
     func prepareForUpdate() {
         progressValue = .zero
     }
     
-    func update(customizations: ImageCustomization) async throws {
-        
-        self.customizations = customizations
+    /// Updates the image using the specified customizations.
+    ///
+    /// - Parameter customisations: The customizations to apply to the image.
+    /// - Throws: An error if the update fails.
+    func update(customisations: ImageCustomisation) async throws {
+        self.customisations = customisations
         
         for size in ImageSize.processingCases {
             await process(original: originalImage[size]!, with: size)
         }
     }
     
+    /// Processes the image with customizations for a specified size.
+    ///
+    /// - Parameters:
+    ///   - original: The original image to process.
+    ///   - size: The size of the image to process.
+    ///   - notifyReady: A Boolean value indicating whether to notify that processing is complete.
     private func process(original: NSImage, with size: ImageSize, notifyReady: Bool = true) async {
-        let cImage = await customizations.updateColor(for: original, size: size, updatedImage: colorizedImage[size]!)
-        colorizedImage[size] = cImage
+        let cImage = await customisations.updateColor(for: original, size: size, updatedImage: colorisedImage[size]!)
+        colorisedImage[size] = cImage
         
-        let pImage = await customizations.updatePicture(for: cImage, size: size, updatedImage: picturedImage[size]!)
+        let pImage = await customisations.updatePicture(for: cImage, size: size, updatedImage: picturedImage[size]!)
         picturedImage[size] = pImage
         
-        let eImage = await customizations.updateEmoji(for: pImage, size: size, updatedImage: emojiedImage[size]!)
+        let eImage = await customisations.updateEmoji(for: pImage, size: size, updatedImage: emojiedImage[size]!)
         emojiedImage[size] = eImage
         
         outputImage[size] = eImage
@@ -212,15 +219,20 @@ final public class ImageDto: ObservableObject {
         if size == .s256 {
             state = .preview
         } else if size == .s512x2 {
-            state = notifyReady ? .ready : .initieted
+            state = notifyReady ? .ready : .initiated
         }
     }
     
+    /// Updates the original image and processes it for different sizes.
+    ///
+    /// - Parameters:
+    ///   - url: The URL of the image file.
+    ///   - image: The new image to use.
     func updateOriginal(url: URL?, image: NSImage) async {
         
         self.url = url
         
-        self.customizations = .init()
+        self.customisations = .init()
         
         func imageFor(size: ImageSize, in images: [NSImageRep]) -> NSImage {
             let pixel = Int(size.pixel)
@@ -249,7 +261,7 @@ final public class ImageDto: ObservableObject {
         switch state {
         case .none:
             EmptyView()
-        case .ready, .preview, .initieted:
+        case .ready, .preview, .initiated:
             Image(nsImage: outputImage[.s256]!)
                 .resizable()
         case .processing(let progress):

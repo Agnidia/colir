@@ -8,18 +8,24 @@
 
 import Photos
 
+/// Manages photo albums and photo assets in the user's photo library.
 class PhotoLibraryAlbumManager: NSObject, ObservableObject {
     
+    /// Published property holding the collection of photo assets in the album.
     @Published var photoAssets: PhotoAssetCollection = PhotoAssetCollection(PHFetchResult<PHAsset>())
     
+    /// The local identifier of the asset collection.
     var identifier: String? {
         assetCollection?.localIdentifier
     }
     
+    /// The name of the album.
     var albumName: String?
     
+    /// The subtype of the smart album, if applicable.
     var smartAlbumType: PHAssetCollectionSubtype?
     
+    /// Cache manager for photo library assets.
     let cache = PhotoLibraryCacheManager()
     
     private var assetCollection: PHAssetCollection?
@@ -28,6 +34,7 @@ class PhotoLibraryAlbumManager: NSObject, ObservableObject {
     
     private let logger: LogProtocol = Log(category: .photoLibrary)
     
+    /// Enumeration for errors related to photo collections.
     enum PhotoCollectionError: LocalizedError {
         case missingAssetCollection
         case missingAlbumName
@@ -39,12 +46,18 @@ class PhotoLibraryAlbumManager: NSObject, ObservableObject {
         case removeAllError(Error)
     }
     
+    /// Initializes a `PhotoLibraryAlbumManager` for a specific album name.
+    /// - Parameters:
+    ///   - albumName: The name of the album to manage.
+    ///   - createIfNotFound: Boolean flag indicating whether to create the album if it does not exist.
     init(albumNamed albumName: String, createIfNotFound: Bool = false) {
         self.albumName = albumName
         self.createAlbumIfNotFound = createIfNotFound
         super.init()
     }
 
+    /// Initializes a `PhotoLibraryAlbumManager` for an album with a specific identifier.
+    /// - Parameter identifier: The identifier of the album.
     init?(albumWithIdentifier identifier: String) {
         guard let assetCollection = PhotoLibraryAlbumManager.getAlbum(identifier: identifier) else {
             logger.error("Photo album not found for identifier: \(identifier)")
@@ -58,6 +71,8 @@ class PhotoLibraryAlbumManager: NSObject, ObservableObject {
         }
     }
     
+    /// Initializes a `PhotoLibraryAlbumManager` for a specific smart album type.
+    /// - Parameter smartAlbumType: The subtype of the smart album to manage.
     init(smartAlbum smartAlbumType: PHAssetCollectionSubtype) {
         self.smartAlbumType = smartAlbumType
         super.init()
@@ -67,6 +82,8 @@ class PhotoLibraryAlbumManager: NSObject, ObservableObject {
         //PHPhotoLibrary.shared().unregisterChangeObserver(self)
     }
     
+    /// Loads the photo album either by name or as a smart album.
+    /// - Throws: `PhotoCollectionError` if the album cannot be found or created.
     func load() async throws {
         
         //PHPhotoLibrary.shared().register(self)
@@ -101,6 +118,8 @@ class PhotoLibraryAlbumManager: NSObject, ObservableObject {
         }
     }
     
+    /// Refreshes the photo assets from the current asset collection.
+    /// - Parameter fetchResult: Optional fetch result to use instead of fetching from the asset collection.
     private func refreshPhotoAssets(_ fetchResult: PHFetchResult<PHAsset>? = nil) async {
 
         var newFetchResult = fetchResult
@@ -121,12 +140,18 @@ class PhotoLibraryAlbumManager: NSObject, ObservableObject {
         }
     }
 
+    /// Fetches an album using its local identifier.
+    /// - Parameter identifier: The local identifier of the album.
+    /// - Returns: The `PHAssetCollection` with the specified identifier, if found.
     private static func getAlbum(identifier: String) -> PHAssetCollection? {
         let fetchOptions = PHFetchOptions()
         let collections = PHAssetCollection.fetchAssetCollections(withLocalIdentifiers: [identifier], options: fetchOptions)
         return collections.firstObject
     }
     
+    /// Fetches an album using its name.
+    /// - Parameter name: The name of the album.
+    /// - Returns: The `PHAssetCollection` with the specified name, if found.
     private static func getAlbum(named name: String) -> PHAssetCollection? {
         let fetchOptions = PHFetchOptions()
         fetchOptions.predicate = NSPredicate(format: "title = %@", name)
@@ -134,6 +159,9 @@ class PhotoLibraryAlbumManager: NSObject, ObservableObject {
         return collections.firstObject
     }
     
+    /// Fetches a smart album using its subtype.
+    /// - Parameter subtype: The subtype of the smart album.
+    /// - Returns: The `PHAssetCollection` with the specified subtype, if found.
     private static func getSmartAlbum(subtype: PHAssetCollectionSubtype) -> PHAssetCollection? {
         let fetchOptions = PHFetchOptions()
         let collections = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: subtype, options: fetchOptions)

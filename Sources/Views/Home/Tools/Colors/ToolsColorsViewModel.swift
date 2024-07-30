@@ -10,6 +10,26 @@ import SwiftUI
 import SwiftCommons
 import Throttler
 
+/// View model responsible for managing color selection and display in the `ToolsColorsView`.
+///
+/// `ToolsColorsViewModel` provides the necessary data and behavior for displaying color options and handling user selection. It includes functionality for updating the selected color and rendering the color picker and list of colors.
+///
+/// - Inherits:
+///   - `ObservableObject`: Allows the view to observe changes in the model.
+///   - `DomainViewConstantProtocol`: Defines constants used in the view model.
+///
+/// - Published Properties:
+///   - `selectedColor`: The currently selected color. Updates will reflect in the view.
+///   - `colorGroups`: A dictionary grouping colors by type for display purposes.
+///
+/// - Properties:
+///   - `viewSettings`: Settings and constants for the view's appearance.
+///   - `columns`: Defines the layout for displaying color cells in a grid.
+///
+/// - Methods:
+///   - `colorPickerTitle`: A view displaying the title for the color picker and a color picker control.
+///   - `colorsList`: A view displaying a grid of color options, grouped by type.
+///   - `cell(for:)`: Returns a view for a single color cell, including selection handling and styling.
 class ToolsColorsViewModel: ObservableObject, DomainViewConstantProtocol {
     typealias DomainViewConstantType = ToolsColorsViewDomain
     

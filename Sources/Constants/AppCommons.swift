@@ -8,25 +8,27 @@
 
 import Foundation
 
+/// Provides general utility types and constants.
 struct Commons {
-    /// General closure for empty response
-    ///
+    /// A closure with no parameters and no return value, typically used for callbacks with no data.
     typealias EmptyClosure = () -> Void
 }
 
-/// default states for SwiftUI View
-///
+/// Enumerates the possible states for a SwiftUI view to represent different stages of a process.
 enum StateMode: Int, CaseIterable {
-    case idle
-    case progress
-    case success
-    case fault
-    
+    case idle      // The view is in an idle state, no action is being performed.
+    case progress  // The view is showing progress, such as a loading spinner.
+    case success   // The view has successfully completed its task.
+    case fault     // The view encountered an error or fault.
+
+    /// Provides a collection of all possible states.
     static var allCases: [StateMode] {
         [.idle, .progress, .success, .fault]
     }
 }
 
+/// Contains constants related to application secrets and configuration.
+/// Replace the placeholder value with actual values as needed.
 enum Secrets {
     //#error("setup secrets")
     static let userDefaultsId = "com.igrsoft.colir-defaults"

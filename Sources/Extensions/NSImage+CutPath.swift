@@ -10,6 +10,12 @@ import AppKit
 
 extension NSImage {
     
+    /// Cuts the image using the specified bezier path.
+    ///
+    /// This function creates a new image by applying a clipping path to the original image. The resulting image will only show the part of the original image that falls within the path.
+    ///
+    /// - Parameter path: The `NSBezierPath` used to clip the image.
+    /// - Returns: A new `NSImage` that has been clipped by the specified path.
     func cutImage(by path: NSBezierPath) -> NSImage {
         let size = size
         

@@ -8,17 +8,25 @@
 
 import Foundation
 
+/// Handles application-level initialization and setup, including logging.
 class Application {
+    
+    // MARK: - Properties
     
     private let log: LogProtocol = Log(category: .application)
     
+    // MARK: - Initialization
+    
+    /// Initializes the Application instance and logs the initialization.
     init() {
-        log.info("init")
+        log.info("Application initialized")
     }
     
-    /// main setup of base objects
-    ///
+    // MARK: - Setup
+    
+    /// Performs the main setup of base objects and logs the setup process.
     func setup() {
-        log.info("setup")
+        log.info("Application setup started")
+        // Add further setup logic here if needed.
     }
 }

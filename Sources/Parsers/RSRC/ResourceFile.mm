@@ -5,6 +5,11 @@
 
 @implementation ResourceFile
 
+/// Reads resources from the specified URL and returns an array of `RSRCResource` objects.
+    ///
+    /// - Parameter url: The URL of the resource file to read.
+    /// - Throws: An error if the file cannot be read or parsed.
+    /// - Returns: An array of `RSRCResource` objects representing the resources in the file.
 + (NSArray<RSRCResource *> *)readFromURL:(NSURL *)url error:(NSError **)outError {
     graphite::rsrc::file gFile;
     try {

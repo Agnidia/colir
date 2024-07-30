@@ -11,11 +11,17 @@ import SwiftUI
 import SwiftCommons
 import Combine
 
+/// The view model for the `HomeView`, handling data and state management related to
+/// image customization, tool selection, and app settings. It integrates with various services
+/// to provide functionality such as applying colors, images, emojis, and managing undo actions.
 final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
+    
+    /// View settings for configuring appearance and behavior.
     let viewSettings: HomeViewDomain = .init()
     
     typealias DomainViewConstantType = HomeViewDomain
     
+    /// Enumeration representing different tool types available in the view.
     enum Tools: Equatable {
         case colors
         case photos
@@ -25,37 +31,59 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         case webResources
     }
     
+    /// Undo manager for handling undo and redo actions.
     private(set) var undoManager: UndoManager
     
+    /// Manager for handling picture folders.
     let picturesFolderManager: PicturesFolderManagerProtocol
     
+    /// App settings configuration.
     private var appSettings: AppSettingsProtocol
     
+    /// Manager for exporting icons.
     private var exportIconManager: ExportIconManagerProtocol
     
+    /// Service for app store interactions.
     private var appStoreService: AppStoreProtocol
     
+    /// Parser for `.rsrc` files.
     private lazy var rsrcFileParser = RSRCFileParser()
     
+    /// Logger for recording logs and errors.
     private let log: LogProtocol
     
+    /// URLs for folders used in the application.
     private var foldersUrls: [URL]
-        
+    
+    /// Fixed width for the view.
     var width: CGFloat {
         236
     }
     
+    /// The currently selected tool.
     @Published private var tools: Tools
     
+    /// Counter for wrong attempts, used for feedback in the UI.
     @Published var wrongAttempt: Int = .zero
     
+    /// Flag used to force a UI update.
     @Published var updateHack = true
     
+    /// Task for managing ongoing customization operations.
     private var customizationTask: Task<(), Never>?
     
-    /// Collection of cancellable publishers to clean up when done.
+    /// Collection of cancellable publishers for Combine.
     private var cancellables = Set<AnyCancellable>()
     
+    /// Initializes the `HomeViewModel` with default or provided dependencies.
+    /// - Parameters:
+    ///   - undoManager: An optional `UndoManager` for handling undo/redo actions.
+    ///   - appSettings: An optional `AppSettingsProtocol` for configuration.
+    ///   - appStoreService: An optional `AppStoreProtocol` for app store interactions.
+    ///   - logger: An optional `LogProtocol` for logging.
+    ///   - foldersUrls: URLs for folders to be used in the application.
+    ///   - folderImage: Optional image for the folder.
+    ///   - tools: The initial tool to be selected.
     init(undoManager: UndoManager = .init(),
          appSettings: AppSettingsProtocol = AppSettings(),
          appStoreService: AppStoreProtocol = AppStoreService(),
@@ -88,9 +116,11 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     }
     
     deinit {
-        
+        // Clean up resources if needed
     }
     
+    /// Applies a color to the current image, handling errors and updating the view.
+    /// - Parameter color: The color to apply.
     public func apply(color: NSColor?) {
         guard dropZoneViewModel.image.state != .none else {
             withAnimation(.default) {
@@ -102,16 +132,21 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         customizationTask?.cancel()
         
         customizationTask = Task {
-            await dropZoneViewModel.image.customizations.apply(color: color)
+            await dropZoneViewModel.image.customisations.apply(color: color)
             
             do {
-                try await dropZoneViewModel.image.update(customizations: dropZoneViewModel.image.customizations)
+                try await dropZoneViewModel.image.update(customisations: dropZoneViewModel.image.customisations)
             } catch {
                 print("task canceled")
             }
         }
     }
     
+    /// Applies an image to the current image, handling errors and updating the view.
+    /// - Parameters:
+    ///   - image: The image to apply.
+    ///   - asset: Optional photo asset related to the image.
+    ///   - item: Optional picture item related to the image.
     public func apply(image: NSImage?, asset: PhotoAsset? = nil, item: PictureItem? = nil) {
         guard dropZoneViewModel.image.state != .none else {
             wrongAttempt += 1
@@ -128,16 +163,18 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         customizationTask?.cancel()
         
         customizationTask = Task { [updateImage] in
-            await dropZoneViewModel.image.customizations.apply(picture: updateImage, asset: asset, item: item)
+            await dropZoneViewModel.image.customisations.apply(picture: updateImage, asset: asset, item: item)
             
             do {
-                try await dropZoneViewModel.image.update(customizations: dropZoneViewModel.image.customizations)
+                try await dropZoneViewModel.image.update(customisations: dropZoneViewModel.image.customisations)
             } catch {
                 print("task canceled")
             }
         }
     }
     
+    /// Applies an emoji to the current image, handling errors and updating the view.
+    /// - Parameter emoji: The emoji to apply.
     public func apply(emoji: Character?) {
         guard dropZoneViewModel.image.state != .none else {
             wrongAttempt += 1
@@ -147,16 +184,18 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         customizationTask?.cancel()
         
         customizationTask = Task { [emoji] in
-            await dropZoneViewModel.image.customizations.apply(emoji: emoji)
+            await dropZoneViewModel.image.customisations.apply(emoji: emoji)
             
             do {
-                try await dropZoneViewModel.image.update(customizations: dropZoneViewModel.image.customizations)
+                try await dropZoneViewModel.image.update(customisations: dropZoneViewModel.image.customisations)
             } catch {
                 print("task canceled")
             }
         }
     }
     
+    /// Handles actions from the toolbar, such as undo, redo, and tool selection.
+    /// - Parameter action: The action to perform.
     public func apply(action: ToolbarView.ToolbarViewDomain.Action) {
         switch action {
         case .undo:
@@ -180,6 +219,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         }
     }
     
+    // Flags for skipping and applying selections
     private var skipSelectedColor = true
     private var skipSelectedPhoto = true
     private var skipSelectedPicture = true
@@ -190,6 +230,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     private var isApplyingSelectedPicture = false
     private var isApplyingSelectedEmoji = false
     
+    /// Subscribes to view model publishers to handle updates for color, photo, picture, and emoji selections.
     private func addPublishers() {
         toolsColorsViewModel.$selectedColor
             .receive(on: DispatchQueue.main)
@@ -258,16 +299,19 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
             .store(in: &cancellables)
     }
     
+    /// Removes all cancellable publishers.
     private func removePublishers() {
         cancellables.removeAll()
     }
     
+    // Lazy instantiation of view models used in tools and customization.
     private lazy var toolsColorsViewModel: ToolsColorsViewModel = .init()
     private lazy var toolsPhotosViewModel: ToolsPhotosViewModel = .init()
     private lazy var toolsPicturesViewModel: ToolsPicturesViewModel = .init(appSettings: appSettings, picturesFolderManager: picturesFolderManager)
     private lazy var toolsEmojisViewModel: ToolsEmojisViewModel = .init()
     private lazy var webResourcesViewModel: WebResourcesViewModel = .init()
     
+    /// Provides the view for the selected tool.
     @ViewBuilder
     func toolsView() -> some View {
         switch tools {
@@ -291,12 +335,13 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         }
     }
     
+    // Lazy instantiation of drop zone view model.
     private lazy var dropZoneViewModel: DropZoneViewModel = .init { [weak self] urls in
         self?.setupFolders(from: urls)
     } updateStateClosure: { [weak self] state in
         print("Set state to: \(state)")
         self?.customizingActionViewModel.update(state: state)
-        self?.appliedStylesViewModel.update(state: state, imageCustomization: (self?.dropZoneViewModel.image.customizations)!)
+        self?.appliedStylesViewModel.update(state: state, imageCustomization: (self?.dropZoneViewModel.image.customisations)!)
         if state == .ready, let dropZone = self?.dropZoneViewModel, let index = self?.currentUndoItem, let undoItems = self?.undoItems.prefix(index + 1) {
             self?.undoItems = Array(undoItems)
             self?.undoItems.append(dropZone.image.undoItems)
@@ -304,6 +349,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         }
     }
     
+    /// Provides the view for the icon folder.
     @ViewBuilder
     func iconFolderView() -> some View {
         DropZoneView()
@@ -313,8 +359,10 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
             .modifier(Shake(animatableData: CGFloat(wrongAttempt)))
     }
     
+    // Lazy instantiation of applied styles view model.
     private lazy var appliedStylesViewModel: AppliedStylesViewModel = .init(toolsColorsViewModel: toolsColorsViewModel, toolsPhotosViewModel: toolsPhotosViewModel, toolsPicturesViewModel: toolsPicturesViewModel, toolsEmojisViewModel: toolsEmojisViewModel)
     
+    /// Provides the view for the applied styles.
     @ViewBuilder
     func appliedStylesView() -> some View {
         AppliedStylesView()
@@ -322,6 +370,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
             .frame(maxWidth: .infinity)
     }
     
+    // Lazy instantiation of customizing action view model.
     private lazy var customizingActionViewModel: CustomizingActionViewModel = .init(actionClosure: { [weak self] in
         if self?.exportIconManager.canExport == true, let image = self?.dropZoneViewModel.image {
             self?.exportIconManager.export(image: image)
@@ -333,10 +382,12 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     @Published private var showingExportAlert = false
     @Published private var showingAppStoreSheet = false
     
+    // Lazy instantiation of app store view model.
     private lazy var appStoreViewModel: AppStoreViewModel = .init(appStoreService: appStoreService, appSettings: appSettings) { [weak self] in
         self?.showingAppStoreSheet.toggle()
     }
     
+    /// Provides the view for the customization folder.
     @ViewBuilder
     func customizeFolderView() -> some View {
         CustomizingActionView()
@@ -366,10 +417,14 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
             }
     }
     
+    /// Opens a folder in the drop zone view.
     public func openFolder() {
         dropZoneViewModel.openFolder()
     }
     
+    /// Sets up folders based on the provided URLs, initializing the drop zone view model
+    /// and updating the view with the folder's icon or image.
+    /// - Parameter urls: The URLs of the folders to set up.
     func setupFolders(from urls: [URL]) {
         let folders = urls.filter { $0.isFolder }
         
@@ -415,9 +470,12 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         }
     }
     
+    /// List of undo items for managing undo/redo actions.
     private var undoItems: [ImageUndoDto] = .init()
     private var currentUndoItem: Int = .zero
     
+    /// Adds an undo item to the undo stack and updates the current index.
+    /// - Parameter index: The index of the undo item to add.
     private func add(index: Int) {
         self.currentUndoItem = index
         
@@ -428,6 +486,8 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         setupItemsForCurrentIndex()
     }
     
+    /// Removes an undo item from the undo stack and updates the current index.
+    /// - Parameter index: The index of the undo item to remove.
     private func remove(index: Int) {
         currentUndoItem = index - 1
         
@@ -438,27 +498,27 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         setupItemsForCurrentIndex()
     }
     
+    /// Sets up the view state for the current undo item.
     private func setupItemsForCurrentIndex() {
         let image = undoItems[currentUndoItem]
         dropZoneViewModel.update(from: image)
         
         skipSelectedColor = true
-        toolsColorsViewModel.selectedColor = image.customizations.selectedColor
+        toolsColorsViewModel.selectedColor = image.customisations.selectedColor
         
         skipSelectedPhoto = true
-        toolsPhotosViewModel.selectedImage = image.customizations.selectedPicture
-        toolsPhotosViewModel.selectedAsset = image.customizations.selectedAsset
+        toolsPhotosViewModel.selectedImage = image.customisations.selectedPicture
+        toolsPhotosViewModel.selectedAsset = image.customisations.selectedAsset
         
         skipSelectedPicture = true
-        toolsPicturesViewModel.selectedImage = image.customizations.selectedPictureItem
+        toolsPicturesViewModel.selectedImage = image.customisations.selectedPictureItem
         
-        appliedStylesViewModel.update(state: .none, imageCustomization: dropZoneViewModel.image.customizations)
+        appliedStylesViewModel.update(state: .none, imageCustomization: dropZoneViewModel.image.customisations)
         
         updateHack.toggle()
     }
     
-    /// main setup of base objects
-    ///
+    /// Sets up the app store service and syncs store data.
     func setupAppStoreService() async {
         log.info("setup")
         

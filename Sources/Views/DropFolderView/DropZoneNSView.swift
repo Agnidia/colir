@@ -8,9 +8,9 @@
 
 import AppKit
 
-/// A view that support dropping files
+/// A view that supports dropping files
 @objc public class DropZoneNSView: NSView {
-    // MARK: - Public accessors
+    // MARK: - Public Accessors
     
     /// Enable or disable the control
     public dynamic var isEnabled: Bool = true
@@ -19,7 +19,7 @@ import AppKit
     public var dropDelegate: DropZoneViewProtocol?
     
     /// Do we support dropping multiple files at once?
-    var allowsMultipleDrop: Bool = true
+    public var allowsMultipleDrop: Bool = true
     
     // MARK: - Initialization
     
@@ -32,11 +32,9 @@ import AppKit
         super.init(coder: coder)
         configureControl()
     }
-}
-
-// MARK: - Action callbacks
-
-extension DropZoneNSView {
+    
+    // MARK: - Action Callbacks
+    
     @objc func selectFiles(_: Any) {
         guard let userSelectedFiles = dropDelegate?.dropFilesViewWantsSelectFiles else { return }
         
@@ -46,69 +44,52 @@ extension DropZoneNSView {
 
 // MARK: - UI Layout
 
-fileprivate extension DropZoneNSView {
+private extension DropZoneNSView {
     
-    private func configureControl() {
+    func configureControl() {
         wantsLayer = true
-        
         registerForDraggedTypes([.fileURL])
     }
 }
 
-// MARK: - Drag and drop
+// MARK: - Drag and Drop
 
 public extension DropZoneNSView {
     
-    // Called when the user has dropped a file
-    
+    // Called when the user has dragged a file
     override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
-        if isEnabled, let dropDelegate, let files = filesOnPasteboard(for: sender) {
-            return dropDelegate.dropFilesView(self, validateFiles: files) != []
+        guard isEnabled, let files = filesOnPasteboard(for: sender) else {
+            return false
         }
         
-        return false
+        return dropDelegate?.dropFilesView(self, validateFiles: files) != []
     }
     
     // When the user has dragged INTO the view
-    
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
-        // If there are no files on the pasteboard then do nothing
-        guard let files = filesOnPasteboard(for: sender) else {
+        guard let files = filesOnPasteboard(for: sender), !files.isEmpty else {
             return []
         }
         
-        // If we are in single select and there are multiple files then don't allow drop
         if !allowsMultipleDrop, files.count != 1 {
             return []
         }
         
-        guard let dropDelegate else {
-            return []
+        let dragOperation = dropDelegate?.dropFilesView(self, validateFiles: files) ?? []
+        
+        if !dragOperation.isEmpty {
+            dropDelegate?.dropFilesViewEnterZone(self)
         }
-        
-        let dragOperation: NSDragOperation = dropDelegate.dropFilesView(self, validateFiles: files)
-        
-        guard dragOperation.isEmpty == false else {
-            return []
-        }
-        
-        dropDelegate.dropFilesViewEnterZone(self)
         
         return dragOperation
     }
     
     // When the user has dragged OUT of the view or drag is cancelled
-    
-    override func draggingExited(_: NSDraggingInfo?) {
-        guard let dropDelegate else {
-            return
-        }
-        
-        dropDelegate.dropFilesViewExitZone(self)
+    override func draggingExited(_ sender: NSDraggingInfo?) {
+        dropDelegate?.dropFilesViewExitZone(self)
     }
     
     // Perform the drag operation
-    
     override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         guard let dropDelegate, let files = filesOnPasteboard(for: sender) else {
             return false
@@ -119,19 +100,13 @@ public extension DropZoneNSView {
         return dropDelegate.dropFilesView(self, didDropFiles: files)
     }
     
-    //MARK: - Private
+    // MARK: - Private
     
     private func filesOnPasteboard(for sender: NSDraggingInfo) -> [URL]? {
-        guard let objs = sender.draggingPasteboard.readObjects(forClasses: [NSURL.self], options: nil) as? [URL] else {
+        guard let objects = sender.draggingPasteboard.readObjects(forClasses: [NSURL.self], options: nil) as? [URL], !objects.isEmpty else {
             return nil
         }
         
-        let urls = objs.compactMap { $0 }
-        
-        guard urls.isEmpty == false else {
-            return nil
-        }
-        
-        return urls
+        return objects
     }
 }

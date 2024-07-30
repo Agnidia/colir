@@ -12,6 +12,23 @@ import SystemSettingsAccess
 import SwiftCommons
 import Throttler
 
+/// ViewModel for managing and displaying photos from the photo library in the `ToolsPhotosView`.
+///
+/// `ToolsPhotosViewModel` handles photo fetching, authorization, and selection logic. It integrates with the photo library and manages state related to photo assets and user permissions.
+///
+/// - Properties:
+///   - `viewSettings`: Settings related to the view's appearance, such as corner radius and padding.
+///   - `logger`: A logging instance used for error reporting.
+///   - `selectedAsset`: The currently selected photo asset.
+///   - `selectedImage`: The currently selected image. Sets `selectedAsset` to nil if the image is cleared.
+///   - `isAuthorised`: Boolean indicating if the app has permission to access the photo library.
+///   - `photosAppManager`: Manager for photo library access and authorization.
+///   - `isPhotosLoaded`: Boolean indicating if the photos have been loaded from the library.
+///   - `photoLibraryAlbumManager`: Manages the photo library album and caching.
+///   - `cellWidth`, `cellHeight`: Dimensions for the photo cells.
+///   - `imageSize`, `thumbnailSize`: Sizes for fetching images and thumbnails.
+///   - `cellCornerRadius`: Corner radius for the photo cell.
+
 class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
     
     typealias DomainViewConstantType = ToolsPhotosViewDomain
@@ -31,7 +48,7 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
         }
     }
     
-    @Published var isAuthorized: Bool = true
+    @Published var isAuthorised: Bool = true
     
     private let photosAppManager: PhotoLibraryAccessManagerProtocol
     
@@ -53,7 +70,7 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
     
     @ViewBuilder
     var overlay: some View {
-        if isAuthorized == false, let url = SystemSettingsSecurityPrivacy.photos.path {
+        if isAuthorised == false, let url = SystemSettingsSecurityPrivacy.photos.path {
             PermissionsOverlayView()
                 .environmentObject(PermissionsOverlayViewModel(title: ToolsPhotosViewDomain.Localization.photoDescription, url: url))
         } else {
@@ -61,6 +78,7 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
         }
     }
     
+    /// Creates a cell view for a given photo asset, with selection handling and image fetching.
     @ViewBuilder
     func cell(for item: PhotoAsset) -> some View {
         ToolsPhotosItemView(asset: item, cache: photoLibraryAlbumManager.cache, imageSize: thumbnailSize)
@@ -108,16 +126,17 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
             }
     }
     
+    /// Asynchronously fetches images from the photo library and checks authorization status.
     func fetchImages() async {
         guard !isPhotosLoaded else { return }
         
-        let authorized = await photosAppManager.checkAuthorization()
+        let authorised = await photosAppManager.checkAuthorization()
         
         Task { @MainActor in
-            isAuthorized = authorized
+            isAuthorised = authorised
         }
         
-        guard authorized else {
+        guard authorised else {
             return
         }
         
@@ -132,5 +151,11 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
                 self.isPhotosLoaded = true
             }
         }
+    }
+}
+
+extension ToolsPhotosViewModel {
+    static var preview: ToolsPhotosViewModel {
+        ToolsPhotosViewModel()
     }
 }

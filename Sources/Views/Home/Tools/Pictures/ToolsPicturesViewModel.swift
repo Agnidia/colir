@@ -9,6 +9,23 @@
 import SwiftUI
 import Throttler
 
+/// A view model responsible for managing and providing picture data to the `ToolsPicturesView`.
+///
+/// `ToolsPicturesViewModel` handles fetching images from a specified directory, managing selected images,
+/// and providing view-related properties for presenting images in a grid format.
+///
+/// - Properties:
+///   - `images`: The array of `PictureItem` objects representing images to be displayed.
+///   - `selectedImage`: The currently selected `PictureItem`, or `nil` if no image is selected.
+///   - `columns`: A grid layout configuration for displaying images in a responsive grid.
+///   - `cell(for:)`: Generates a view for a given `PictureItem`, including selection indication.
+///
+/// - Methods:
+///   - `fetchImages()`: Initiates the process of fetching images from the specified directory.
+///   - `setupAccess()`: Checks and sets up access to the image directory if needed.
+///
+/// - Initialization:
+///   - `init(appSettings:picturesFolderManager:)`: Initializes with app settings and a folder manager for managing pictures.
 class ToolsPicturesViewModel: ObservableObject {
     private let picturesFolderPath: URL
     
@@ -18,9 +35,7 @@ class ToolsPicturesViewModel: ObservableObject {
     @Published var selectedImage: PictureItem? = nil
     
     private let picturesFolderManager: PicturesFolderManagerProtocol
-    
     private var appSettings: AppSettingsProtocol
-    
     private var isFetching: Bool = false
     
     private lazy var fileAccessManager: FileAccessManagerProtocol = {
@@ -29,21 +44,32 @@ class ToolsPicturesViewModel: ObservableObject {
     
     private let cellWidth: CGFloat = 192
     private let cellHeight: CGFloat = 128
-    
     private let cellCornerRadius: CGFloat = .radiusSmall
     
+    /// Initializes the view model with app settings and a folder manager.
+    ///
+    /// - Parameters:
+    ///   - appSettings: An object conforming to `AppSettingsProtocol` that provides app settings.
+    ///   - picturesFolderManager: An object conforming to `PicturesFolderManagerProtocol` for managing picture folders.
     init(appSettings: AppSettingsProtocol, picturesFolderManager: PicturesFolderManagerProtocol) {
         self.picturesFolderPath = appSettings.userPicturesPath
         self.picturesFolderManager = picturesFolderManager
         self.appSettings = appSettings
     }
     
+    /// Provides a grid layout configuration for displaying images in a responsive grid.
+    ///
+    /// - Returns: An array of `GridItem` defining the grid layout.
     var columns: [GridItem] {
         [
             GridItem(.adaptive(minimum: cellWidth))
         ]
     }
     
+    /// Generates a view for a given `PictureItem`, including a selection indication overlay.
+    ///
+    /// - Parameter item: The `PictureItem` to be displayed in the grid.
+    /// - Returns: A `View` representing the image cell, with selection indication if applicable.
     @ViewBuilder
     func cell(for item: PictureItem) -> some View {
         Image(nsImage: item.image)
@@ -72,6 +98,9 @@ class ToolsPicturesViewModel: ObservableObject {
             }
     }
     
+    /// Initiates the process of fetching images from the specified directory.
+    ///
+    /// Uses throttling to debounce rapid calls and fetch images asynchronously.
     func fetchImages() {
         debounce(.milliseconds(100)) { [weak self] in
             Task { [weak self] in
@@ -95,7 +124,6 @@ class ToolsPicturesViewModel: ObservableObject {
                         self?.images.removeAll()
                         debounce(.milliseconds(100)) { [weak self] in
                             self?.images.append(contentsOf: pictures)
-                            
                             self?.isFetching = false
                         }
                     }
@@ -110,24 +138,27 @@ class ToolsPicturesViewModel: ObservableObject {
         }
     }
     
+    /// Checks and sets up access to the image directory if needed.
+    ///
+    /// Updates the app's access data and re-fetches images if access is granted.
     fileprivate func setupAccess() {
         do {
             let accessData = try fileAccessManager.checkAndSetupDataAccessIfNeeded()
-            // update access to Xcode data folder
+            // Update access to Xcode data folder
             appSettings.bookmarkData = accessData.bookmark
             appSettings.userPicturesPath = accessData.path
             
             fetchImages()
-            
-            //log.info("setup success")
         } catch {
-            // mark app's assess to Xcode data folder as invalid
+            // Mark app's access to Xcode data folder as invalid
             appSettings.bookmarkData = Data()
-            //log.info("setup failed: \(error.localizedDescription)")
         }
     }
 }
 
 extension ToolsPicturesViewModel {
-    static var preview: ToolsPicturesViewModel = .init(appSettings: AppSettings.preview, picturesFolderManager: PicturesFolderManager(picturesDirectory: URL(string: "")!))
+    static var preview: ToolsPicturesViewModel = .init(
+        appSettings: AppSettings.preview,
+        picturesFolderManager: PicturesFolderManager(picturesDirectory: URL(string: "")!)
+    )
 }

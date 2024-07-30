@@ -10,29 +10,46 @@ import AppKit
 import SwiftUI
 import Combine
 
+/// The view model for the `DropZoneView`, managing file drag-and-drop interactions and state updates.
 final class DropZoneViewModel: ObservableObject {
     
+    /// Closure type for handling dropped files.
     typealias FilesClosure = ([URL]) -> ()
     
+    /// Closure type for updating the image state.
     typealias UpdateStateClosure = (ImageDto.ImageState) -> ()
     
+    /// The current image data and state.
     @Published var image: ImageDto = .init()
     
+    /// Used to trigger view updates.
     @Published private var updateHack = false
     
     private var fileClosure: FilesClosure
-    
     private var updateStateClosure: UpdateStateClosure
     
-    /// Collection of cancellable publishers to clean up when done.
+    /// Collection of cancellable publishers to manage Combine subscriptions.
     private var cancellables = Set<AnyCancellable>()
     
+    /// Indicates whether a drop operation is pending.
     var isWaitingDropping: Bool = false
+    
+    /// Indicates whether the drag is currently within the drop zone.
     @Published var isEnterZone: Bool = false
+    
+    /// Animation scale for text when dragging enters the drop zone.
     @Published private var enterZoneAnimationTextScale = 1.0
+    
+    /// Animation scale for the image when dragging enters the drop zone.
     @Published private var enterZoneAnimationImageScale = 1.0
+    
+    /// Background opacity when dragging enters the drop zone.
     @Published private var enterZoneAnimationBackgroundOpacity: CGFloat = .opacity0
     
+    /// Initializes the view model with the given closures for file handling and state updates.
+    /// - Parameters:
+    ///   - fileClosure: Closure called with URLs of dropped files.
+    ///   - updateStateClosure: Closure called with updated image state.
     init(fileClosure: @escaping FilesClosure, updateStateClosure: @escaping UpdateStateClosure) {
         self.fileClosure = fileClosure
         self.updateStateClosure = updateStateClosure
@@ -40,13 +57,16 @@ final class DropZoneViewModel: ObservableObject {
         addPublishers()
     }
     
+    /// Updates the view model with new image undo items.
+    /// - Parameter imageUndoItems: The new image undo items to update the view model with.
     func update(from imageUndoItems: ImageUndoDto) {
         image.update(from: imageUndoItems)
-        image.customizations.update(from: imageUndoItems.customizations)
+        image.customisations.update(from: imageUndoItems.customisations)
         
         updateHack.toggle()
     }
     
+    /// Adds publishers to observe image state changes.
     private func addPublishers() {
         image.$state
             .receive(on: DispatchQueue.main)
@@ -57,10 +77,14 @@ final class DropZoneViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
+    /// Removes all cancellable publishers.
     private func removePublishers() {
         cancellables.removeAll()
     }
     
+    /// Checks if the provided URLs contain any folders.
+    /// - Parameter urls: The URLs to check.
+    /// - Returns: `true` if any of the URLs are folders; otherwise, `false`.
     func urlsHasFolders(urls: [URL]) -> Bool {
         !urls
             .filter {
@@ -69,6 +93,7 @@ final class DropZoneViewModel: ObservableObject {
             .isEmpty
     }
     
+    /// The view displayed as the background of the drop zone.
     @ViewBuilder
     var backgroundView: some View {
         ZStack {
@@ -95,6 +120,7 @@ final class DropZoneViewModel: ObservableObject {
         }
     }
     
+    /// The text overlay displayed on top of the drop zone.
     private var overlayText: LocalizedStringKey {
         var text = HomeViewDomain.Localization.dragHere
         if isEnterZone {
@@ -106,6 +132,8 @@ final class DropZoneViewModel: ObservableObject {
         
         return text
     }
+    
+    /// The view displayed as the overlay of the drop zone.
     @ViewBuilder
     var overlayView: some View {
         if image.state == .none {
@@ -120,6 +148,7 @@ final class DropZoneViewModel: ObservableObject {
         }
     }
     
+    /// Opens a folder selection dialog for the user to choose directories.
     func openFolder() {
         let panel = NSOpenPanel()
         panel.allowsMultipleSelection = true
@@ -136,6 +165,8 @@ final class DropZoneViewModel: ObservableObject {
         fileClosure(urls)
     }
     
+    /// Animates the text and background when the drag enters or exits the drop zone.
+    /// - Parameter hovered: `true` if the drag is within the drop zone; otherwise, `false`.
     func animateText(hovered: Bool) {
         guard hovered else {
             isEnterZone = false
@@ -172,6 +203,8 @@ final class DropZoneViewModel: ObservableObject {
         }
     }
     
+    /// Handles the delivery of dropped files.
+    /// - Parameter urls: The URLs of the dropped files.
     func delivery(urls: [URL]) {
         fileClosure(urls)
     }

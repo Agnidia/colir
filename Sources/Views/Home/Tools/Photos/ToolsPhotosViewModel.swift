@@ -108,7 +108,6 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
             }
     }
     
-    @Sendable
     func fetchImages() async {
         guard !isPhotosLoaded else { return }
         

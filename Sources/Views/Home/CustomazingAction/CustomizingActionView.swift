@@ -12,13 +12,11 @@ struct CustomizingActionView: View {
     @EnvironmentObject var viewModel: CustomizingActionViewModel
     
     var body: some View {
-        VStack(spacing: .spacingDefault) {
-            
+        VStack(spacing: .spacingSmall) {
             viewModel.progressView
-            
             viewModel.actionButton
         }
-        .padding(.horizontal, .paddingDefault)
+        .padding([.horizontal, .bottom], .paddingDefault)
     }
 }
 

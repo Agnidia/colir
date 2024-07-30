@@ -14,18 +14,7 @@ struct ToolsEmojisView: View {
     @EnvironmentObject var model: ToolsEmojisViewModel
     
     var body: some View {
-        let spacing: CGFloat = .spacingDefault
-        let magicWidthOffset = model.columnWidth * 0.25
-        let fontSize = model.columnWidth * 0.6
-        
         GeometryReader { geometry in
-            // Calculate the number of columns dynamically
-            let width = geometry.size.width
-            let columns = Int(width / (model.columnWidth + magicWidthOffset + spacing))
-            let numberOfColumns = (CGFloat(columns) * model.columnWidth + CGFloat(columns) * spacing) > width ? columns - 1 : columns
-            
-            let gridLayout = Array(repeating: GridItem(.fixed(model.columnWidth + magicWidthOffset), spacing: spacing), count: max(numberOfColumns, 1))
-            
             ScrollView {
                 ForEach(model.groups, id: \.self) { group in
                     if let emojis = model.emojis[group], emojis.isEmpty == false {
@@ -41,10 +30,10 @@ struct ToolsEmojisView: View {
                                 }
                             )
                         ) {
-                            LazyVGrid(columns: gridLayout, alignment: .leading, spacing: spacing) {
+                            LazyVGrid(columns: model.columns(in: geometry), alignment: .leading, spacing: model.viewSettings.spacing) {
                                 ForEach(emojis, id: \.self) { char in
                                     Text(String(char))
-                                        .font(.system(size: fontSize))
+                                        .font(.system(size: model.fontSize))
                                         .frame(width: model.columnWidth, height: model.columnWidth, alignment: .center)
                                         .padding(.paddingDefault)
                                         .background(Color.accentColor.opacity(0.1))
@@ -85,7 +74,7 @@ struct ToolsEmojisView: View {
                     }
                     
                 }
-                .padding(spacing)
+                .padding(.paddingDefault)
             }
         }
     }

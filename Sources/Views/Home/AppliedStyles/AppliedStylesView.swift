@@ -16,7 +16,7 @@ struct AppliedStylesView: View {
             
             viewModel.tagsView
         }
-        .padding(.horizontal, .paddingDefault)
+        .padding(.init(top: .paddingThin, leading: .paddingHeight, bottom: .paddingThin, trailing: .paddingDefault))
     }
 }
 

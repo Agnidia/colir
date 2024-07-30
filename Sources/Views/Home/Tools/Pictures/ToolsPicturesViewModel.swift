@@ -72,7 +72,6 @@ class ToolsPicturesViewModel: ObservableObject {
             }
     }
     
-    @Sendable
     func fetchImages() {
         debounce(.milliseconds(100)) { [weak self] in
             Task { [weak self] in
@@ -111,7 +110,6 @@ class ToolsPicturesViewModel: ObservableObject {
         }
     }
     
-    @Sendable
     fileprivate func setupAccess() {
         do {
             let accessData = try fileAccessManager.checkAndSetupDataAccessIfNeeded()

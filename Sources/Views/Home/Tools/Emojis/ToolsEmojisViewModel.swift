@@ -6,7 +6,7 @@
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
-import Foundation
+import SwiftUI
 import SwiftCommons
 
 class ToolsEmojisViewModel: ObservableObject, DomainViewConstantProtocol {
@@ -26,6 +26,10 @@ class ToolsEmojisViewModel: ObservableObject, DomainViewConstantProtocol {
     @Published var expanded: Set<EmojisGroup> = []
     
     let columnWidth: CGFloat = 128 // The width for each column
+        
+    var fontSize: CGFloat {
+        columnWidth * 0.6
+    }
     
     lazy var cellCornerRadius: CGFloat = viewSettings.cornerRadius!
     
@@ -35,6 +39,20 @@ class ToolsEmojisViewModel: ObservableObject, DomainViewConstantProtocol {
         if let firstGroup = self.groups.first {
             self.expanded.insert(firstGroup)
         }
+    }
+    
+    func columns(in geometry: GeometryProxy) -> [GridItem] {
+        // Calculate the number of columns dynamically
+        let magicWidthOffset = columnWidth * 0.25
+        let width = geometry.size.width
+        let spacing: CGFloat = viewSettings.spacing ?? .spacingDefault
+        
+        let columns = Int(width / (columnWidth + magicWidthOffset + spacing))
+        let numberOfColumns = (CGFloat(columns) * columnWidth + CGFloat(columns) * spacing) > width ? columns - 1 : columns
+        
+        let gridLayout = Array(repeating: GridItem(.adaptive(minimum: (columnWidth + magicWidthOffset)), spacing: spacing), count: max(numberOfColumns, 1))
+        
+        return gridLayout
     }
 }
 

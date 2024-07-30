@@ -53,9 +53,9 @@ class CustomizingActionViewModel: ObservableObject, DomainViewConstantProtocol {
             Text(DomainViewConstantType.Localization.customize)
                 .font(ButtonStyleConstants.font)
                 .padding(ButtonStyleConstants.padding)
+                .frame(maxWidth: .infinity)
         })
         .buttonStyle(.primary)
-        .padding(.paddingDefault)
         .disabled(state != .ready)
     }
     

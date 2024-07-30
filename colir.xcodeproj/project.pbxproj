@@ -1482,8 +1482,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/IGRSoft/SwiftUICustomTagListView";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.0;
 			};
 		};
 		A5E115C32AFBDBB50023A70C /* XCRemoteSwiftPackageReference "DominantColor" */ = {

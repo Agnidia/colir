@@ -27,7 +27,7 @@ struct ToolsEmojisViewDomain: DomainViewConstantType {
     }
     
     var spacing: CGFloat? {
-        .spacingLarge
+        .spacingDefault
     }
     
     var border: CGFloat? {

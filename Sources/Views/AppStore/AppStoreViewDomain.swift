@@ -47,6 +47,7 @@ struct AppStoreViewDomain: DomainViewConstantType {
         .secondaryBackground
     }
     
+    @MainActor
     enum L: ConstantRawRepresentable {
         static let titleSubscription: LocalizedStringKey =
         "app.store.view.title.subscribe"

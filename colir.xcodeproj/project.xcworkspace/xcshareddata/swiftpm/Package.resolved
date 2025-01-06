@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/danielsaidi/StoreKitPlus",
       "state" : {
-        "revision" : "583feb5be4480bb0ce6eb732fb342968c3b44d91",
-        "version" : "0.3.1"
+        "revision" : "b52ea96bc8425392c80b40fd765574b08d63b71c",
+        "version" : "0.5.1"
       }
     },
     {

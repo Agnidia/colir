@@ -12,7 +12,7 @@ internal protocol ColorWheelViewDelegate: AnyObject {
     func didChangeColor(hue: Double, saturation: Double, brightness: Double)
 }
 
-internal class ColorWheelNSView: NSView {
+internal final class ColorWheelNSView: NSView {
     weak var delegate: ColorWheelViewDelegate?
     
     let wheelLayer = CALayer()

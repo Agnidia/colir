@@ -28,7 +28,7 @@ public protocol AppSettingsProtocol {
     var exportCount: CryptoModel { get set }
 }
 
-class AppSettings: AppSettingsProtocol, ObservableObject {
+final class AppSettings: AppSettingsProtocol, ObservableObject {
     // MARK: - Constants
     
     private enum Key {
@@ -47,7 +47,7 @@ class AppSettings: AppSettingsProtocol, ObservableObject {
     
     // MARK: - Dependency Injection
     
-    private static var userDefaults: UserDefaults!
+    nonisolated(unsafe) private static var userDefaults: UserDefaults!
     
     // MARK: - Initialization
     
@@ -63,7 +63,7 @@ class AppSettings: AppSettingsProtocol, ObservableObject {
     
     // MARK: - Properties
     
-    /// Access data for Xcode data folder.
+    /// Access data for Pictures folder.
     @AppStorage(Key.bookmarkData, store: userDefaults)
     var bookmarkData: Data = Data()
     
@@ -87,5 +87,7 @@ class AppSettings: AppSettingsProtocol, ObservableObject {
 
 extension AppSettings {
     /// A preview instance of `AppSettings` for testing purposes.
-    static var preview: AppSettings = .init(store: UserDefaults(suiteName: Secrets.userDefaultsId + ".preview")!)
+    static var preview: AppSettings {
+        .init(store: UserDefaults(suiteName: Secrets.userDefaultsId + ".preview")!)
+    }
 }

@@ -35,7 +35,7 @@ struct Log {
     
     /// The subsystem for the logs, which utilizes the main bundle identifier
     /// of the application to namespace the logs, enhancing their traceability and filtering.
-    private static var subsystem = Bundle.main.bundleIdentifier!
+    private static let subsystem = Bundle.main.bundleIdentifier!
     
     /// The `Logger` instance derived from the OS logging system, configured for a specific logging category.
     private let logger: Logger

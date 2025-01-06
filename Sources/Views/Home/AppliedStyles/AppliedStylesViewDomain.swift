@@ -47,6 +47,7 @@ struct AppliedStylesViewDomain: DomainViewConstantType {
         .secondaryBackground
     }
     
+    @MainActor
     enum L: ConstantRawRepresentable {
         static let customize: LocalizedStringKey =
         "customizing.view.button.customize"

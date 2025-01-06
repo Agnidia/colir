@@ -47,6 +47,7 @@ struct HomeViewDomain: DomainViewConstantType {
         .secondaryBackground
     }
     
+    @MainActor
     enum L: ConstantRawRepresentable {
         static let dragHere: LocalizedStringKey =
         "home.view.drag-and-drop-zone.drag-here"

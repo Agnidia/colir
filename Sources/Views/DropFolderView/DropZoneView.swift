@@ -30,7 +30,8 @@ struct DropZoneView: View {
             // Callback to validate the files being dragged.
             // Allows drop if URLs contain folders.
             validateFiles: { urls in
-                return (viewModel.urlsHasFolders(urls: urls) == true) ? .copy : NSDragOperation()
+                let value: NSDragOperation = (viewModel.urlsHasFolders(urls: urls) == true) ? .copy : .init()
+                return value
             },
             
             // Callback triggered when the drag enters or exits the drop zone.

@@ -9,42 +9,15 @@
 import AppKit
 import SwiftUI
 
-/// An `EnvironmentKey` for specifying the material type of a visual effect view.
-struct VisualEffectMaterialKey: EnvironmentKey {
-    typealias Value = NSVisualEffectView.Material?
-    static var defaultValue: Value = nil
-}
-
-/// An `EnvironmentKey` for specifying the blending mode of a visual effect view.
-struct VisualEffectBlendingKey: EnvironmentKey {
-    typealias Value = NSVisualEffectView.BlendingMode?
-    static var defaultValue: Value = nil
-}
-
-/// An `EnvironmentKey` for specifying whether the visual effect view is emphasized.
-struct VisualEffectEmphasizedKey: EnvironmentKey {
-    typealias Value = Bool?
-    static var defaultValue: Bool? = nil
-}
-
 extension EnvironmentValues {
     /// The material type for the visual effect view.
-    var visualEffectMaterial: NSVisualEffectView.Material? {
-        get { self[VisualEffectMaterialKey.self] }
-        set { self[VisualEffectMaterialKey.self] = newValue }
-    }
+    @Entry var visualEffectMaterial: NSVisualEffectView.Material? = nil
     
     /// The blending mode for the visual effect view.
-    var visualEffectBlending: NSVisualEffectView.BlendingMode? {
-        get { self[VisualEffectBlendingKey.self] }
-        set { self[VisualEffectBlendingKey.self] = newValue }
-    }
+    @Entry var visualEffectBlending: NSVisualEffectView.BlendingMode? = nil
     
     /// Indicates if the visual effect view is emphasized.
-    var visualEffectEmphasized: Bool? {
-        get { self[VisualEffectEmphasizedKey.self] }
-        set { self[VisualEffectEmphasizedKey.self] = newValue }
-    }
+    @Entry var visualEffectEmphasized: Bool? = nil
 }
 
 /// A SwiftUI view that wraps an `NSVisualEffectView` to apply visual effects.

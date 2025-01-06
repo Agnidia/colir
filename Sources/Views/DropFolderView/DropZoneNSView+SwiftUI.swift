@@ -103,7 +103,7 @@ extension DropZoneNSView.SwiftUI: NSViewRepresentable {
 // MARK: - Delegate Handling
 
 public extension DropZoneNSView.SwiftUI {
-    class Coordinator: NSObject, DropZoneViewProtocol {
+    final class Coordinator: NSObject, DropZoneViewProtocol {
         let parent: DropZoneNSView.SwiftUI
         
         init(_ dropView: DropZoneNSView.SwiftUI) {

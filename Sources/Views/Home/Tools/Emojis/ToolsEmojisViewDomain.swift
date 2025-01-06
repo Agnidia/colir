@@ -46,6 +46,7 @@ struct ToolsEmojisViewDomain: DomainViewConstantType {
         .secondaryBackground
     }
     
+    @MainActor
     enum L: ConstantRawRepresentable {
         static let photoDescription: LocalizedStringKey =
         "permissions.overlay.open-photo.description"

@@ -20,7 +20,7 @@ struct ImageUndoDto {
     let customisations: ImageCustomisationUndoDto
 }
 
-final public class ImageDto: ObservableObject {
+final public class ImageDto: ObservableObject, @unchecked Sendable {
     
     /// Represents the current state of the image processing.
     enum ImageState: Equatable {
@@ -49,9 +49,9 @@ final public class ImageDto: ObservableObject {
         case s512
         case s512x2
         
-        static var processingCases: [ImageDto.ImageSize] = [.s256, .s16, .s16x2, .s32, .s32x2, .s128, .s128x2, .s256x2, .s512, .s512x2]
+        static let processingCases: [ImageDto.ImageSize] = [.s256, .s16, .s16x2, .s32, .s32x2, .s128, .s128x2, .s256x2, .s512, .s512x2]
         
-        static var allCases: [ImageDto.ImageSize] = [.s16, .s16x2, .s32, .s32x2, .s128, .s128x2, .s256, .s256x2, .s512, .s512x2]
+        static let allCases: [ImageDto.ImageSize] = [.s16, .s16x2, .s32, .s32x2, .s128, .s128x2, .s256, .s256x2, .s512, .s512x2]
         
         /// Returns the dimension (size) of the image for this `ImageSize`.
         var dimension: CGFloat {
@@ -95,10 +95,12 @@ final public class ImageDto: ObservableObject {
     }
     
     // Placeholder images for initialization.
-    private static var dummyImages = ImageSize.processingCases.reduce([ImageSize: NSImage]()) {
-        var result = $0
-        result[$1] = NSImage()
-        return result
+    private static var dummyImages: [ImageSize: NSImage] {
+        ImageSize.processingCases.reduce([ImageSize: NSImage]()) {
+            var result = $0
+            result[$1] = NSImage()
+            return result
+        }
     }
     
     // Various image states.
@@ -144,11 +146,17 @@ final public class ImageDto: ObservableObject {
     
     /// Binding for observing and setting the image state.
     private(set) lazy var stateBinding = Binding<ImageState>(
-        get: { [weak self] in self?.state ?? .none },
-        set: { [weak self] newState in
-            self?.state = newState
-        }
+        get: getState,
+        set: setState
     )
+    
+    private func getState() -> ImageState {
+        state
+    }
+    
+    private func setState(_ newState: ImageState) {
+        state = newState
+    }
     
     /// Indicates whether the image processing is complete and the image is valid.
     var isValid: Bool {
@@ -173,8 +181,8 @@ final public class ImageDto: ObservableObject {
         self.customisations = customisations
         
         if image.isValid {
-            Task {
-                await updateOriginal(url: url, image: image)
+            Task { [url, image, weak self] in
+                await self?.updateOriginal(url: url, image: image)
             }
         }
     }
@@ -256,6 +264,7 @@ final public class ImageDto: ObservableObject {
         }
     }
     
+    @MainActor
     @ViewBuilder
     var preview: some View {
         switch state {

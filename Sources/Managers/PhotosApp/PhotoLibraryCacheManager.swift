@@ -69,6 +69,8 @@ actor PhotoLibraryCacheManager {
         imageManager.stopCachingImagesForAllAssets()
     }
     
+    typealias ImageResult = (image: NSImage?, isLowerQuality: Bool)?
+    
     /// Requests an image for a specific photo asset.
     /// - Parameters:
     ///   - asset: The `PhotoAsset` for which to request the image.
@@ -76,25 +78,35 @@ actor PhotoLibraryCacheManager {
     ///   - completion: A closure to be called with the requested image and a flag indicating if the image is of lower quality.
     /// - Returns: The request ID for the image request, or `nil` if the asset is not available.
     @discardableResult
-    func requestImage(for asset: PhotoAsset, targetSize: CGSize, completion: @escaping ((image: NSImage?, isLowerQuality: Bool)?) -> Void) -> PHImageRequestID? {
+    func requestImage(for asset: PhotoAsset, targetSize: CGSize, completion: @escaping @Sendable @MainActor (ImageResult) -> Void) -> PHImageRequestID? {
         guard let phAsset = asset.phAsset else {
-            completion(nil)
+            Task { @MainActor in
+                completion(nil)
+            }
             return nil
         }
         
         let requestID = imageManager.requestImage(for: phAsset, targetSize: targetSize, contentMode: imageContentMode, options: requestOptions) { image, info in
             if info?[PHImageErrorKey] is Error {
                 // Handle image request error
-                completion(nil)
+                Task { @MainActor in
+                    completion(nil)
+                }
             } else if let cancelled = (info?[PHImageCancelledKey] as? NSNumber)?.boolValue, cancelled {
                 // Handle cancelled request
-                completion(nil)
+                Task { @MainActor in
+                    completion(nil)
+                }
             } else if let image = image {
                 let isLowerQualityImage = (info?[PHImageResultIsDegradedKey] as? NSNumber)?.boolValue ?? false
                 let result = (image: image, isLowerQuality: isLowerQualityImage)
-                completion(result)
+                Task { @MainActor [result] in
+                    completion(result)
+                }
             } else {
-                completion(nil)
+                Task { @MainActor in
+                    completion(nil)
+                }
             }
         }
         return requestID

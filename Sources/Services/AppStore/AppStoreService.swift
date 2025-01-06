@@ -11,7 +11,7 @@ import StoreKitPlus
 import StoreKit
 
 /// Represents the different in-app products available for purchase.
-public enum AppProduct: String, CaseIterable, Equatable, ProductRepresentable {
+public enum AppProduct: String, CaseIterable, Equatable, ProductRepresentable, Sendable {
     case add1Folder = "com.igrsoft.colir.1.folders.inapp"
     case add5Folder = "com.igrsoft.colir.5.folders.inapp"
     case add15Folder = "com.igrsoft.colir.15.folders.inapp"
@@ -41,7 +41,7 @@ public struct AppStoreProductInfo {
 }
 
 /// Represents the possible results of a purchase attempt.
-public enum PurchaseResult {
+public enum PurchaseResult: Sendable {
     /// The purchase succeeded with a `Transaction`.
     case success(AppProduct)
     /// The user cancelled the purchase.
@@ -83,7 +83,7 @@ final class AppStoreService: AppStoreProtocol {
     private let context = StoreContext()
     
     private var storeService: StoreService {
-        return StandardStoreService(products: AppProduct.allCases, context: context)
+        StandardStoreService(products: AppProduct.allCases)
     }
     
     private var products: [AppProduct: Product]?
@@ -107,7 +107,7 @@ final class AppStoreService: AppStoreProtocol {
     /// Synchronizes store data with the App Store.
     func syncStoreData() async throws {
         log.debug("sync Store Data")
-        try await storeService.syncStoreData()
+        try await storeService.syncStoreData(to: context)
         fillProducts()
         fillPurchased()
         log.debug("restored Purchases")
@@ -132,7 +132,7 @@ final class AppStoreService: AppStoreProtocol {
             throw AppStoreServiceError.missedProduct
         }
         log.debug("purchase product: \(appStoreProduct)")
-        let result = try await storeService.purchase(appStoreProduct)
+        let result = try await storeService.purchase(appStoreProduct).0
         switch result {
         case .success(let verificationResult):
             let productId = try verificationResult.payloadValue.productID

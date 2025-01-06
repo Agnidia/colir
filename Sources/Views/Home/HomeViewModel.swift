@@ -14,7 +14,7 @@ import Combine
 /// The view model for the `HomeView`, handling data and state management related to
 /// image customization, tool selection, and app settings. It integrates with various services
 /// to provide functionality such as applying colors, images, emojis, and managing undo actions.
-final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
+final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchecked Sendable {
     
     /// View settings for configuring appearance and behavior.
     let viewSettings: HomeViewDomain = .init()
@@ -183,7 +183,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         
         customizationTask?.cancel()
         
-        customizationTask = Task { [emoji] in
+        customizationTask = Task { [dropZoneViewModel, emoji] in
             await dropZoneViewModel.image.customisations.apply(emoji: emoji)
             
             do {
@@ -246,7 +246,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
             }
             .store(in: &cancellables)
         
-        toolsPhotosViewModel.$selectedImage
+        toolsPhotosViewModel.selectedImage.publisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] image in
                 guard self?.skipSelectedPhoto == false else {
@@ -312,6 +312,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     private lazy var webResourcesViewModel: WebResourcesViewModel = .init()
     
     /// Provides the view for the selected tool.
+    @MainActor
     @ViewBuilder
     func toolsView() -> some View {
         switch tools {
@@ -320,7 +321,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
                 .environmentObject(toolsColorsViewModel)
         case .photos:
             ToolsPhotosView()
-                .environmentObject(toolsPhotosViewModel)
+                .environment(toolsPhotosViewModel)
         case .emojis:
             ToolsEmojisView()
                 .environmentObject(toolsEmojisViewModel)
@@ -350,6 +351,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     }
     
     /// Provides the view for the icon folder.
+    @MainActor
     @ViewBuilder
     func iconFolderView() -> some View {
         DropZoneView()
@@ -363,6 +365,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     private lazy var appliedStylesViewModel: AppliedStylesViewModel = .init(toolsColorsViewModel: toolsColorsViewModel, toolsPhotosViewModel: toolsPhotosViewModel, toolsPicturesViewModel: toolsPicturesViewModel, toolsEmojisViewModel: toolsEmojisViewModel)
     
     /// Provides the view for the applied styles.
+    @MainActor
     @ViewBuilder
     func appliedStylesView() -> some View {
         AppliedStylesView()
@@ -388,6 +391,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     }
     
     /// Provides the view for the customization folder.
+    @MainActor
     @ViewBuilder
     func customizeFolderView() -> some View {
         CustomizingActionView()
@@ -412,12 +416,13 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
                 }
             )) {
                 AppStoreView()
-                    .environmentObject(self.appStoreViewModel)
+                    .environment(self.appStoreViewModel)
                     .frame(height: 544)
             }
     }
     
     /// Opens a folder in the drop zone view.
+    @MainActor
     public func openFolder() {
         dropZoneViewModel.openFolder()
     }
@@ -438,7 +443,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
             var icon: NSImage?
             
             let rsrcFile = url.appendingPathComponent("Icon\r/..namedfork/rsrc")
-            if FileManager.default.fileExists(atPath: rsrcFile.path()) {
+            if FileManager.default.fileExists(atPath: rsrcFile.path(percentEncoded: false)) {
                 var resource: RSRCResource?
                 do {
                     resource = try rsrcFileParser.parse(url: rsrcFile).first

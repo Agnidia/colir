@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Foundation
-
 /// A class responsible for parsing resource files from a given URL.
 ///
 /// This class reads and parses resource files, returning an array of `RSRCResource` objects.

@@ -29,7 +29,8 @@ import Throttler
 ///   - `imageSize`, `thumbnailSize`: Sizes for fetching images and thumbnails.
 ///   - `cellCornerRadius`: Corner radius for the photo cell.
 
-class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
+@Observable
+final class ToolsPhotosViewModel: DomainViewConstantProtocol, @unchecked Sendable {
     
     typealias DomainViewConstantType = ToolsPhotosViewDomain
     
@@ -37,10 +38,10 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
     
     private let logger: LogProtocol = Log(category: .toolsPhoto)
     
-    @Published var selectedAsset: PhotoAsset? = nil
+    var selectedAsset: PhotoAsset? = nil
     
     //TODO: set it private(set)
-    @Published var selectedImage: NSImage? = nil {
+    var selectedImage: NSImage? = nil {
         didSet {
             if selectedImage == nil {
                 selectedAsset = nil
@@ -48,11 +49,11 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
         }
     }
     
-    @Published var isAuthorised: Bool = true
+    var isAuthorised: Bool = true
     
     private let photosAppManager: PhotoLibraryAccessManagerProtocol
     
-    @Published var isPhotosLoaded = false
+    var isPhotosLoaded = false
     
     var photoLibraryAlbumManager = PhotoLibraryAlbumManager(smartAlbum: .smartAlbumUserLibrary)
     
@@ -62,19 +63,20 @@ class ToolsPhotosViewModel: ObservableObject, DomainViewConstantProtocol {
     var imageSize = CGSize(width: 1024, height: 1024)
     var thumbnailSize = CGSize(width: 512, height: 512)
     
-    private lazy var cellCornerRadius: CGFloat = viewSettings.cornerRadius!
+    private var cellCornerRadius: CGFloat {
+        viewSettings.cornerRadius!
+    }
     
     init() {
         self.photosAppManager = PhotoLibraryAccessManager()
     }
     
+    @MainActor
     @ViewBuilder
     var overlay: some View {
         if isAuthorised == false, let url = SystemSettingsSecurityPrivacy.photos.path {
             PermissionsOverlayView()
                 .environmentObject(PermissionsOverlayViewModel(title: ToolsPhotosViewDomain.Localization.photoDescription, url: url))
-        } else {
-            EmptyView()
         }
     }
     

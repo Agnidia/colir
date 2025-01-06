@@ -19,7 +19,7 @@ import SwiftCommons
 ///   - title: The title of the overlay, displayed prominently.
 ///   - description: Additional information or instructions related to the permissions request.
 ///   - url: The URL to open when the user interacts with the action button (e.g., system preferences).
-class PermissionsOverlayViewModel: ObservableObject, DomainViewConstantProtocol {
+final class PermissionsOverlayViewModel: ObservableObject, DomainViewConstantProtocol {
     
     // MARK: - DomainViewConstantProtocol
     typealias DomainViewConstantType = PermissionsOverlayDomain
@@ -76,6 +76,7 @@ class PermissionsOverlayViewModel: ObservableObject, DomainViewConstantProtocol 
     /// The action button for the overlay.
     ///
     /// This button triggers an action to open the specified URL, such as system preferences.
+    @MainActor
     @ViewBuilder
     var actionButton: some View {
         Button(action: action, label: {

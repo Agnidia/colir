@@ -9,7 +9,7 @@
 import Photos
 
 /// A struct representing a photo asset in the photo library.
-struct PhotoAsset: Identifiable {
+struct PhotoAsset: Identifiable, Sendable {
     /// The unique identifier for the asset.
     var id: String { identifier }
     
@@ -68,7 +68,7 @@ extension PhotoAsset: Hashable {
     }
 }
 
-extension PHObject: Identifiable {
+extension PHObject: @retroactive Identifiable {
     /// Provides a unique identifier for `PHObject` based on its local identifier.
     public var id: String { localIdentifier }
 }

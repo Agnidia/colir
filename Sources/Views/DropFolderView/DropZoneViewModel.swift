@@ -11,7 +11,7 @@ import SwiftUI
 import Combine
 
 /// The view model for the `DropZoneView`, managing file drag-and-drop interactions and state updates.
-final class DropZoneViewModel: ObservableObject {
+final class DropZoneViewModel: ObservableObject, @unchecked Sendable {
     
     /// Closure type for handling dropped files.
     typealias FilesClosure = ([URL]) -> ()
@@ -87,13 +87,12 @@ final class DropZoneViewModel: ObservableObject {
     /// - Returns: `true` if any of the URLs are folders; otherwise, `false`.
     func urlsHasFolders(urls: [URL]) -> Bool {
         !urls
-            .filter {
-                $0.isFolder && !$0.path().hasSuffix(".app/")
-            }
+            .filter { $0.isFolder && !$0.path().hasSuffix(".app/") }
             .isEmpty
     }
     
     /// The view displayed as the background of the drop zone.
+    @MainActor
     @ViewBuilder
     var backgroundView: some View {
         ZStack {
@@ -121,6 +120,7 @@ final class DropZoneViewModel: ObservableObject {
     }
     
     /// The text overlay displayed on top of the drop zone.
+    @MainActor
     private var overlayText: LocalizedStringKey {
         var text = HomeViewDomain.Localization.dragHere
         if isEnterZone {
@@ -134,6 +134,7 @@ final class DropZoneViewModel: ObservableObject {
     }
     
     /// The view displayed as the overlay of the drop zone.
+    @MainActor
     @ViewBuilder
     var overlayView: some View {
         if image.state == .none {
@@ -149,6 +150,7 @@ final class DropZoneViewModel: ObservableObject {
     }
     
     /// Opens a folder selection dialog for the user to choose directories.
+    @MainActor
     func openFolder() {
         let panel = NSOpenPanel()
         panel.allowsMultipleSelection = true

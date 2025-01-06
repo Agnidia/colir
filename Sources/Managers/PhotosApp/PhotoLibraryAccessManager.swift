@@ -17,7 +17,7 @@ protocol PhotoLibraryAccessManagerProtocol {
 }
 
 /// A class that manages photo library access and authorization.
-class PhotoLibraryAccessManager: PhotoLibraryAccessManagerProtocol {
+final class PhotoLibraryAccessManager: PhotoLibraryAccessManagerProtocol {
     
     private let logger: LogProtocol = Log(category: .photoAppAccess)
     

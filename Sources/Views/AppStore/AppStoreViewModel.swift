@@ -13,7 +13,8 @@ import SwiftCommons
 ///
 /// This view model interacts with `AppStoreProtocol` for handling purchases and `AppSettingsProtocol` for updating application settings.
 /// It manages the state of the UI, including displaying overlays and handling user interactions for purchasing and restoring products.
-final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
+@Observable
+final class AppStoreViewModel: DomainViewConstantProtocol, @unchecked Sendable {
     
     // MARK: - DomainViewConstantProtocol
     /// Type alias for domain-specific view constants.
@@ -25,16 +26,13 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
     // MARK: - Properties
     
     /// Service for interacting with the App Store.
-    private let appStoreService: AppStoreProtocol
+    let appStoreService: AppStoreProtocol
     
     /// Application settings for managing export counts and other configurations.
     private var appSettings: AppSettingsProtocol
     
     /// Closure to be called when the view is closed or when a specific action is completed.
     private let completionHandler: Commons.EmptyClosure
-    
-    /// Published property indicating whether an overlay (e.g., progress indicator) should be displayed.
-    @Published private(set) var displayOverlay = false
     
     // MARK: - Initialization
     
@@ -53,6 +51,7 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
     // MARK: - Views
     
     /// Title for the subscriptions section.
+    @MainActor
     @ViewBuilder
     var titleSubscription: some View {
         Text(DomainViewConstantType.Localization.titleSubscription)
@@ -61,20 +60,15 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
     }
     
     /// Size of the buttons in the grid.
-    private static var buttonSize: CGFloat = 150
+    static var buttonSize: CGFloat { 150 }
     
     /// Layout for the grid items.
-    private let rows = [
+    let rows = [
         GridItem(.adaptive(minimum: buttonSize, maximum: buttonSize))
     ]
     
-    /// List of subscription products.
-    @ViewBuilder
-    var subscriptionsList: some View {
-        ListView(for: AppProduct.subscriptions)
-    }
-    
     /// Title for the in-app purchases section.
+    @MainActor
     @ViewBuilder
     var titleInAppPurchase: some View {
         Text(DomainViewConstantType.Localization.titleInAppPurchase)
@@ -82,77 +76,8 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
             .padding(.top, .paddingDefault)
     }
     
-    /// List of in-app purchase products.
-    @ViewBuilder
-    var inAppPurchasesList: some View {
-        ListView(for: AppProduct.inAppPurchases)
-    }
-    
-    /// Creates a grid view for displaying a list of products.
-    ///
-    /// - Parameter products: The list of products to be displayed.
-    /// - Returns: A `LazyHGrid` containing buttons for each product.
-    @ViewBuilder
-    private func ListView(for products: [AppProduct]) -> some View {
-        LazyHGrid(rows: rows, alignment: .center) {
-            ForEach(products, id: \.self) { item in
-                Button {
-                    self.displayOverlay = true
-                    Task {
-                        do {
-                            let result = try await self.appStoreService.purchase(item)
-                            self.process(purchase: result)
-                        } catch {
-                            print(error.localizedDescription)
-                        }
-                        
-                        Task { @MainActor in
-                            self.displayOverlay = false
-                        }
-                    }
-                } label: {
-                    let info = try? self.appStoreService.info(for: item)
-                    VStack {
-                        Text(info?.name ?? "")
-                            .font(.title2)
-                            .multilineTextAlignment(.center)
-                        Text(info?.description ?? "")
-                            .font(.body)
-                            .multilineTextAlignment(.center)
-                            .padding(.paddingThin)
-                        Spacer()
-                        Text(info?.price ?? "")
-                            .font(.body)
-                    }
-                    .padding(.paddingDefault)
-                    .frame(width: AppStoreViewModel.buttonSize, height: AppStoreViewModel.buttonSize)
-                }
-                .buttonStyle(.appStore)
-            }
-        }
-        .frame(height: AppStoreViewModel.buttonSize)
-    }
-    
-    /// Button for restoring previous purchases.
-    @ViewBuilder
-    var restoreButton: some View {
-        Button {
-            Task {
-                do {
-                    try await self.appStoreService.syncStoreData()
-                } catch {
-                    print("Sync error: \(error.localizedDescription)")
-                }
-            }
-        } label: {
-            Text("Restore")
-                .padding(.init(top: .paddingSmall, leading: .zero, bottom: .paddingSmall, trailing: .zero))
-                .frame(width: AppStoreViewModel.buttonSize)
-        }
-        .buttonStyle(.accent)
-    }
-    
     /// Button for closing the App Store view.
+    @MainActor
     @ViewBuilder
     var closeButton: some View {
         Button { [weak self] in
@@ -170,13 +95,11 @@ final class AppStoreViewModel: ObservableObject, DomainViewConstantProtocol {
     /// Processes the result of a purchase attempt.
     ///
     /// - Parameter purchase: The result of the purchase attempt.
-    private func process(purchase: PurchaseResult) {
+    func process(purchase: PurchaseResult) {
         switch purchase {
         case .success(let product):
             handleSuccess(for: product)
-            Task { @MainActor in
-                completionHandler()
-            }
+            completionHandler()
         case .userCancelled:
             // Handle user cancellation if needed
             break

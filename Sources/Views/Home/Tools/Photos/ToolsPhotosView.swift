@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SystemSettingsAccess
 
 /// A SwiftUI view that displays photos from the user's photo library.
 ///
@@ -28,7 +27,7 @@ import SystemSettingsAccess
 ///   - A preview instance of `ToolsPhotosView` is provided to visualize the view's layout and behavior in Xcode's canvas.
 struct ToolsPhotosView: View {
     
-    @EnvironmentObject var viewModel: ToolsPhotosViewModel
+    @Environment(ToolsPhotosViewModel.self) var viewModel
     
     var body: some View {
         ScrollView {
@@ -42,13 +41,11 @@ struct ToolsPhotosView: View {
         .overlay(content: {
             viewModel.overlay
         })
-        .task {
-            await viewModel.fetchImages()
-        }
+        .task(viewModel.fetchImages)
     }
 }
 
 #Preview("ToolsPhotosView") {
     ToolsPhotosView()
-        .environmentObject(ToolsPhotosViewModel())
+        .environment(ToolsPhotosViewModel())
 }

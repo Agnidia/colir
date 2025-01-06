@@ -12,7 +12,7 @@ import SwiftCommons
 /// A view model that provides data and state management for displaying emoji groups in `ToolsEmojisView`.
 ///
 /// It manages the list of emoji groups, their emojis, and the current state of selected and expanded items. It also calculates the layout for displaying emojis in a grid.
-class ToolsEmojisViewModel: ObservableObject, DomainViewConstantProtocol {
+final class ToolsEmojisViewModel: ObservableObject, DomainViewConstantProtocol {
     
     /// Type alias for domain-specific constants.
     typealias DomainViewConstantType = ToolsEmojisViewDomain

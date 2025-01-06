@@ -19,7 +19,7 @@ enum FileAccessManagerError: Error {
 protocol FileAccessManagerProtocol {
     init(with path: URL, bookmarkData: Data)
     
-    func checkAndSetupDataAccessIfNeeded() throws -> FileAccessData
+    @MainActor func checkAndSetupDataAccessIfNeeded() throws -> FileAccessData
 }
 
 /// A struct representing the data needed for file access, including a URL and its associated bookmark data.
@@ -29,7 +29,7 @@ struct FileAccessData {
 }
 
 /// A manager class for handling file access by using bookmarks and security scopes.
-class FileAccessManager: FileAccessManagerProtocol {
+final class FileAccessManager: FileAccessManagerProtocol {
     
     private enum K {
         static let promptMessage = "Choose ~/Pictures directory"
@@ -53,6 +53,7 @@ class FileAccessManager: FileAccessManagerProtocol {
     /// Checks and sets up data access if needed.
     /// - Throws: Throws an error if access cannot be established.
     /// - Returns: The `FileAccessData` containing the path and bookmark data if access is granted.
+    @MainActor
     func checkAndSetupDataAccessIfNeeded() throws -> FileAccessData {
         var accessData: FileAccessData!
         do {
@@ -78,6 +79,7 @@ class FileAccessManager: FileAccessManagerProtocol {
     /// - Parameters:
     ///   - dir: The URL of the directory to prompt for access.
     /// - Returns: The URL of the directory if access is granted; otherwise, `nil`.
+    @MainActor
     private func promptPermission(to dir: URL) -> URL? {
         NSOpenPanel.promptPermission(to: dir, message: K.promptMessage)
     }

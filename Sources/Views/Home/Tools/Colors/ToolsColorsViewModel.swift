@@ -30,7 +30,7 @@ import Throttler
 ///   - `colorPickerTitle`: A view displaying the title for the color picker and a color picker control.
 ///   - `colorsList`: A view displaying a grid of color options, grouped by type.
 ///   - `cell(for:)`: Returns a view for a single color cell, including selection handling and styling.
-class ToolsColorsViewModel: ObservableObject, DomainViewConstantProtocol {
+final class ToolsColorsViewModel: ObservableObject, DomainViewConstantProtocol {
     typealias DomainViewConstantType = ToolsColorsViewDomain
     
     let viewSettings: ToolsColorsViewDomain = .init()
@@ -50,6 +50,7 @@ class ToolsColorsViewModel: ObservableObject, DomainViewConstantProtocol {
         ]
     }
     
+    @MainActor
     @ViewBuilder
     var colorPickerTitle: some View {
         VStack(spacing: viewSettings.spacing) {

@@ -9,7 +9,7 @@
 import Foundation
 
 /// Handles application-level initialization and setup, including logging.
-class Application {
+final class Application {
     
     // MARK: - Properties
     

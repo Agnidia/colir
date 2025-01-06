@@ -22,7 +22,7 @@ protocol PicturesFolderManagerProtocol {
 }
 
 /// A class that manages and retrieves images from the "Pictures" folder.
-class PicturesFolderManager: PicturesFolderManagerProtocol {
+final class PicturesFolderManager: PicturesFolderManagerProtocol {
     
     /// The URL of the "Pictures" directory.
     let picturesDirectory: URL

@@ -35,10 +35,12 @@ final class ImageCustomisation {
         case processed
     }
     
-    private static var dummyImages = ImageDto.ImageSize.allCases.reduce([ImageDto.ImageSize: ImageState]()) {
-        var result = $0
-        result[$1] = .empty
-        return result
+    private static var dummyImages: [ImageDto.ImageSize: ImageState] {
+        ImageDto.ImageSize.allCases.reduce([ImageDto.ImageSize: ImageState]()) {
+            var result = $0
+            result[$1] = .empty
+            return result
+        }
     }
     
     private var coloredImageState: [ImageDto.ImageSize: ImageState] = dummyImages

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ColorWheelView: NSViewRepresentable {
     
-    internal class Coordinator: NSObject, ColorWheelViewDelegate {
+    internal final class Coordinator: NSObject, ColorWheelViewDelegate {
         var colorWheel: ColorWheelNSView?
         
         func didChangeColor(hue: Double, saturation: Double, brightness: Double) {

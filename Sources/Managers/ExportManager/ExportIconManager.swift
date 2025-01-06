@@ -44,7 +44,12 @@ final class ExportIconManager: ExportIconManagerProtocol {
     
     /// Indicates whether exporting is allowed. Returns `true` if there are remaining exports or if full access is granted; otherwise, `false`.
     var canExport: Bool {
+        #if DEBUG
+        #warning("Exporting is allowed in debug mode")
+        return true
+        #else
         Int(appSettings.exportCount.value) ?? 0 > 0 || appStoreService.hasFullAccess
+        #endif
     }
     
     /// Exports the given image by converting it to ICNS format and setting it at the specified URL.

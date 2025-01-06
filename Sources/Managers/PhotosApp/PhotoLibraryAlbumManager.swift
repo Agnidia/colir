@@ -9,7 +9,7 @@
 import Photos
 
 /// Manages photo albums and photo assets in the user's photo library.
-class PhotoLibraryAlbumManager: NSObject, ObservableObject {
+final class PhotoLibraryAlbumManager: NSObject, ObservableObject, @unchecked Sendable {
     
     /// Published property holding the collection of photo assets in the album.
     @Published var photoAssets: PhotoAssetCollection = PhotoAssetCollection(PHFetchResult<PHAsset>())
@@ -66,8 +66,8 @@ class PhotoLibraryAlbumManager: NSObject, ObservableObject {
         logger.debug("Loaded photo album with identifier: \(identifier)")
         self.assetCollection = assetCollection
         super.init()
-        Task {
-            await refreshPhotoAssets()
+        Task { [refresh = self.refreshPhotoAssets] in
+            await refresh(nil)
         }
     }
     

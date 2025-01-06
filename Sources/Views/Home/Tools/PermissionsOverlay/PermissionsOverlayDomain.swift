@@ -47,6 +47,7 @@ struct PermissionsOverlayDomain: DomainViewConstantType {
         .secondaryBackground
     }
     
+    @MainActor
     enum L: ConstantRawRepresentable {
         static let openSettings: LocalizedStringKey =
         "permissions.overlay.open-settings"

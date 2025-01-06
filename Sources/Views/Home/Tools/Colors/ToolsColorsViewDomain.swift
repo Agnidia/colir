@@ -46,6 +46,7 @@ struct ToolsColorsViewDomain: DomainViewConstantType {
         .secondaryBackground
     }
     
+    @MainActor
     enum L: ConstantRawRepresentable {
         static let customColor: LocalizedStringKey = "color.tool.view.color-picker.title"
     }

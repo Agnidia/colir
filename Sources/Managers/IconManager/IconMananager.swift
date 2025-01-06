@@ -19,7 +19,7 @@ enum IconManagerError: Error {
 }
 
 /// Manages the creation and setting of application icons.
-class IconManager {
+final class IconManager {
     
     private enum K {
         static let iconsetName = "icon.iconset"
@@ -121,7 +121,7 @@ set theImage to (current application's NSImage's alloc()'s initWithContentsOfFil
         var error: NSDictionary?
         if let scriptObject = NSAppleScript(source: myAppleScript) {
             let semaphore = DispatchSemaphore(value: 0)
-            serialQueue.async {
+            serialQueue.sync { [scriptObject] in
                 let value = scriptObject.executeAndReturnError(&error).stringValue
                 if value != "true" {
                     error = NSDictionary(object: K.scriptNotExecutedKey, forKey: NSAppleScript.errorMessage as NSCopying)

@@ -25,7 +25,7 @@ import SwiftCommons
 ///       // Handle button action
 ///   })
 ///   ```
-class CustomizingActionViewModel: ObservableObject, DomainViewConstantProtocol {
+final class CustomizingActionViewModel: ObservableObject, DomainViewConstantProtocol {
     
     // MARK: - DomainViewConstantProtocol
     
@@ -62,6 +62,7 @@ class CustomizingActionViewModel: ObservableObject, DomainViewConstantProtocol {
     ///
     /// Displays a `ProgressView` with the progress value and total of 100 if the state is
     /// `.processing`. Otherwise, it displays an empty view.
+    @MainActor
     @ViewBuilder
     var progressView: some View {
         switch state {
@@ -78,6 +79,7 @@ class CustomizingActionViewModel: ObservableObject, DomainViewConstantProtocol {
     ///
     /// The button is only enabled if the state is `.ready`. The button's label is set
     /// based on the localization provided by `DomainViewConstantType.Localization.customize`.
+    @MainActor
     @ViewBuilder
     var actionButton: some View {
         Button(action: action, label: {

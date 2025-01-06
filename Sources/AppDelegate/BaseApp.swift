@@ -53,7 +53,7 @@ struct BaseApp: App {
         }
     }
     
-    class AppDelegate: NSObject, NSApplicationDelegate {
+    final class AppDelegate: NSObject, NSApplicationDelegate {
         
         /// base Application settings
         /// need init once and send as param to another instances

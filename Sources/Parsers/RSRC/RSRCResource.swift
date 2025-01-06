@@ -12,7 +12,7 @@ import AppKit
 ///
 /// This class is used to encapsulate a resource, providing access to its underlying data and
 /// the ability to create an `NSImage` from that data if applicable.
-class RSRCResource: NSObject {
+final class RSRCResource: NSObject {
     
     /// The data associated with this resource.
     ///

@@ -9,7 +9,7 @@
 import AppKit
 
 /// A view that supports dropping files
-@objc public class DropZoneNSView: NSView {
+@objc public final class DropZoneNSView: NSView {
     // MARK: - Public Accessors
     
     /// Enable or disable the control

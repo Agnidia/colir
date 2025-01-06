@@ -10,7 +10,7 @@ import Foundation
 import AppKit
 
 /// A manager class for handling emojis loaded from a JSON asset.
-class EmojisManager {
+final class EmojisManager {
     
     private lazy var emojisList: EmojisListDto? = {
         var list: EmojisListDto? = nil

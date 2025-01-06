@@ -26,7 +26,7 @@ import Throttler
 ///
 /// - Initialization:
 ///   - `init(appSettings:picturesFolderManager:)`: Initializes with app settings and a folder manager for managing pictures.
-class ToolsPicturesViewModel: ObservableObject {
+final class ToolsPicturesViewModel: ObservableObject, @unchecked Sendable {
     private let picturesFolderPath: URL
     
     @Published var images: [PictureItem] = .init()
@@ -141,6 +141,7 @@ class ToolsPicturesViewModel: ObservableObject {
     /// Checks and sets up access to the image directory if needed.
     ///
     /// Updates the app's access data and re-fetches images if access is granted.
+    @MainActor
     fileprivate func setupAccess() {
         do {
             let accessData = try fileAccessManager.checkAndSetupDataAccessIfNeeded()
@@ -157,8 +158,10 @@ class ToolsPicturesViewModel: ObservableObject {
 }
 
 extension ToolsPicturesViewModel {
-    static var preview: ToolsPicturesViewModel = .init(
-        appSettings: AppSettings.preview,
-        picturesFolderManager: PicturesFolderManager(picturesDirectory: URL(string: "")!)
-    )
+    static var preview: ToolsPicturesViewModel {
+        .init(
+            appSettings: AppSettings.preview,
+            picturesFolderManager: PicturesFolderManager(picturesDirectory: URL(string: "")!)
+        )
+    }
 }

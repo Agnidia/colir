@@ -62,6 +62,7 @@ final class ToolbarViewModel: ObservableObject {
     /// Constructs a toolbar item view for a given action.
     /// - Parameter action: The action for which to create a toolbar item.
     /// - Returns: A SwiftUI view for the toolbar item.
+    @MainActor
     @ViewBuilder
     func item(for action: ToolbarView.ToolbarViewDomain.Action) -> some View {
         if updateHack {
@@ -119,5 +120,7 @@ final class ToolbarViewModel: ObservableObject {
 
 extension ToolbarViewModel {
     /// A preview instance of `ToolbarViewModel` for SwiftUI previews.
-    static var preview: ToolbarViewModel = .init(undoManager: .init()) { _ in }
+    static var preview: ToolbarViewModel {
+        .init(undoManager: .init()) { _ in }
+    }
 }

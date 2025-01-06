@@ -25,7 +25,7 @@ import SwiftUICustomTagListView
 ///
 /// - EnvironmentObject:
 ///   - Uses various tool view models to manage different aspects of the applied styles.
-class AppliedStylesViewModel: ObservableObject, DomainViewConstantProtocol {
+final class AppliedStylesViewModel: ObservableObject, DomainViewConstantProtocol {
     
     // MARK: - DomainViewConstantProtocol
     
@@ -41,6 +41,7 @@ class AppliedStylesViewModel: ObservableObject, DomainViewConstantProtocol {
     @Published var data: [CustomizationTagViewData] = .init()
     
     /// An array of custom tag views created from the `data` property.
+    @MainActor
     var views: [SwiftUICustomTagView<SampleTagView>] {
         self.data.map { data in
             SwiftUICustomTagView(content: {
@@ -100,6 +101,7 @@ class AppliedStylesViewModel: ObservableObject, DomainViewConstantProtocol {
     // MARK: - Views
     
     /// Creates a view that displays the tags using `SwiftUICustomTagListView`.
+    @MainActor
     @ViewBuilder
     var tagsView: some View {
         SwiftUICustomTagListView(views, horizontalSpace: .spacingDefault, verticalSpace: .spacingDefault)

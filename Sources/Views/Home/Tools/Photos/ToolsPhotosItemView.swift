@@ -57,12 +57,14 @@ struct ToolsPhotosItemView: View {
         }
         .task {
             guard image == nil else { return }
-            imageRequestID = await cache.requestImage(for: asset, targetSize: imageSize) { result in
-                Task {
-                    if let image = result?.image {
-                        self.image = Image(nsImage: image)
-                    }
-                }
+            imageRequestID = await cache.requestImage(for: asset, targetSize: imageSize, completion: process(result:))
+        }
+    }
+    
+    private func process(result: PhotoLibraryCacheManager.ImageResult) {
+        Task { [result] in
+            if let image = result?.image {
+                self.image = Image(nsImage: image)
             }
         }
     }

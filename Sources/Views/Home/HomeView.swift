@@ -54,12 +54,36 @@ struct HomeView: View {
             
             VStack(alignment: .leading) {
                 // Display the tools view provided by the view model
-                viewModel.toolsView()
+                toolsView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .fixedSize(horizontal: false, vertical: false)
+    }
+    
+    /// Provides the view for the selected tool.
+    @ViewBuilder
+    func toolsView() -> some View {
+        switch viewModel.tools {
+        case .colors:
+            ToolsColorsView()
+                .environment(viewModel.toolsColorsViewModel)
+        case .photos:
+            ToolsPhotosView()
+                .environment(viewModel.toolsPhotosViewModel)
+        case .emojis:
+            ToolsEmojisView()
+                .environmentObject(viewModel.toolsEmojisViewModel)
+        case .decals:
+            ToolsDecalsView()
+        case .pictures:
+            ToolsPicturesView()
+                .environmentObject(viewModel.toolsPicturesViewModel)
+        case .webResources:
+            WebResourcesView()
+                .environmentObject(viewModel.webResourcesViewModel)
+        }
     }
 }
 

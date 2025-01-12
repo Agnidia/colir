@@ -68,7 +68,6 @@ final class CustomizingActionViewModel: ObservableObject, DomainViewConstantProt
         switch state {
         case .processing(let progress):
             ProgressView("", value: progress, total: 100)
-                .frame(height: 8)
                 .progressViewStyle(.primary)
         default:
             EmptyView()

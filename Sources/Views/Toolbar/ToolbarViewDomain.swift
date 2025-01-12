@@ -22,6 +22,7 @@ extension ToolbarView {
             case decals
             case webResources
             case spacer
+            case tips
             
             /// A localized title for the toolbar button associated with the action.
             var title: LocalizedStringKey {
@@ -36,15 +37,16 @@ extension ToolbarView {
             /// The system icon name associated with the action.
             var icon: String {
                 switch self {
-                case .colors: return "paintpalette"
-                case .photos: return "person.crop.rectangle"
-                case .pictures: return "photo"
-                case .emojis: return "face.smiling"
-                case .decals: return "tag"
-                case .spacer: return ""
-                case .undo: return "arrow.counterclockwise.circle"
-                case .redo: return "arrow.clockwise.circle"
-                case .webResources: return "network"
+                case .colors: "paintpalette"
+                case .photos: "person.crop.rectangle"
+                case .pictures: "photo"
+                case .emojis: "face.smiling"
+                case .decals: "tag"
+                case .spacer: ""
+                case .undo: "arrow.counterclockwise.circle"
+                case .redo: "arrow.clockwise.circle"
+                case .webResources: "network"
+                case .tips: "bag"
                 }
             }
             

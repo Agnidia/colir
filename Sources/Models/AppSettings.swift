@@ -24,8 +24,11 @@ public protocol AppSettingsProtocol {
     /// Indicates whether the application is running in test mode.
     var isTestMode: Bool { get }
     
-    /// The count of exported items, represented by a `CryptoModel`.
-    var exportCount: CryptoModel { get set }
+    /// The count of exported items.
+    var exportCount: Int { get set }
+    
+    /// Is user gave tips to developer
+    var tipped: CryptoModel { get set }
 }
 
 final class AppSettings: AppSettingsProtocol, ObservableObject {
@@ -35,6 +38,7 @@ final class AppSettings: AppSettingsProtocol, ObservableObject {
         static let bookmarkData = "BookmarkData"
         static let userPicturesPath = "UserPicturesPath"
         static let exportCount = "ExportCount"
+        static let tipped = "Tipped"
         static let isTestMode = "IsTestMode"
     }
     
@@ -73,7 +77,11 @@ final class AppSettings: AppSettingsProtocol, ObservableObject {
     
     /// Count of exported items.
     @AppStorage(Key.exportCount, store: userDefaults)
-    var exportCount: CryptoModel = CryptoModel(value: "1")
+    var exportCount: Int = 0
+    
+    /// Is user tipped.
+    @AppStorage(Key.tipped, store: userDefaults)
+    var tipped: CryptoModel = CryptoModel(value: "0")
     
     /// Indicates whether the application is running in test mode.
     var isTestMode: Bool {

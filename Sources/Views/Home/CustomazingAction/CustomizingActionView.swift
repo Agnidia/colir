@@ -26,11 +26,11 @@ struct CustomizingActionView: View {
     @EnvironmentObject var viewModel: CustomizingActionViewModel
     
     var body: some View {
-        VStack(spacing: .spacingSmall) {
-            viewModel.progressView
-            viewModel.actionButton
-        }
-        .padding([.horizontal, .bottom], .paddingDefault)
+        viewModel.actionButton
+            .overlay {
+                viewModel.progressView
+            }
+            .padding([.horizontal, .bottom], .paddingDefault)
     }
 }
 

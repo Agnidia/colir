@@ -10,7 +10,7 @@ import Foundation
 
 /// A model that represents encrypted/decrypted data using AES encryption.
 public struct CryptoModel {
-    fileprivate var key: String = TokenManager().getSystem() ?? "Token23"
+    fileprivate var key: String = "ColirToken"
     
     var value: String
     

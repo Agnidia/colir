@@ -14,6 +14,8 @@ public protocol ExportIconManagerProtocol {
     /// Indicates whether exporting is currently allowed.
     var canExport: Bool { get }
     
+    var askTips: Bool { get }
+    
     /// Exports the given image.
     /// - Parameter image: The `ImageDto` object containing information about the image to be exported.
     func export(image: ImageDto)
@@ -44,12 +46,11 @@ final class ExportIconManager: ExportIconManagerProtocol {
     
     /// Indicates whether exporting is allowed. Returns `true` if there are remaining exports or if full access is granted; otherwise, `false`.
     var canExport: Bool {
-        #if DEBUG
-        #warning("Exporting is allowed in debug mode")
-        return true
-        #else
-        Int(appSettings.exportCount.value) ?? 0 > 0 || appStoreService.hasFullAccess
-        #endif
+        true
+    }
+    
+    var askTips: Bool {
+        appSettings.exportCount == 5 && appSettings.tipped.value == "0"
     }
     
     /// Exports the given image by converting it to ICNS format and setting it at the specified URL.
@@ -67,17 +68,19 @@ final class ExportIconManager: ExportIconManagerProtocol {
             return
         }
         
-        if !appStoreService.hasFullAccess {
-            let exportCount = (Int(appSettings.exportCount.value) ?? 0)
-            appSettings.exportCount = CryptoModel(value: "\(exportCount - 1)")
-        }
+        appSettings.exportCount += 1
     }
 }
 
 /// A preview implementation of `ExportIconManagerProtocol` used for testing or development purposes.
 final class ExportIconManagerPreview: ExportIconManagerProtocol {
+    
     /// Always returns `false`, indicating that exporting is not allowed in the preview.
     var canExport: Bool {
+        false
+    }
+    
+    var askTips: Bool {
         false
     }
     

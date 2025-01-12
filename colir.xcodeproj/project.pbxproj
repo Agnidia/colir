@@ -39,12 +39,12 @@
 		A536DF172AD5A0F400B423EE /* PhotoAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF162AD5A0F400B423EE /* PhotoAssetCollection.swift */; };
 		A536DF192AD5C92600B423EE /* ToolsPhotosItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF182AD5C92600B423EE /* ToolsPhotosItemView.swift */; };
 		A54850782B06570C0020A3FB /* AppStoreButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54850772B06570C0020A3FB /* AppStoreButtonStyle.swift */; };
-		A548507B2B077E9C0020A3FB /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507A2B077E9C0020A3FB /* TokenManager.swift */; };
 		A548507D2B0789610020A3FB /* String+Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507C2B0789610020A3FB /* String+Crypto.swift */; };
 		A548507F2B07C58F0020A3FB /* CryptoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507E2B07C58F0020A3FB /* CryptoModel.swift */; };
 		A56811302B0FAFC600236EA8 /* ToolsColorsViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A568112F2B0FAFC600236EA8 /* ToolsColorsViewDomain.swift */; };
 		A568113B2B1109F200236EA8 /* ToolsEmojisViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A568113A2B1109F200236EA8 /* ToolsEmojisViewDomain.swift */; };
 		A56893292B8A6699001C0B94 /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56893282B8A6699001C0B94 /* NSColor+Hex.swift */; };
+		A57ECAAF2D345F3100288FB5 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = A57ECAAE2D345F3100288FB5 /* Algorithms */; };
 		A597E5F92D2C3E7D00F43C48 /* URL+Dir.swift in Sources */ = {isa = PBXBuildFile; fileRef = A597E5F82D2C3E7D00F43C48 /* URL+Dir.swift */; };
 		A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D7E2AEEFA8D0063FE06 /* SwiftCommons */; };
 		A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */; };
@@ -207,7 +207,6 @@
 		A536DF162AD5A0F400B423EE /* PhotoAssetCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAssetCollection.swift; sourceTree = "<group>"; };
 		A536DF182AD5C92600B423EE /* ToolsPhotosItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsPhotosItemView.swift; sourceTree = "<group>"; };
 		A54850772B06570C0020A3FB /* AppStoreButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreButtonStyle.swift; sourceTree = "<group>"; };
-		A548507A2B077E9C0020A3FB /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		A548507C2B0789610020A3FB /* String+Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Crypto.swift"; sourceTree = "<group>"; };
 		A548507E2B07C58F0020A3FB /* CryptoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoModel.swift; sourceTree = "<group>"; };
 		A568112F2B0FAFC600236EA8 /* ToolsColorsViewDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsColorsViewDomain.swift; sourceTree = "<group>"; };
@@ -345,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5E115C52AFBDBB50023A70C /* DominantColor in Frameworks */,
+				A57ECAAF2D345F3100288FB5 /* Algorithms in Frameworks */,
 				A5E115EF2AFEA7760023A70C /* Throttler in Frameworks */,
 				A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */,
 				A5E115F52AFFD70A0023A70C /* StoreKitPlus in Frameworks */,
@@ -537,14 +537,6 @@
 				A515FF202AF80EE3000F0C3B /* IconMananager.swift */,
 			);
 			path = IconManager;
-			sourceTree = "<group>";
-		};
-		A54850792B077E910020A3FB /* Token */ = {
-			isa = PBXGroup;
-			children = (
-				A548507A2B077E9C0020A3FB /* TokenManager.swift */,
-			);
-			path = Token;
 			sourceTree = "<group>";
 		};
 		A56811312B0FD0C700236EA8 /* ColorWheel */ = {
@@ -942,7 +934,6 @@
 		A5E860F12AA635C300D2293B /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				A54850792B077E910020A3FB /* Token */,
 				A5E115FC2B014BB60023A70C /* ExportManager */,
 				A515FF1F2AF80ECB000F0C3B /* IconManager */,
 				A5BF05F92AD2943D00A86904 /* PhotosApp */,
@@ -1062,6 +1053,7 @@
 				A5E115EE2AFEA7760023A70C /* Throttler */,
 				A5E115F42AFFD70A0023A70C /* StoreKitPlus */,
 				A5A557B92B8A50970092386B /* SwiftUICustomTagListView */,
+				A57ECAAE2D345F3100288FB5 /* Algorithms */,
 			);
 			productName = colir;
 			productReference = A5F5CDF52A6D2BFB008AF959 /* colir.app */;
@@ -1144,6 +1136,7 @@
 				A5E115ED2AFEA7760023A70C /* XCRemoteSwiftPackageReference "Throttler" */,
 				A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreKitPlus" */,
 				A5A557B82B8A50970092386B /* XCRemoteSwiftPackageReference "SwiftUICustomTagListView" */,
+				A57ECAAD2D345F3100288FB5 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 			);
 			productRefGroup = A5F5CDF62A6D2BFB008AF959 /* Products */;
 			projectDirPath = "";
@@ -1225,7 +1218,6 @@
 				A5BA1D1D2A81816E0014E276 /* cicn.cpp in Sources */,
 				A515FF152AF6D821000F0C3B /* NSImage+Data.swift in Sources */,
 				A5F5CDFB2A6D2BFB008AF959 /* HomeView.swift in Sources */,
-				A548507B2B077E9C0020A3FB /* TokenManager.swift in Sources */,
 				A5BA1D2D2A81816E0014E276 /* extended.cpp in Sources */,
 				A5CFFDF82AA12BA100D6E7A9 /* ToolsPhotosView.swift in Sources */,
 				A597E5F92D2C3E7D00F43C48 /* URL+Dir.swift in Sources */,
@@ -1464,6 +1456,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A57ECAAD2D345F3100288FB5 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-algorithms.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
 		A5A00D7D2AEEFA8D0063FE06 /* XCRemoteSwiftPackageReference "SwiftCommons" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/IGRSoft/SwiftCommons";
@@ -1515,6 +1515,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A57ECAAE2D345F3100288FB5 /* Algorithms */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A57ECAAD2D345F3100288FB5 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
+			productName = Algorithms;
+		};
 		A5A00D7E2AEEFA8D0063FE06 /* SwiftCommons */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A5A00D7D2AEEFA8D0063FE06 /* XCRemoteSwiftPackageReference "SwiftCommons" */;

@@ -13,49 +13,52 @@ struct ToolbarView: CustomizableToolbarContent {
     
     @StateObject var viewModel: ToolbarViewModel
     
-    /// Initializes the `ToolbarView` with a given view model.
-    /// - Parameter viewModel: The view model to provide data and actions for the toolbar.
-    init(viewModel: ToolbarViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
-    }
+    /// The current tool action selected.
+    @State private var currentToolAction = ToolbarView.ToolbarViewDomain.Action.colors
     
     var body: some CustomizableToolbarContent {
         
         // Toolbar item for the 'Undo' action
         ToolbarItem(id: ToolbarViewDomain.Action.undo.tag, placement: .navigation) {
-            viewModel.item(for: .undo)
+            item(for: .undo)
         }
         .customizationBehavior(.disabled)
         .defaultCustomization(.visible)
         
         // Toolbar item for the 'Redo' action
         ToolbarItem(id: ToolbarViewDomain.Action.redo.tag, placement: .navigation) {
-            viewModel.item(for: .redo)
+            item(for: .redo)
         }
         .customizationBehavior(.disabled)
         .defaultCustomization(.visible)
         
         // Toolbar item for the 'Colors' action
         ToolbarItem(id: ToolbarViewDomain.Action.colors.tag, placement: .principal) {
-            viewModel.item(for: .colors)
+            item(for: .colors)
         }
         .defaultCustomization(.visible)
         
         // Toolbar item for the 'Photos' action
         ToolbarItem(id: ToolbarViewDomain.Action.photos.tag, placement: .principal) {
-            viewModel.item(for: .photos)
+            item(for: .photos)
         }
         .defaultCustomization(.visible)
         
         // Toolbar item for the 'Pictures' action
         ToolbarItem(id: ToolbarViewDomain.Action.pictures.tag, placement: .principal) {
-            viewModel.item(for: .pictures)
+            item(for: .pictures)
         }
         .defaultCustomization(.visible)
         
         // Toolbar item for the 'Emojis' action
         ToolbarItem(id: ToolbarViewDomain.Action.emojis.tag, placement: .principal) {
-            viewModel.item(for: .emojis)
+            item(for: .emojis)
+        }
+        .defaultCustomization(.visible)
+        
+        // Toolbar item for the 'Emojis' action
+        ToolbarItem(id: ToolbarViewDomain.Action.tips.tag, placement: .confirmationAction) {
+            item(for: .tips)
         }
         .defaultCustomization(.visible)
         
@@ -79,6 +82,55 @@ struct ToolbarView: CustomizableToolbarContent {
         }
         .defaultCustomization(.visible)
         */
+    }
+    
+    /// Constructs a toolbar item view for a given action.
+    /// - Parameter action: The action for which to create a toolbar item.
+    /// - Returns: A SwiftUI view for the toolbar item.
+    @ViewBuilder
+    func item(for action: ToolbarView.ToolbarViewDomain.Action) -> some View {
+        switch action {
+        case .colors, .photos, .emojis, .decals, .pictures, .webResources, .tips:
+            Button {
+                if action != .tips {
+                    currentToolAction = action
+                }
+                viewModel.perform(action)
+            } label: {
+                Label(action.title, systemImage: action.icon)
+                    .font(.title3)
+            }
+            .background(RoundedRectangle(cornerRadius: .radiusThin)
+                .fill(currentToolAction == action ? Color.accent.opacity(0.4) : .clear))
+            .help(action.helpTitle)
+        case .spacer:
+            Spacer()
+        case .undo:
+            HStack {
+                Spacer()
+                Button { viewModel.perform(action) } label: {
+                    Label(action.title, systemImage: action.icon)
+                        .font(.title3)
+                }
+                .help(action.helpTitle)
+                .disabled(viewModel.undoManager.canUndo == false)
+            }
+            .frame(width: 84)
+        case .redo:
+            HStack {
+                Button { viewModel.perform(action) } label: {
+                    Label(action.title, systemImage: action.icon)
+                        .font(.title3)
+                }
+                .help(action.helpTitle)
+                .disabled(viewModel.undoManager.canRedo == false)
+                
+                Spacer()
+                
+                Divider()
+            }
+            .frame(width: 54)
+        }
     }
 }
 

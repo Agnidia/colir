@@ -12,24 +12,21 @@ import StoreKit
 
 /// Represents the different in-app products available for purchase.
 public enum AppProduct: String, CaseIterable, Equatable, ProductRepresentable, Sendable {
-    case add1Folder = "com.igrsoft.colir.1.folders.inapp"
-    case add5Folder = "com.igrsoft.colir.5.folders.inapp"
-    case add15Folder = "com.igrsoft.colir.15.folders.inapp"
-    case fullAccessLifetime = "com.igrsoft.full.access.inapp"
-    case fullAccess1Month = "com.igrsoft.colir.full.access.month.subs"
-    case fullAccessYear = "com.igrsoft.colir.full.access.year.subs"
+    case smallTips = "com.igrsoft.colir.small.tips.subs"
+    case middleTips = "com.igrsoft.colir.middle.tips.inapp"
+    case bigTips = "com.igrsoft.colir.big.tips.inapp"
 
     /// The unique identifier of the product.
     public var id: String { rawValue }
 
     /// A list of in-app purchase products.
     static var inAppPurchases: [AppProduct] {
-        [.add1Folder, .add5Folder, .add15Folder]
+        [.middleTips, .bigTips]
     }
 
     /// A list of subscription products.
     static var subscriptions: [AppProduct] {
-        [.fullAccessLifetime, .fullAccess1Month, .fullAccessYear]
+        [.smallTips]
     }
 }
 
@@ -180,7 +177,7 @@ final class AppStorePreview: AppStoreProtocol {
     /// - Parameter product: The product to be purchased.
     /// - Returns: The result of the purchase attempt.
     func purchase(_ product: AppProduct) async throws -> PurchaseResult {
-        return .userCancelled
+        .userCancelled
     }
     
     /// Synchronizes store data with the App Store.

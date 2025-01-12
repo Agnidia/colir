@@ -61,7 +61,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     }
     
     /// The currently selected tool.
-    @Published private var tools: Tools
+    @Published private(set) var tools: Tools
     
     /// Counter for wrong attempts, used for feedback in the UI.
     @Published var wrongAttempt: Int = .zero
@@ -199,51 +199,37 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     public func apply(action: ToolbarView.ToolbarViewDomain.Action) {
         switch action {
         case .undo:
+            skipSelectedColor = true
             undoManager.undo()
         case .redo:
+            skipSelectedColor = true
             undoManager.redo()
-        case .colors:
-            tools = .colors
-        case .photos:
-            tools = .photos
-        case .emojis:
-            tools = .emojis
-        case .decals:
-            tools = .decals
-        case .spacer:
-            break
-        case .pictures:
-            tools = .pictures
-        case .webResources:
-            tools = .webResources
+        case .colors: tools = .colors
+        case .photos: tools = .photos
+        case .emojis: tools = .emojis
+        case .decals: tools = .decals
+        case .spacer: break
+        case .pictures: tools = .pictures
+        case .webResources: tools = .webResources
+        case .tips: showingAppStoreSheet.toggle()
         }
     }
     
     // Flags for skipping and applying selections
-    private var skipSelectedColor = true
+    private var skipSelectedColor = false
     private var skipSelectedPhoto = true
     private var skipSelectedPicture = true
     private var skipSelectedEmoji = true
     
-    private var isApplyingSelectedColor = false
     private var isApplyingSelectedPhoto = false
     private var isApplyingSelectedPicture = false
     private var isApplyingSelectedEmoji = false
     
     /// Subscribes to view model publishers to handle updates for color, photo, picture, and emoji selections.
     private func addPublishers() {
-        toolsColorsViewModel.$selectedColor
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] color in
-                guard self?.skipSelectedColor == false else {
-                    self?.skipSelectedColor = false
-                    return
-                }
-                
-                self?.isApplyingSelectedColor = true
-                self?.apply(color: color)
-                self?.isApplyingSelectedColor = false
-            }
+        toolsColorsViewModel.selectedColorPublisher
+            .throttle(for: .milliseconds(400), scheduler: RunLoop.main, latest: true)
+            .sink(receiveValue: setup(color:))
             .store(in: &cancellables)
         
         toolsPhotosViewModel.selectedImage.publisher
@@ -299,42 +285,26 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
             .store(in: &cancellables)
     }
     
+    private func setup(color: NSColor?) {
+        guard skipSelectedColor == false else {
+            skipSelectedColor = false
+            return
+        }
+        
+        apply(color: color)
+    }
+    
     /// Removes all cancellable publishers.
     private func removePublishers() {
         cancellables.removeAll()
     }
     
     // Lazy instantiation of view models used in tools and customization.
-    private lazy var toolsColorsViewModel: ToolsColorsViewModel = .init()
-    private lazy var toolsPhotosViewModel: ToolsPhotosViewModel = .init()
-    private lazy var toolsPicturesViewModel: ToolsPicturesViewModel = .init(appSettings: appSettings, picturesFolderManager: picturesFolderManager)
-    private lazy var toolsEmojisViewModel: ToolsEmojisViewModel = .init()
-    private lazy var webResourcesViewModel: WebResourcesViewModel = .init()
-    
-    /// Provides the view for the selected tool.
-    @MainActor
-    @ViewBuilder
-    func toolsView() -> some View {
-        switch tools {
-        case .colors:
-            ToolsColorsView()
-                .environmentObject(toolsColorsViewModel)
-        case .photos:
-            ToolsPhotosView()
-                .environment(toolsPhotosViewModel)
-        case .emojis:
-            ToolsEmojisView()
-                .environmentObject(toolsEmojisViewModel)
-        case .decals:
-            ToolsDecalsView()
-        case .pictures:
-            ToolsPicturesView()
-                .environmentObject(toolsPicturesViewModel)
-        case .webResources:
-            WebResourcesView()
-                .environmentObject(webResourcesViewModel)
-        }
-    }
+    private(set) lazy var toolsColorsViewModel: ToolsColorsViewModel = .init()
+    private(set) lazy var toolsPhotosViewModel: ToolsPhotosViewModel = .init()
+    private(set) lazy var toolsPicturesViewModel: ToolsPicturesViewModel = .init(appSettings: appSettings, picturesFolderManager: picturesFolderManager)
+    private(set) lazy var toolsEmojisViewModel: ToolsEmojisViewModel = .init()
+    private(set) lazy var webResourcesViewModel: WebResourcesViewModel = .init()
     
     // Lazy instantiation of drop zone view model.
     private lazy var dropZoneViewModel: DropZoneViewModel = .init { [weak self] urls in
@@ -346,7 +316,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
         if state == .ready, let dropZone = self?.dropZoneViewModel, let index = self?.currentUndoItem, let undoItems = self?.undoItems.prefix(index + 1) {
             self?.undoItems = Array(undoItems)
             self?.undoItems.append(dropZone.image.undoItems)
-            self?.add(index: index + 1)
+            self?.add(index: index + 1, needUpdate: false)
         }
     }
     
@@ -374,13 +344,17 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     }
     
     // Lazy instantiation of customizing action view model.
-    private lazy var customizingActionViewModel: CustomizingActionViewModel = .init(actionClosure: { [weak self] in
-        if self?.exportIconManager.canExport == true, let image = self?.dropZoneViewModel.image {
-            self?.exportIconManager.export(image: image)
-        } else {
-            self?.showingExportAlert.toggle()
+    private lazy var customizingActionViewModel: CustomizingActionViewModel = .init(actionClosure: exportIcon)
+    
+    private func exportIcon() {
+        let image = dropZoneViewModel.image
+        
+        exportIconManager.export(image: image)
+        
+        if exportIconManager.askTips {
+            showingExportAlert.toggle()
         }
-    })
+    }
     
     @Published private var showingExportAlert = false
     @Published private var showingAppStoreSheet = false
@@ -481,42 +455,43 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     
     /// Adds an undo item to the undo stack and updates the current index.
     /// - Parameter index: The index of the undo item to add.
-    private func add(index: Int) {
+    private func add(index: Int, needUpdate: Bool) {
         self.currentUndoItem = index
         
         undoManager.registerUndo(withTarget: self) { this in
-            this.remove(index: index)
+            this.remove(index: index, needUpdate: true)
         }
         
-        setupItemsForCurrentIndex()
+        setupItemsForCurrentIndex(needUpdate: needUpdate)
     }
     
     /// Removes an undo item from the undo stack and updates the current index.
     /// - Parameter index: The index of the undo item to remove.
-    private func remove(index: Int) {
+    private func remove(index: Int, needUpdate: Bool) {
         currentUndoItem = index - 1
         
         undoManager.registerUndo(withTarget: self) { this in
-            this.add(index: index)
+            this.add(index: index, needUpdate: true)
         }
         
-        setupItemsForCurrentIndex()
+        setupItemsForCurrentIndex(needUpdate: needUpdate)
     }
     
     /// Sets up the view state for the current undo item.
-    private func setupItemsForCurrentIndex() {
+    private func setupItemsForCurrentIndex(needUpdate: Bool) {
         let image = undoItems[currentUndoItem]
         dropZoneViewModel.update(from: image)
         
-        skipSelectedColor = true
-        toolsColorsViewModel.selectedColor = image.customisations.selectedColor
-        
-        skipSelectedPhoto = true
-        toolsPhotosViewModel.selectedImage = image.customisations.selectedPicture
-        toolsPhotosViewModel.selectedAsset = image.customisations.selectedAsset
-        
-        skipSelectedPicture = true
-        toolsPicturesViewModel.selectedImage = image.customisations.selectedPictureItem
+        if needUpdate {
+            toolsColorsViewModel.selectedColor = image.customisations.selectedColor
+            
+            skipSelectedPhoto = true
+            toolsPhotosViewModel.selectedImage = image.customisations.selectedPicture
+            toolsPhotosViewModel.selectedAsset = image.customisations.selectedAsset
+            
+            skipSelectedPicture = true
+            toolsPicturesViewModel.selectedImage = image.customisations.selectedPictureItem
+        }
         
         appliedStylesViewModel.update(state: .none, imageCustomization: dropZoneViewModel.image.customisations)
         

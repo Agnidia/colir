@@ -42,7 +42,7 @@ public struct RGBA32: Equatable, Hashable {
         var blue:  CGFloat = .zero
         var alpha: CGFloat = .zero
         
-        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        color.usingColorSpace(.deviceRGB)?.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
         
         self.color = (UInt32(red * 255) << 24) | (UInt32(green * 255) << 16) | (UInt32(blue * 255) << 8) | (UInt32(alpha * 255) << 0)
     }

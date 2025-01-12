@@ -113,21 +113,6 @@ final class AppStoreViewModel: DomainViewConstantProtocol, @unchecked Sendable {
     ///
     /// - Parameter product: The product that was successfully purchased.
     private func handleSuccess(for product: AppProduct) {
-        switch product {
-        case .add1Folder: addExports(count: 1)
-        case .add5Folder: addExports(count: 5)
-        case .add15Folder: addExports(count: 15)
-        case .fullAccessLifetime, .fullAccess1Month, .fullAccessYear:
-            // Handle these cases if needed
-            break
-        }
-    }
-    
-    /// Updates the export count based on the purchased amount.
-    ///
-    /// - Parameter count: The number of additional exports to add.
-    private func addExports(count: Int) {
-        let exportCount = (Int(appSettings.exportCount.value) ?? .zero) + count
-        appSettings.exportCount = CryptoModel(value: "\(exportCount)")
+        appSettings.tipped = CryptoModel(value: "1")
     }
 }

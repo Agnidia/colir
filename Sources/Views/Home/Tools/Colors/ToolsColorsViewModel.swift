@@ -8,7 +8,7 @@
 
 import SwiftUI
 import SwiftCommons
-import Throttler
+import Combine
 
 /// View model responsible for managing color selection and display in the `ToolsColorsView`.
 ///
@@ -30,95 +30,21 @@ import Throttler
 ///   - `colorPickerTitle`: A view displaying the title for the color picker and a color picker control.
 ///   - `colorsList`: A view displaying a grid of color options, grouped by type.
 ///   - `cell(for:)`: Returns a view for a single color cell, including selection handling and styling.
-final class ToolsColorsViewModel: ObservableObject, DomainViewConstantProtocol {
+@Observable
+final class ToolsColorsViewModel: DomainViewConstantProtocol {
     typealias DomainViewConstantType = ToolsColorsViewDomain
     
     let viewSettings: ToolsColorsViewDomain = .init()
     
-    @Published var selectedColor: NSColor? = nil
+    let cellWidth: CGFloat = 128
+    let cellHeight: CGFloat = 48
     
-    var colorGroups: [String : [NSColor]] = NSColor.groupsByType
-    
-    private let cellWidth: CGFloat = 128
-    private let cellHeight: CGFloat = 48
-    
-    private lazy var cellCornerRadius: CGFloat = viewSettings.cornerRadius!
-    
-    var columns: [GridItem] {
-        [
-            GridItem(.adaptive(minimum: cellWidth))
-        ]
+    var cellCornerRadius: CGFloat {
+        viewSettings.cornerRadius ?? .radiusThin
     }
     
-    @MainActor
-    @ViewBuilder
-    var colorPickerTitle: some View {
-        VStack(spacing: viewSettings.spacing) {
-            Text(DomainViewConstantType.Localization.customColor)
-                .font(.headline)
-            
-            ColorPicker(selection: Binding(get: {
-                Color(nsColor: self.selectedColor ?? .clear)
-            }, set: { value in
-                debounce(.milliseconds(200)) {
-                    self.selectedColor = NSColor(value)
-                }
-            })) {
-                EmptyView()
-            }
-            .scaleEffect(x: 2, y: 2)
-            
-            /*ColorWheelView()
-                .frame(width: 200, height: 200)*/
-            
-            Divider()
-                .padding(viewSettings.padding)
-        }
-        .padding(viewSettings.padding)
-    }
-    
-    @ViewBuilder
-    var colorsList: some View {
-        LazyVGrid(columns: columns, spacing: viewSettings.spacing) {
-            ForEach(colorGroups.sorted(by: { $0.key < $1.key }), id: \.key) { groupKey, colors in
-                Section(header: Text(groupKey.capitalized)
-                    .font(.headline)
-                    .padding(.top, .paddingSmall)) {
-                        ForEach(colors, id: \.self) { color in
-                            self.cell(for: color)
-                        }
-                    }
-            }
-        }
-        .padding(EdgeInsets(top: .zero, leading: .paddingDefault, bottom: .paddingDefault, trailing: .paddingDefault))
-    }
-    
-    @ViewBuilder
-    private func cell(for color: NSColor) -> some View {
-        RoundedRectangle(cornerRadius: cellCornerRadius, style: .continuous)
-            .fill(Color(nsColor: color))
-            .frame(width: cellWidth, height: cellHeight)
-            .cornerRadius(cellCornerRadius)
-            .overlay(
-                ZStack(alignment: .bottomTrailing) {
-                    RoundedRectangle(cornerRadius: cellCornerRadius)
-                        .strokeBorder(selectedColor == color ? Color.selectedView : Color.clear, lineWidth: 4)
-                    if selectedColor == color {
-                        Image(systemName: DomainViewConstantType.Icon.selected)
-                            .symbolRenderingMode(.multicolor)
-                            .font(.title)
-                            .padding(viewSettings.padding)
-                    }
-                }
-            )
-            .onTapGesture { [weak self] in
-                if self?.selectedColor == color {
-                    self?.selectedColor = nil
-                } else {
-                    self?.selectedColor = color
-                }
-            }
-    }
+    var selectedColor: NSColor? = nil
+    private(set) var selectedColorPublisher: PassthroughSubject<NSColor?, Never> = .init()
 }
 
 extension ToolsColorsViewModel {

@@ -27,7 +27,7 @@ struct PrimaryProgressViewStyle: ProgressViewStyle {
     var labelFontStyle: Font = .caption
     
     /// The corner radius of the progress bar.
-    var cornerRadius: CGFloat = .radiusSmall
+    var cornerRadius: CGFloat = .radiusThin
  
     /// Creates and configures the body of the progress view.
     /// - Parameter configuration: The configuration for the progress view.

@@ -32,7 +32,7 @@ final class AppStoreViewModel: DomainViewConstantProtocol, @unchecked Sendable {
     private var appSettings: AppSettingsProtocol
     
     /// Closure to be called when the view is closed or when a specific action is completed.
-    private let completionHandler: Commons.EmptyClosure
+    let completionHandler: Commons.EmptyClosure
     
     // MARK: - Initialization
     
@@ -50,15 +50,6 @@ final class AppStoreViewModel: DomainViewConstantProtocol, @unchecked Sendable {
     
     // MARK: - Views
     
-    /// Title for the subscriptions section.
-    @MainActor
-    @ViewBuilder
-    var titleSubscription: some View {
-        Text(DomainViewConstantType.Localization.titleSubscription)
-            .font(.title)
-            .padding(.top, .paddingLarge)
-    }
-    
     /// Size of the buttons in the grid.
     static var buttonSize: CGFloat { 150 }
     
@@ -66,29 +57,6 @@ final class AppStoreViewModel: DomainViewConstantProtocol, @unchecked Sendable {
     let rows = [
         GridItem(.adaptive(minimum: buttonSize, maximum: buttonSize))
     ]
-    
-    /// Title for the in-app purchases section.
-    @MainActor
-    @ViewBuilder
-    var titleInAppPurchase: some View {
-        Text(DomainViewConstantType.Localization.titleInAppPurchase)
-            .font(.title)
-            .padding(.top, .paddingDefault)
-    }
-    
-    /// Button for closing the App Store view.
-    @MainActor
-    @ViewBuilder
-    var closeButton: some View {
-        Button { [weak self] in
-            self?.completionHandler()
-        } label: {
-            Text("Done")
-                .padding(.init(top: .paddingSmall, leading: .zero, bottom: .paddingSmall, trailing: .zero))
-                .frame(width: AppStoreViewModel.buttonSize)
-        }
-        .buttonStyle(.accent)
-    }
     
     // MARK: - Methods
     

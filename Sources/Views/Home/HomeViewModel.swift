@@ -391,7 +391,6 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
             )) {
                 AppStoreView()
                     .environment(self.appStoreViewModel)
-                    .frame(height: 544)
             }
     }
     

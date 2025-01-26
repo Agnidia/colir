@@ -8,9 +8,8 @@
 
 import SwiftUI
 import Photos
-import SystemSettingsAccess
 import SwiftCommons
-import Throttler
+import Combine
 
 /// ViewModel for managing and displaying photos from the photo library in the `ToolsPhotosView`.
 ///
@@ -38,94 +37,27 @@ final class ToolsPhotosViewModel: DomainViewConstantProtocol, @unchecked Sendabl
     
     private let logger: LogProtocol = Log(category: .toolsPhoto)
     
-    var selectedAsset: PhotoAsset? = nil
-    
-    //TODO: set it private(set)
-    var selectedImage: NSImage? = nil {
-        didSet {
-            if selectedImage == nil {
-                selectedAsset = nil
-            }
-        }
-    }
-    
-    var isAuthorised: Bool = true
+    private(set) var isAuthorised: Bool = true
     
     private let photosAppManager: PhotoLibraryAccessManagerProtocol
-    
     var isPhotosLoaded = false
     
     var photoLibraryAlbumManager = PhotoLibraryAlbumManager(smartAlbum: .smartAlbumUserLibrary)
     
-    let cellWidth: CGFloat = 192
-    let cellHeight: CGFloat = 128
+    var selectedPicture: NSImage? = nil
+    var selectedAsset: PhotoAsset? = nil
+    private(set) var selectedImagePublisher: PassthroughSubject<(NSImage?, PhotoAsset?), Never> = .init()
     
-    var imageSize = CGSize(width: 1024, height: 1024)
-    var thumbnailSize = CGSize(width: 512, height: 512)
+    var cellWidth: CGFloat { 192 }
+    var cellHeight: CGFloat { 128 }
     
-    private var cellCornerRadius: CGFloat {
-        viewSettings.cornerRadius!
-    }
+    var imageSize: CGSize { .init(width: 1024, height: 1024) }
+    var thumbnailSize: CGSize { .init(width: 512, height: 512) }
+    
+    var cellCornerRadius: CGFloat { viewSettings.cornerRadius! }
     
     init() {
         self.photosAppManager = PhotoLibraryAccessManager()
-    }
-    
-    @MainActor
-    @ViewBuilder
-    var overlay: some View {
-        if isAuthorised == false, let url = SystemSettingsSecurityPrivacy.photos.path {
-            PermissionsOverlayView()
-                .environmentObject(PermissionsOverlayViewModel(title: ToolsPhotosViewDomain.Localization.photoDescription, url: url))
-        }
-    }
-    
-    /// Creates a cell view for a given photo asset, with selection handling and image fetching.
-    @ViewBuilder
-    func cell(for item: PhotoAsset) -> some View {
-        ToolsPhotosItemView(asset: item, cache: photoLibraryAlbumManager.cache, imageSize: thumbnailSize)
-            .frame(width: cellWidth, height: cellHeight)
-            .cornerRadius(cellCornerRadius)
-            .overlay(
-                ZStack(alignment: .bottomTrailing) {
-                    let isSelected = selectedAsset == item
-                    RoundedRectangle(cornerRadius: cellCornerRadius)
-                        .strokeBorder(isSelected ? Color.selectedView : Color.gray, lineWidth: isSelected ? 4 : 1)
-                    if isSelected {
-                        Image(systemName: ToolsPhotosViewDomain.Icon.selection)
-                            .symbolRenderingMode(.multicolor)
-                            .font(.title)
-                            .padding(viewSettings.padding)
-                    }
-                }
-            )
-            .onTapGesture { [weak self] in
-                if self?.selectedAsset == item {
-                    self?.selectedAsset = nil
-                } else {
-                    self?.selectedAsset = item
-                }
-                
-                if let selectedAsset = self?.selectedAsset, let imageSize = self?.imageSize, let cache = self?.photoLibraryAlbumManager.cache {
-                    
-                    guard let self = self else { return }
-                    
-                    Task {
-                        _ = await cache.requestImage(for: selectedAsset, targetSize: imageSize) { result in
-                            
-                            if let image = result?.image {
-                                Task { @MainActor in
-                                    debounce(.milliseconds(100)) { [weak self] in
-                                        self?.selectedImage = image
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    self?.selectedImage = nil
-                }
-            }
     }
     
     /// Asynchronously fetches images from the photo library and checks authorization status.

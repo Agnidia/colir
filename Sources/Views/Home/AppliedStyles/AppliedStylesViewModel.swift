@@ -125,26 +125,34 @@ struct SampleTagView: View {
     
     var body: some View {
         HStack(spacing: .spacingDefault) {
-            if let image = data.image {
-                Image(nsImage: image)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 24, height: 20)
-                    .shadow(color: .black, radius: 1)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            Group {
+                if let image = data.image {
+                    Image(nsImage: image)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 28, height: 28)
+                }
+                
+                if !data.text.isEmpty {
+                    Text(data.text)
+                        .font(.title3)
+                        .padding(.vertical, .paddingThin + .paddingUltraThin)
+                        .foregroundStyle(data.color)
+                }
             }
-            
-            if !data.text.isEmpty {
-                Text(data.text)
-                    .foregroundStyle(data.color)
-                    .shadow(color: .black, radius: 1)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
+            .shadow(color: .white, radius: 1)
+            .frame(maxWidth: .infinity, alignment: .leading)
             
             if let closeImage = data.closeImage, let onClose = data.onClose {
                 Button(action: onClose) {
                     closeImage
+                        .resizable()
+                        .frame(width: 12, height: 12)
                         .shadow(color: .black, radius: 1)
+                        .padding([.bottom, .leading], .paddingSmall)
+                        .overlay {
+                            Color.white.opacity(0.001)
+                        }
                 }
                 .buttonStyle(.borderless)
             }
@@ -157,7 +165,7 @@ struct SampleTagView: View {
         .font(.title2)
         .foregroundColor(.white)
         .padding(.horizontal, .paddingSmall)
-        .padding(.vertical, .paddingThin)
+        .padding(.vertical, .paddingUltraThin)
         .background(.accentBackgroundButton.opacity(0.8))
         .cornerRadius(.radiusThin)
     }

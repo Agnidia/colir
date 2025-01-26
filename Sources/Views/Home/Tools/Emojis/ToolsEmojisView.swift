@@ -36,38 +36,7 @@ struct ToolsEmojisView: View {
                                 }
                             )
                         ) {
-                            // Display emojis in a grid within the DisclosureGroup
-                            LazyVGrid(columns: model.columns(in: geometry), alignment: .leading, spacing: model.viewSettings.spacing) {
-                                ForEach(emojis, id: \.self) { char in
-                                    Text(String(char))
-                                        .font(.system(size: model.fontSize))
-                                        .frame(width: model.columnWidth, height: model.columnWidth, alignment: .center)
-                                        .padding(.paddingDefault)
-                                        .background(Color.accentColor.opacity(0.1))
-                                        .foregroundColor(.white)
-                                        .clipShape(RoundedRectangle(cornerRadius: model.cellCornerRadius))
-                                        .overlay(
-                                            ZStack(alignment: .bottomTrailing) {
-                                                RoundedRectangle(cornerRadius: model.cellCornerRadius)
-                                                    .strokeBorder(model.selectedEmoji == char ? Color.selectedView : Color.clear, lineWidth: 4)
-                                                if model.selectedEmoji == char {
-                                                    Image(systemName: "checkmark.circle.fill")
-                                                        .symbolRenderingMode(.multicolor)
-                                                        .font(.title)
-                                                        .padding(model.viewSettings.padding)
-                                                }
-                                            }
-                                        )
-                                        .onTapGesture {
-                                            // Handle emoji selection
-                                            if model.selectedEmoji == char {
-                                                model.selectedEmoji = nil
-                                            } else {
-                                                model.selectedEmoji = char
-                                            }
-                                        }
-                                }
-                            }
+                            emojiesList(geometry: geometry, emojis: emojis)
                         } label: {
                             Text(group.name)
                                 .font(.title2)
@@ -84,6 +53,42 @@ struct ToolsEmojisView: View {
                     
                 }
                 .padding(.paddingDefault)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func emojiesList(geometry: GeometryProxy, emojis: [Character]) -> some View {
+        // Display emojis in a grid within the DisclosureGroup
+        LazyVGrid(columns: model.columns(in: geometry), alignment: .leading, spacing: model.viewSettings.spacing) {
+            ForEach(emojis, id: \.self) { char in
+                Text(String(char))
+                    .font(.system(size: model.fontSize))
+                    .frame(maxWidth: .infinity, maxHeight: model.columnWidth, alignment: .center)
+                    .padding(.paddingDefault)
+                    .background(Color.accentColor.opacity(0.1))
+                    .foregroundColor(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: model.cellCornerRadius))
+                    .overlay(
+                        ZStack(alignment: .bottomTrailing) {
+                            RoundedRectangle(cornerRadius: model.cellCornerRadius)
+                                .strokeBorder(model.selectedEmoji == char ? Color.selectedView : Color.clear, lineWidth: 4)
+                            if model.selectedEmoji == char {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .symbolRenderingMode(.multicolor)
+                                    .font(.title)
+                                    .padding(model.viewSettings.padding)
+                            }
+                        }
+                    )
+                    .onTapGesture {
+                        // Handle emoji selection
+                        if model.selectedEmoji == char {
+                            model.selectedEmoji = nil
+                        } else {
+                            model.selectedEmoji = char
+                        }
+                    }
             }
         }
     }

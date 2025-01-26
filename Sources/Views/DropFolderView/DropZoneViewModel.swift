@@ -70,11 +70,13 @@ final class DropZoneViewModel: ObservableObject, @unchecked Sendable {
     private func addPublishers() {
         image.$state
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] state in
-                self?.updateStateClosure(state)
-                self?.updateHack.toggle()
-            }
+            .sink(receiveValue: update(state:))
             .store(in: &cancellables)
+    }
+    
+    private func update(state: ImageDto.ImageState) {
+        updateStateClosure(state)
+        updateHack.toggle()
     }
     
     /// Removes all cancellable publishers.

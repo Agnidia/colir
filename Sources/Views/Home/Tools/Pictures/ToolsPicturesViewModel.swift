@@ -42,9 +42,9 @@ final class ToolsPicturesViewModel: ObservableObject, @unchecked Sendable {
         FileAccessManager(with: appSettings.userPicturesPath, bookmarkData: appSettings.bookmarkData)
     }()
     
-    private let cellWidth: CGFloat = 192
-    private let cellHeight: CGFloat = 128
-    private let cellCornerRadius: CGFloat = .radiusSmall
+    let cellWidth: CGFloat = 192
+    let cellHeight: CGFloat = 128
+    let cellCornerRadius: CGFloat = .radiusSmall
     
     /// Initializes the view model with app settings and a folder manager.
     ///
@@ -64,38 +64,6 @@ final class ToolsPicturesViewModel: ObservableObject, @unchecked Sendable {
         [
             GridItem(.adaptive(minimum: cellWidth))
         ]
-    }
-    
-    /// Generates a view for a given `PictureItem`, including a selection indication overlay.
-    ///
-    /// - Parameter item: The `PictureItem` to be displayed in the grid.
-    /// - Returns: A `View` representing the image cell, with selection indication if applicable.
-    @ViewBuilder
-    func cell(for item: PictureItem) -> some View {
-        Image(nsImage: item.image)
-            .resizable()
-            .frame(width: cellWidth, height: cellHeight)
-            .cornerRadius(cellCornerRadius)
-            .overlay(
-                ZStack(alignment: .bottomTrailing) {
-                    let isSelected = selectedImage == item
-                    RoundedRectangle(cornerRadius: cellCornerRadius)
-                        .strokeBorder(isSelected ? Color.blue : Color.gray, lineWidth: isSelected ? 4 : 1)
-                    if isSelected {
-                        Image(systemName: "checkmark.circle.fill")
-                            .symbolRenderingMode(.multicolor)
-                            .font(.title)
-                            .padding(.paddingSmall)
-                    }
-                }
-            )
-            .onTapGesture { [weak self] in
-                if self?.selectedImage == item {
-                    self?.selectedImage = nil
-                } else {
-                    self?.selectedImage = item
-                }
-            }
     }
     
     /// Initiates the process of fetching images from the specified directory.
@@ -145,13 +113,13 @@ final class ToolsPicturesViewModel: ObservableObject, @unchecked Sendable {
     fileprivate func setupAccess() {
         do {
             let accessData = try fileAccessManager.checkAndSetupDataAccessIfNeeded()
-            // Update access to Xcode data folder
+            // Update access to Pictures data folder
             appSettings.bookmarkData = accessData.bookmark
             appSettings.userPicturesPath = accessData.path
             
             fetchImages()
         } catch {
-            // Mark app's access to Xcode data folder as invalid
+            // Mark app's access to Pictures data folder as invalid
             appSettings.bookmarkData = Data()
         }
     }

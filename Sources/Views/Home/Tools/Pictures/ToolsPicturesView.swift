@@ -32,15 +32,45 @@ struct ToolsPicturesView: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: viewModel.columns, spacing: .spacingHeight) {
-                ForEach(viewModel.images, id: \.self) { item in
-                    viewModel.cell(for: item)
-                }
+                ForEach(viewModel.images, id: \.self) { cell(for: $0) }
             }
             .padding(.paddingDefault)
         }
-        .task {
-            viewModel.fetchImages()
-        }
+        .task(viewModel.fetchImages)
+    }
+    
+    /// Generates a view for a given `PictureItem`, including a selection indication overlay.
+    ///
+    /// - Parameter item: The `PictureItem` to be displayed in the grid.
+    /// - Returns: A `View` representing the image cell, with selection indication if applicable.
+    @ViewBuilder
+    func cell(for item: PictureItem) -> some View {
+        Image(nsImage: item.image)
+            .resizable()
+            .scaledToFill()
+            .frame(width: viewModel.cellWidth, height: viewModel.cellHeight)
+            .cornerRadius(viewModel.cellCornerRadius)
+            .overlay(
+                ZStack(alignment: .bottomTrailing) {
+                    let isSelected = viewModel.selectedImage == item
+                    RoundedRectangle(cornerRadius: viewModel.cellCornerRadius)
+                        .strokeBorder(isSelected ? Color.blue : Color.gray, lineWidth: isSelected ? 4 : 1)
+                    
+                    Image(systemName: "checkmark.circle.fill")
+                        .symbolRenderingMode(.multicolor)
+                        .font(.title)
+                        .padding(.paddingSmall)
+                        .opacity(isSelected ? .opacity100 : .opacity0)
+                        .animation(.default, value: viewModel.selectedImage)
+                }
+            )
+            .onTapGesture {
+                if viewModel.selectedImage == item {
+                    viewModel.selectedImage = nil
+                } else {
+                    viewModel.selectedImage = item
+                }
+            }
     }
 }
 

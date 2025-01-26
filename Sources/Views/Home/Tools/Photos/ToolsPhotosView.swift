@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SystemSettingsAccess
 
 /// A SwiftUI view that displays photos from the user's photo library.
 ///
@@ -29,19 +30,91 @@ struct ToolsPhotosView: View {
     
     @Environment(ToolsPhotosViewModel.self) var viewModel
     
+    @State private var selectedAsset: PhotoAsset? = nil
+    
+    @State private var selectedImage: NSImage? = nil {
+        didSet {
+            if selectedImage == nil {
+                selectedAsset = nil
+            }
+        }
+    }
+    
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: viewModel.cellWidth))], spacing: .spacingHeight) {
-                ForEach(viewModel.photoLibraryAlbumManager.photoAssets) { item in
-                    viewModel.cell(for: item)
-                }
+                ForEach(viewModel.photoLibraryAlbumManager.photoAssets, content: cell(for:))
             }
             .padding(.paddingDefault)
         }
-        .overlay(content: {
-            viewModel.overlay
-        })
+        .overlay(content: overlay)
         .task(viewModel.fetchImages)
+    }
+    
+    @ViewBuilder
+    private func overlay() -> some View {
+        if viewModel.isAuthorised == false, let url = SystemSettingsSecurityPrivacy.photos.path {
+            PermissionsOverlayView()
+                .environmentObject(PermissionsOverlayViewModel(title: ToolsPhotosViewDomain.Localization.photoDescription, url: url))
+        }
+    }
+    
+    /// Creates a cell view for a given photo asset, with selection handling and image fetching.
+    @ViewBuilder
+    func cell(for item: PhotoAsset) -> some View {
+        ToolsPhotosItemView(asset: item, cache: viewModel.photoLibraryAlbumManager.cache, imageSize: viewModel.thumbnailSize)
+            .frame(width: viewModel.cellWidth, height: viewModel.cellHeight)
+            .cornerRadius(viewModel.cellCornerRadius)
+            .overlay(
+                ZStack(alignment: .bottomTrailing) {
+                    let isSelected = selectedAsset == item
+                    RoundedRectangle(cornerRadius: viewModel.cellCornerRadius)
+                        .strokeBorder(isSelected ? Color.selectedView : Color.gray, lineWidth: isSelected ? 4 : 1)
+                    
+                    Image(systemName: ToolsPhotosViewDomain.Icon.selection)
+                        .symbolRenderingMode(.multicolor)
+                        .font(.title)
+                        .padding(viewModel.viewSettings.padding)
+                        .opacity(isSelected ? .opacity100 : .opacity0)
+                        .animation(.default, value: selectedAsset)
+                }
+            )
+            .onTapGesture {
+                select(item: item)
+            }
+            .onChange(of: viewModel.selectedAsset) { _, newValue in
+                selectedAsset = newValue
+            }
+            .onChange(of: viewModel.selectedPicture) { _, newValue in
+                selectedImage = newValue
+            }
+    }
+    
+    private func select(item: PhotoAsset) {
+        if selectedAsset == item {
+            selectedAsset = nil
+        } else {
+            selectedAsset = item
+        }
+        
+        guard let selectedAsset = self.selectedAsset else {
+            self.selectedImage = nil
+            viewModel.selectedImagePublisher.send((nil, nil))
+            return
+        }
+        
+        let imageSize = viewModel.imageSize
+        let cache = viewModel.photoLibraryAlbumManager.cache
+        
+        Task {
+            _ = await cache.requestImage(for: selectedAsset, targetSize: imageSize) { result in
+                
+                guard result?.isLowerQuality == false, let image = result?.image else { return }
+                
+                self.selectedImage = image
+                viewModel.selectedImagePublisher.send((image, selectedAsset))
+            }
+        }
     }
 }
 

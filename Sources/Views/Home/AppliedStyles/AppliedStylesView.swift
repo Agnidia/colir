@@ -8,8 +8,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 /// A SwiftUI view that displays the applied styles in a vertical stack.
 ///
 /// This view uses the `AppliedStylesViewModel` environment object to manage and present

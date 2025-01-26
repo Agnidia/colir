@@ -29,8 +29,9 @@ public extension NSImage {
     /// - Parameter emoji: The emoji character to be drawn.
     /// - Returns: A new `NSImage` with the drawn emoji.
     func draw(emoji: Character) -> NSImage {
-        var fontScale: CGFloat = 1.86
-        var xOffset: CGFloat = (24 * size.width / 512)
+        var fontScale: CGFloat = 2
+        var xOffset: CGFloat = (8 * size.width / 512)
+        let yOffset: CGFloat = (2 * size.height / 512)
         var yScale = 4.6
         
         if size.width == 32 {
@@ -54,7 +55,7 @@ public extension NSImage {
         draw(in: CGRect(origin: .zero, size: size))
         String(emoji).draw(
             in: CGRect(
-                origin: CGPoint(x: (size.width / 4) - xOffset, y: -(size.height / yScale)),
+                origin: CGPoint(x: (size.width / 4) - xOffset, y: -((size.height / yScale) + yOffset)),
                 size: size
             ),
             withAttributes: textFontAttributes

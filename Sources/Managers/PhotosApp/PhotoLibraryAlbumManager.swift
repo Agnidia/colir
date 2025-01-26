@@ -9,10 +9,11 @@
 import Photos
 
 /// Manages photo albums and photo assets in the user's photo library.
-final class PhotoLibraryAlbumManager: NSObject, ObservableObject, @unchecked Sendable {
+@Observable
+final class PhotoLibraryAlbumManager: NSObject, @unchecked Sendable {
     
     /// Published property holding the collection of photo assets in the album.
-    @Published var photoAssets: PhotoAssetCollection = PhotoAssetCollection(PHFetchResult<PHAsset>())
+    var photoAssets: PhotoAssetCollection = PhotoAssetCollection(PHFetchResult<PHAsset>())
     
     /// The local identifier of the asset collection.
     var identifier: String? {

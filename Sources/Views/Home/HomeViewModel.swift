@@ -232,56 +232,19 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
             .sink(receiveValue: setup(color:))
             .store(in: &cancellables)
         
-        toolsPhotosViewModel.selectedImage.publisher
+        toolsPhotosViewModel.selectedImagePublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] image in
-                guard self?.skipSelectedPhoto == false else {
-                    self?.skipSelectedPhoto = false
-                    return
-                }
-                
-                guard self?.isApplyingSelectedPicture == false else {
-                    self?.isApplyingSelectedPicture = false
-                    return
-                }
-                
-                self?.isApplyingSelectedPhoto = true
-                self?.toolsPicturesViewModel.selectedImage = nil
-                self?.apply(image: image, asset: self?.toolsPhotosViewModel.selectedAsset)
-            }
+            .sink(receiveValue: setup(item:))
             .store(in: &cancellables)
         
         toolsPicturesViewModel.$selectedImage
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] image in
-                guard self?.skipSelectedPicture == false else {
-                    self?.skipSelectedPicture = false
-                    return
-                }
-                
-                guard self?.isApplyingSelectedPhoto == false else {
-                    self?.isApplyingSelectedPhoto = false
-                    return
-                }
-                
-                self?.isApplyingSelectedPicture = true
-                self?.toolsPhotosViewModel.selectedImage = nil
-                self?.apply(image: image?.image, item: image)
-            }
+            .sink(receiveValue: setup(picture:))
             .store(in: &cancellables)
         
         toolsEmojisViewModel.$selectedEmoji
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] emoji in
-                guard self?.skipSelectedEmoji == false else {
-                    self?.skipSelectedEmoji = false
-                    return
-                }
-                
-                self?.isApplyingSelectedEmoji = true
-                self?.apply(emoji: emoji)
-                self?.isApplyingSelectedEmoji = false
-            }
+            .sink(receiveValue: setup(emoji:))
             .store(in: &cancellables)
     }
     
@@ -292,6 +255,50 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
         }
         
         apply(color: color)
+    }
+    
+    private func setup(item: (NSImage?, PhotoAsset?)) {
+        guard skipSelectedPhoto == false else {
+            skipSelectedPhoto = false
+            return
+        }
+        
+        guard isApplyingSelectedPicture == false else {
+            isApplyingSelectedPicture = false
+            return
+        }
+        
+        isApplyingSelectedPhoto = true
+        toolsPicturesViewModel.selectedImage = nil
+        apply(image: item.0, asset: item.1)
+    }
+    
+    private func setup(picture: PictureItem?) {
+        guard skipSelectedPicture == false else {
+            skipSelectedPicture = false
+            return
+        }
+        
+        guard isApplyingSelectedPhoto == false else {
+            isApplyingSelectedPhoto = false
+            return
+        }
+        
+        isApplyingSelectedPicture = true
+        toolsPhotosViewModel.selectedAsset = nil
+        apply(image: picture?.image, item: picture)
+        isApplyingSelectedPicture = false
+    }
+    
+    private func setup(emoji: Character?) {
+        guard skipSelectedEmoji == false else {
+            skipSelectedEmoji = false
+            return
+        }
+        
+        isApplyingSelectedEmoji = true
+        apply(emoji: emoji)
+        isApplyingSelectedEmoji = false
     }
     
     /// Removes all cancellable publishers.
@@ -307,19 +314,19 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     private(set) lazy var webResourcesViewModel: WebResourcesViewModel = .init()
     
     // Lazy instantiation of drop zone view model.
-    private lazy var dropZoneViewModel: DropZoneViewModel = .init { [weak self] urls in
-        self?.setupFolders(from: urls)
-    } updateStateClosure: { [weak self] state in
+    private lazy var dropZoneViewModel: DropZoneViewModel = .init(fileClosure: setupFolders(from:), updateStateClosure: update(state:))
+    
+    private func update(state: ImageDto.ImageState) {
         print("Set state to: \(state)")
-        self?.customizingActionViewModel.update(state: state)
-        self?.appliedStylesViewModel.update(state: state, imageCustomization: (self?.dropZoneViewModel.image.customisations)!)
-        if state == .ready, let dropZone = self?.dropZoneViewModel, let index = self?.currentUndoItem, let undoItems = self?.undoItems.prefix(index + 1) {
-            self?.undoItems = Array(undoItems)
-            self?.undoItems.append(dropZone.image.undoItems)
-            self?.add(index: index + 1, needUpdate: false)
+        customizingActionViewModel.update(state: state)
+        appliedStylesViewModel.update(state: state, imageCustomization: dropZoneViewModel.image.customisations)
+        if state == .ready {
+            let index = self.currentUndoItem
+            undoItems = Array(undoItems.prefix(index + 1))
+            undoItems.append(dropZoneViewModel.image.undoItems)
+            add(index: index + 1, needUpdate: false)
         }
     }
-    
     /// Provides the view for the icon folder.
     @MainActor
     @ViewBuilder
@@ -485,7 +492,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
             toolsColorsViewModel.selectedColor = image.customisations.selectedColor
             
             skipSelectedPhoto = true
-            toolsPhotosViewModel.selectedImage = image.customisations.selectedPicture
+            toolsPhotosViewModel.selectedPicture = image.customisations.selectedPicture
             toolsPhotosViewModel.selectedAsset = image.customisations.selectedAsset
             
             skipSelectedPicture = true

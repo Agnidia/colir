@@ -8,7 +8,6 @@
 
 import SwiftUI
 import SwiftCommons
-import SwiftUICustomTagListView
 
 /// ViewModel for managing and displaying applied styles.
 ///
@@ -25,7 +24,8 @@ import SwiftUICustomTagListView
 ///
 /// - EnvironmentObject:
 ///   - Uses various tool view models to manage different aspects of the applied styles.
-final class AppliedStylesViewModel: ObservableObject, DomainViewConstantProtocol {
+@Observable
+final class AppliedStylesViewModel: DomainViewConstantProtocol {
     
     // MARK: - DomainViewConstantProtocol
     
@@ -37,18 +37,8 @@ final class AppliedStylesViewModel: ObservableObject, DomainViewConstantProtocol
     private var toolsPicturesViewModel: ToolsPicturesViewModel?
     private var toolsEmojisViewModel: ToolsEmojisViewModel?
     
-    @Published var state: ImageDto.ImageState
-    @Published var data: [CustomizationTagViewData] = .init()
-    
-    /// An array of custom tag views created from the `data` property.
-    @MainActor
-    var views: [SwiftUICustomTagView<SampleTagView>] {
-        self.data.map { data in
-            SwiftUICustomTagView(content: {
-                SampleTagView(data: data)
-            })
-        }
-    }
+    var state: ImageDto.ImageState
+    var data: [CustomizationTagViewData] = .init()
     
     // MARK: - Initialization
     
@@ -78,7 +68,7 @@ final class AppliedStylesViewModel: ObservableObject, DomainViewConstantProtocol
         
         if let color = imageCustomization.selectedColor {
             data.append(.init(text: color.hexString, color: Color(nsColor: color), closeImage: Image(systemName: "xmark.circle"), onClose: { [weak self] in
-                self?.toolsColorsViewModel?.selectedColor = nil
+                self?.toolsColorsViewModel?.selectedColorPublisher.send(nil)
             }))
         }
         
@@ -100,13 +90,6 @@ final class AppliedStylesViewModel: ObservableObject, DomainViewConstantProtocol
     
     // MARK: - Views
     
-    /// Creates a view that displays the tags using `SwiftUICustomTagListView`.
-    @MainActor
-    @ViewBuilder
-    var tagsView: some View {
-        SwiftUICustomTagListView(views, horizontalSpace: .spacingDefault, verticalSpace: .spacingDefault)
-    }
-    
     // MARK: - Private
     
     private func action() {
@@ -119,12 +102,24 @@ final class AppliedStylesViewModel: ObservableObject, DomainViewConstantProtocol
 ///
 /// - Parameters:
 ///   - data: The data used to display the tag, including image, text, color, and actions.
-struct SampleTagView: View {
+struct StyleTagView: View {
     
     let data: CustomizationTagViewData
     
     var body: some View {
         HStack(spacing: .spacingDefault) {
+            if let closeImage = data.closeImage, let onClose = data.onClose {
+                Button(action: onClose) {
+                    closeImage
+                        .resizable()
+                        .frame(width: .FrameSize.Button.small, height: .FrameSize.Button.small)
+                        .shadow(color: .black, radius: 1)
+                        .padding([.trailing], .paddingThin)
+                        .overlay { Color.white0 }
+                }
+                .buttonStyle(.borderless)
+            }
+            
             Group {
                 if let image = data.image {
                     Image(nsImage: image)
@@ -142,20 +137,6 @@ struct SampleTagView: View {
             }
             .shadow(color: .white, radius: 1)
             .frame(maxWidth: .infinity, alignment: .leading)
-            
-            if let closeImage = data.closeImage, let onClose = data.onClose {
-                Button(action: onClose) {
-                    closeImage
-                        .resizable()
-                        .frame(width: 12, height: 12)
-                        .shadow(color: .black, radius: 1)
-                        .padding([.bottom, .leading], .paddingSmall)
-                        .overlay {
-                            Color.white.opacity(0.001)
-                        }
-                }
-                .buttonStyle(.borderless)
-            }
         }
         .onTapGesture {
             if let onSelect = data.onSelect {
@@ -180,10 +161,11 @@ struct SampleTagView: View {
 ///   - closeImage: An optional image for the close button.
 ///   - onSelect: An optional action to perform when the tag is selected.
 ///   - onClose: An optional action to perform when the close button is tapped.
-struct CustomizationTagViewData {
+struct CustomizationTagViewData: Identifiable {
     
     typealias ActionClosure = Closure.EmptyBlock
     
+    let id = UUID()
     let image: NSImage?
     let text: String
     let color: Color

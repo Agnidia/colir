@@ -56,7 +56,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     private var foldersUrls: [URL]
     
     /// Fixed width for the view.
-    var width: CGFloat {
+    var dropZoneHeight: CGFloat {
         236
     }
     
@@ -98,11 +98,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
         self.exportIconManager = ExportIconManager(appSettings: appSettings, appStoreService: appStoreService)
         self.log = logger
         
-        #if DEBUG
-        self.foldersUrls = [picturesFolderManager.picturesDirectory]
-        #else
         self.foldersUrls = foldersUrls
-        #endif
         
         self.tools = tools
         
@@ -113,6 +109,13 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
         Task {
             await setupAppStoreService()
         }
+        
+#if DEBUG
+        Task {
+            try? await Task.sleep(for: .seconds(1))
+            dropZoneViewModel.fileClosure([picturesFolderManager.picturesDirectory])
+        }
+#endif
     }
     
     deinit {
@@ -217,9 +220,9 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     
     // Flags for skipping and applying selections
     private var skipSelectedColor = false
-    private var skipSelectedPhoto = true
-    private var skipSelectedPicture = true
-    private var skipSelectedEmoji = true
+    private var skipSelectedPhoto = false
+    private var skipSelectedPicture = false
+    private var skipSelectedEmoji = false
     
     private var isApplyingSelectedPhoto = false
     private var isApplyingSelectedPicture = false
@@ -325,6 +328,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
             undoItems = Array(undoItems.prefix(index + 1))
             undoItems.append(dropZoneViewModel.image.undoItems)
             add(index: index + 1, needUpdate: false)
+            
         }
     }
     /// Provides the view for the icon folder.
@@ -332,26 +336,22 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     @ViewBuilder
     func iconFolderView() -> some View {
         DropZoneView()
+            .background(
+                Color.dropFolderViewBackground
+                    .clipShape(.rect(bottomTrailingRadius: 24))
+            )
             .environmentObject(dropZoneViewModel)
-            .padding(.paddingSmall)
-            .frame(width: width, height: width)
+            .frame(maxWidth: .infinity, minHeight: dropZoneHeight)
+            .clipShape(.rect(bottomTrailingRadius: 24))
+            .padding(.trailing, .paddingSmall)
             .modifier(Shake(animatableData: CGFloat(wrongAttempt)))
     }
     
     // Lazy instantiation of applied styles view model.
-    private lazy var appliedStylesViewModel: AppliedStylesViewModel = .init(toolsColorsViewModel: toolsColorsViewModel, toolsPhotosViewModel: toolsPhotosViewModel, toolsPicturesViewModel: toolsPicturesViewModel, toolsEmojisViewModel: toolsEmojisViewModel)
-    
-    /// Provides the view for the applied styles.
-    @MainActor
-    @ViewBuilder
-    func appliedStylesView() -> some View {
-        AppliedStylesView()
-            .environmentObject(appliedStylesViewModel)
-            .frame(maxWidth: .infinity)
-    }
+    private(set) lazy var appliedStylesViewModel: AppliedStylesViewModel = .init(toolsColorsViewModel: toolsColorsViewModel, toolsPhotosViewModel: toolsPhotosViewModel, toolsPicturesViewModel: toolsPicturesViewModel, toolsEmojisViewModel: toolsEmojisViewModel)
     
     // Lazy instantiation of customizing action view model.
-    private lazy var customizingActionViewModel: CustomizingActionViewModel = .init(actionClosure: exportIcon)
+    private(set) lazy var customizingActionViewModel: CustomizingActionViewModel = .init(actionClosure: exportIcon)
     
     private func exportIcon() {
         let image = dropZoneViewModel.image
@@ -363,42 +363,12 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
         }
     }
     
-    @Published private var showingExportAlert = false
-    @Published private var showingAppStoreSheet = false
+    @Published var showingExportAlert = false
+    @Published var showingAppStoreSheet = false
     
     // Lazy instantiation of app store view model.
-    private lazy var appStoreViewModel: AppStoreViewModel = .init(appStoreService: appStoreService, appSettings: appSettings) { [weak self] in
+    private(set) lazy var appStoreViewModel: AppStoreViewModel = .init(appStoreService: appStoreService, appSettings: appSettings) { [weak self] in
         self?.showingAppStoreSheet.toggle()
-    }
-    
-    /// Provides the view for the customization folder.
-    @MainActor
-    @ViewBuilder
-    func customizeFolderView() -> some View {
-        CustomizingActionView()
-            .environmentObject(customizingActionViewModel)
-            .frame(maxWidth: .infinity)
-            .alert(isPresented: Binding<Bool>(
-                get: { self.showingExportAlert },
-                set: { newState in
-                    self.showingExportAlert = newState
-                }
-            )) {
-                Alert(title: Text(DomainViewConstantType.Localization.alertPurchaseTitle),
-                      message: Text(DomainViewConstantType.Localization.alertPurchaseDescription),
-                      primaryButton: .default(Text(DomainViewConstantType.Localization.alertPurchaseAction), action: {
-                    self.showingAppStoreSheet.toggle()
-                }), secondaryButton: .cancel(Text(DomainViewConstantType.Localization.alertPurchaseCancel)))
-            }
-            .sheet(isPresented: Binding<Bool>(
-                get: { self.showingAppStoreSheet },
-                set: { newState in
-                    self.showingAppStoreSheet = newState
-                }
-            )) {
-                AppStoreView()
-                    .environment(self.appStoreViewModel)
-            }
     }
     
     /// Opens a folder in the drop zone view.

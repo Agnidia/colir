@@ -25,7 +25,7 @@ final class DropZoneViewModel: ObservableObject, @unchecked Sendable {
     /// Used to trigger view updates.
     @Published private var updateHack = false
     
-    private var fileClosure: FilesClosure
+    private(set) var fileClosure: FilesClosure
     private var updateStateClosure: UpdateStateClosure
     
     /// Collection of cancellable publishers to manage Combine subscriptions.

@@ -25,7 +25,8 @@ import SwiftCommons
 ///       // Handle button action
 ///   })
 ///   ```
-final class CustomizingActionViewModel: ObservableObject, DomainViewConstantProtocol {
+@Observable
+final class CustomizingActionViewModel: DomainViewConstantProtocol {
     
     // MARK: - DomainViewConstantProtocol
     
@@ -37,7 +38,7 @@ final class CustomizingActionViewModel: ObservableObject, DomainViewConstantProt
     
     private let buttonAction: ButtonAction
     
-    @Published private var state: ImageDto.ImageState
+    private(set) var state: ImageDto.ImageState
     
     // MARK: - Variables
     
@@ -56,47 +57,12 @@ final class CustomizingActionViewModel: ObservableObject, DomainViewConstantProt
         self.state = state
     }
     
-    // MARK: - Views
-    
-    /// A view showing a progress indicator if the state is `.processing`.
-    ///
-    /// Displays a `ProgressView` with the progress value and total of 100 if the state is
-    /// `.processing`. Otherwise, it displays an empty view.
-    @MainActor
-    @ViewBuilder
-    var progressView: some View {
-        switch state {
-        case .processing(let progress):
-            ProgressView("", value: progress, total: 100)
-                .progressViewStyle(.primary)
-        default:
-            EmptyView()
-        }
-    }
-    
-    /// A button that triggers the `buttonAction` when pressed.
-    ///
-    /// The button is only enabled if the state is `.ready`. The button's label is set
-    /// based on the localization provided by `DomainViewConstantType.Localization.customize`.
-    @MainActor
-    @ViewBuilder
-    var actionButton: some View {
-        Button(action: action, label: {
-            Text(DomainViewConstantType.Localization.customize)
-                .font(ButtonStyleConstants.font)
-                .padding(ButtonStyleConstants.padding)
-                .frame(maxWidth: .infinity)
-        })
-        .buttonStyle(.primary)
-        .disabled(state != .ready)
-    }
-    
-    // MARK: - Private
+    // MARK: - Actions
     
     /// Executes the button action.
     ///
     /// This method is called when the button is pressed, triggering the `buttonAction` closure.
-    private func action() {
+    func action() {
         buttonAction()
     }
 }

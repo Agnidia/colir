@@ -71,14 +71,15 @@ struct ToolsEmojisView: View {
                     .clipShape(RoundedRectangle(cornerRadius: model.cellCornerRadius))
                     .overlay(
                         ZStack(alignment: .bottomTrailing) {
+                            let isSelected = model.selectedEmoji == char
                             RoundedRectangle(cornerRadius: model.cellCornerRadius)
-                                .strokeBorder(model.selectedEmoji == char ? Color.selectedView : Color.clear, lineWidth: 4)
-                            if model.selectedEmoji == char {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .symbolRenderingMode(.multicolor)
-                                    .font(.title)
-                                    .padding(model.viewSettings.padding)
-                            }
+                                .strokeBorder(isSelected ? Color.selectedView : Color.clear, lineWidth: 4)
+                            Image(systemName: "checkmark.circle.fill")
+                                .symbolRenderingMode(.multicolor)
+                                .font(.title)
+                                .padding(model.viewSettings.padding)
+                                .opacity(isSelected ? .opacity100 : .opacity0)
+                                .animation(.default, value: model.selectedEmoji)
                         }
                     )
                     .onTapGesture {

@@ -52,6 +52,7 @@ public extension NSImage {
         
         for offset in .zero..<backImagePixelCount {
             let color = bufferBackImage[offset]
+            
             bufferBackImage[offset] = RGBA32(
                 red: color.redComponent,
                 green: color.greenComponent,

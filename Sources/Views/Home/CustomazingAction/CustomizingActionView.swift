@@ -23,14 +23,106 @@ import SwiftUI
 ///       .environmentObject(CustomizingActionViewModel(state: .none, actionClosure: {}))
 ///   ```
 struct CustomizingActionView: View {
-    @EnvironmentObject var viewModel: CustomizingActionViewModel
+    @Environment(CustomizingActionViewModel.self) var viewModel
     
+    @State private var isPopupVisible: Bool = false
+
     var body: some View {
-        viewModel.actionButton
-            .overlay {
-                viewModel.progressView
+        ZStack {
+            VStack(spacing: .spacingHeight) {
+                actionButton
+                    .overlay { progressView }
+                    .background {
+                        PopupContentView()
+                            .offset(y: isPopupVisible ? -.paddingBig : .zero)
+                            .opacity(isPopupVisible ? .opacity100 : .opacity0)
+                            .animation(.default, value: isPopupVisible)
+                            .zIndex(1) // Ensure popup is above other content
+                            .task {
+                                hidePopupTask()
+                            }
+                            .onChange(of: isPopupVisible) { _, needDisplay in
+                                if needDisplay {
+                                    hidePopupTask()
+                                }
+                            }
+                    }
             }
-            .padding([.horizontal, .bottom], .paddingDefault)
+        }
+        .onChange(of: viewModel.state, { _, state in
+            switch state {
+            case .processing:
+                isPopupVisible = false
+            default: break
+            }
+        })
+        .animation(.easeInOut, value: isPopupVisible) // Animate visibility change
+        .padding([.horizontal, .bottom], .paddingDefault)
+    }
+    
+    @State private var hidePopoverTask: Task<Void, Never>? = nil
+    
+    private func hidePopupTask() {
+        hidePopoverTask?.cancel()
+        hidePopoverTask = Task {
+            try? await Task.sleep(for: .seconds(5))
+            guard Task.isCancelled == false else {
+                return
+            }
+            
+            isPopupVisible = false
+        }
+    }
+        
+    /// A view showing a progress indicator if the state is `.processing`.
+    ///
+    /// Displays a `ProgressView` with the progress value and total of 100 if the state is
+    /// `.processing`. Otherwise, it displays an empty view.
+    @ViewBuilder
+    var progressView: some View {
+        switch viewModel.state {
+        case .processing(let progress):
+            ProgressView("", value: progress, total: 100)
+                .progressViewStyle(.primary)
+        default:
+            EmptyView()
+        }
+    }
+    
+    /// A button that triggers the `buttonAction` when pressed.
+    ///
+    /// The button is only enabled if the state is `.ready`. The button's label is set
+    /// based on the localization provided by `DomainViewConstantType.Localization.customize`.
+    @ViewBuilder
+    var actionButton: some View {
+        Button(action: {
+            viewModel.action()
+            isPopupVisible = true
+        }, label: {
+            Text(CustomizingActionViewDomain.Localization.customize)
+                .font(ButtonStyleConstants.font)
+                .padding(ButtonStyleConstants.padding)
+                .frame(maxWidth: .infinity)
+        })
+        .buttonStyle(.primary)
+        .disabled(viewModel.state != .ready)
+    }
+}
+
+struct PopupContentView: View {
+    var body: some View {
+        VStack {
+            Text("Done!")
+                .font(.headline)
+                .padding(.paddingCompact)
+        }
+        .padding(.bottom, .paddingCompact)
+        .frame(maxWidth: .infinity)
+        .background(ButtonStyleConstants.backgroundColor.opacity(0.9))
+        .foregroundColor(.white)
+        .cornerRadius(12)
+        .padding(.paddingSmall)
+        
     }
 }
 
@@ -50,27 +142,27 @@ struct CustomizingActionView: View {
 #Preview("CustomizingActionView") {
     VStack {
         CustomizingActionView()
-            .environmentObject(CustomizingActionViewModel(state: .none, actionClosure: {}))
+            .environment(CustomizingActionViewModel(state: .none, actionClosure: {}))
         
         Divider()
         
         CustomizingActionView()
-            .environmentObject(CustomizingActionViewModel(state: .ready, actionClosure: {}))
+            .environment(CustomizingActionViewModel(state: .ready, actionClosure: {}))
         
         Divider()
         
         CustomizingActionView()
-            .environmentObject(CustomizingActionViewModel(state: .preview, actionClosure: {}))
+            .environment(CustomizingActionViewModel(state: .preview, actionClosure: {}))
         
         Divider()
         
         CustomizingActionView()
-            .environmentObject(CustomizingActionViewModel(state: .processing(value: 30), actionClosure: {}))
+            .environment(CustomizingActionViewModel(state: .processing(value: 30), actionClosure: {}))
         
         Divider()
         
         CustomizingActionView()
-            .environmentObject(CustomizingActionViewModel(state: .error, actionClosure: {}))
+            .environment(CustomizingActionViewModel(state: .error, actionClosure: {}))
         
         Divider()
         Spacer()

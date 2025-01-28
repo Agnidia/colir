@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftCommons
 
 /// A view that represents the main screen of the application, displaying various sections
 /// based on the provided `HomeViewModel`. It includes areas for icons, applied styles, and tools.
@@ -30,6 +31,7 @@ struct HomeView: View {
             ZStack {
                 VStack {}
                     .visualEffect(material: .sidebar)
+                    .background(Color.dropFolderViewBackground)
                 
                 VStack(alignment: .leading) {
                     
@@ -37,20 +39,14 @@ struct HomeView: View {
                     viewModel.iconFolderView()
                     
                     // Display the applied styles view provided by the view model
-                    viewModel.appliedStylesView()
-                    
-                    Spacer()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    appliedStylesView()
                     
                     // Display the customize folder view provided by the view model
-                    viewModel.customizeFolderView()
-                    
+                    customizeFolderView()
                 }
+                .clipped()
             }
-            .frame(minWidth: viewModel.width, maxWidth: viewModel.width, maxHeight: .infinity)
-            
-            Divider()
-                .padding(.vertical, .paddingThin)
+            .frame(minWidth: viewModel.dropZoneHeight, maxWidth: viewModel.dropZoneHeight, maxHeight: .infinity)
             
             VStack(alignment: .leading) {
                 // Display the tools view provided by the view model
@@ -60,6 +56,7 @@ struct HomeView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .fixedSize(horizontal: false, vertical: false)
+        .background(Color.sidebarBackground)
     }
     
     /// Provides the view for the selected tool.
@@ -84,6 +81,44 @@ struct HomeView: View {
             WebResourcesView()
                 .environmentObject(viewModel.webResourcesViewModel)
         }
+    }
+    
+    /// Provides the view for the applied styles.
+    @ViewBuilder
+    private func appliedStylesView() -> some View {
+        AppliedStylesView()
+            .environment(viewModel.appliedStylesViewModel)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .offset(x: .paddingLarge)
+    }
+    
+    /// Provides the view for the customization folder.
+    @ViewBuilder
+    func customizeFolderView() -> some View {
+        CustomizingActionView()
+            .environment(viewModel.customizingActionViewModel)
+            .frame(maxWidth: .infinity)
+            .alert(isPresented: Binding<Bool>(
+                get: { viewModel.showingExportAlert },
+                set: { newState in
+                    viewModel.showingExportAlert = newState
+                }
+            )) {
+                Alert(title: Text(HomeViewDomain.Localization.alertPurchaseTitle),
+                      message: Text(HomeViewDomain.Localization.alertPurchaseDescription),
+                      primaryButton: .default(Text(HomeViewDomain.Localization.alertPurchaseAction), action: {
+                    viewModel.showingAppStoreSheet.toggle()
+                }), secondaryButton: .cancel(Text(HomeViewDomain.Localization.alertPurchaseCancel)))
+            }
+            .sheet(isPresented: Binding<Bool>(
+                get: { viewModel.showingAppStoreSheet },
+                set: { newState in
+                    viewModel.showingAppStoreSheet = newState
+                }
+            )) {
+                AppStoreView()
+                    .environment(viewModel.appStoreViewModel)
+            }
     }
 }
 

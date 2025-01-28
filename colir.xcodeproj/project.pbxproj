@@ -45,12 +45,13 @@
 		A568113B2B1109F200236EA8 /* ToolsEmojisViewDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A568113A2B1109F200236EA8 /* ToolsEmojisViewDomain.swift */; };
 		A56893292B8A6699001C0B94 /* NSColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A56893282B8A6699001C0B94 /* NSColor+Hex.swift */; };
 		A57ECAAF2D345F3100288FB5 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = A57ECAAE2D345F3100288FB5 /* Algorithms */; };
+		A58544C22D46CE4B00CACBDF /* Color+Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58544C12D46CE4B00CACBDF /* Color+Value.swift */; };
+		A58544C42D49742D00CACBDF /* Collection+SafeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58544C32D49742D00CACBDF /* Collection+SafeIndex.swift */; };
 		A597E5F92D2C3E7D00F43C48 /* URL+Dir.swift in Sources */ = {isa = PBXBuildFile; fileRef = A597E5F82D2C3E7D00F43C48 /* URL+Dir.swift */; };
 		A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D7E2AEEFA8D0063FE06 /* SwiftCommons */; };
 		A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */; };
 		A5A00D842AEF011D0063FE06 /* PermissionsOverlayDomain.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A00D832AEF011D0063FE06 /* PermissionsOverlayDomain.swift */; };
 		A5A00D8A2AEF0CDE0063FE06 /* PrimaryButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A00D872AEF0CDE0063FE06 /* PrimaryButtonStyle.swift */; };
-		A5A557BA2B8A50970092386B /* SwiftUICustomTagListView in Frameworks */ = {isa = PBXBuildFile; productRef = A5A557B92B8A50970092386B /* SwiftUICustomTagListView */; };
 		A5A557BD2B8A59C10092386B /* Double+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A557BB2B8A59C10092386B /* Double+Constants.swift */; };
 		A5A557BE2B8A59C10092386B /* CGFloat+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A557BC2B8A59C10092386B /* CGFloat+Constants.swift */; };
 		A5B68E512AB8DA08003C5FFA /* NSColor+List.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B68E502AB8DA08003C5FFA /* NSColor+List.swift */; };
@@ -216,6 +217,8 @@
 		A56811382B0FD55400236EA8 /* ColorWheelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheelView.swift; sourceTree = "<group>"; };
 		A568113A2B1109F200236EA8 /* ToolsEmojisViewDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsEmojisViewDomain.swift; sourceTree = "<group>"; };
 		A56893282B8A6699001C0B94 /* NSColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
+		A58544C12D46CE4B00CACBDF /* Color+Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Value.swift"; sourceTree = "<group>"; };
+		A58544C32D49742D00CACBDF /* Collection+SafeIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+SafeIndex.swift"; sourceTree = "<group>"; };
 		A597E5F82D2C3E7D00F43C48 /* URL+Dir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Dir.swift"; sourceTree = "<group>"; };
 		A5A00D832AEF011D0063FE06 /* PermissionsOverlayDomain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsOverlayDomain.swift; sourceTree = "<group>"; };
 		A5A00D872AEF0CDE0063FE06 /* PrimaryButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButtonStyle.swift; sourceTree = "<group>"; };
@@ -349,7 +352,6 @@
 				A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */,
 				A5E115F52AFFD70A0023A70C /* StoreKitPlus in Frameworks */,
 				A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */,
-				A5A557BA2B8A50970092386B /* SwiftUICustomTagListView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -820,6 +822,7 @@
 		A5CFFDEF2AA1190D00D6E7A9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A58544C32D49742D00CACBDF /* Collection+SafeIndex.swift */,
 				A5E115E72AFC10190023A70C /* NSBezierPath+Folder.swift */,
 				A5B68E502AB8DA08003C5FFA /* NSColor+List.swift */,
 				A515FF192AF80B94000F0C3B /* NSImage+Alpha.swift */,
@@ -833,6 +836,7 @@
 				A548507C2B0789610020A3FB /* String+Crypto.swift */,
 				A56893282B8A6699001C0B94 /* NSColor+Hex.swift */,
 				A597E5F82D2C3E7D00F43C48 /* URL+Dir.swift */,
+				A58544C12D46CE4B00CACBDF /* Color+Value.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1052,7 +1056,6 @@
 				A5E115C42AFBDBB50023A70C /* DominantColor */,
 				A5E115EE2AFEA7760023A70C /* Throttler */,
 				A5E115F42AFFD70A0023A70C /* StoreKitPlus */,
-				A5A557B92B8A50970092386B /* SwiftUICustomTagListView */,
 				A57ECAAE2D345F3100288FB5 /* Algorithms */,
 			);
 			productName = colir;
@@ -1135,7 +1138,6 @@
 				A5E115C32AFBDBB50023A70C /* XCRemoteSwiftPackageReference "DominantColor" */,
 				A5E115ED2AFEA7760023A70C /* XCRemoteSwiftPackageReference "Throttler" */,
 				A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreKitPlus" */,
-				A5A557B82B8A50970092386B /* XCRemoteSwiftPackageReference "SwiftUICustomTagListView" */,
 				A57ECAAD2D345F3100288FB5 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 			);
 			productRefGroup = A5F5CDF62A6D2BFB008AF959 /* Products */;
@@ -1233,6 +1235,7 @@
 				A5BA1D352A81816E0014E276 /* writer.cpp in Sources */,
 				A5A00D8A2AEF0CDE0063FE06 /* PrimaryButtonStyle.swift in Sources */,
 				A5E115B22AFA9C060023A70C /* PrimaryProgressViewStyle.swift in Sources */,
+				A58544C22D46CE4B00CACBDF /* Color+Value.swift in Sources */,
 				A504B88E2A6D44EB002A2C8B /* Logger.swift in Sources */,
 				A5E116032B0222C10023A70C /* AppStoreViewModel.swift in Sources */,
 				A5BF05FD2AD2954300A86904 /* PhotoAppItem.swift in Sources */,
@@ -1260,6 +1263,7 @@
 				A5E115F22AFFD6EA0023A70C /* AppStoreService.swift in Sources */,
 				A504B8992A6D7AA7002A2C8B /* ToolbarView.swift in Sources */,
 				A5BA1D242A81816E0014E276 /* ppat.cpp in Sources */,
+				A58544C42D49742D00CACBDF /* Collection+SafeIndex.swift in Sources */,
 				A50AF9622AF67704000C18AB /* DropZoneNSView+SwiftUI.swift in Sources */,
 				A515FF0B2AF6CBE6000F0C3B /* CustomizingActionView.swift in Sources */,
 				A5BA1D282A81816E0014E276 /* animation.cpp in Sources */,
@@ -1480,14 +1484,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		A5A557B82B8A50970092386B /* XCRemoteSwiftPackageReference "SwiftUICustomTagListView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/IGRSoft/SwiftUICustomTagListView";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		A5E115C32AFBDBB50023A70C /* XCRemoteSwiftPackageReference "DominantColor" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/indragiek/DominantColor";
@@ -1529,11 +1525,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A5A00D802AEEFC7E0063FE06 /* XCRemoteSwiftPackageReference "SystemSettingsAccess" */;
 			productName = SystemSettingsAccess;
-		};
-		A5A557B92B8A50970092386B /* SwiftUICustomTagListView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A5A557B82B8A50970092386B /* XCRemoteSwiftPackageReference "SwiftUICustomTagListView" */;
-			productName = SwiftUICustomTagListView;
 		};
 		A5E115C42AFBDBB50023A70C /* DominantColor */ = {
 			isa = XCSwiftPackageProductDependency;

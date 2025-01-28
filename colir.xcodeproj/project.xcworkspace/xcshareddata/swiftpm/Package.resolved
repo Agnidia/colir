@@ -1,5 +1,5 @@
 {
-  "originHash" : "09798e6c6ceae7c05f0e98861c7d15969ce7f77e150730fedfa318becbf49c22",
+  "originHash" : "13b40b480b87c32850e1eaeca5436cdd66ee16976b31fd003b5b8fd6bbd36196",
   "pins" : [
     {
       "identity" : "dominantcolor",
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/danielsaidi/StoreKitPlus",
       "state" : {
-        "revision" : "b52ea96bc8425392c80b40fd765574b08d63b71c",
-        "version" : "0.5.1"
+        "revision" : "d8761c82b204ea9fc1d63464f8fc14ba4f106672",
+        "version" : "0.6.0"
       }
     },
     {
@@ -44,15 +44,6 @@
       "state" : {
         "branch" : "main",
         "revision" : "1e48d407feba12b3d293faaa980602776cf54bb8"
-      }
-    },
-    {
-      "identity" : "swiftuicustomtaglistview",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/IGRSoft/SwiftUICustomTagListView",
-      "state" : {
-        "branch" : "main",
-        "revision" : "febb7ff4c2b0bb953cdf82627d85cad030f4407b"
       }
     },
     {

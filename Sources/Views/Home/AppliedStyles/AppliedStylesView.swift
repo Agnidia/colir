@@ -20,18 +20,35 @@ import SwiftUI
 struct AppliedStylesView: View {
     
     /// The view model that provides the data and functionality for this view.
-    @EnvironmentObject var viewModel: AppliedStylesViewModel
+    @Environment(AppliedStylesViewModel.self) var viewModel
     
     var body: some View {
-        VStack(spacing: .zero) { viewModel.tagsView }
-            .padding(.init(top: .paddingThin, leading: .paddingHeight, bottom: .paddingThin, trailing: .paddingDefault))
+        VStack(spacing: .spacingDefault) { tagsView }
+    }
+    
+    /// Creates a view that displays the tags`.
+    @ViewBuilder
+    var tagsView: some View {
+        List {
+            ForEach(views, id: \.data.id) { $0 }
+                .listRowBackground(Color.clear)
+                .listRowInsets(.init(top: .paddingSmall, leading: .zero, bottom: .zero, trailing: .zero))
+                .listRowSeparator(.hidden)
+        }
+        .scrollContentBackground(.hidden)
+    }
+    
+    /// An array of custom tag views created from the `data` property.
+    @MainActor
+    var views: [StyleTagView] {
+        viewModel.data.map { StyleTagView(data: $0) }
     }
 }
 
 #Preview("AppliedStylesView") {
     VStack {
         AppliedStylesView()
-            .environmentObject(AppliedStylesViewModel(
+            .environment(AppliedStylesViewModel(
                 state: .none,
                 toolsColorsViewModel: ToolsColorsViewModel(),
                 toolsPhotosViewModel: ToolsPhotosViewModel(),

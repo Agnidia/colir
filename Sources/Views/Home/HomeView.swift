@@ -28,25 +28,19 @@ struct HomeView: View {
 #endif
         
         HStack(alignment: .top, spacing: .zero) {
-            ZStack {
-                VStack {}
-                    .visualEffect(material: .sidebar)
-                    .background(Color.dropFolderViewBackground)
+            VStack(alignment: .leading) {
                 
-                VStack(alignment: .leading) {
-                    
-                    // Display the icon folder view provided by the view model
-                    viewModel.iconFolderView()
-                    
-                    // Display the applied styles view provided by the view model
-                    appliedStylesView()
-                    
-                    // Display the customize folder view provided by the view model
-                    customizeFolderView()
-                }
-                .clipped()
+                // Display the icon folder view provided by the view model
+                iconFolderView()
+                
+                // Display the applied styles view provided by the view model
+                appliedStylesView()
+                
+                // Display the customize folder view provided by the view model
+                customizeFolderView()
             }
-            .frame(minWidth: viewModel.dropZoneHeight, maxWidth: viewModel.dropZoneHeight, maxHeight: .infinity)
+            .frame(minWidth: viewModel.dropZoneSize, maxWidth: viewModel.dropZoneSize, maxHeight: .infinity)
+            .clipped()
             
             VStack(alignment: .leading) {
                 // Display the tools view provided by the view model
@@ -56,12 +50,31 @@ struct HomeView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .fixedSize(horizontal: false, vertical: false)
-        .background(Color.sidebarBackground)
+        .background {
+            Color.primaryBackground
+        }
+    }
+    
+    /// Provides the view for the icon folder.
+    @ViewBuilder
+    private func iconFolderView() -> some View {
+        DropZoneView()
+            .environment(viewModel.dropZoneViewModel)
+            .frame(maxWidth: .infinity, minHeight: viewModel.dropZoneSize)
+            .modifier(Shake(animatableData: CGFloat(viewModel.wrongAttempt)))
+            .background(
+                Rectangle()
+                    .fill(
+                        .shadow(.inner(radius: 16, x: -8, y: -8))
+                    )
+                    .foregroundStyle(.primaryBackground)
+            )
+            .clipShape(.rect(bottomTrailingRadius: 24))
     }
     
     /// Provides the view for the selected tool.
     @ViewBuilder
-    func toolsView() -> some View {
+    private func toolsView() -> some View {
         switch viewModel.tools {
         case .colors:
             ToolsColorsView()
@@ -89,12 +102,12 @@ struct HomeView: View {
         AppliedStylesView()
             .environment(viewModel.appliedStylesViewModel)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .offset(x: .paddingLarge)
+            .offset(x: -.paddingLarge)
     }
     
     /// Provides the view for the customization folder.
     @ViewBuilder
-    func customizeFolderView() -> some View {
+    private func customizeFolderView() -> some View {
         CustomizingActionView()
             .environment(viewModel.customizingActionViewModel)
             .frame(maxWidth: .infinity)

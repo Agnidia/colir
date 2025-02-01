@@ -50,7 +50,6 @@ struct ToolsEmojisView: View {
                                 }
                         }
                     }
-                    
                 }
                 .padding(.paddingDefault)
             }
@@ -64,9 +63,9 @@ struct ToolsEmojisView: View {
             ForEach(emojis, id: \.self) { char in
                 Text(String(char))
                     .font(.system(size: model.fontSize))
-                    .frame(maxWidth: .infinity, maxHeight: model.columnWidth, alignment: .center)
+                    .frame(maxWidth: .infinity, minHeight: model.columnWidth, maxHeight: model.columnWidth, alignment: .center)
                     .padding(.paddingDefault)
-                    .background(Color.accentColor.opacity(0.1))
+                    .background(Color.secondaryBackground)
                     .foregroundColor(.white)
                     .clipShape(RoundedRectangle(cornerRadius: model.cellCornerRadius))
                     .overlay(

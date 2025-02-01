@@ -48,8 +48,9 @@ struct ToolsPicturesView: View {
         Image(nsImage: item.image)
             .resizable()
             .scaledToFill()
-            .frame(width: viewModel.cellWidth, height: viewModel.cellHeight)
+            .frame(maxWidth: .infinity, minHeight: viewModel.cellHeight, maxHeight: viewModel.cellHeight, alignment: .center)
             .cornerRadius(viewModel.cellCornerRadius)
+            .clipShape(RoundedRectangle(cornerRadius: viewModel.cellCornerRadius))
             .overlay(
                 ZStack(alignment: .bottomTrailing) {
                     let isSelected = viewModel.selectedImage == item
@@ -71,6 +72,7 @@ struct ToolsPicturesView: View {
                     viewModel.selectedImage = item
                 }
             }
+            .contentShape(Rectangle())
     }
 }
 

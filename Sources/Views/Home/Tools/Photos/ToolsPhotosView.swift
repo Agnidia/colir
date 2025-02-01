@@ -63,7 +63,7 @@ struct ToolsPhotosView: View {
     @ViewBuilder
     func cell(for item: PhotoAsset) -> some View {
         ToolsPhotosItemView(asset: item, cache: viewModel.photoLibraryAlbumManager.cache, imageSize: viewModel.thumbnailSize)
-            .frame(width: viewModel.cellWidth, height: viewModel.cellHeight)
+            .frame(maxWidth: .infinity, minHeight: viewModel.cellHeight, maxHeight: viewModel.cellHeight, alignment: .center)
             .cornerRadius(viewModel.cellCornerRadius)
             .overlay(
                 ZStack(alignment: .bottomTrailing) {
@@ -79,9 +79,7 @@ struct ToolsPhotosView: View {
                         .animation(.default, value: selectedAsset)
                 }
             )
-            .onTapGesture {
-                select(item: item)
-            }
+            .onTapGesture { select(item: item) }
             .onChange(of: viewModel.selectedAsset) { _, newValue in
                 selectedAsset = newValue
             }

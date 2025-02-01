@@ -128,8 +128,9 @@ struct ToolbarView: CustomizableToolbarContent {
                 Spacer()
                 
                 Divider()
+                    .background(Color.primaryDivider.opacity(0.01))
             }
-            .frame(width: 54)
+            .frame(width: 64)
         }
     }
 }

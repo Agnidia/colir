@@ -56,7 +56,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     private var foldersUrls: [URL]
     
     /// Fixed width for the view.
-    var dropZoneHeight: CGFloat {
+    var dropZoneSize: CGFloat {
         236
     }
     
@@ -111,8 +111,9 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
         }
         
 #if DEBUG
+        #warning("Remove this code before release")
         Task {
-            try? await Task.sleep(for: .seconds(1))
+            try? await Task.sleep(for: .seconds(20))
             dropZoneViewModel.fileClosure([picturesFolderManager.picturesDirectory])
         }
 #endif
@@ -317,7 +318,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     private(set) lazy var webResourcesViewModel: WebResourcesViewModel = .init()
     
     // Lazy instantiation of drop zone view model.
-    private lazy var dropZoneViewModel: DropZoneViewModel = .init(fileClosure: setupFolders(from:), updateStateClosure: update(state:))
+    private(set) lazy var dropZoneViewModel: DropZoneViewModel = .init(fileClosure: setupFolders(from:), updateStateClosure: update(state:))
     
     private func update(state: ImageDto.ImageState) {
         print("Set state to: \(state)")
@@ -328,23 +329,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
             undoItems = Array(undoItems.prefix(index + 1))
             undoItems.append(dropZoneViewModel.image.undoItems)
             add(index: index + 1, needUpdate: false)
-            
         }
-    }
-    /// Provides the view for the icon folder.
-    @MainActor
-    @ViewBuilder
-    func iconFolderView() -> some View {
-        DropZoneView()
-            .background(
-                Color.dropFolderViewBackground
-                    .clipShape(.rect(bottomTrailingRadius: 24))
-            )
-            .environmentObject(dropZoneViewModel)
-            .frame(maxWidth: .infinity, minHeight: dropZoneHeight)
-            .clipShape(.rect(bottomTrailingRadius: 24))
-            .padding(.trailing, .paddingSmall)
-            .modifier(Shake(animatableData: CGFloat(wrongAttempt)))
     }
     
     // Lazy instantiation of applied styles view model.

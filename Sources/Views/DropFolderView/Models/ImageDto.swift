@@ -105,6 +105,17 @@ final public class ImageDto: ObservableObject, @unchecked Sendable {
     
     // Various image states.
     private lazy var originalImage: [ImageSize: NSImage] = ImageDto.dummyImages
+    private var templateImage: [ImageSize: NSImage]  {
+        let images = NSWorkspace.shared.icon(for: .folder).representations
+        var templates: [ImageSize: NSImage] = .init()
+        for size in ImageSize.processingCases {
+            let oImage = Self.imageFor(size: size, in: images)
+            templates[size] = oImage
+        }
+        
+        return templates
+    }
+    
     private lazy var colorisedImage: [ImageSize: NSImage] = ImageDto.dummyImages
     private lazy var picturedImage: [ImageSize: NSImage] = ImageDto.dummyImages
     private lazy var emojiedImage: [ImageSize: NSImage] = ImageDto.dummyImages
@@ -200,7 +211,7 @@ final public class ImageDto: ObservableObject, @unchecked Sendable {
         self.customisations = customisations
         
         for size in ImageSize.processingCases {
-            await process(original: originalImage[size]!, with: size)
+            await process(original: templateImage[size]!, with: size)
         }
     }
     
@@ -231,6 +242,18 @@ final public class ImageDto: ObservableObject, @unchecked Sendable {
         }
     }
     
+    private static func imageFor(size: ImageSize, in images: [NSImageRep]) -> NSImage {
+        let pixel = Int(size.pixel)
+        let dimension = size.dimension
+        
+        if let imageRep = images.first(where: { $0.size.width == dimension && $0.pixelsWide == pixel }), let cgImage = imageRep.cgImage(forProposedRect: nil, context: nil, hints: nil) {
+            return NSImage(cgImage: cgImage, size: .init(width: dimension, height: dimension))
+        } else {
+            assert(false, "wrong image for size: \(dimension), pixels: \(pixel)")
+            return .init()
+        }
+    }
+    
     /// Updates the original image and processes it for different sizes.
     ///
     /// - Parameters:
@@ -242,22 +265,10 @@ final public class ImageDto: ObservableObject, @unchecked Sendable {
         
         self.customisations = .init()
         
-        func imageFor(size: ImageSize, in images: [NSImageRep]) -> NSImage {
-            let pixel = Int(size.pixel)
-            let dimension = size.dimension
-            
-            if let imageRep = images.first(where: { $0.size.width == dimension && $0.pixelsWide == pixel }), let cgImage = imageRep.cgImage(forProposedRect: nil, context: nil, hints: nil) {
-                return NSImage(cgImage: cgImage, size: .init(width: dimension, height: dimension))
-            } else {
-                assert(false, "wrong image for size: \(dimension), pixels: \(pixel)")
-                return .init()
-            }
-        }
-        
         let images = image.representations
         
         for size in ImageSize.processingCases {
-            let oImage = imageFor(size: size, in: images)
+            let oImage = Self.imageFor(size: size, in: images)
             originalImage[size] = oImage
             
             await process(original: oImage, with: size, notifyReady: false)
@@ -271,18 +282,24 @@ final public class ImageDto: ObservableObject, @unchecked Sendable {
         case .none:
             EmptyView()
         case .ready, .preview, .initiated:
-            Image(nsImage: outputImage[.s256]!)
-                .resizable()
+            if let image = outputImage[.s256] {
+                Image(nsImage: image)
+                    .resizable()
+            }
         case .processing(let progress):
             if progress < 20 {
-                Image(nsImage: outputImage[.s256]!)
-                    .resizable()
-                    .blur(radius: 5.0)
+                if let image = outputImage[.s256] {
+                    Image(nsImage: image)
+                        .resizable()
+                        .blur(radius: 5.0)
+                }
                 ProgressView()
                     .progressViewStyle(.circular)
             } else {
-                Image(nsImage: outputImage[.s256]!)
-                    .resizable()
+                if let image = outputImage[.s256] {
+                    Image(nsImage: image)
+                        .resizable()
+                }
             }
         case .error:
             EmptyView()

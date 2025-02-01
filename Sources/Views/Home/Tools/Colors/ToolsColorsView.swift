@@ -53,6 +53,7 @@ struct ToolsColorsView: View {
     var colorPickerTitle: some View {
         VStack(spacing: viewModel.viewSettings.spacing) {
             Text(ToolsColorsViewDomain.Localization.customColor)
+                .foregroundStyle(Color.primaryText)
                 .font(.headline)
             
             ColorPicker(selection: Binding(get: { Color(nsColor: selectedColor ?? .clear) },
@@ -70,6 +71,7 @@ struct ToolsColorsView: View {
         LazyVGrid(columns: columns, spacing: viewModel.viewSettings.spacing) {
             ForEach(colorGroups.sorted(by: { $0.key < $1.key }), id: \.key) { groupKey, colors in
                 Section(header: Text(groupKey.capitalized)
+                    .foregroundStyle(Color.primaryText)
                     .font(.headline)
                     .padding(.top, .paddingSmall)) {
                         ForEach(colors, id: \.self) { cell(for: $0) }

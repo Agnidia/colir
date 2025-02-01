@@ -27,7 +27,7 @@ struct BaseApp: App {
                 }
                 //.searchable(text: $searchText)
         }
-        .windowToolbarStyle(.unified(showsTitle: false))
+        .windowToolbarStyle(.unifiedCompact(showsTitle: false))
         .commands {
             CommandGroup(after: .newItem) {
                 Button(action: homeViewModel.openFolder) {

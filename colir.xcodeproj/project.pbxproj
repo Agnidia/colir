@@ -38,6 +38,7 @@
 		A536DF152AD5A09700B423EE /* PhotoLibraryAlbumManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF142AD5A09700B423EE /* PhotoLibraryAlbumManager.swift */; };
 		A536DF172AD5A0F400B423EE /* PhotoAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF162AD5A0F400B423EE /* PhotoAssetCollection.swift */; };
 		A536DF192AD5C92600B423EE /* ToolsPhotosItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF182AD5C92600B423EE /* ToolsPhotosItemView.swift */; };
+		A53CA1F32D4C267E00CC33AA /* View+Hide.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53CA1F22D4C267E00CC33AA /* View+Hide.swift */; };
 		A54850782B06570C0020A3FB /* AppStoreButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54850772B06570C0020A3FB /* AppStoreButtonStyle.swift */; };
 		A548507D2B0789610020A3FB /* String+Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507C2B0789610020A3FB /* String+Crypto.swift */; };
 		A548507F2B07C58F0020A3FB /* CryptoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507E2B07C58F0020A3FB /* CryptoModel.swift */; };
@@ -207,6 +208,7 @@
 		A536DF142AD5A09700B423EE /* PhotoLibraryAlbumManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryAlbumManager.swift; sourceTree = "<group>"; };
 		A536DF162AD5A0F400B423EE /* PhotoAssetCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAssetCollection.swift; sourceTree = "<group>"; };
 		A536DF182AD5C92600B423EE /* ToolsPhotosItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsPhotosItemView.swift; sourceTree = "<group>"; };
+		A53CA1F22D4C267E00CC33AA /* View+Hide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Hide.swift"; sourceTree = "<group>"; };
 		A54850772B06570C0020A3FB /* AppStoreButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreButtonStyle.swift; sourceTree = "<group>"; };
 		A548507C2B0789610020A3FB /* String+Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Crypto.swift"; sourceTree = "<group>"; };
 		A548507E2B07C58F0020A3FB /* CryptoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoModel.swift; sourceTree = "<group>"; };
@@ -822,6 +824,7 @@
 		A5CFFDEF2AA1190D00D6E7A9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A53CA1F22D4C267E00CC33AA /* View+Hide.swift */,
 				A58544C32D49742D00CACBDF /* Collection+SafeIndex.swift */,
 				A5E115E72AFC10190023A70C /* NSBezierPath+Folder.swift */,
 				A5B68E502AB8DA08003C5FFA /* NSColor+List.swift */,
@@ -1269,6 +1272,7 @@
 				A5BA1D282A81816E0014E276 /* animation.cpp in Sources */,
 				A5BA1D2F2A81816E0014E276 /* file.cpp in Sources */,
 				A5E115EA2AFC105B0023A70C /* NSImage+CutPath.swift in Sources */,
+				A53CA1F32D4C267E00CC33AA /* View+Hide.swift in Sources */,
 				A5BA1D292A81816E0014E276 /* string.cpp in Sources */,
 				A5A557BE2B8A59C10092386B /* CGFloat+Constants.swift in Sources */,
 				A5E115C92AFBFEFC0023A70C /* NSImage+Draw.swift in Sources */,

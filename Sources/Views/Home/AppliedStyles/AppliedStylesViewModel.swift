@@ -108,17 +108,6 @@ struct StyleTagView: View {
     
     var body: some View {
         HStack(spacing: .spacingDefault) {
-            if let closeImage = data.closeImage, let onClose = data.onClose {
-                Button(action: onClose) {
-                    closeImage
-                        .resizable()
-                        .frame(width: .FrameSize.Button.small, height: .FrameSize.Button.small)
-                        .shadow(color: .black, radius: 1)
-                        .padding([.trailing], .paddingThin)
-                        .overlay { Color.white0 }
-                }
-                .buttonStyle(.borderless)
-            }
             
             Group {
                 if let image = data.image {
@@ -137,6 +126,19 @@ struct StyleTagView: View {
             }
             .shadow(color: .white, radius: 1)
             .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading, .paddingLarge)
+            
+            if let closeImage = data.closeImage, let onClose = data.onClose {
+                Button(action: onClose) {
+                    closeImage
+                        .resizable()
+                        .frame(width: .FrameSize.Button.small, height: .FrameSize.Button.small)
+                        .shadow(color: .black, radius: 1)
+                        .padding([.leading], .paddingThin)
+                        .overlay { Color.white0 }
+                }
+                .buttonStyle(.borderless)
+            }
         }
         .onTapGesture {
             if let onSelect = data.onSelect {
@@ -147,7 +149,10 @@ struct StyleTagView: View {
         .foregroundColor(.white)
         .padding(.horizontal, .paddingSmall)
         .padding(.vertical, .paddingUltraThin)
-        .background(.accentBackgroundButton.opacity(0.8))
+        .background {
+            Color.accentBackgroundButton.opacity(0.8)
+                .clipShape(.rect(bottomTrailingRadius: 12, topTrailingRadius: 12))
+        }
         .cornerRadius(.radiusThin)
     }
 }

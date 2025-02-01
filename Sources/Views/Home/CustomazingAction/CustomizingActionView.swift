@@ -47,6 +47,7 @@ struct CustomizingActionView: View {
                                 }
                             }
                     }
+                    .shadow(color: .primaryBackground, radius: 2, x: 0, y: 1)
             }
         }
         .onChange(of: viewModel.state, { _, state in

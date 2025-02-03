@@ -45,7 +45,11 @@ struct PrimaryProgressViewStyle: ProgressViewStyle {
                 .overlay(alignment: .leading) {
                     RoundedRectangle(cornerRadius: cornerRadius)
                         .fill(gradient)
-                        .frame(width: geometry.size.width * progress)
+                        .mask(
+                            Rectangle()
+                                .frame(width: geometry.size.width * progress, height: geometry.size.height)
+                                .padding(.trailing, geometry.size.width * (1 - progress))
+                        )
                         .overlay {
                             if let currentValueLabel = configuration.currentValueLabel {
                                 currentValueLabel

@@ -29,13 +29,13 @@ public extension NSImage {
     /// - Parameter emoji: The emoji character to be drawn.
     /// - Returns: A new `NSImage` with the drawn emoji.
     func draw(emoji: Character) -> NSImage {
-        var fontScale: CGFloat = 2
-        var xOffset: CGFloat = (8 * size.width / 512)
-        let yOffset: CGFloat = (2 * size.height / 512)
+        var fontScale: CGFloat = 2.2
+        var xOffset: CGFloat = (1 * size.width / 512)
+        let yOffset: CGFloat = (18 * size.height / 512)
         var yScale = 4.6
         
         if size.width == 32 {
-            fontScale = 2.2
+            fontScale = 2.3
             xOffset += 1
             yScale = 3.4
         } else if size.width == 16 {

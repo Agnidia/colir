@@ -47,10 +47,10 @@ struct AppStoreView: View {
             inAppPurchasesList
         }
         .onAppear(perform: {
-            elementFocus = .restore
+            Task(operation: setup)
         })
         .padding(.paddingBig)
-        .padding([.horizontal, .bottom], .paddingSmall)
+        .padding([.horizontal, .bottom], .paddingCompact)
         .overlay {
             if displayOverlay {
                 ZStack {
@@ -62,6 +62,10 @@ struct AppStoreView: View {
                 .edgesIgnoringSafeArea(.all) // Ensure overlay covers the entire view
             }
         }
+    }
+    
+    private func setup() {
+        elementFocus = .subscribe
     }
     
     /// List of subscription products.

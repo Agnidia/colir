@@ -49,7 +49,7 @@ final class ToolsPhotosViewModel: DomainViewConstantProtocol, @unchecked Sendabl
     private(set) var selectedImagePublisher: PassthroughSubject<(NSImage?, PhotoAsset?), Never> = .init()
     
     var cellWidth: CGFloat { 192 }
-    var cellHeight: CGFloat { 128 }
+    var cellHeight: CGFloat { 148 }
     
     var imageSize: CGSize { .init(width: 1024, height: 1024) }
     var thumbnailSize: CGSize { .init(width: 512, height: 512) }

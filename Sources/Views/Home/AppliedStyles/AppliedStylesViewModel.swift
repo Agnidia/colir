@@ -113,8 +113,8 @@ struct StyleTagView: View {
                 if let image = data.image {
                     Image(nsImage: image)
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 28, height: 28)
+                        .scaledToFill()
+                        .frame(width: 32, height: 32)
                 }
                 
                 if !data.text.isEmpty {
@@ -124,7 +124,7 @@ struct StyleTagView: View {
                         .foregroundStyle(data.color)
                 }
             }
-            .shadow(color: .white, radius: 1)
+            .shadow(color: .black, radius: 1)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, .paddingLarge)
             
@@ -132,9 +132,8 @@ struct StyleTagView: View {
                 Button(action: onClose) {
                     closeImage
                         .resizable()
-                        .frame(width: .FrameSize.Button.small, height: .FrameSize.Button.small)
+                        .frame(width: .FrameSize.Button.small - 4, height: .FrameSize.Button.small - 4)
                         .shadow(color: .black, radius: 1)
-                        .padding([.leading], .paddingThin)
                         .overlay { Color.white0 }
                 }
                 .buttonStyle(.borderless)
@@ -151,7 +150,7 @@ struct StyleTagView: View {
         .padding(.vertical, .paddingUltraThin)
         .background {
             Color.accentBackgroundButton.opacity(0.8)
-                .clipShape(.rect(bottomTrailingRadius: 12, topTrailingRadius: 12))
+                .clipShape(.rect(bottomTrailingRadius: .radiusDefault, topTrailingRadius: .radiusDefault))
         }
         .cornerRadius(.radiusThin)
     }

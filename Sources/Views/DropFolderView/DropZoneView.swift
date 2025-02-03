@@ -89,6 +89,7 @@ struct DropZoneView: View {
                 Image(systemName: "folder.badge.plus")
                     .resizable()
                     .symbolRenderingMode(.multicolor)
+                    .foregroundStyle(Color.primaryText, Color.primaryText, Color.selectedView)
                     .scaleEffect(viewModel.enterZoneAnimationImageScale)
                     .animation(.spring(duration: .animationDurationDefault, bounce: 0.5), value: viewModel.enterZoneAnimationImageScale)
                     .fontWeight(.thin)

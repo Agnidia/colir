@@ -113,7 +113,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
 #if DEBUG
         #warning("Remove this code before release")
         Task {
-            try? await Task.sleep(for: .seconds(20))
+            try? await Task.sleep(for: .seconds(2))
             dropZoneViewModel.fileClosure([picturesFolderManager.picturesDirectory])
         }
 #endif

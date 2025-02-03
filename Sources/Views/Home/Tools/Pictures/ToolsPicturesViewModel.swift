@@ -43,7 +43,7 @@ final class ToolsPicturesViewModel: ObservableObject, @unchecked Sendable {
     }()
     
     let cellWidth: CGFloat = 192
-    let cellHeight: CGFloat = 128
+    let cellHeight: CGFloat = 148
     let cellCornerRadius: CGFloat = .radiusSmall
     
     /// Initializes the view model with app settings and a folder manager.

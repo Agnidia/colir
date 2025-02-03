@@ -55,10 +55,11 @@ struct ToolsPicturesView: View {
                 ZStack(alignment: .bottomTrailing) {
                     let isSelected = viewModel.selectedImage == item
                     RoundedRectangle(cornerRadius: viewModel.cellCornerRadius)
-                        .strokeBorder(isSelected ? Color.blue : Color.gray, lineWidth: isSelected ? 4 : 1)
+                        .strokeBorder(isSelected ? Color.selectedView : Color.secondaryText, lineWidth: isSelected ? 4 : 1)
                     
                     Image(systemName: "checkmark.circle.fill")
-                        .symbolRenderingMode(.multicolor)
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(Color.primaryText, Color.selectedView)
                         .font(.title)
                         .padding(.paddingSmall)
                         .opacity(isSelected ? .opacity100 : .opacity0)

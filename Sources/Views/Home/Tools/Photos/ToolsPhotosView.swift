@@ -69,12 +69,13 @@ struct ToolsPhotosView: View {
                 ZStack(alignment: .bottomTrailing) {
                     let isSelected = selectedAsset == item
                     RoundedRectangle(cornerRadius: viewModel.cellCornerRadius)
-                        .strokeBorder(isSelected ? Color.selectedView : Color.gray, lineWidth: isSelected ? 4 : 1)
+                        .strokeBorder(isSelected ? Color.selectedView : Color.secondaryText, lineWidth: isSelected ? 4 : 1)
                     
-                    Image(systemName: ToolsPhotosViewDomain.Icon.selection)
-                        .symbolRenderingMode(.multicolor)
+                    Image(systemName: "checkmark.circle.fill")
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(Color.primaryText, Color.selectedView)
                         .font(.title)
-                        .padding(viewModel.viewSettings.padding)
+                        .padding(.paddingSmall)
                         .opacity(isSelected ? .opacity100 : .opacity0)
                         .animation(.default, value: selectedAsset)
                 }

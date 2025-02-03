@@ -87,21 +87,23 @@ struct ToolsColorsView: View {
             .fill(Color(nsColor: color))
             .frame(width: viewModel.cellWidth, height: viewModel.cellHeight)
             .cornerRadius(viewModel.cellCornerRadius)
-            .overlay(
+            .overlay {
+                let isSelected = selectedColor == color
                 RoundedRectangle(cornerRadius: viewModel.cellCornerRadius)
-                    .strokeBorder(selectedColor == color ? Color.selectedView : Color.clear, lineWidth: 4)
+                    .strokeBorder(isSelected ? Color.selectedView : Color.secondaryText, lineWidth: isSelected ? 4 : 1)
                     .overlay {
                         ZStack {
                             Image(systemName: ToolsColorsViewDomain.Icon.selected)
-                                .symbolRenderingMode(.multicolor)
+                                .symbolRenderingMode(.palette)
+                                .foregroundStyle(Color.primaryText, Color.selectedView)
                                 .font(.title)
                                 .padding(viewModel.viewSettings.padding)
-                                .opacity(selectedColor == color ? .opacity100 : .opacity0)
+                                .opacity(isSelected ? .opacity100 : .opacity0)
                                 .animation(.default, value: selectedColor)
                         }
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                     }
-            )
+            }
             .onTapGesture {
                 if selectedColor == color {
                     selectedColor = nil

@@ -113,7 +113,7 @@ struct CustomizingActionView: View {
 struct PopupContentView: View {
     var body: some View {
         VStack {
-            Text("Done!")
+            Text("txt.done")
                 .font(.headline)
                 .padding(.paddingCompact)
         }

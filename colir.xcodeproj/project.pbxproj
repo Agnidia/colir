@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A504B8622A6D2DAE002A2C8B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A504B8612A6D2DAE002A2C8B /* Preview Assets.xcassets */; };
-		A504B8882A6D2DCA002A2C8B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A504B8742A6D2DCA002A2C8B /* Localizable.strings */; };
-		A504B8892A6D2DCA002A2C8B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A504B8762A6D2DCA002A2C8B /* InfoPlist.strings */; };
 		A504B88E2A6D44EB002A2C8B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A504B88D2A6D44EB002A2C8B /* Logger.swift */; };
 		A504B8912A6D4503002A2C8B /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A504B8902A6D4503002A2C8B /* AppSettings.swift */; };
 		A504B8942A6D49D5002A2C8B /* AppCommons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A504B8932A6D49D5002A2C8B /* AppCommons.swift */; };
@@ -39,6 +37,8 @@
 		A536DF172AD5A0F400B423EE /* PhotoAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF162AD5A0F400B423EE /* PhotoAssetCollection.swift */; };
 		A536DF192AD5C92600B423EE /* ToolsPhotosItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A536DF182AD5C92600B423EE /* ToolsPhotosItemView.swift */; };
 		A53CA1F32D4C267E00CC33AA /* View+Hide.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53CA1F22D4C267E00CC33AA /* View+Hide.swift */; };
+		A53CA1F62D50FB2F00CC33AA /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A53CA1F52D50FB2E00CC33AA /* InfoPlist.xcstrings */; };
+		A53CA1F82D50FB2F00CC33AA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A53CA1F72D50FB2F00CC33AA /* Localizable.xcstrings */; };
 		A54850782B06570C0020A3FB /* AppStoreButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54850772B06570C0020A3FB /* AppStoreButtonStyle.swift */; };
 		A548507D2B0789610020A3FB /* String+Crypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507C2B0789610020A3FB /* String+Crypto.swift */; };
 		A548507F2B07C58F0020A3FB /* CryptoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A548507E2B07C58F0020A3FB /* CryptoModel.swift */; };
@@ -174,12 +174,6 @@
 		A504B8702A6D2DCA002A2C8B /* release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = release.xcconfig; sourceTree = "<group>"; };
 		A504B8712A6D2DCA002A2C8B /* entitlement.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = entitlement.entitlements; sourceTree = "<group>"; };
 		A504B8722A6D2DCA002A2C8B /* base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = base.xcconfig; sourceTree = "<group>"; };
-		A504B8752A6D2DCA002A2C8B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		A504B8772A6D2DCA002A2C8B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		A504B8782A6D2DCA002A2C8B /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
-		A504B8792A6D2DCA002A2C8B /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		A504B87A2A6D2DCA002A2C8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		A504B87B2A6D2DCA002A2C8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A504B88D2A6D44EB002A2C8B /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		A504B8902A6D4503002A2C8B /* AppSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		A504B8932A6D49D5002A2C8B /* AppCommons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppCommons.swift; sourceTree = "<group>"; };
@@ -209,6 +203,8 @@
 		A536DF162AD5A0F400B423EE /* PhotoAssetCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAssetCollection.swift; sourceTree = "<group>"; };
 		A536DF182AD5C92600B423EE /* ToolsPhotosItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsPhotosItemView.swift; sourceTree = "<group>"; };
 		A53CA1F22D4C267E00CC33AA /* View+Hide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Hide.swift"; sourceTree = "<group>"; };
+		A53CA1F52D50FB2E00CC33AA /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		A53CA1F72D50FB2F00CC33AA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		A54850772B06570C0020A3FB /* AppStoreButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreButtonStyle.swift; sourceTree = "<group>"; };
 		A548507C2B0789610020A3FB /* String+Crypto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Crypto.swift"; sourceTree = "<group>"; };
 		A548507E2B07C58F0020A3FB /* CryptoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoModel.swift; sourceTree = "<group>"; };
@@ -421,8 +417,8 @@
 		A504B8732A6D2DCA002A2C8B /* Localization */ = {
 			isa = PBXGroup;
 			children = (
-				A504B8742A6D2DCA002A2C8B /* Localizable.strings */,
-				A504B8762A6D2DCA002A2C8B /* InfoPlist.strings */,
+				A53CA1F72D50FB2F00CC33AA /* Localizable.xcstrings */,
+				A53CA1F52D50FB2E00CC33AA /* InfoPlist.xcstrings */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -1159,9 +1155,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A504B8892A6D2DCA002A2C8B /* InfoPlist.strings in Resources */,
+				A53CA1F62D50FB2F00CC33AA /* InfoPlist.xcstrings in Resources */,
+				A53CA1F82D50FB2F00CC33AA /* Localizable.xcstrings in Resources */,
 				A504B8622A6D2DAE002A2C8B /* Preview Assets.xcassets in Resources */,
-				A504B8882A6D2DCA002A2C8B /* Localizable.strings in Resources */,
 				A5F5CDFD2A6D2BFC008AF959 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1342,34 +1338,13 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		A504B8742A6D2DCA002A2C8B /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A504B8752A6D2DCA002A2C8B /* en */,
-				A504B8782A6D2DCA002A2C8B /* uk */,
-				A504B87A2A6D2DCA002A2C8B /* Base */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		A504B8762A6D2DCA002A2C8B /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A504B8772A6D2DCA002A2C8B /* en */,
-				A504B8792A6D2DCA002A2C8B /* uk */,
-				A504B87B2A6D2DCA002A2C8B /* Base */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		A5F5CE182A6D2BFC008AF959 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A504B86F2A6D2DCA002A2C8B /* debug.xcconfig */;
 			buildSettings = {
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Debug;
 		};
@@ -1377,6 +1352,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A504B8702A6D2DCA002A2C8B /* release.xcconfig */;
 			buildSettings = {
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};

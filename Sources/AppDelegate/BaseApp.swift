@@ -31,19 +31,19 @@ struct BaseApp: App {
         .commands {
             CommandGroup(after: .newItem) {
                 Button(action: homeViewModel.openFolder) {
-                    Text("Open Folder...")
+                    Text("menu.open.folder")
                 }
                 .keyboardShortcut("o")
             }
             
             CommandGroup(replacing: .undoRedo) {
-                Button("Undo") {
+                Button("txt.undo") {
                     //Trigger  your own undo with your created undoManager
                     homeViewModel.undoManager.undo()
                 }
                 .keyboardShortcut(KeyEquivalent("z"), modifiers: [.command])
                 .disabled(homeViewModel.undoManager.canUndo == false)
-                Button("Redo") {
+                Button("txt.redo") {
                     //Trigger  your own undo with your created undoManager
                     homeViewModel.undoManager.redo()
                 }
@@ -54,17 +54,6 @@ struct BaseApp: App {
     }
     
     final class AppDelegate: NSObject, NSApplicationDelegate {
-        
-        /// base Application settings
-        /// need init once and send as param to another instances
-        ///
-        private var appSettings: AppSettingsProtocol = AppSettings()
-        
-        /// base App Store Manager
-        /// need init once and send as param to another instances
-        ///
-        fileprivate var appStoreService: AppStoreProtocol = AppStoreService()
-        
         /// base application object
         /// need setup everything inside that object to allow aadd unit tests
         ///

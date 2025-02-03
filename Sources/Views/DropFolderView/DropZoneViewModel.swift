@@ -98,8 +98,8 @@ final class DropZoneViewModel: @unchecked Sendable {
         panel.allowsMultipleSelection = true
         panel.canChooseDirectories = true
         panel.canChooseFiles = false
-        panel.prompt = NSLocalizedString("Choose", comment: "")
-        panel.message = NSLocalizedString("Choose folder to colorise it", comment: "")
+        panel.prompt = NSLocalizedString("alert.open.folder", comment: "")
+        panel.message = NSLocalizedString("alert.open.folder.message", comment: "")
         let response = panel.runModal()
         
         guard let urls = response == .OK ? panel.urls : nil else {

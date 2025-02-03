@@ -247,7 +247,7 @@ final public class ImageDto: ObservableObject, @unchecked Sendable {
     }
     
     private static func imageFor(size: ImageSize, in images: [NSImageRep]) -> NSImage {
-        let pixel = Int(size.pixel)
+        let pixel = Int(size == .s512x2 ? ImageSize.s512.pixel : size.pixel) // max size is 512x512
         let dimension = size.dimension
         
         if let imageRep = images.first(where: { $0.size.width == dimension && $0.pixelsWide == pixel }), let cgImage = imageRep.cgImage(forProposedRect: nil, context: nil, hints: nil) {

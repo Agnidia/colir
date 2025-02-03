@@ -20,7 +20,9 @@ struct DropZoneView: View {
     /// Indicates whether the drag is currently within the drop zone.
     @State private var isEnterZone: Bool = false
     
-    @State private var image: ImageDto = .init()
+    @State private var image: ImageModel? = nil
+    
+    @State private var isProcessing: Bool = false
     
     var body: some View {
 #if DEBUG
@@ -80,12 +82,17 @@ struct DropZoneView: View {
     @ViewBuilder
     private var backgroundView: some View {
         ZStack {
+            
+            if isProcessing {
+                EmptyView()
+            }
+            
             Rectangle()
                 .fill(.dropFolderViewBackgroundActive)
                 .opacity(viewModel.enterZoneAnimationBackgroundOpacity)
                 .cornerRadius(.radiusThin)
             
-            if image.state == .none {
+            if image == nil {
                 Image(systemName: "folder.badge.plus")
                     .resizable()
                     .symbolRenderingMode(.multicolor)
@@ -96,26 +103,16 @@ struct DropZoneView: View {
                     .aspectRatio(contentMode: .fit)
                     .padding(.paddingBig)
             } else {
-                image.preview
-                    .scaleEffect(viewModel.enterZoneAnimationImageScale)
-                    .animation(.spring(duration: .animationDurationDefault, bounce: 0.5), value: viewModel.enterZoneAnimationImageScale)
-                    .padding(.paddingSmall)
+                if let image = image?.previewImage {
+                    Image(nsImage: image)
+                        .resizable()
+                        .scaleEffect(viewModel.enterZoneAnimationImageScale)
+                        .animation(.spring(duration: .animationDurationDefault, bounce: 0.5), value: viewModel.enterZoneAnimationImageScale)
+                        .padding(.paddingSmall)
+                }
             }
         }
-        .onReceive(viewModel.updatedImagePublisher) { image = $0 }
-    }
-    
-    /// The text overlay displayed on top of the drop zone.
-    private var overlayText: LocalizedStringKey {
-        var text = HomeViewDomain.Localization.dragHere
-        if isEnterZone {
-            text = HomeViewDomain.Localization.choice
-        }
-        if isWaitingDropping {
-            text = HomeViewDomain.Localization.dropHere
-        }
-        
-        return text
+        .onReceive(viewModel.updatedImagePublisher) { image = $0.model }
     }
     
     /// The view displayed as the overlay of the drop zone.
@@ -125,7 +122,7 @@ struct DropZoneView: View {
             HomeViewDomain.Localization.dropHere
         } else if isEnterZone {
             HomeViewDomain.Localization.choice
-        } else if image.state == .none {
+        } else if image == nil {
             HomeViewDomain.Localization.dragHere
         } else {
             nil
@@ -133,7 +130,7 @@ struct DropZoneView: View {
         
         if let text {
             
-            let hasFolder = image.state != .none
+            let hasFolder = image != nil
             let xOffSet: CGFloat = hasFolder ? 0 : -20
             let yOffSet: CGFloat = hasFolder ? 0 : 24
             
@@ -148,7 +145,8 @@ struct DropZoneView: View {
                     .background {
                         RoundedRectangle(cornerRadius: .radiusSmall)
                             .fill(.primaryBackground)
-                    
+                            .scaleEffect(viewModel.enterZoneAnimationTextScale)
+                            .animation(.spring(duration: .animationDurationDefault, bounce: 0.5), value: viewModel.enterZoneAnimationTextScale)
                     }
             }
             .offset(x: xOffSet, y: yOffSet)

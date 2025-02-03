@@ -121,6 +121,10 @@ final public class ImageDto: ObservableObject, @unchecked Sendable {
     private lazy var emojiedImage: [ImageSize: NSImage] = ImageDto.dummyImages
     private lazy var outputImage: [ImageSize: NSImage] = ImageDto.dummyImages
     
+    var model: ImageModel {
+        .init(outputImage: outputImage)
+    }
+    
     /// Array of output images.
     var outputImages: [NSImage] {
         ImageSize.allCases.compactMap { outputImage[$0] }
@@ -304,5 +308,13 @@ final public class ImageDto: ObservableObject, @unchecked Sendable {
         case .error:
             EmptyView()
         }
+    }
+}
+
+struct ImageModel: Hashable {
+    var outputImage: [ImageDto.ImageSize: NSImage]
+    
+    var previewImage: NSImage? {
+        outputImage[.s256]
     }
 }

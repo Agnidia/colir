@@ -401,6 +401,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
             
             await dropZoneViewModel.image.updateOriginal(url: url, image: icon)
             
+            undoItems.removeAll()
             undoItems.append(dropZoneViewModel.image.undoItems)
             currentUndoItem = .zero
             

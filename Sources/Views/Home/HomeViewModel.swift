@@ -166,7 +166,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
         
         customizationTask?.cancel()
         
-        customizationTask = Task { [updateImage] in
+        customizationTask = Task { [updateImage, dropZoneViewModel] in
             await dropZoneViewModel.image.customisations.apply(picture: updateImage, asset: asset, item: item)
             
             do {
@@ -305,11 +305,6 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
         isApplyingSelectedEmoji = false
     }
     
-    /// Removes all cancellable publishers.
-    private func removePublishers() {
-        cancellables.removeAll()
-    }
-    
     // Lazy instantiation of view models used in tools and customization.
     private(set) lazy var toolsColorsViewModel: ToolsColorsViewModel = .init()
     private(set) lazy var toolsPhotosViewModel: ToolsPhotosViewModel = .init()
@@ -325,7 +320,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
         customizingActionViewModel.update(state: state)
         appliedStylesViewModel.update(state: state, imageCustomization: dropZoneViewModel.image.customisations)
         if state == .ready {
-            let index = self.currentUndoItem
+            let index = currentUndoItem
             undoItems = Array(undoItems.prefix(index + 1))
             undoItems.append(dropZoneViewModel.image.undoItems)
             add(index: index + 1, needUpdate: false)
@@ -338,22 +333,22 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     // Lazy instantiation of customizing action view model.
     private(set) lazy var customizingActionViewModel: CustomizingActionViewModel = .init(actionClosure: exportIcon)
     
-    private func exportIcon() {
-        let image = dropZoneViewModel.image
-        
-        exportIconManager.export(image: image)
-        
-        if exportIconManager.askTips {
-            showingExportAlert.toggle()
-        }
-    }
-    
     @Published var showingExportAlert = false
     @Published var showingAppStoreSheet = false
     
     // Lazy instantiation of app store view model.
     private(set) lazy var appStoreViewModel: AppStoreViewModel = .init(appStoreService: appStoreService, appSettings: appSettings) { [weak self] in
         self?.showingAppStoreSheet.toggle()
+    }
+    
+    private func exportIcon() {
+        let image = dropZoneViewModel.image
+        
+        exportIconManager.export(image: image)
+        
+        guard exportIconManager.askTips else { return }
+        
+        showingExportAlert.toggle()
     }
     
     /// Opens a folder in the drop zone view.
@@ -405,9 +400,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
             undoItems.append(dropZoneViewModel.image.undoItems)
             currentUndoItem = .zero
             
-            Task { @MainActor in
-                foldersUrls = [url]
-            }
+            foldersUrls = [url]
         }
     }
     
@@ -420,8 +413,8 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     private func add(index: Int, needUpdate: Bool) {
         self.currentUndoItem = index
         
-        undoManager.registerUndo(withTarget: self) { this in
-            this.remove(index: index, needUpdate: true)
+        undoManager.registerUndo(withTarget: self) {
+            $0.remove(index: index, needUpdate: true)
         }
         
         setupItemsForCurrentIndex(needUpdate: needUpdate)
@@ -432,8 +425,8 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     private func remove(index: Int, needUpdate: Bool) {
         currentUndoItem = index - 1
         
-        undoManager.registerUndo(withTarget: self) { this in
-            this.add(index: index, needUpdate: true)
+        undoManager.registerUndo(withTarget: self) {
+            $0.add(index: index, needUpdate: true)
         }
         
         setupItemsForCurrentIndex(needUpdate: needUpdate)
@@ -441,7 +434,8 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     
     /// Sets up the view state for the current undo item.
     private func setupItemsForCurrentIndex(needUpdate: Bool) {
-        let image = undoItems[currentUndoItem]
+        guard let image = undoItems[safe: currentUndoItem] else { return }
+        
         dropZoneViewModel.update(from: image)
         
         if needUpdate {

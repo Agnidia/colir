@@ -44,18 +44,19 @@ public extension NSImage {
         }
         
         let font = NSFont.boldSystemFont(ofSize: size.height / fontScale)
-        let textStyle = NSMutableParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
-        let textFontAttributes = [
-            NSAttributedString.Key.font: font,
-            NSAttributedString.Key.paragraphStyle: textStyle
+        let textStyle = NSMutableParagraphStyle.default
+        let textFontAttributes: [NSAttributedString.Key : AnyObject] = [
+            .font: font,
+            .paragraphStyle: textStyle
         ]
         
-        let img = NSImage(size: size)
+        let img: NSImage = .init(size: size)
         img.lockFocus()
-        draw(in: CGRect(origin: .zero, size: size))
+        draw(in: .init(origin: .zero, size: size))
         String(emoji).draw(
-            in: CGRect(
-                origin: CGPoint(x: (size.width / 4) - xOffset, y: -((size.height / yScale) + yOffset)),
+            in: .init(
+                origin: .init(x: (size.width / 4) - xOffset,
+                              y: -((size.height / yScale) + yOffset)),
                 size: size
             ),
             withAttributes: textFontAttributes

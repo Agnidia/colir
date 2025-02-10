@@ -28,7 +28,7 @@ ENABLE_USER_SCRIPT_SANDBOXING = YES
 COPY_PHASE_STRIP = NO
 
 //Info.plist Values
-INFOPLIST_KEY_LSApplicationCategoryType = public.app-category.developer-tools
+INFOPLIST_KEY_LSApplicationCategoryType = public.app-category.graphics-design
 
 //Linking
 DEAD_CODE_STRIPPING = YES

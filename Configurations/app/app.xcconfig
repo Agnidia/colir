@@ -11,6 +11,7 @@
 
 //Packaging
 PRODUCT_BUNDLE_IDENTIFIER = $(APP_DOMAIN).$(APP_NAME)
+INFOPLIST_FILE = Resources/colir-Info.plist
 
 //Signing
 CODE_SIGN_ENTITLEMENTS = Configurations/entitlement.entitlements

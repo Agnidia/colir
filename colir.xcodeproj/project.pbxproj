@@ -19,6 +19,7 @@
 		A50AF9642AF67749000C18AB /* DropZoneNSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AF9632AF67749000C18AB /* DropZoneNSView.swift */; };
 		A50AF9662AF67776000C18AB /* DropZoneViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AF9652AF67776000C18AB /* DropZoneViewProtocol.swift */; };
 		A50AF9682AF67865000C18AB /* DropFolderViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AF9672AF67865000C18AB /* DropFolderViewConstants.swift */; };
+		A50F2C7C2D5A932200E8041B /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = A50F2C7B2D5A932200E8041B /* Credits.html */; };
 		A515FF042AF6BAC1000F0C3B /* ButtonStyleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A515FF032AF6BAC1000F0C3B /* ButtonStyleConstants.swift */; };
 		A515FF082AF6CA9B000F0C3B /* AccentButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A515FF072AF6CA9B000F0C3B /* AccentButtonStyle.swift */; };
 		A515FF0B2AF6CBE6000F0C3B /* CustomizingActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A515FF0A2AF6CBE6000F0C3B /* CustomizingActionView.swift */; };
@@ -185,6 +186,8 @@
 		A50AF9632AF67749000C18AB /* DropZoneNSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneNSView.swift; sourceTree = "<group>"; };
 		A50AF9652AF67776000C18AB /* DropZoneViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneViewProtocol.swift; sourceTree = "<group>"; };
 		A50AF9672AF67865000C18AB /* DropFolderViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropFolderViewConstants.swift; sourceTree = "<group>"; };
+		A50F2C7B2D5A932200E8041B /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
+		A50F2C7D2D5A9D2200E8041B /* colir-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "colir-Info.plist"; sourceTree = "<group>"; };
 		A515FF032AF6BAC1000F0C3B /* ButtonStyleConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleConstants.swift; sourceTree = "<group>"; };
 		A515FF072AF6CA9B000F0C3B /* AccentButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccentButtonStyle.swift; sourceTree = "<group>"; };
 		A515FF0A2AF6CBE6000F0C3B /* CustomizingActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizingActionView.swift; sourceTree = "<group>"; };
@@ -1008,8 +1011,10 @@
 		A5F5CE232A6D2C1A008AF959 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A50F2C7D2D5A9D2200E8041B /* colir-Info.plist */,
 				A504B8602A6D2DAE002A2C8B /* Preview Content */,
 				A5F5CDFC2A6D2BFC008AF959 /* Assets.xcassets */,
+				A50F2C7B2D5A932200E8041B /* Credits.html */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1159,6 +1164,7 @@
 				A53CA1F82D50FB2F00CC33AA /* Localizable.xcstrings in Resources */,
 				A504B8622A6D2DAE002A2C8B /* Preview Assets.xcassets in Resources */,
 				A5F5CDFD2A6D2BFC008AF959 /* Assets.xcassets in Resources */,
+				A50F2C7C2D5A932200E8041B /* Credits.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1486,7 +1492,7 @@
 			repositoryURL = "https://github.com/danielsaidi/StoreKitPlus";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.1;
+				minimumVersion = 0.6.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

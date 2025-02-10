@@ -320,8 +320,8 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
         customizingActionViewModel.update(state: state)
         appliedStylesViewModel.update(state: state, imageCustomization: dropZoneViewModel.image.customisations)
         if state == .ready {
-            let index = currentUndoItem
-            undoItems = Array(undoItems.prefix(index + 1))
+            let index = currentUndoItem + 1
+            undoItems = Array(undoItems.prefix(index))
             undoItems.append(dropZoneViewModel.image.undoItems)
             add(index: index + 1, needUpdate: false)
         }

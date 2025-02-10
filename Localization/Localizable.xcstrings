@@ -100,6 +100,54 @@
         }
       }
     },
+    "app.store.view.help.close" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрити"
+          }
+        }
+      }
+    },
+    "app.store.view.help.inapp" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Give"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дати"
+          }
+        }
+      }
+    },
+    "app.store.view.help.restore" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore purchase"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відновити покупку"
+          }
+        }
+      }
+    },
     "app.store.view.title.inapp" : {
       "localizations" : {
         "en" : {
@@ -153,7 +201,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Customize folder"
+            "value" : "Colorize folder"
           }
         },
         "uk" : {
@@ -565,9 +613,6 @@
           }
         }
       }
-    },
-    "Type attributes are not compatible with the requested file format." : {
-      "shouldTranslate" : false
     }
   },
   "version" : "1.0"

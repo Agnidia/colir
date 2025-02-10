@@ -32,7 +32,7 @@
         for (auto resource : typeList->resources()) {
             // create the resource & add it to the array
             //NSString    *name = [NSString stringWithUTF8String:resource->name().c_str()];
-            NSData      *data = [NSData dataWithBytes:resource->data()->get()->data()+resource->data()->start() length:resource->data()->size()];
+            NSData *data = [NSData dataWithBytes: resource->data()->get()->data()+resource->data()->start() length: resource->data()->size()];
             RSRCResource *r = [[RSRCResource alloc] initWithData:data];
             [resources addObject:r];
         }
@@ -40,21 +40,15 @@
     return resources;
 }
 
-/*+ (BOOL)writeResources:(NSArray<Resource *> *)resources toURL:(NSURL *)url asFormat:(ResourceFileFormat)format error:(NSError **)outError
-{
-    graphite::rsrc::file gFile = graphite::rsrc::file();
-    for (Resource *resource in resources) {
++ (BOOL)writeResources:(NSArray<RSRCResource *> *)resources toURL:(NSURL *)url asFormat:(ResourceFileFormat)format error:(NSError **)outError {
+    /*graphite::rsrc::file gFile = graphite::rsrc::file();
+    for (RSRCResource *resource in resources) {
         std::string name(resource.name.UTF8String);
         std::string type(resource.typeCode.UTF8String);
         char *first = (char *)resource.data.bytes; // Bytes pointer should only be accessed once
         std::vector<char> buffer(first, first+resource.data.length);
         graphite::data::data data(std::make_shared<std::vector<char>>(buffer), resource.data.length);
-        std::map<std::string, std::string> attributes;
-        if (format != kResourceFileFormatExtended && resource.typeAttributes.count != 0) {
-            NSString *message = NSLocalizedString(@"Type attributes are not compatible with the requested file format.", "");
-            *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:@{NSLocalizedFailureReasonErrorKey:message}];
-            return NO;
-        }
+        std::map<std::string, std::string> attributes;s
         for (NSString *att in resource.typeAttributes) {
             auto key = std::string(att.UTF8String);
             auto val = std::string(resource.typeAttributes[att].UTF8String);
@@ -68,8 +62,8 @@
         NSString *message = [NSString stringWithUTF8String:e.what()];
         *outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:@{NSLocalizedFailureReasonErrorKey:message}];
         return NO;
-    }
+    }*/
     return YES;
-}*/
+}
 
 @end

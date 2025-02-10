@@ -40,6 +40,8 @@ struct ToolsPhotosView: View {
         }
     }
     
+    @State private var previewImage: NSImage? = nil
+    
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: viewModel.cellWidth))], spacing: .spacingHeight) {
@@ -105,11 +107,19 @@ struct ToolsPhotosView: View {
         let imageSize = viewModel.imageSize
         let cache = viewModel.photoLibraryAlbumManager.cache
         
+        previewImage = nil
+        
         Task {
             _ = await cache.requestImage(for: selectedAsset, targetSize: imageSize) { result in
                 
-                guard result?.isLowerQuality == false, let image = result?.image else { return }
+                if result?.isLowerQuality == true, let image = result?.image {
+                    previewImage = image
+                    return
+                }
                 
+                guard let image = result?.image ?? previewImage else { return }
+                
+                self.previewImage = nil
                 self.selectedImage = image
                 viewModel.selectedImagePublisher.send((image, selectedAsset))
             }

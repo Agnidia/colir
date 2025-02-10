@@ -107,6 +107,7 @@ struct AppStoreView: View {
                 }
                 .buttonStyle(.appStore)
                 .focused($elementFocus, equals: id)
+                .help(AppStoreViewDomain.Localization.helpInAppPurchase)
             }
         }
         .frame(height: AppStoreViewModel.buttonSize)
@@ -171,6 +172,7 @@ struct AppStoreView: View {
         }
         .buttonStyle(.borderless)
         .focused($elementFocus, equals: .restore)
+        .help(AppStoreViewDomain.Localization.helpRestore)
     }
     
     /// Button for closing the App Store view.
@@ -183,6 +185,7 @@ struct AppStoreView: View {
         }
         .buttonStyle(.borderless)
         .focused($elementFocus, equals: .close)
+        .help(AppStoreViewDomain.Localization.helpClose)
     }
 }
 

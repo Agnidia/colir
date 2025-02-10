@@ -53,6 +53,12 @@ struct AppStoreViewDomain: DomainViewConstantType {
         "app.store.view.title.subscribe"
         static let titleInAppPurchase: LocalizedStringKey =
         "app.store.view.title.inapp"
+        static let helpRestore: LocalizedStringKey =
+        "app.store.view.help.restore"
+        static let helpClose: LocalizedStringKey =
+        "app.store.view.help.close"
+        static let helpInAppPurchase: LocalizedStringKey =
+        "app.store.view.help.inapp"
     }
     
     enum I: ConstantRawRepresentable {

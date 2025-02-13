@@ -1349,8 +1349,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A504B86F2A6D2DCA002A2C8B /* debug.xcconfig */;
 			buildSettings = {
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Debug;
 		};
@@ -1358,8 +1356,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A504B8702A6D2DCA002A2C8B /* release.xcconfig */;
 			buildSettings = {
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};
@@ -1381,6 +1377,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A504B86E2A6D2DCA002A2C8B /* test-debug.xcconfig */;
 			buildSettings = {
+				"INFOPLIST_KEY_CFBundleDisplayName[sdk=macosx*]" = Colir;
 			};
 			name = Debug;
 		};

@@ -34,6 +34,9 @@ INFOPLIST_KEY_LSApplicationCategoryType = public.app-category.graphics-design
 DEAD_CODE_STRIPPING = YES
 LD_RUNPATH_SEARCH_PATHS = @executable_path/../Frameworks
 
+//Localization
+LOCALIZATION_PREFERS_STRING_CATALOGS = YES
+
 //Packaging
 PRODUCT_NAME = $(TARGET_NAME)
 GENERATE_INFOPLIST_FILE = YES

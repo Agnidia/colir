@@ -515,6 +515,23 @@
         }
       }
     },
+    "toolbar.button.tips" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tips"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подяка"
+          }
+        }
+      }
+    },
     "toolbar.button.tips.help" : {
       "extractionState" : "manual",
       "localizations" : {

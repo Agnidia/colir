@@ -41,6 +41,7 @@ final class ToolbarViewModel: ObservableObject {
 
 extension ToolbarViewModel {
     /// A preview instance of `ToolbarViewModel` for SwiftUI previews.
+    @MainActor
     static var preview: ToolbarViewModel {
         .init(undoManager: .init()) { _ in }
     }

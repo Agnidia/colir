@@ -10,6 +10,12 @@
             "state" : "new",
             "value" : "Colir"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Колір"
+          }
         }
       }
     },

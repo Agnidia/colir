@@ -77,14 +77,14 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     
     /// Initializes the `HomeViewModel` with default or provided dependencies.
     /// - Parameters:
-    ///   - undoManager: An optional `UndoManager` for handling undo/redo actions.
+    ///   - undoManager: An `UndoManager` for handling undo/redo actions.
     ///   - appSettings: An optional `AppSettingsProtocol` for configuration.
     ///   - appStoreService: An optional `AppStoreProtocol` for app store interactions.
     ///   - logger: An optional `LogProtocol` for logging.
     ///   - foldersUrls: URLs for folders to be used in the application.
     ///   - folderImage: Optional image for the folder.
     ///   - tools: The initial tool to be selected.
-    init(undoManager: UndoManager = .init(),
+    init(undoManager: UndoManager,
          appSettings: AppSettingsProtocol = AppSettings(),
          appStoreService: AppStoreProtocol = AppStoreService(),
          logger: LogProtocol = Log(category: .home),
@@ -111,7 +111,6 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
         }
         
 #if DEBUG
-        #warning("Remove this code before release")
         Task {
             try? await Task.sleep(for: .seconds(2))
             dropZoneViewModel.fileClosure([picturesFolderManager.picturesDirectory])
@@ -200,6 +199,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     
     /// Handles actions from the toolbar, such as undo, redo, and tool selection.
     /// - Parameter action: The action to perform.
+    @MainActor
     public func apply(action: ToolbarView.ToolbarViewDomain.Action) {
         switch action {
         case .undo:
@@ -313,8 +313,13 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     private(set) lazy var webResourcesViewModel: WebResourcesViewModel = .init()
     
     // Lazy instantiation of drop zone view model.
-    private(set) lazy var dropZoneViewModel: DropZoneViewModel = .init(fileClosure: setupFolders(from:), updateStateClosure: update(state:))
+    private(set) lazy var dropZoneViewModel: DropZoneViewModel = .init(fileClosure: setupFolders(from:)) { state in
+        Task { @MainActor [weak self] in
+            self?.update(state: state)
+        }
+    }
     
+    @MainActor
     private func update(state: ImageDto.ImageState) {
         print("Set state to: \(state)")
         customizingActionViewModel.update(state: state)
@@ -410,6 +415,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     
     /// Adds an undo item to the undo stack and updates the current index.
     /// - Parameter index: The index of the undo item to add.
+    @MainActor
     private func add(index: Int, needUpdate: Bool) {
         self.currentUndoItem = index
         
@@ -422,6 +428,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     
     /// Removes an undo item from the undo stack and updates the current index.
     /// - Parameter index: The index of the undo item to remove.
+    @MainActor
     private func remove(index: Int, needUpdate: Bool) {
         currentUndoItem = index - 1
         
@@ -467,7 +474,8 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
 }
 
 extension HomeViewModel {
+    @MainActor
     static var preview: HomeViewModel {
-        HomeViewModel(appStoreService: AppStorePreview())
+        HomeViewModel(undoManager: UndoManager(), appStoreService: AppStorePreview())
     }
 }

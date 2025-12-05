@@ -13,7 +13,7 @@ struct BaseApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @State private var searchText = ""
     
-    @StateObject private var homeViewModel: HomeViewModel = .init()
+    @StateObject private var homeViewModel: HomeViewModel = .init(undoManager: UndoManager())
     
     var body: some Scene {
         WindowGroup {

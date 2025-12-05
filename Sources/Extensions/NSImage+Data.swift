@@ -34,5 +34,3 @@ extension NSImage {
         tiffRepresentation?.bitmap?.pngData
     }
 }
-
-extension NSImage: @unchecked @retroactive Sendable {}

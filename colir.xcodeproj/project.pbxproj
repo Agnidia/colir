@@ -1110,7 +1110,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 2610;
 				ORGANIZATIONNAME = "IGR Software";
 				TargetAttributes = {
 					A5F5CDF42A6D2BFB008AF959 = {
@@ -1377,7 +1377,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A504B86E2A6D2DCA002A2C8B /* test-debug.xcconfig */;
 			buildSettings = {
-				"INFOPLIST_KEY_CFBundleDisplayName[sdk=macosx*]" = Colir;
 			};
 			name = Debug;
 		};

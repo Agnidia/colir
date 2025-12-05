@@ -115,7 +115,7 @@ struct ToolbarView: CustomizableToolbarContent {
                 .help(action.helpTitle)
                 .disabled(viewModel.undoManager.canUndo == false)
             }
-            .frame(width: 84)
+            //.frame(width: 84)
         case .redo:
             HStack {
                 Button { viewModel.perform(action) } label: {
@@ -127,10 +127,10 @@ struct ToolbarView: CustomizableToolbarContent {
                 
                 Spacer()
                 
-                Divider()
-                    .background(Color.primaryDivider.opacity(0.01))
+//                Divider()
+//                    .background(Color.primaryDivider.opacity(0.01))
             }
-            .frame(width: 64)
+            //.frame(width: 64)
         }
     }
 }

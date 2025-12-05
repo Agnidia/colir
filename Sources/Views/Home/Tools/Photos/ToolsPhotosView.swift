@@ -51,6 +51,12 @@ struct ToolsPhotosView: View {
         }
         .overlay(content: overlay)
         .task(viewModel.fetchImages)
+        .onChange(of: viewModel.selectedAsset) { _, newValue in
+            selectedAsset = newValue
+        }
+        .onChange(of: viewModel.selectedPicture) { _, newValue in
+            selectedImage = newValue
+        }
     }
     
     @ViewBuilder
@@ -64,31 +70,17 @@ struct ToolsPhotosView: View {
     /// Creates a cell view for a given photo asset, with selection handling and image fetching.
     @ViewBuilder
     func cell(for item: PhotoAsset) -> some View {
-        ToolsPhotosItemView(asset: item, cache: viewModel.photoLibraryAlbumManager.cache, imageSize: viewModel.thumbnailSize)
-            .frame(maxWidth: .infinity, minHeight: viewModel.cellHeight, maxHeight: viewModel.cellHeight, alignment: .center)
-            .cornerRadius(viewModel.cellCornerRadius)
-            .overlay(
-                ZStack(alignment: .bottomTrailing) {
-                    let isSelected = selectedAsset == item
-                    RoundedRectangle(cornerRadius: viewModel.cellCornerRadius)
-                        .strokeBorder(isSelected ? Color.selectedView : Color.secondaryText, lineWidth: isSelected ? 4 : 1)
-                    
-                    Image(systemName: "checkmark.circle.fill")
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(Color.primaryText, Color.selectedView)
-                        .font(.title)
-                        .padding(.paddingSmall)
-                        .opacity(isSelected ? .opacity100 : .opacity0)
-                        .animation(.default, value: selectedAsset)
-                }
-            )
-            .onTapGesture { select(item: item) }
-            .onChange(of: viewModel.selectedAsset) { _, newValue in
-                selectedAsset = newValue
-            }
-            .onChange(of: viewModel.selectedPicture) { _, newValue in
-                selectedImage = newValue
-            }
+        SelectableGridCell(
+            isSelected: selectedAsset == item,
+            cornerRadius: viewModel.cellCornerRadius,
+            accessibilityLabel: item.id,
+            accessibilityHint: "Tap to add this photo to the folder"
+        ) {
+            ToolsPhotosItemView(asset: item, cache: viewModel.photoLibraryAlbumManager.cache, imageSize: viewModel.thumbnailSize)
+                .frame(minWidth: viewModel.cellWidth, maxWidth: .infinity, minHeight: viewModel.cellHeight, maxHeight: viewModel.cellHeight, alignment: .center)
+        } onTap: {
+            select(item: item)
+        }
     }
     
     private func select(item: PhotoAsset) {

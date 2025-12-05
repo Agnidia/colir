@@ -33,18 +33,53 @@ import Combine
 @Observable
 final class ToolsColorsViewModel: DomainViewConstantProtocol {
     typealias DomainViewConstantType = ToolsColorsViewDomain
-    
+
     let viewSettings: ToolsColorsViewDomain = .init()
-    
-    let cellWidth: CGFloat = 128
-    let cellHeight: CGFloat = 48
-    
+
+    static var cellWidth: CGFloat { 128 }
+    static var cellHeight: CGFloat { 48 }
+
+    /// Maximum number of recent colors to track
+    private let maxRecentColors = 8
+
     var cellCornerRadius: CGFloat {
         viewSettings.cornerRadius ?? .radiusThin
     }
-    
-    var selectedColor: NSColor? = nil
+
+    var selectedColor: NSColor? = nil {
+        didSet {
+            if let color = selectedColor {
+                addToRecentColors(color)
+            }
+        }
+    }
+
     private(set) var selectedColorPublisher: PassthroughSubject<NSColor?, Never> = .init()
+
+    /// Recently used colors (most recent first)
+    private(set) var recentColors: [NSColor] = []
+
+    // MARK: - Recent Colors Management
+
+    /// Adds a color to the recent colors list
+    /// - Parameter color: The color to add
+    private func addToRecentColors(_ color: NSColor) {
+        // Remove if already exists (to move to front)
+        recentColors.removeAll { $0.hexString == color.hexString }
+
+        // Add to front
+        recentColors.insert(color, at: 0)
+
+        // Trim to max size
+        if recentColors.count > maxRecentColors {
+            recentColors = Array(recentColors.prefix(maxRecentColors))
+        }
+    }
+
+    /// Clears all recent colors
+    func clearRecentColors() {
+        recentColors.removeAll()
+    }
 }
 
 extension ToolsColorsViewModel {

@@ -23,6 +23,7 @@ struct Log {
     /// - photoAppAccess: Logs for communication with Photos app.
     ///
     enum Category: String {
+        case ui
         case application
         case fileStorage
         case photoAppAccess
@@ -62,20 +63,21 @@ struct Log {
     }
 }
 
-private extension Log {
+extension Log {
     
     /// A dictionary mapping logging categories to boolean values, which dictate
     /// whether logging is enabled or disabled for each category.
-    var enabledList: [Category : Bool] {
+    static var enabledList: [Category : Bool] {
         [
-            .application: true,
+            .ui: false,
+            .application: false,
             .fileStorage: false,
             .photoAppAccess: false,
-            .photoLibrary: true,
+            .photoLibrary: false,
             .toolsPhoto: false,
             .home: false,
-            .appStore: false,
-            .imageProcessing: true
+            .appStore: true,
+            .imageProcessing: false
         ]
     }
 }
@@ -86,7 +88,7 @@ extension Log: LogProtocol {
     ///
     /// - Parameter message: The debug message to be logged.
     func debug(_ message: String) {
-        guard enabledList[category] == true else {
+        guard Self.enabledList[category] == true else {
             return
         }
         
@@ -97,7 +99,7 @@ extension Log: LogProtocol {
     ///
     /// - Parameter message: The informational message to be logged.
     func info(_ message: String) {
-        guard enabledList[category] == true else {
+        guard Self.enabledList[category] == true else {
             return
         }
         
@@ -108,7 +110,7 @@ extension Log: LogProtocol {
     ///
     /// - Parameter message: The error message to be logged.
     func error(_ message: String) {
-        guard enabledList[category] == true else {
+        guard Self.enabledList[category] == true else {
             return
         }
         

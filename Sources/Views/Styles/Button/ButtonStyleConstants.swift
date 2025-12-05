@@ -11,9 +11,9 @@ import SwiftUI
 enum ButtonStyleConstants {
     static let padding: EdgeInsets = .init(top: .paddingSmall, leading: .paddingDefault, bottom: .paddingSmall, trailing: .paddingDefault)
     
-    static let font: Font = .title3
+    static let font: Font = .title2
     
-    static let cornerRadius: CGFloat = .radiusThin
+    static let cornerRadius: CGFloat = .radiusSmall
     
     static let textColor: Color = Color.primaryTitleButton
     

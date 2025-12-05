@@ -28,13 +28,11 @@ struct PrimaryButtonStyle: ButtonStyle {
             }
             .background(content: {
                 if !isEnabled {
-                    Rectangle()
-                        .fill(ButtonStyleConstants.backgroundDisabledColor)
-                        .cornerRadius(cornerRadius)
+                    UnevenRoundedRectangle(cornerRadii: .init(topTrailing: cornerRadius))
+                                        .fill(ButtonStyleConstants.backgroundDisabledColor)
                 } else {
-                    Rectangle()
+                    UnevenRoundedRectangle(cornerRadii: .init(topTrailing: cornerRadius))
                         .fill(isHovered ? ButtonStyleConstants.backgroundHoveredColor : ButtonStyleConstants.backgroundColor)
-                        .cornerRadius(cornerRadius)
                 }
             })
             .onHover { over in

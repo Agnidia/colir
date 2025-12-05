@@ -100,59 +100,94 @@ final class AppliedStylesViewModel: DomainViewConstantProtocol {
 
 /// A view representing a single tag in the customization tag list.
 ///
+/// Redesigned with:
+/// - Neutral background for less visual weight
+/// - Larger close button (28x28) for better touch target
+/// - Minimum height of 40pt
+/// - Proper content alignment
+///
 /// - Parameters:
 ///   - data: The data used to display the tag, including image, text, color, and actions.
 struct StyleTagView: View {
-    
+
     let data: CustomizationTagViewData
-    
+
+    @State private var isHovered = false
+
     var body: some View {
         HStack(spacing: .spacingDefault) {
-            
-            Group {
-                if let image = data.image {
-                    Image(nsImage: image)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 32, height: 32)
-                }
-                
-                if !data.text.isEmpty {
-                    Text(data.text)
-                        .font(.title3)
-                        .padding(.vertical, .paddingThin + .paddingUltraThin)
-                        .foregroundStyle(data.color)
-                }
-            }
-            .shadow(color: .black, radius: 1)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading, .paddingLarge)
-            
-            if let closeImage = data.closeImage, let onClose = data.onClose {
-                Button(action: onClose) {
-                    closeImage
-                        .resizable()
-                        .frame(width: .FrameSize.Button.small - 4, height: .FrameSize.Button.small - 4)
-                        .shadow(color: .black, radius: 1)
-                        .overlay { Color.white0 }
-                }
-                .buttonStyle(.borderless)
+            // Leading content (color swatch, image, or emoji)
+            leadingContent
+
+            Spacer()
+
+            // Close button
+            if let onClose = data.onClose {
+                closeButton(action: onClose)
             }
         }
-        .onTapGesture {
-            if let onSelect = data.onSelect {
-                onSelect()
-            }
-        }
-        .font(.title2)
-        .foregroundColor(.white)
+        .frame(minHeight: 34)
         .padding(.horizontal, .paddingSmall)
-        .padding(.vertical, .paddingUltraThin)
-        .background {
-            Color.accentBackgroundButton.opacity(0.8)
-                .clipShape(.rect(bottomTrailingRadius: .radiusDefault, topTrailingRadius: .radiusDefault))
+        .padding(.vertical, .paddingThin)
+        .background(backgroundView)
+        .clipShape(RoundedRectangle(cornerRadius: .radiusSmall))
+        .onHover { isHovered = $0 }
+        .onTapGesture {
+            data.onSelect?()
         }
-        .cornerRadius(.radiusThin)
+    }
+
+    @ViewBuilder
+    private var leadingContent: some View {
+        HStack(spacing: .spacingDefault) {
+            // Color swatch or image thumbnail
+            if let image = data.image {
+                Image(nsImage: image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 28, height: 28)
+                    .clipShape(RoundedRectangle(cornerRadius: .radiusThin))
+            } else if !data.text.isEmpty && data.text.hasPrefix("#") {
+                // Color swatch for hex colors
+                RoundedRectangle(cornerRadius: .radiusThin)
+                    .fill(data.color)
+                    .frame(width: 28, height: 28)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: .radiusThin)
+                            .strokeBorder(Color.primaryText.opacity(0.2), lineWidth: 1)
+                    )
+            }
+
+            // Text label
+            if !data.text.isEmpty {
+                Text(data.text)
+                    .font(Typography.headlineMedium)
+                    .foregroundStyle(Color.primaryText)
+                    .lineLimit(1)
+            }
+        }
+        .padding(.leading, .paddingSmall)
+    }
+
+    @ViewBuilder
+    private func closeButton(action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: "xmark.circle.fill")
+                .font(.system(size: 18))
+                .foregroundStyle(Color.secondaryText)
+                .frame(width: 28, height: 28)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .opacity(isHovered ? 1.0 : 0.6)
+        .animation(.easeInOut(duration: 0.15), value: isHovered)
+    }
+
+    @ViewBuilder
+    private var backgroundView: some View {
+        Color.secondaryBackground
+            .opacity(isHovered ? 1.0 : 0.8)
+            .animation(.easeInOut(duration: 0.15), value: isHovered)
     }
 }
 

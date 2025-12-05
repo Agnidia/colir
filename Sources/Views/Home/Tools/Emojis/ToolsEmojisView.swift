@@ -61,38 +61,44 @@ struct ToolsEmojisView: View {
         // Display emojis in a grid within the DisclosureGroup
         LazyVGrid(columns: viewModel.columns(in: geometry), alignment: .leading, spacing: viewModel.viewSettings.spacing) {
             ForEach(emojis, id: \.self) { char in
-                Text(String(char))
-                    .font(.system(size: viewModel.fontSize))
-                    .frame(maxWidth: .infinity, minHeight: viewModel.columnWidth, maxHeight: viewModel.columnWidth, alignment: .center)
-                    .padding(.paddingDefault)
-                    .background(Color.secondaryBackground)
-                    .foregroundColor(.white)
-                    .clipShape(RoundedRectangle(cornerRadius: viewModel.cellCornerRadius))
-                    .overlay(
-                        ZStack(alignment: .bottomTrailing) {
-                            let isSelected = viewModel.selectedEmoji == char
-                            RoundedRectangle(cornerRadius: viewModel.cellCornerRadius)
-                                .strokeBorder(isSelected ? Color.selectedView : Color.secondaryText, lineWidth: isSelected ? 4 : 1)
-                            
-                            Image(systemName: "checkmark.circle.fill")
-                                .symbolRenderingMode(.palette)
-                                .foregroundStyle(Color.primaryText, Color.selectedView)
-                                .font(.title)
-                                .padding(.paddingSmall)
-                                .opacity(isSelected ? .opacity100 : .opacity0)
-                                .animation(.default, value: viewModel.selectedEmoji)
-                        }
-                    )
-                    .onTapGesture {
-                        // Handle emoji selection
-                        if viewModel.selectedEmoji == char {
-                            viewModel.selectedEmoji = nil
-                        } else {
-                            viewModel.selectedEmoji = char
-                        }
-                    }
+                emojiCell(for: char)
             }
         }
+        .padding(.paddingThin)
+    }
+
+    @ViewBuilder
+    private func emojiCell(for char: Character) -> some View {
+        SelectableGridCell(
+            isSelected: viewModel.selectedEmoji == char,
+            cornerRadius: viewModel.cellCornerRadius,
+            accessibilityLabel: emojiAccessibilityLabel(for: char),
+            accessibilityHint: "tap to add this emoji to the folder"
+        ) {
+            Text(String(char))
+                .font(.system(size: viewModel.fontSize))
+                .frame(maxWidth: .infinity, minHeight: viewModel.columnWidth, maxHeight: viewModel.columnWidth, alignment: .center)
+                .padding(.paddingDefault)
+                .background(Color.secondaryBackground)
+                .foregroundColor(.white)
+        } onTap: {
+            if viewModel.selectedEmoji == char {
+                viewModel.selectedEmoji = nil
+            } else {
+                viewModel.selectedEmoji = char
+            }
+        }
+    }
+
+    /// Gets the accessibility label for an emoji character
+    private func emojiAccessibilityLabel(for char: Character) -> String {
+        // Get Unicode name for the emoji if available
+        if let scalar = char.unicodeScalars.first {
+            if let name = scalar.properties.name {
+                return name.capitalized
+            }
+        }
+        return "Emoji \(char)"
     }
 }
 

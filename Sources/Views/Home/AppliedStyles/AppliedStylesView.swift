@@ -32,7 +32,7 @@ struct AppliedStylesView: View {
         List {
             ForEach(views, id: \.data.id) { $0 }
                 .listRowBackground(Color.clear)
-                .listRowInsets(.init(top: .paddingSmall, leading: .zero, bottom: .zero, trailing: .zero))
+                .listRowInsets(.init(top: .paddingThin, leading: .paddingSmall, bottom: .zero, trailing: .paddingThin))
                 .listRowSeparator(.hidden)
         }
         .scrollContentBackground(.hidden)

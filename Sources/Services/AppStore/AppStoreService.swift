@@ -15,15 +15,15 @@ public enum AppProduct: String, CaseIterable, Equatable, ProductRepresentable, S
     case smallTips = "com.igrsoft.colir.small.tips.subs"
     case middleTips = "com.igrsoft.colir.middle.tips.inapp"
     case bigTips = "com.igrsoft.colir.big.tips.inapp"
-
+    
     /// The unique identifier of the product.
     public var id: String { rawValue }
-
+    
     /// A list of in-app purchase products.
     static var inAppPurchases: [AppProduct] {
         [.middleTips, .bigTips]
     }
-
+    
     /// A list of subscription products.
     static var subscriptions: [AppProduct] {
         [.smallTips]
@@ -54,17 +54,17 @@ public enum PurchaseResult: Sendable {
 public protocol AppStoreProtocol {
     /// Synchronizes store data with the App Store.
     func syncStoreData() async throws
-
+    
     /// Initiates the purchase of a specified product.
     /// - Parameter product: The product to be purchased.
     /// - Returns: The result of the purchase attempt.
     func purchase(_ product: AppProduct) async throws -> PurchaseResult
-
+    
     /// Retrieves information for a specified product.
     /// - Parameter product: The product to retrieve information for.
     /// - Returns: Information about the product.
     func info(for product: AppProduct) throws -> AppStoreProductInfo
-
+    
     /// Indicates whether the user has full access.
     var hasFullAccess: Bool { get }
 }
@@ -79,9 +79,7 @@ final class AppStoreService: AppStoreProtocol {
     
     private let context = StoreContext()
     
-    private var storeService: StoreService {
-        StandardStoreService(products: AppProduct.allCases)
-    }
+    private var storeService: StoreService
     
     private var products: [AppProduct: Product]?
     
@@ -93,6 +91,7 @@ final class AppStoreService: AppStoreProtocol {
     /// - Parameter logger: An optional logger for logging messages.
     init(logger: LogProtocol = Log(category: .appStore)) {
         self.log = logger
+        storeService = StandardStoreService(products: AppProduct.allCases)
     }
     
     /// Indicates whether the user has full access.
@@ -103,16 +102,16 @@ final class AppStoreService: AppStoreProtocol {
     
     /// Synchronizes store data with the App Store.
     func syncStoreData() async throws {
-        log.debug("sync Store Data")
-        try await storeService.syncStoreData(to: context)
-        fillProducts()
+        log.debug("Sync Store data")
+        //try await storeService.syncStoreData(to: context)
+        try await fillProducts()
         fillPurchased()
         log.debug("restored Purchases")
     }
     
     /// Fills the products dictionary with the available products.
-    private func fillProducts() {
-        let products = context.products
+    private func fillProducts() async throws {
+        let products = try await storeService.getProducts()
         self.products = products.reduce(into: [AppProduct: Product](), { partialResult, product in
             if let id = AppProduct(rawValue: product.id) {
                 partialResult[id] = product

@@ -31,8 +31,8 @@ struct ToolsPicturesView: View {
     
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: viewModel.columns, spacing: .spacingHeight) {
-                ForEach(viewModel.images, id: \.self) { cell(for: $0) }
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: viewModel.cellWidth))], spacing: .spacingHeight) {
+                ForEach(viewModel.images, content: cell(for:))
             }
             .padding(.paddingDefault)
         }
@@ -45,35 +45,23 @@ struct ToolsPicturesView: View {
     /// - Returns: A `View` representing the image cell, with selection indication if applicable.
     @ViewBuilder
     func cell(for item: PictureItem) -> some View {
-        Image(nsImage: item.image)
-            .resizable()
-            .scaledToFill()
-            .frame(maxWidth: .infinity, minHeight: viewModel.cellHeight, maxHeight: viewModel.cellHeight, alignment: .center)
-            .cornerRadius(viewModel.cellCornerRadius)
-            .clipShape(RoundedRectangle(cornerRadius: viewModel.cellCornerRadius))
-            .overlay(
-                ZStack(alignment: .bottomTrailing) {
-                    let isSelected = viewModel.selectedImage == item
-                    RoundedRectangle(cornerRadius: viewModel.cellCornerRadius)
-                        .strokeBorder(isSelected ? Color.selectedView : Color.secondaryText, lineWidth: isSelected ? 4 : 1)
-                    
-                    Image(systemName: "checkmark.circle.fill")
-                        .symbolRenderingMode(.palette)
-                        .foregroundStyle(Color.primaryText, Color.selectedView)
-                        .font(.title)
-                        .padding(.paddingSmall)
-                        .opacity(isSelected ? .opacity100 : .opacity0)
-                        .animation(.default, value: viewModel.selectedImage)
-                }
-            )
-            .onTapGesture {
-                if viewModel.selectedImage == item {
-                    viewModel.selectedImage = nil
-                } else {
-                    viewModel.selectedImage = item
-                }
+        SelectableGridCell(
+            isSelected: viewModel.selectedImage == item,
+            cornerRadius: viewModel.cellCornerRadius,
+            accessibilityLabel: item.name,
+            accessibilityHint: "tap to add this picture to the folder"
+        ) {
+            Image(nsImage: item.image)
+                .resizable()
+                .scaledToFill()
+                .frame(minWidth: viewModel.cellWidth, maxWidth: .infinity, minHeight: viewModel.cellHeight, maxHeight: viewModel.cellHeight, alignment: .center)
+        } onTap: {
+            if viewModel.selectedImage == item {
+                viewModel.selectedImage = nil
+            } else {
+                viewModel.selectedImage = item
             }
-            .contentShape(Rectangle())
+        }
     }
 }
 

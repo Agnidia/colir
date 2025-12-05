@@ -107,6 +107,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
         addPublishers()
         
         Task {
+            try? await Task.sleep(for: .seconds(1))
             await setupAppStoreService()
         }
         
@@ -321,7 +322,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol, @unchec
     
     @MainActor
     private func update(state: ImageDto.ImageState) {
-        print("Set state to: \(state)")
+        log.debug("Set state to: \(state)")
         customizingActionViewModel.update(state: state)
         appliedStylesViewModel.update(state: state, imageCustomization: dropZoneViewModel.image.customisations)
         if state == .ready {

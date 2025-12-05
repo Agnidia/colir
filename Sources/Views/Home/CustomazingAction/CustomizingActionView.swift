@@ -26,7 +26,7 @@ struct CustomizingActionView: View {
     @Environment(CustomizingActionViewModel.self) var viewModel
     
     @State private var isPopupVisible: Bool = false
-
+    
     var body: some View {
         ZStack {
             VStack(spacing: .spacingHeight) {
@@ -34,31 +34,27 @@ struct CustomizingActionView: View {
                     .overlay { progressView }
                     .background {
                         PopupContentView()
-                            .offset(y: isPopupVisible ? -.paddingBig : .zero)
+                            .offset(y: isPopupVisible ? -.paddingHeight : .zero)
                             .opacity(isPopupVisible ? .opacity100 : .opacity0)
                             .animation(.default, value: isPopupVisible)
                             .zIndex(1) // Ensure popup is above other content
-                            .task {
-                                hidePopupTask()
-                            }
+                            .task(hidePopupTask)
                             .onChange(of: isPopupVisible) { _, needDisplay in
                                 if needDisplay {
                                     hidePopupTask()
                                 }
                             }
                     }
-                    .shadow(color: .primaryBackground, radius: 2, x: 0, y: 1)
+                    .padding(.trailing, .paddingDefault)
             }
         }
         .onChange(of: viewModel.state, { _, state in
             switch state {
-            case .processing:
-                isPopupVisible = false
+            case .processing: isPopupVisible = false
             default: break
             }
         })
         .animation(.easeInOut, value: isPopupVisible) // Animate visibility change
-        .padding([.horizontal, .bottom], .paddingDefault)
     }
     
     @State private var hidePopoverTask: Task<Void, Never>? = nil
@@ -66,15 +62,13 @@ struct CustomizingActionView: View {
     private func hidePopupTask() {
         hidePopoverTask?.cancel()
         hidePopoverTask = Task {
-            try? await Task.sleep(for: .seconds(5))
-            guard Task.isCancelled == false else {
-                return
-            }
+            try? await Task.sleep(for: .seconds(2))
+            guard Task.isCancelled == false else { return }
             
             isPopupVisible = false
         }
     }
-        
+    
     /// A view showing a progress indicator if the state is `.processing`.
     ///
     /// Displays a `ProgressView` with the progress value and total of 100 if the state is
@@ -103,10 +97,12 @@ struct CustomizingActionView: View {
             Text(CustomizingActionViewDomain.Localization.customize)
                 .font(ButtonStyleConstants.font)
                 .padding(ButtonStyleConstants.padding)
+                .padding(.vertical, .paddingSmall)
                 .frame(maxWidth: .infinity)
         })
         .buttonStyle(.primary)
         .disabled(viewModel.state != .ready)
+        .shadow(radius: 8)
     }
 }
 

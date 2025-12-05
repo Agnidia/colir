@@ -36,35 +36,96 @@ struct ToolsPhotosItemView: View {
     var asset: PhotoAsset
     var cache: PhotoLibraryCacheManager
     var imageSize: CGSize
-    
-    @State private(set) var image: Image?
+
+    /// Loading states for the photo item
+    enum LoadingState {
+        case loading
+        case loaded(Image)
+        case error
+    }
+
+    @State private var loadingState: LoadingState = .loading
     @State private var imageRequestID: PHImageRequestID?
-    
+
     var body: some View {
         GeometryReader { geo in
-            Group {
-                if let image {
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: geo.size.width, height: geo.size.height)
-                        .contentShape(Rectangle()) // Fix gesture issues
-                } else {
-                    ProgressView()
-                        .scaleEffect(0.5)
-                }
-            }
+            contentView(size: geo.size)
         }
         .task {
-            guard image == nil else { return }
-            imageRequestID = await cache.requestImage(for: asset, targetSize: imageSize, completion: process(result:))
+            await loadImage()
         }
     }
-    
-    private func process(result: PhotoLibraryCacheManager.ImageResult) {
-        Task { [result] in
-            if let image = result?.image {
-                self.image = Image(nsImage: image)
+
+    @ViewBuilder
+    private func contentView(size: CGSize) -> some View {
+        switch loadingState {
+        case .loading:
+            loadingView(size: size)
+
+        case .loaded(let image):
+            image
+                .resizable()
+                .scaledToFill()
+                .frame(width: size.width, height: size.height)
+                .contentShape(Rectangle())
+                .transition(.opacity.combined(with: .scale(scale: 0.95)))
+
+        case .error:
+            errorView(size: size)
+        }
+    }
+
+    /// Skeleton loading view with shimmer animation
+    @ViewBuilder
+    private func loadingView(size: CGSize) -> some View {
+        ZStack {
+            ImageSkeletonView(cornerRadius: .radiusSmall)
+                .frame(width: size.width, height: size.height)
+
+            ProgressView()
+                .scaleEffect(0.8)
+                .tint(Color.secondaryText)
+        }
+    }
+
+    /// Error state view with retry option
+    @ViewBuilder
+    private func errorView(size: CGSize) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: .radiusSmall)
+                .fill(Color.secondaryBackground)
+                .frame(width: size.width, height: size.height)
+
+            VStack(spacing: .spacingSmall) {
+                Image(systemName: "exclamationmark.triangle")
+                    .font(.system(size: 20))
+                    .foregroundStyle(Color.secondaryText)
+
+                Text("Tap to retry")
+                    .font(Typography.labelSmall)
+                    .foregroundStyle(Color.secondaryText)
+            }
+        }
+        .onTapGesture {
+            Task {
+                await loadImage()
+            }
+        }
+    }
+
+    /// Loads the image from cache
+    private func loadImage() async {
+        loadingState = .loading
+
+        imageRequestID = await cache.requestImage(for: asset, targetSize: imageSize) { result in
+            Task { @MainActor in
+                if let nsImage = result?.image {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        loadingState = .loaded(Image(nsImage: nsImage))
+                    }
+                } else {
+                    loadingState = .error
+                }
             }
         }
     }

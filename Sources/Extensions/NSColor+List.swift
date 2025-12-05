@@ -321,6 +321,60 @@ extension NSColor {
         "pink": pink,
         "rose": rose
     ]
+
+    /// Color group metadata with hue wheel ordering
+    /// Ordered by color wheel: Red → Orange → Yellow → Green → Cyan → Blue → Purple → Pink → Grays
+    public struct ColorGroup: Identifiable, Hashable, @unchecked Sendable {
+        public let id: String
+        public let name: String
+        public let colors: [NSColor]
+        public let primaryColor: NSColor // The 500 shade for preview
+
+        public init(id: String, name: String, colors: [NSColor]) {
+            self.id = id
+            self.name = name
+            self.colors = colors
+            self.primaryColor = colors.count > 5 ? colors[5] : colors.first ?? .clear
+        }
+
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+        }
+
+        public static func == (lhs: ColorGroup, rhs: ColorGroup) -> Bool {
+            lhs.id == rhs.id
+        }
+    }
+
+    /// Colors ordered by hue wheel position (warm → cool → grays)
+    public static let colorGroupsOrdered: [ColorGroup] = [
+        // Warm colors (Reds → Oranges → Yellows)
+        ColorGroup(id: "red", name: "Red", colors: red),
+        ColorGroup(id: "rose", name: "Rose", colors: rose),
+        ColorGroup(id: "pink", name: "Pink", colors: pink),
+        ColorGroup(id: "orange", name: "Orange", colors: orange),
+        ColorGroup(id: "amber", name: "Amber", colors: amber),
+        ColorGroup(id: "yellow", name: "Yellow", colors: yellow),
+        // Green spectrum
+        ColorGroup(id: "lime", name: "Lime", colors: lime),
+        ColorGroup(id: "green", name: "Green", colors: green),
+        ColorGroup(id: "emerald", name: "Emerald", colors: emerald),
+        ColorGroup(id: "teal", name: "Teal", colors: teal),
+        // Cool colors (Cyans → Blues → Purples)
+        ColorGroup(id: "cyan", name: "Cyan", colors: cyan),
+        ColorGroup(id: "sky", name: "Sky", colors: sky),
+        ColorGroup(id: "blue", name: "Blue", colors: blue),
+        ColorGroup(id: "indigo", name: "Indigo", colors: indigo),
+        ColorGroup(id: "violet", name: "Violet", colors: violet),
+        ColorGroup(id: "purple", name: "Purple", colors: purple),
+        ColorGroup(id: "fuchsia", name: "Fuchsia", colors: fuchsia),
+        // Grayscale (at end)
+        ColorGroup(id: "slate", name: "Slate", colors: slate),
+        ColorGroup(id: "gray", name: "Gray", colors: gray),
+        ColorGroup(id: "zinc", name: "Zinc", colors: zinc),
+        ColorGroup(id: "neutral", name: "Neutral", colors: neutral),
+        ColorGroup(id: "stone", name: "Stone", colors: stone)
+    ]
     /// Groups By Color Depth
     public static let depth50: [NSColor] = [slate50, gray50, zinc50, neutral50, stone50, red50, orange50, amber50, yellow50, lime50, green50, emerald50, teal50, cyan50, sky50, blue50, indigo50, violet50, purple50, fuchsia50, pink50, rose50]
     public static let depth100: [NSColor] = [slate100, gray100, zinc100, neutral100, stone100, red100, orange100, amber100, yellow100, lime100, green100, emerald100, teal100, cyan100, sky100, blue100, indigo100, violet100, purple100, fuchsia100, pink100, rose100]

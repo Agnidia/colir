@@ -26,14 +26,23 @@ struct ToolsColorsView: View {
     
     @State private var selectedColor: NSColor? = nil
     
-    @State private var colorGroups: [String : [NSColor]] = NSColor.groupsByType
+    /// Tracks which color groups are expanded to show all shades
+    @State private var expandedGroups: Set<String> = []
+    
+    @Namespace private var namespace
+    
+    /// Color groups ordered by hue wheel
+    private let colorGroups: [NSColor.ColorGroup] = NSColor.colorGroupsOrdered
     
     var body: some View {
         ScrollView {
             colorPickerTitle
             
+            recentColorsSection
+            
             colorsList
         }
+        .animation(.default, value: viewModel.recentColors)
         .onChange(of: selectedColor) { oldValue, newValue in
             viewModel.selectedColor = newValue
             viewModel.selectedColorPublisher.send(newValue)
@@ -43,74 +52,213 @@ struct ToolsColorsView: View {
         }
     }
     
+    /// Section showing recently used colors
+    @ViewBuilder
+    private var recentColorsSection: some View {
+        VStack(alignment: .leading, spacing: .spacingDefault) {
+            HStack {
+                Text("Recent")
+                    .font(Typography.headlineMedium)
+                    .foregroundStyle(Color.primaryText)
+                
+                Spacer()
+                
+                Button {
+                    viewModel.clearRecentColors()
+                } label: {
+                    Text("Clear")
+                        .font(Typography.labelMedium)
+                        .foregroundStyle(Color.secondaryText)
+                }
+                .buttonStyle(.plain)
+            }
+            .padding(.horizontal, .paddingDefault)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: .spacingDefault) {
+                    ForEach(viewModel.recentColors, id: \.self) { color in
+                        cell(for: color)
+                    }
+                }
+                .padding(.horizontal, .paddingDefault)
+            }
+            
+            Divider()
+                .padding(.horizontal, .paddingDefault)
+                .padding(.top, .paddingSmall)
+        }
+        .isHidden(viewModel.recentColors.isEmpty)
+        .animation(.default, value: viewModel.recentColors)
+    }
+    
     var columns: [GridItem] {
         [
-            GridItem(.adaptive(minimum: viewModel.cellWidth))
+            GridItem(.adaptive(minimum: ToolsColorsViewModel.cellWidth))
         ]
     }
     
     @ViewBuilder
     var colorPickerTitle: some View {
         VStack(spacing: viewModel.viewSettings.spacing) {
-            Text(ToolsColorsViewDomain.Localization.customColor)
-                .foregroundStyle(Color.primaryText)
-                .font(.headline)
-            
-            ColorPicker(selection: Binding(get: { Color(nsColor: selectedColor ?? .clear) },
-                                           set: { selectedColor = NSColor($0) }), supportsOpacity: false) {}
-                .scaleEffect(x: 2, y: 2)
+            customColorButton
             
             Divider()
-                .padding(viewModel.viewSettings.padding)
         }
-        .padding(viewModel.viewSettings.padding)
+        .padding(.horizontal, .paddingDefault)
+        .padding(.vertical, viewModel.viewSettings.padding.top)
+    }
+    
+    /// Custom color picker button with improved discoverability
+    @ViewBuilder
+    private var customColorButton: some View {
+        HStack(spacing: .spacingDefault) {
+            // Color swatch showing current custom color or + icon
+            ZStack {
+                RoundedRectangle(cornerRadius: .radiusSmall)
+                    .fill(selectedColor != nil ? Color(nsColor: selectedColor!) : Color.secondaryBackground)
+                    .frame(width: 48, height: 36)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: .radiusSmall)
+                            .strokeBorder(Color.primaryText.opacity(0.2), lineWidth: 1)
+                    )
+                
+                if selectedColor == nil {
+                    Image(systemName: "plus")
+                        .font(.system(size: 16, weight: .medium))
+                        .foregroundStyle(Color.secondaryText)
+                }
+            }
+            
+            Text(ToolsColorsViewDomain.Localization.customColor)
+                .font(Typography.headlineSmall)
+                .foregroundStyle(Color.primaryText)
+            
+            Spacer()
+            
+            // Native color picker (hidden, triggered by button)
+            ColorPicker(
+                selection: Binding(
+                    get: { Color(nsColor: selectedColor ?? .systemGray) },
+                    set: { selectedColor = NSColor($0) }
+                ),
+                supportsOpacity: false
+            ) {}
+                .labelsHidden()
+                .frame(width: 28, height: 28)
+                .padding(.trailing, 10)
+        }
+        .padding(.paddingSmall)
+        .background(Color.secondaryBackground.opacity(0.5))
+        .clipShape(RoundedRectangle(cornerRadius: .radiusSmall))
     }
     
     @ViewBuilder
     var colorsList: some View {
-        LazyVGrid(columns: columns, spacing: viewModel.viewSettings.spacing) {
-            ForEach(colorGroups.sorted(by: { $0.key < $1.key }), id: \.key) { groupKey, colors in
-                Section(header: Text(groupKey.capitalized)
-                    .foregroundStyle(Color.primaryText)
-                    .font(.headline)
-                    .padding(.top, .paddingSmall)) {
-                        ForEach(colors, id: \.self) { cell(for: $0) }
-                    }
+        LazyVStack(spacing: .spacingHeight) {
+            ForEach(colorGroups) { group in
+                colorGroupSection(for: group)
             }
         }
         .padding(EdgeInsets(top: .zero, leading: .paddingDefault, bottom: .paddingDefault, trailing: .paddingDefault))
     }
     
+    /// A collapsible color group section
+    /// Shows only the 500 shade by default, expands to show all shades when tapped
     @ViewBuilder
-    private func cell(for color: NSColor) -> some View {
-        RoundedRectangle(cornerRadius: viewModel.cellCornerRadius, style: .continuous)
-            .fill(Color(nsColor: color))
-            .frame(width: viewModel.cellWidth, height: viewModel.cellHeight)
-            .cornerRadius(viewModel.cellCornerRadius)
-            .overlay {
-                let isSelected = selectedColor == color
-                RoundedRectangle(cornerRadius: viewModel.cellCornerRadius)
-                    .strokeBorder(isSelected ? Color.selectedView : Color.secondaryText, lineWidth: isSelected ? 4 : 1)
-                    .overlay {
-                        ZStack {
-                            Image(systemName: ToolsColorsViewDomain.Icon.selected)
-                                .symbolRenderingMode(.palette)
-                                .foregroundStyle(Color.primaryText, Color.selectedView)
-                                .font(.title)
-                                .padding(viewModel.viewSettings.padding)
-                                .opacity(isSelected ? .opacity100 : .opacity0)
-                                .animation(.default, value: selectedColor)
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+    private func colorGroupSection(for group: NSColor.ColorGroup) -> some View {
+        let isExpanded = expandedGroups.contains(group.id)
+        
+        VStack(alignment: .leading, spacing: .spacingDefault) {
+            // Header with expand/collapse toggle
+            colorGroupHeader(for: group, isExpanded: isExpanded)
+            
+            // Color grid - shows primary color only or all shades
+            if isExpanded {
+                LazyVGrid(columns: columns, spacing: viewModel.viewSettings.spacing) {
+                    // Show all shades when expanded
+                    ForEach(group.colors, id: \.self) { color in
+                        cell(for: color)
+                            .matchedGeometryEffect(id: color.hexString, in: namespace)
                     }
+                }
+            } else {
+                // Show only the 500 shade (primary) when collapsed
+                cell(for: group.primaryColor, width: .infinity)
+                    .padding(.horizontal, .paddingCompact)
+                    .frame(maxWidth: .infinity)
+                    .matchedGeometryEffect(id: group.primaryColor.hexString, in: namespace)
             }
-            .onTapGesture {
-                if selectedColor == color {
-                    selectedColor = nil
+        }
+        .clipped()
+    }
+    
+    /// Header for a color group with expand/collapse functionality
+    @ViewBuilder
+    private func colorGroupHeader(for group: NSColor.ColorGroup, isExpanded: Bool) -> some View {
+        Button {
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                if isExpanded {
+                    expandedGroups.remove(group.id)
                 } else {
-                    selectedColor = color
+                    expandedGroups.insert(group.id)
                 }
             }
+        } label: {
+            HStack(spacing: .spacingDefault) {
+                // Color indicator
+                Circle()
+                    .fill(Color(nsColor: group.primaryColor))
+                    .frame(width: 12, height: 12)
+                
+                Text(group.name)
+                    .font(Typography.headlineMedium)
+                    .foregroundStyle(Color.primaryText)
+                
+                Spacer()
+                
+                // Shade count badge
+                Text(isExpanded ? "\(group.colors.count) shades" : "Tap to expand")
+                    .font(Typography.labelMedium)
+                    .foregroundStyle(Color.primaryText)
+                
+                // Chevron indicator
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(Color.primaryText)
+                    .rotationEffect(.degrees(isExpanded ? 90 : 0))
+            }
+            .padding(.vertical, .paddingSmall)
+            .padding(.horizontal, .paddingSmall)
+            .background(Color.secondaryBackground.opacity(0.5))
+            .clipShape(RoundedRectangle(cornerRadius: .radiusSmall))
+        }
+        .buttonStyle(.plain)
+    }
+    
+    @ViewBuilder
+    private func cell(for color: NSColor, width: CGFloat = ToolsColorsViewModel.cellWidth) -> some View {
+        SelectableGridCell(
+            isSelected: selectedColor == color,
+            cornerRadius: viewModel.cellCornerRadius,
+            accessibilityLabel: "Color \(color.hexString)",
+            accessibilityHint: "Tap to apply this color to the folder"
+        ) {
+            if width == .infinity {
+                RoundedRectangle(cornerRadius: viewModel.cellCornerRadius, style: .continuous)
+                    .fill(Color(nsColor: color))
+                    .frame(maxWidth: width, minHeight: ToolsColorsViewModel.cellHeight, maxHeight: ToolsColorsViewModel.cellHeight)
+            } else {
+                RoundedRectangle(cornerRadius: viewModel.cellCornerRadius, style: .continuous)
+                    .fill(Color(nsColor: color))
+                    .frame(width: width, height: ToolsColorsViewModel.cellHeight)
+            }
+        } onTap: {
+            if selectedColor == color {
+                selectedColor = nil
+            } else {
+                selectedColor = color
+            }
+        }
     }
 }
 

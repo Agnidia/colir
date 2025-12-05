@@ -22,10 +22,7 @@ struct HomeView: View {
     
     var body: some View {
         
-#if DEBUG
-        // Prints changes to help with debugging.
-        let _ = Self._printChanges()
-#endif
+        Self.printDebugInfo()
         
         HStack(alignment: .top, spacing: .zero) {
             VStack(alignment: .leading) {
@@ -60,13 +57,11 @@ struct HomeView: View {
     private func iconFolderView() -> some View {
         DropZoneView()
             .environment(viewModel.dropZoneViewModel)
-            .frame(maxWidth: .infinity, minHeight: viewModel.dropZoneSize)
+            .frame(width: viewModel.dropZoneSize, height: viewModel.dropZoneSize)
             .modifier(Shake(animatableData: CGFloat(viewModel.wrongAttempt)))
             .background(
                 Rectangle()
-                    .fill(
-                        .shadow(.inner(radius: 16, x: -8, y: -8))
-                    )
+                    .fill(.shadow(.inner(radius: 12, x: -8, y: -8)))
                     .foregroundStyle(.primaryBackground)
             )
             .clipShape(.rect(bottomTrailingRadius: 24))
@@ -102,7 +97,7 @@ struct HomeView: View {
         AppliedStylesView()
             .environment(viewModel.appliedStylesViewModel)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .offset(x: -.paddingLarge)
+            .offset(x: -.paddingHeight)
     }
     
     /// Provides the view for the customization folder.

@@ -25,10 +25,8 @@ struct DropZoneView: View {
     @State private var isProcessing: Bool = false
     
     var body: some View {
-#if DEBUG
-        // Prints changes for debug purposes.
-        let _ = Self._printChanges()
-#endif
+
+        Self.printDebugInfo()
         
         DropZoneNSView.SwiftUI(
             // Indicates whether the drop zone is enabled.

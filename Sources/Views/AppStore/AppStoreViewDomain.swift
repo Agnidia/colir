@@ -59,6 +59,15 @@ struct AppStoreViewDomain: DomainViewConstantType {
         "app.store.view.help.close"
         static let helpInAppPurchase: LocalizedStringKey =
         "app.store.view.help.inapp"
+        static let privacyPolicy: LocalizedStringKey =
+        "app.store.view.privacy.policy"
+        static let termsOfUse: LocalizedStringKey =
+        "app.store.view.terms.of.use"
+    }
+
+    enum URLs {
+        static let privacyPolicy = URL(string: "https://igrsoft.com/info/app/colir/policy.html")!
+        static let termsOfUse = URL(string: "https://igrsoft.com/info/app/colir/terms.html")!
     }
     
     enum I: ConstantRawRepresentable {

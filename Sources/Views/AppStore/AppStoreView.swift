@@ -47,6 +47,9 @@ struct AppStoreView: View {
                 // One-time purchases section
                 oneTimePurchaseSection
             }
+
+            // Legal links footer
+            legalLinksFooter
         }
         .onAppear(perform: {
             Task(operation: setup)
@@ -267,6 +270,32 @@ struct AppStoreView: View {
             hoveredProduct = hovering ? product : nil
         }
         .help(AppStoreViewDomain.Localization.helpInAppPurchase)
+    }
+
+    // MARK: - Legal Links Footer
+
+    @ViewBuilder
+    private var legalLinksFooter: some View {
+        HStack(spacing: .spacingDefault) {
+            Link(destination: AppStoreViewDomain.URLs.privacyPolicy) {
+                Text(AppStoreViewDomain.Localization.privacyPolicy)
+                    .font(Typography.labelSmall)
+                    .foregroundStyle(Color.secondaryText)
+            }
+            .buttonStyle(.plain)
+
+            Text("•")
+                .font(Typography.labelSmall)
+                .foregroundStyle(Color.secondaryText.opacity(0.5))
+
+            Link(destination: AppStoreViewDomain.URLs.termsOfUse) {
+                Text(AppStoreViewDomain.Localization.termsOfUse)
+                    .font(Typography.labelSmall)
+                    .foregroundStyle(Color.secondaryText)
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(.top, .paddingSmall)
     }
 
     // MARK: - Actions

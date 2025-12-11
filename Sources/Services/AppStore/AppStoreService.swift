@@ -12,7 +12,7 @@ import StoreKit
 
 /// Represents the different in-app products available for purchase.
 public enum AppProduct: String, CaseIterable, Equatable, ProductRepresentable, Sendable {
-    case smallTips = "com.igrsoft.colir.small.tips.subs"
+    case smallTips = "com.igrsoft.colir.small.tips1.subs"
     case middleTips = "com.igrsoft.colir.middle.tips.inapp"
     case bigTips = "com.igrsoft.colir.big.tips.inapp"
     

@@ -6,8 +6,8 @@
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
-import SwiftUI
 import SwiftCommons
+import SwiftUI
 
 /// ViewModel for managing and displaying applied styles.
 ///
@@ -26,22 +26,21 @@ import SwiftCommons
 ///   - Uses various tool view models to manage different aspects of the applied styles.
 @Observable
 final class AppliedStylesViewModel: DomainViewConstantProtocol {
-    
     // MARK: - DomainViewConstantProtocol
-    
+
     typealias DomainViewConstantType = AppliedStylesViewDomain
     var viewSettings: DomainViewConstantType = .init()
-    
+
     private var toolsColorsViewModel: ToolsColorsViewModel?
     private var toolsPhotosViewModel: ToolsPhotosViewModel?
     private var toolsPicturesViewModel: ToolsPicturesViewModel?
     private var toolsEmojisViewModel: ToolsEmojisViewModel?
-    
+
     var state: ImageDto.ImageState
     var data: [CustomizationTagViewData] = .init()
-    
+
     // MARK: - Initialization
-    
+
     /// Initializes a new instance of `AppliedStylesViewModel`.
     /// - Parameters:
     ///   - state: The initial state of the image (default is `.none`).
@@ -56,42 +55,42 @@ final class AppliedStylesViewModel: DomainViewConstantProtocol {
         self.toolsPicturesViewModel = toolsPicturesViewModel
         self.toolsEmojisViewModel = toolsEmojisViewModel
     }
-    
+
     /// Updates the view model with new state and image customization data.
     /// - Parameters:
     ///   - state: The new state of the image.
     ///   - imageCustomization: The image customization data to update the view model.
     func update(state: ImageDto.ImageState, imageCustomization: ImageCustomisation) {
         self.state = state
-        
+
         var data: [CustomizationTagViewData] = .init()
-        
+
         if let color = imageCustomization.selectedColor {
             data.append(.init(text: color.hexString, color: Color(nsColor: color), closeImage: Image(systemName: "xmark.circle"), onClose: { [weak self] in
                 self?.toolsColorsViewModel?.selectedColorPublisher.send(nil)
             }))
         }
-        
+
         if let picture = imageCustomization.selectedPicture {
             data.append(.init(image: picture, text: "", color: Color(.gray50), closeImage: Image(systemName: "xmark.circle"), onClose: { [weak self] in
                 self?.toolsPicturesViewModel?.selectedImage = nil
                 self?.toolsPhotosViewModel?.selectedAsset = nil
             }))
         }
-        
+
         if let selectedEmoji = imageCustomization.selectedEmoji {
             data.append(.init(text: String(selectedEmoji), color: Color(.gray50), closeImage: Image(systemName: "xmark.circle"), onClose: { [weak self] in
                 self?.toolsEmojisViewModel?.selectedEmoji = nil
             }))
         }
-        
+
         self.data = data
     }
-    
+
     // MARK: - Views
-    
+
     // MARK: - Private
-    
+
     private func action() {
         // Placeholder for future functionality.
         // NSWorkspace.shared.open(url)
@@ -109,10 +108,10 @@ final class AppliedStylesViewModel: DomainViewConstantProtocol {
 /// - Parameters:
 ///   - data: The data used to display the tag, including image, text, color, and actions.
 struct StyleTagView: View {
-
     let data: CustomizationTagViewData
 
     @State private var isHovered = false
+    @FocusState private var isFocused: Bool
 
     var body: some View {
         HStack(spacing: .spacingDefault) {
@@ -135,6 +134,49 @@ struct StyleTagView: View {
         .onTapGesture {
             data.onSelect?()
         }
+        // Accessibility
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(tagAccessibilityLabel)
+        .accessibilityHint("Press Delete to remove")
+        .accessibilityAddTraits([.isButton])
+        // Keyboard support for removal
+        .focusable()
+        .focused($isFocused)
+        .focusEffectDisabled()
+        .onKeyPress(.delete) {
+            data.onClose?()
+            return .handled
+        }
+        .onKeyPress(KeyEquivalent("\u{7F}")) { // Backspace
+            data.onClose?()
+            return .handled
+        }
+    }
+
+    // MARK: - Accessibility
+
+    /// Accessibility label for the style tag
+    private var tagAccessibilityLabel: String {
+        if data.text.hasPrefix("#") {
+            return "Applied color \(data.text)"
+        } else if data.image != nil {
+            return "Applied image"
+        } else if !data.text.isEmpty {
+            return "Applied emoji \(data.text)"
+        }
+        return "Applied style"
+    }
+
+    /// Accessibility label for the close button
+    private var closeButtonAccessibilityLabel: String {
+        if data.text.hasPrefix("#") {
+            return "Remove color \(data.text)"
+        } else if data.image != nil {
+            return "Remove image"
+        } else if !data.text.isEmpty {
+            return "Remove emoji \(data.text)"
+        }
+        return "Remove style"
     }
 
     @ViewBuilder
@@ -181,6 +223,8 @@ struct StyleTagView: View {
         .buttonStyle(.plain)
         .opacity(isHovered ? 1.0 : 0.6)
         .animation(.easeInOut(duration: 0.15), value: isHovered)
+        .accessibilityLabel(closeButtonAccessibilityLabel)
+        .accessibilityHint("Double tap to remove this style")
     }
 
     @ViewBuilder
@@ -201,9 +245,8 @@ struct StyleTagView: View {
 ///   - onSelect: An optional action to perform when the tag is selected.
 ///   - onClose: An optional action to perform when the close button is tapped.
 struct CustomizationTagViewData: Identifiable {
-    
     typealias ActionClosure = Closure.EmptyBlock
-    
+
     let id = UUID()
     let image: NSImage?
     let text: String
@@ -211,7 +254,7 @@ struct CustomizationTagViewData: Identifiable {
     let closeImage: Image?
     let onSelect: ActionClosure?
     let onClose: ActionClosure?
-    
+
     init(image: NSImage? = nil, text: String = "", color: Color, closeImage: Image? = nil, onSelect: ActionClosure? = nil, onClose: ActionClosure? = nil) {
         self.image = image
         self.text = text

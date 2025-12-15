@@ -6,8 +6,8 @@
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
-import SwiftUI
 import Algorithms
+import SwiftUI
 
 /// A view that displays a list of color options for selection.
 ///
@@ -21,37 +21,36 @@ import Algorithms
 ///   - `colorPickerTitle`: A view displaying the title for the color picker.
 ///   - `colorsList`: A view displaying a list of color options for the user to choose from.
 struct ToolsColorsView: View {
-    
     @Environment(ToolsColorsViewModel.self) var viewModel
-    
+
     @State private var selectedColor: NSColor? = nil
-    
+
     /// Tracks which color groups are expanded to show all shades
     @State private var expandedGroups: Set<String> = []
-    
+
     @Namespace private var namespace
-    
+
     /// Color groups ordered by hue wheel
     private let colorGroups: [NSColor.ColorGroup] = NSColor.colorGroupsOrdered
-    
+
     var body: some View {
         ScrollView {
             colorPickerTitle
-            
+
             recentColorsSection
-            
+
             colorsList
         }
         .animation(.default, value: viewModel.recentColors)
-        .onChange(of: selectedColor) { oldValue, newValue in
+        .onChange(of: selectedColor) { _, newValue in
             viewModel.selectedColor = newValue
             viewModel.selectedColorPublisher.send(newValue)
         }
-        .onChange(of: viewModel.selectedColor) { oldValue, newValue in
+        .onChange(of: viewModel.selectedColor) { _, newValue in
             selectedColor = newValue
         }
     }
-    
+
     /// Section showing recently used colors
     @ViewBuilder
     private var recentColorsSection: some View {
@@ -60,9 +59,9 @@ struct ToolsColorsView: View {
                 Text("Recent")
                     .font(Typography.headlineMedium)
                     .foregroundStyle(Color.primaryText)
-                
+
                 Spacer()
-                
+
                 Button {
                     viewModel.clearRecentColors()
                 } label: {
@@ -73,7 +72,7 @@ struct ToolsColorsView: View {
                 .buttonStyle(.plain)
             }
             .padding(.horizontal, .paddingDefault)
-            
+
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: .spacingDefault) {
                     ForEach(viewModel.recentColors, id: \.self) { color in
@@ -82,7 +81,7 @@ struct ToolsColorsView: View {
                 }
                 .padding(.horizontal, .paddingDefault)
             }
-            
+
             Divider()
                 .padding(.horizontal, .paddingDefault)
                 .padding(.top, .paddingSmall)
@@ -90,24 +89,24 @@ struct ToolsColorsView: View {
         .isHidden(viewModel.recentColors.isEmpty)
         .animation(.default, value: viewModel.recentColors)
     }
-    
+
     var columns: [GridItem] {
         [
-            GridItem(.adaptive(minimum: ToolsColorsViewModel.cellWidth))
+            GridItem(.adaptive(minimum: ToolsColorsViewModel.cellWidth)),
         ]
     }
-    
+
     @ViewBuilder
     var colorPickerTitle: some View {
         VStack(spacing: viewModel.viewSettings.spacing) {
             customColorButton
-            
+
             Divider()
         }
         .padding(.horizontal, .paddingDefault)
         .padding(.vertical, viewModel.viewSettings.padding.top)
     }
-    
+
     /// Custom color picker button with improved discoverability
     @ViewBuilder
     private var customColorButton: some View {
@@ -121,20 +120,20 @@ struct ToolsColorsView: View {
                         RoundedRectangle(cornerRadius: .radiusSmall)
                             .strokeBorder(Color.primaryText.opacity(0.2), lineWidth: 1)
                     )
-                
+
                 if selectedColor == nil {
                     Image(systemName: "plus")
                         .font(.system(size: 16, weight: .medium))
                         .foregroundStyle(Color.secondaryText)
                 }
             }
-            
+
             Text(ToolsColorsViewDomain.Localization.customColor)
                 .font(Typography.headlineSmall)
                 .foregroundStyle(Color.primaryText)
-            
+
             Spacer()
-            
+
             // Native color picker (hidden, triggered by button)
             ColorPicker(
                 selection: Binding(
@@ -151,7 +150,7 @@ struct ToolsColorsView: View {
         .background(Color.secondaryBackground.opacity(0.5))
         .clipShape(RoundedRectangle(cornerRadius: .radiusSmall))
     }
-    
+
     @ViewBuilder
     var colorsList: some View {
         LazyVStack(spacing: .spacingHeight) {
@@ -161,17 +160,17 @@ struct ToolsColorsView: View {
         }
         .padding(EdgeInsets(top: .zero, leading: .paddingDefault, bottom: .paddingDefault, trailing: .paddingDefault))
     }
-    
+
     /// A collapsible color group section
     /// Shows only the 500 shade by default, expands to show all shades when tapped
     @ViewBuilder
     private func colorGroupSection(for group: NSColor.ColorGroup) -> some View {
         let isExpanded = expandedGroups.contains(group.id)
-        
+
         VStack(alignment: .leading, spacing: .spacingDefault) {
             // Header with expand/collapse toggle
             colorGroupHeader(for: group, isExpanded: isExpanded)
-            
+
             // Color grid - shows primary color only or all shades
             if isExpanded {
                 LazyVGrid(columns: columns, spacing: viewModel.viewSettings.spacing) {
@@ -191,7 +190,7 @@ struct ToolsColorsView: View {
         }
         .clipped()
     }
-    
+
     /// Header for a color group with expand/collapse functionality
     @ViewBuilder
     private func colorGroupHeader(for group: NSColor.ColorGroup, isExpanded: Bool) -> some View {
@@ -209,18 +208,18 @@ struct ToolsColorsView: View {
                 Circle()
                     .fill(Color(nsColor: group.primaryColor))
                     .frame(width: 12, height: 12)
-                
+
                 Text(group.name)
                     .font(Typography.headlineMedium)
                     .foregroundStyle(Color.primaryText)
-                
+
                 Spacer()
-                
+
                 // Shade count badge
                 Text(isExpanded ? "\(group.colors.count) shades" : "Tap to expand")
                     .font(Typography.labelMedium)
                     .foregroundStyle(Color.primaryText)
-                
+
                 // Chevron indicator
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12, weight: .semibold))
@@ -233,8 +232,12 @@ struct ToolsColorsView: View {
             .clipShape(RoundedRectangle(cornerRadius: .radiusSmall))
         }
         .buttonStyle(.plain)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(group.name), \(group.colors.count) shades, \(isExpanded ? "expanded" : "collapsed")")
+        .accessibilityHint(isExpanded ? "Double tap to collapse" : "Double tap to expand")
+        .accessibilityAddTraits([.isButton])
     }
-    
+
     @ViewBuilder
     private func cell(for color: NSColor, width: CGFloat = ToolsColorsViewModel.cellWidth) -> some View {
         SelectableGridCell(

@@ -456,6 +456,86 @@ Located in `UITests/`:
 - [Photos Framework](https://developer.apple.com/documentation/photos)
 - [Swift Concurrency](https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html)
 
+## Accessibility
+
+Colir implements comprehensive accessibility support for WCAG 2.1 Level A compliance:
+
+### VoiceOver Support
+
+All interactive elements are accessible via VoiceOver with:
+- **Descriptive labels**: Clear, meaningful labels for all controls
+- **Contextual hints**: Instructions for available actions
+- **State announcements**: Dynamic updates for state changes
+
+### Keyboard Navigation
+
+Full keyboard accessibility:
+- **Tab navigation**: Standard focus traversal through interactive elements
+- **Arrow keys**: ColorWheelNSView supports hue/saturation adjustment
+- **Delete/Backspace**: Remove applied styles from StyleTagView
+- **Escape**: Standard dismissal patterns
+
+### Implementation Patterns
+
+#### SwiftUI Accessibility
+
+```swift
+// Standard button accessibility
+.accessibilityElement(children: .ignore)
+.accessibilityLabel("Button description")
+.accessibilityHint("Action result")
+.accessibilityAddTraits([.isButton])
+
+// Toggle/Disclosure accessibility
+.accessibilityLabel("\(label), \(count) items, \(isExpanded ? "expanded" : "collapsed")")
+.accessibilityHint(isExpanded ? "Double tap to collapse" : "Double tap to expand")
+
+// Interactive zone accessibility
+.accessibilityElement(children: .combine)
+.accessibilityValue(hasContent ? "Content selected" : "Empty")
+```
+
+#### NSView Accessibility (AppKit)
+
+For bridged NSViews like ColorWheelNSView:
+
+```swift
+extension ColorWheelNSView {
+    override func accessibilityRole() -> NSAccessibility.Role? { .slider }
+    override func accessibilityLabel() -> String? { "Color picker wheel" }
+    override func accessibilityValue() -> Any? {
+        "Hue \(hueDegrees) degrees, Saturation \(saturationPercent) percent"
+    }
+    override func accessibilityHelp() -> String? {
+        "Use arrow keys to adjust color"
+    }
+}
+```
+
+### Reference Implementation
+
+**SelectableGridCell** serves as the reference pattern for accessible grid items:
+- Consistent label/hint pattern
+- Keyboard focus support with `.focusable()`
+- Selection state announcement
+
+### Accessibility Extensions
+
+`View+Accessibility.swift` provides reusable modifiers:
+- `accessibleButton(label:hint:isSelected:)`
+- `accessibleToggle(label:isExpanded:itemCount:)`
+- `accessibleZone(label:hint:hasContent:)`
+- `accessibleRemovableItem(label:removeHint:)`
+
+### Accessibility Checklist
+
+For new views, ensure:
+- [ ] All interactive elements have `accessibilityLabel`
+- [ ] Actions have `accessibilityHint`
+- [ ] State changes update `accessibilityValue`
+- [ ] Keyboard navigation works (Tab, arrows, Delete)
+- [ ] VoiceOver announces all content correctly
+
 ## Architecture Principles
 
 1. **MVVM** - Clear separation of views, view models, and models
@@ -465,3 +545,4 @@ Located in `UITests/`:
 5. **Extension Pattern** - Framework augmentation via extensions
 6. **Reactive State** - Combine publishers for state updates
 7. **Sandboxed Security** - App sandbox with minimal permissions
+8. **Accessible Design** - WCAG 2.1 compliant with VoiceOver support

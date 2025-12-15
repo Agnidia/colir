@@ -27,11 +27,10 @@ import SystemSettingsAccess
 /// - Preview:
 ///   - A preview instance of `ToolsPhotosView` is provided to visualize the view's layout and behavior in Xcode's canvas.
 struct ToolsPhotosView: View {
-    
     @Environment(ToolsPhotosViewModel.self) var viewModel
-    
+
     @State private var selectedAsset: PhotoAsset? = nil
-    
+
     @State private var selectedImage: NSImage? = nil {
         didSet {
             if selectedImage == nil {
@@ -39,9 +38,9 @@ struct ToolsPhotosView: View {
             }
         }
     }
-    
+
     @State private var previewImage: NSImage? = nil
-    
+
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: viewModel.cellWidth))], spacing: .spacingHeight) {
@@ -58,7 +57,7 @@ struct ToolsPhotosView: View {
             selectedImage = newValue
         }
     }
-    
+
     @ViewBuilder
     private func overlay() -> some View {
         if viewModel.isAuthorised == false, let url = SystemSettingsSecurityPrivacy.photos.path {
@@ -66,7 +65,7 @@ struct ToolsPhotosView: View {
                 .environmentObject(PermissionsOverlayViewModel(title: ToolsPhotosViewDomain.Localization.photoDescription, url: url))
         }
     }
-    
+
     /// Creates a cell view for a given photo asset, with selection handling and image fetching.
     @ViewBuilder
     func cell(for item: PhotoAsset) -> some View {
@@ -82,35 +81,34 @@ struct ToolsPhotosView: View {
             select(item: item)
         }
     }
-    
+
     private func select(item: PhotoAsset) {
         if selectedAsset == item {
             selectedAsset = nil
         } else {
             selectedAsset = item
         }
-        
-        guard let selectedAsset = self.selectedAsset else {
-            self.selectedImage = nil
+
+        guard let selectedAsset = selectedAsset else {
+            selectedImage = nil
             viewModel.selectedImagePublisher.send((nil, nil))
             return
         }
-        
+
         let imageSize = viewModel.imageSize
         let cache = viewModel.photoLibraryAlbumManager.cache
-        
+
         previewImage = nil
-        
+
         Task {
             _ = await cache.requestImage(for: selectedAsset, targetSize: imageSize) { result in
-                
                 if result?.isLowerQuality == true, let image = result?.image {
                     previewImage = image
                     return
                 }
-                
+
                 guard let image = result?.image ?? previewImage else { return }
-                
+
                 self.previewImage = nil
                 self.selectedImage = image
                 viewModel.selectedImagePublisher.send((image, selectedAsset))

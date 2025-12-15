@@ -9,12 +9,11 @@
 import AppKit
 
 extension NSImage {
-    
     /// Represents a scaling mode
     enum ScalingMode {
         case aspectFill
         case aspectFit
-        
+
         /// Calculates the aspect ratio between two sizes
         ///
         /// - parameters:
@@ -23,9 +22,9 @@ extension NSImage {
         ///
         /// - return: the aspect ratio between the two sizes
         func aspectRatio(between size: CGSize, and otherSize: CGSize) -> CGFloat {
-            let aspectWidth  = size.width/otherSize.width
-            let aspectHeight = size.height/otherSize.height
-            
+            let aspectWidth = size.width / otherSize.width
+            let aspectHeight = size.height / otherSize.height
+
             switch self {
             case .aspectFill:
                 return max(aspectWidth, aspectHeight)
@@ -34,7 +33,7 @@ extension NSImage {
             }
         }
     }
-    
+
     /// Scales an image to fit within a bounds with a size governed by the passed size. Also keeps the aspect ratio.
     ///
     /// - parameter:
@@ -43,22 +42,21 @@ extension NSImage {
     ///
     /// - returns: a new scaled image.
     func scaled(to newSize: CGSize, scalingMode: ScalingMode = .aspectFill) -> NSImage {
-        
         let aspectRatio = scalingMode.aspectRatio(between: newSize, and: size)
-        
+
         /* Build the rectangle representing the area to be drawn */
         var scaledImageRect = CGRect.zero
-        
-        scaledImageRect.size.width  = size.width * aspectRatio
+
+        scaledImageRect.size.width = size.width * aspectRatio
         scaledImageRect.size.height = size.height * aspectRatio
-        scaledImageRect.origin.x    = (newSize.width - size.width * aspectRatio) / 2.0
-        scaledImageRect.origin.y    = (newSize.height - size.height * aspectRatio) / 2.0
-        
+        scaledImageRect.origin.x = (newSize.width - size.width * aspectRatio) / 2.0
+        scaledImageRect.origin.y = (newSize.height - size.height * aspectRatio) / 2.0
+
         let scaledImage = NSImage(size: newSize)
         scaledImage.lockFocus()
         draw(in: scaledImageRect)
         scaledImage.unlockFocus()
-        
+
         return scaledImage
     }
 }

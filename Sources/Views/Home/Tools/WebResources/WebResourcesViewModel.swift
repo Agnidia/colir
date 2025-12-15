@@ -8,7 +8,4 @@
 
 import SwiftUI
 
-final class WebResourcesViewModel: ObservableObject {
-    
-    
-}
+final class WebResourcesViewModel: ObservableObject {}

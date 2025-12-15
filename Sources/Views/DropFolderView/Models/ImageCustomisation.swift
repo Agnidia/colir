@@ -1,5 +1,5 @@
 //
-//  ImageCustomization.swift
+//  ImageCustomisation.swift
 //  colir
 //
 //  Created by Vitalii Parovishnyk on 07.11.2023.
@@ -16,7 +16,7 @@ struct ImageCustomisationUndoDto {
     let selectedAsset: PhotoAsset?
     let selectedPictureItem: PictureItem?
     let selectedEmoji: Character?
-    
+
     init(selectedColor: NSColor? = nil, selectedPicture: NSImage? = nil, selectedAsset: PhotoAsset? = nil, selectedPictureItem: PictureItem? = nil, selectedEmoji: Character? = nil) {
         self.selectedColor = selectedColor
         self.selectedPicture = selectedPicture
@@ -27,14 +27,13 @@ struct ImageCustomisationUndoDto {
 }
 
 final class ImageCustomisation {
-    
     /// Represents the different states an image can be in during customization.
     enum ImageState {
         case empty
         case dirty
         case processed
     }
-    
+
     private static var dummyImages: [ImageDto.ImageSize: ImageState] {
         ImageDto.ImageSize.allCases.reduce([ImageDto.ImageSize: ImageState]()) {
             var result = $0
@@ -42,26 +41,26 @@ final class ImageCustomisation {
             return result
         }
     }
-    
+
     private var coloredImageState: [ImageDto.ImageSize: ImageState] = dummyImages
-    private(set) var selectedColor: NSColor? = nil
-    
+    private(set) var selectedColor: NSColor?
+
     private let folderLines = NSImage(resource: .imgFolderLines)
     private let folderBottomShadow = NSImage(resource: .imgFolderBottomShadow)
-    
+
     private var picturedImageState: [ImageDto.ImageSize: ImageState] = dummyImages
-    private(set) var selectedPicture: NSImage? = nil
-    private(set) var selectedAsset: PhotoAsset? = nil
-    private(set) var selectedPictureItem: PictureItem? = nil
-    
+    private(set) var selectedPicture: NSImage?
+    private(set) var selectedAsset: PhotoAsset?
+    private(set) var selectedPictureItem: PictureItem?
+
     private var emojiedImageState: [ImageDto.ImageSize: ImageState] = dummyImages
-    private(set) var selectedEmoji: Character? = nil
-    
+    private(set) var selectedEmoji: Character?
+
     /// Returns the current state of customizations for undo functionality.
     var undoItems: ImageCustomisationUndoDto {
         .init(selectedColor: selectedColor, selectedPicture: selectedPicture, selectedAsset: selectedAsset, selectedPictureItem: selectedPictureItem, selectedEmoji: selectedEmoji)
     }
-    
+
     /// Updates the customization properties from the provided undo item.
     ///
     /// - Parameter undoItem: The undo data to apply.
@@ -70,20 +69,20 @@ final class ImageCustomisation {
         selectedPicture = undoItem.selectedPicture
         selectedEmoji = undoItem.selectedEmoji
     }
-    
+
     /// Applies a color to the image customizations.
     ///
     /// - Parameter color: The color to apply.
     func apply(color: NSColor?) async {
         selectedColor = color
-        
+
         let newState: ImageState = color != nil ? .dirty : .empty
-        
+
         coloredImageState.keys.forEach { coloredImageState[$0] = newState }
         picturedImageState.keys.forEach { picturedImageState[$0] = .dirty }
         emojiedImageState.keys.forEach { emojiedImageState[$0] = .dirty }
     }
-    
+
     /// Updates the color of the image based on the selected color.
     ///
     /// - Parameters:
@@ -105,7 +104,7 @@ final class ImageCustomisation {
             return image
         }
     }
-    
+
     /// Applies a picture, asset, and item to the image customizations.
     ///
     /// - Parameters:
@@ -116,13 +115,13 @@ final class ImageCustomisation {
         selectedPicture = picture
         selectedAsset = asset
         selectedPictureItem = item
-        
+
         let newState: ImageState = picture != nil ? .dirty : .empty
-        
+
         picturedImageState.keys.forEach { picturedImageState[$0] = newState }
         emojiedImageState.keys.forEach { emojiedImageState[$0] = .dirty }
     }
-    
+
     /// Updates the picture of the image based on the selected picture.
     ///
     /// - Parameters:
@@ -139,16 +138,16 @@ final class ImageCustomisation {
             picturedImageState[size] = .processed
             var newImage = image
             let scaleSize = CGSize(width: size.dimension, height: size.dimension)
-            
+
             let img = picture.scaled(to: scaleSize)
             newImage = update(image: newImage, with: img)
-            
+
             let lines = folderLines.scaled(to: scaleSize)
             newImage = update(image: newImage, with: lines)
-            
+
             let shadow = folderBottomShadow.scaled(to: scaleSize)
             newImage = update(image: newImage, with: shadow)
-            
+
             return newImage
         case .processed:
             return updatedImage
@@ -156,17 +155,17 @@ final class ImageCustomisation {
             return image
         }
     }
-    
+
     /// Applies an emoji to the image customizations.
     ///
     /// - Parameter emoji: The emoji to apply.
     func apply(emoji: Character?) async {
         selectedEmoji = emoji
-        
+
         let newState: ImageState = emoji != nil ? .dirty : .empty
         emojiedImageState.keys.forEach { emojiedImageState[$0] = newState }
     }
-    
+
     /// Updates the image with the selected emoji.
     ///
     /// - Parameters:
@@ -188,7 +187,7 @@ final class ImageCustomisation {
             return image
         }
     }
-    
+
     /// Applies a color tint to the image.
     ///
     /// - Parameters:
@@ -200,14 +199,14 @@ final class ImageCustomisation {
         guard let mainColor = dominantColors.first else {
             return image
         }
-        
+
         guard let newImage = image.tint(color: mainColor, withColor: color) else {
             return image
         }
-        
+
         return newImage
     }
-    
+
     /// Draws an image on top of another image.
     ///
     /// - Parameters:
@@ -216,15 +215,15 @@ final class ImageCustomisation {
     /// - Returns: The combined image.
     private func update(image: NSImage, with img: NSImage) -> NSImage {
         var point: CGPoint = .zero
-        
+
         // Adjust offset for small images
         if img.size.width < 255 {
             point = .init(x: .zero, y: -1)
         }
-        
+
         return image.draw(image: img, at: point)
     }
-    
+
     /// Draws an emoji on top of an image.
     ///
     /// - Parameters:

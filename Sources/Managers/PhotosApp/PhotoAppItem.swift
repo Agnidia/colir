@@ -12,10 +12,10 @@ import AppKit
 struct PhotoAppItem {
     /// The name of the photo item.
     let name: String
-    
+
     /// The image associated with the photo item.
     let image: NSImage
-    
+
     /// Initializes a `PhotoAppItem` with a name and an optional image.
     /// - Parameters:
     ///   - name: The name of the photo item.

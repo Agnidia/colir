@@ -8,19 +8,19 @@
 
 import AppKit
 
-extension NSBezierPath {
+public extension NSBezierPath {
     @available(macOS 12, *)
     @backDeployed(before: macOS 14)
-    public final var cgPath: CGPath {
+    final var cgPath: CGPath {
         let path = CGMutablePath()
         let points = UnsafeMutablePointer<NSPoint>.allocate(capacity: 3)
-        
+
         if elementCount > .zero {
             var didClosePath = true
-            
-            for index in .zero..<elementCount {
+
+            for index in .zero ..< elementCount {
                 let pathType = element(at: index, associatedPoints: points)
-                
+
                 switch pathType {
                 case .moveTo:
                     path.move(to: points[.zero])
@@ -41,10 +41,10 @@ extension NSBezierPath {
                     break
                 }
             }
-            
+
             if !didClosePath { path.closeSubpath() }
         }
-        
+
         points.deallocate()
         return path
     }

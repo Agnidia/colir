@@ -20,21 +20,20 @@ enum IconManagerError: Error {
 
 /// Manages the creation and setting of application icons.
 final class IconManager {
-    
     private enum K {
         static let iconsetName = "icon.iconset"
         static let icnsName = "icon.icns"
-        
+
         static let iconutilPath = "/usr/bin/iconutil"
         static let iconutilFileType = "icns"
-        
+
         static let scriptNotCreatedKey = "scriptNotCreated"
         static let scriptNotExecutedKey = "scriptNotExecuted"
     }
-    
+
     private lazy var fs = FileManager.default
     private let serialQueue = DispatchQueue.global()
-    
+
     /// Creates an icon set directory and writes out all the icon files.
     /// - Parameters:
     ///   - images: An array of `NSImage` objects to be used for creating the icon set.
@@ -43,21 +42,21 @@ final class IconManager {
     private func createIconSet(for images: [NSImage], to url: URL) throws {
         // Create the iconset directory
         try fs.createDirectory(at: url, withIntermediateDirectories: true)
-        
+
         // Write out all the icon files
         for dimension in [16, 32, 128, 256, 512] {
             for scale in [1, 2] {
                 guard let image = images.first(where: { $0.size.width == CGFloat(dimension) }) else {
                     continue
                 }
-                
+
                 let filename = "icon_\(dimension)x\(dimension)\(scale == 1 ? "" : "@\(scale)x").png"
-                
+
                 try image.pngData?.write(to: url.appendingPathComponent(filename))
             }
         }
     }
-    
+
     /// Converts an array of images into ICNS format.
     /// - Parameter images: An array of `NSImage` objects to be converted.
     /// - Returns: A `Data` object representing the ICNS file.
@@ -66,32 +65,32 @@ final class IconManager {
         let tmpDir = fs.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         let iconSetURL = tmpDir.appendingPathComponent(K.iconsetName)
         let iconURL = tmpDir.appendingPathComponent(K.icnsName)
-        
+
         // Get the iconset of all the sized images
-        try self.createIconSet(for: images, to: iconSetURL)
-        
+        try createIconSet(for: images, to: iconSetURL)
+
         // Convert to an ICNS file
         let process = Process()
         let pipe = Pipe()
-        
+
         process.standardOutput = pipe
         process.standardError = pipe
         process.arguments = ["-c", K.iconutilFileType, iconSetURL.lastPathComponent]
-        
+
         process.launchPath = K.iconutilPath
         process.currentDirectoryPath = tmpDir.path
         process.launch()
         process.waitUntilExit()
-        
+
         if process.terminationStatus != .zero {
             print("FAILED")
         }
-        
+
         let data = try Data(contentsOf: iconURL)
         try? fs.removeItem(at: tmpDir)
         return data
     }
-    
+
     /// Sets the provided icon data to the specified file path.
     /// - Parameters:
     ///   - data: A `Data` object containing the ICNS data to be set as the icon.
@@ -99,25 +98,25 @@ final class IconManager {
     /// - Throws: An error if the icon file could not be created or if the AppleScript failed.
     func setIcon(data: Data, to path: URL) throws {
         let filePath = fs.temporaryDirectory.appendingPathComponent(K.icnsName)
-        
+
         do {
             try data.write(to: filePath)
         } catch {
             throw IconManagerError.dummyFileNotCreated
         }
-        
-        let p = filePath.path
-        
-        let myAppleScript = """
-use framework "Foundation"
-use framework "AppKit"
-use scripting additions
 
-set fromPosix to "\(p)" -- whatever
-set toPosix to "\(path.path)"
-set theImage to (current application's NSImage's alloc()'s initWithContentsOfFile:fromPosix)
-(current application's NSWorkspace's sharedWorkspace()'s setIcon:theImage forFile:toPosix options:0)
-"""
+        let p = filePath.path
+
+        let myAppleScript = """
+        use framework "Foundation"
+        use framework "AppKit"
+        use scripting additions
+
+        set fromPosix to "\(p)" -- whatever
+        set toPosix to "\(path.path)"
+        set theImage to (current application's NSImage's alloc()'s initWithContentsOfFile:fromPosix)
+        (current application's NSWorkspace's sharedWorkspace()'s setIcon:theImage forFile:toPosix options:0)
+        """
         var error: NSDictionary?
         if let scriptObject = NSAppleScript(source: myAppleScript) {
             let semaphore = DispatchSemaphore(value: 0)
@@ -132,9 +131,9 @@ set theImage to (current application's NSImage's alloc()'s initWithContentsOfFil
         } else {
             error = NSDictionary(object: K.scriptNotExecutedKey, forKey: NSAppleScript.errorMessage as NSCopying)
         }
-        
+
         try? fs.removeItem(at: filePath)
-        
+
         if let message = error?[NSAppleScript.errorMessage] as? String {
             if message == K.scriptNotCreatedKey {
                 throw IconManagerError.scriptNotCreated

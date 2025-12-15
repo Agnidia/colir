@@ -6,8 +6,8 @@
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
-import SwiftUI
 import SwiftCommons
+import SwiftUI
 
 /// ViewModel for managing the state and presentation of a permissions overlay.
 ///
@@ -20,18 +20,18 @@ import SwiftCommons
 ///   - description: Additional information or instructions related to the permissions request.
 ///   - url: The URL to open when the user interacts with the action button (e.g., system preferences).
 final class PermissionsOverlayViewModel: ObservableObject, DomainViewConstantProtocol {
-    
     // MARK: - DomainViewConstantProtocol
+
     typealias DomainViewConstantType = PermissionsOverlayDomain
-    
+
     var viewSettings: DomainViewConstantType = .init()
-    
+
     // MARK: - Variables
-    
+
     private var title: LocalizedStringKey
     private var description: LocalizedStringKey
     private var url: URL
-    
+
     /// Initializes a new instance of `PermissionsOverlayViewModel`.
     ///
     /// - Parameters:
@@ -43,9 +43,9 @@ final class PermissionsOverlayViewModel: ObservableObject, DomainViewConstantPro
         self.description = description
         self.url = url
     }
-    
+
     // MARK: - Views
-    
+
     /// The background view for the permissions overlay.
     ///
     /// This view uses a rounded rectangle with the specified background color.
@@ -54,7 +54,7 @@ final class PermissionsOverlayViewModel: ObservableObject, DomainViewConstantPro
         RoundedRectangle(cornerRadius: viewSettings.cornerRadius!)
             .fill(viewSettings.background)
     }
-    
+
     /// The title text displayed in the overlay.
     ///
     /// This uses a title font style for prominence.
@@ -63,7 +63,7 @@ final class PermissionsOverlayViewModel: ObservableObject, DomainViewConstantPro
         Text(title)
             .font(.title)
     }
-    
+
     /// The description text displayed in the overlay.
     ///
     /// This uses a body font style for additional information.
@@ -72,7 +72,7 @@ final class PermissionsOverlayViewModel: ObservableObject, DomainViewConstantPro
         Text(description)
             .font(.body)
     }
-    
+
     /// The action button for the overlay.
     ///
     /// This button triggers an action to open the specified URL, such as system preferences.
@@ -87,9 +87,9 @@ final class PermissionsOverlayViewModel: ObservableObject, DomainViewConstantPro
         .tint(ButtonStyleConstants.backgroundAccentColor)
         .buttonStyle(.accent)
     }
-    
+
     // MARK: - Private
-    
+
     /// Opens the specified URL.
     ///
     /// This method is called when the action button is pressed.

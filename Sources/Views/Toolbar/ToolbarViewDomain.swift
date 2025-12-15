@@ -23,17 +23,17 @@ extension ToolbarView {
             case webResources
             case spacer
             case tips
-            
+
             /// A localized title for the toolbar button associated with the action.
             var title: LocalizedStringKey {
                 LocalizedStringKey("toolbar.button." + rawValue)
             }
-            
+
             /// A localized help title for the toolbar button associated with the action.
             var helpTitle: LocalizedStringKey {
                 LocalizedStringKey("toolbar.button." + rawValue + ".help")
             }
-            
+
             /// The system icon name associated with the action.
             var icon: String {
                 switch self {
@@ -49,7 +49,7 @@ extension ToolbarView {
                 case .tips: "bag"
                 }
             }
-            
+
             /// A unique tag identifier for the toolbar action.
             var tag: String {
                 rawValue + "Tag"

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct WebResourcesView: View {
     @EnvironmentObject var viewModel: WebResourcesViewModel
-    
+
     var body: some View {
         ZStack {
             EmptyView()

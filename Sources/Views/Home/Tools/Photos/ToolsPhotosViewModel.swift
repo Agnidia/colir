@@ -6,10 +6,10 @@
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
-import SwiftUI
+import Combine
 import Photos
 import SwiftCommons
-import Combine
+import SwiftUI
 
 /// ViewModel for managing and displaying photos from the photo library in the `ToolsPhotosView`.
 ///
@@ -30,57 +30,56 @@ import Combine
 
 @Observable
 final class ToolsPhotosViewModel: DomainViewConstantProtocol, @unchecked Sendable {
-    
     typealias DomainViewConstantType = ToolsPhotosViewDomain
-    
+
     let viewSettings: ToolsPhotosViewDomain = .init()
-    
+
     private let logger: LogProtocol = Log(category: .toolsPhoto)
-    
+
     private(set) var isAuthorised: Bool = true
-    
+
     private let photosAppManager: PhotoLibraryAccessManagerProtocol
     var isPhotosLoaded = false
-    
+
     var photoLibraryAlbumManager = PhotoLibraryAlbumManager(smartAlbum: .smartAlbumUserLibrary)
-    
-    var selectedPicture: NSImage? = nil
-    var selectedAsset: PhotoAsset? = nil
+
+    var selectedPicture: NSImage?
+    var selectedAsset: PhotoAsset?
     private(set) var selectedImagePublisher: PassthroughSubject<(NSImage?, PhotoAsset?), Never> = .init()
-    
+
     var cellWidth: CGFloat { 192 }
     var cellHeight: CGFloat { 148 }
-    
+
     var imageSize: CGSize { .init(width: 1024, height: 1024) }
     var thumbnailSize: CGSize { .init(width: 512, height: 512) }
-    
+
     var cellCornerRadius: CGFloat { viewSettings.cornerRadius! }
-    
+
     init() {
-        self.photosAppManager = PhotoLibraryAccessManager()
+        photosAppManager = PhotoLibraryAccessManager()
     }
-    
+
     /// Asynchronously fetches images from the photo library and checks authorization status.
     func fetchImages() async {
         guard !isPhotosLoaded else { return }
-        
+
         let authorised = await photosAppManager.checkAuthorization()
-        
+
         Task { @MainActor in
             isAuthorised = authorised
         }
-        
+
         guard authorised else {
             return
         }
-        
+
         Task {
             do {
                 try await self.photoLibraryAlbumManager.load()
-            } catch let error {
+            } catch {
                 logger.error("Failed to load photo collection: \(error.localizedDescription)")
             }
-            
+
             Task { @MainActor in
                 self.isPhotosLoaded = true
             }

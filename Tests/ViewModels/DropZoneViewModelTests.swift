@@ -224,15 +224,14 @@ struct DropZoneViewModelTests {
         #expect(true)
     }
 
-    // MARK: - Sendable Tests
+    // MARK: - MainActor Isolation Tests
 
-    @Test("DropZoneViewModel is Sendable (unchecked)")
-    func sendable_conformance() async {
+    @Test("DropZoneViewModel is MainActor isolated")
+    func mainActor_isolation() async {
         let viewModel = createViewModel()
 
-        let scale = await Task.detached {
-            viewModel.enterZoneAnimationTextScale
-        }.value
+        // MainActor isolation allows access from MainActor context
+        let scale = viewModel.enterZoneAnimationTextScale
 
         #expect(scale == 1.0)
     }

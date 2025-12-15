@@ -18,14 +18,13 @@ import SwiftUI
 ///   needed to display the applied styles.
 ///
 struct AppliedStylesView: View {
-    
     /// The view model that provides the data and functionality for this view.
     @Environment(AppliedStylesViewModel.self) var viewModel
-    
+
     var body: some View {
         VStack(spacing: .spacingDefault) { tagsView }
     }
-    
+
     /// Creates a view that displays the tags`.
     @ViewBuilder
     var tagsView: some View {
@@ -37,7 +36,7 @@ struct AppliedStylesView: View {
         }
         .scrollContentBackground(.hidden)
     }
-    
+
     /// An array of custom tag views created from the `data` property.
     @MainActor
     var views: [StyleTagView] {
@@ -58,9 +57,9 @@ struct AppliedStylesView: View {
                 ),
                 toolsEmojisViewModel: ToolsEmojisViewModel()
             ))
-        
+
         Divider()
-        
+
         Spacer()
     }
     .frame(width: 236, height: 450)

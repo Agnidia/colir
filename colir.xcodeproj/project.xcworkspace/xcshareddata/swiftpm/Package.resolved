@@ -1,5 +1,5 @@
 {
-  "originHash" : "13b40b480b87c32850e1eaeca5436cdd66ee16976b31fd003b5b8fd6bbd36196",
+  "originHash" : "2218fd91efda664d915dd28ce109f549a3b51dd03015813f52cbf690467ac56c",
   "pins" : [
     {
       "identity" : "dominantcolor",
@@ -11,12 +11,12 @@
       }
     },
     {
-      "identity" : "storekitplus",
+      "identity" : "storehelper",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/danielsaidi/StoreKitPlus",
+      "location" : "https://github.com/russell-archer/StoreHelper",
       "state" : {
-        "revision" : "f694b920e6f9bb69661d884f25e5ee9f9835df47",
-        "version" : "0.8.0"
+        "revision" : "1c55f49473d847fd5a2f495aabe45f6e5ea3e2ef",
+        "version" : "2.7.1"
       }
     },
     {
@@ -26,6 +26,15 @@
       "state" : {
         "revision" : "87e50f483c54e6efd60e885f7f5aa946cee68023",
         "version" : "1.2.1"
+      }
+    },
+    {
+      "identity" : "swift-collections",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-collections",
+      "state" : {
+        "revision" : "7b847a3b7008b2dc2f47ca3110d8c782fb2e5c7e",
+        "version" : "1.3.0"
       }
     },
     {

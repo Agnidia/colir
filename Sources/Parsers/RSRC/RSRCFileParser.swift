@@ -12,7 +12,6 @@ import Foundation
 ///
 /// This class reads and parses resource files, returning an array of `RSRCResource` objects.
 final class RSRCFileParser {
-
     /// Parses a resource file at the specified URL.
     ///
     /// - Parameter url: The URL of the resource file to be parsed.
@@ -22,7 +21,7 @@ final class RSRCFileParser {
     /// This method utilizes `ResourceFile.read(from:)` to read the contents of the file
     /// and convert it into an array of `RSRCResource` objects. If the file cannot be accessed
     /// or if there is an issue with parsing, it will throw an appropriate error.
-    public func parse(url: URL) throws -> [RSRCResource] {
+    func parse(url: URL) throws -> [RSRCResource] {
         return try ResourceFile.read(from: url)
     }
 }

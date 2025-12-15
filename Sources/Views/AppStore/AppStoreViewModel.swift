@@ -6,8 +6,8 @@
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
-import SwiftUI
 import SwiftCommons
+import SwiftUI
 
 /// ViewModel for managing and displaying App Store related views, including subscriptions and in-app purchases.
 ///
@@ -15,27 +15,27 @@ import SwiftCommons
 /// It manages the state of the UI, including displaying overlays and handling user interactions for purchasing and restoring products.
 @Observable
 final class AppStoreViewModel: DomainViewConstantProtocol, @unchecked Sendable {
-    
     // MARK: - DomainViewConstantProtocol
+
     /// Type alias for domain-specific view constants.
     typealias DomainViewConstantType = AppStoreViewDomain
-    
+
     /// View settings and constants for the App Store view.
     var viewSettings: DomainViewConstantType = .init()
-    
+
     // MARK: - Properties
-    
+
     /// Service for interacting with the App Store.
     let appStoreService: AppStoreProtocol
-    
+
     /// Application settings for managing export counts and other configurations.
     private var appSettings: AppSettingsProtocol
-    
+
     /// Closure to be called when the view is closed or when a specific action is completed.
     let completionHandler: Commons.EmptyClosure
-    
+
     // MARK: - Initialization
-    
+
     /// Initializes the view model with the given services and completion handler.
     ///
     /// - Parameters:
@@ -45,27 +45,27 @@ final class AppStoreViewModel: DomainViewConstantProtocol, @unchecked Sendable {
     init(appStoreService: AppStoreProtocol, appSettings: AppSettingsProtocol, completion: @escaping Commons.EmptyClosure) {
         self.appSettings = appSettings
         self.appStoreService = appStoreService
-        self.completionHandler = completion
+        completionHandler = completion
     }
-    
+
     // MARK: - Views
-    
+
     /// Size of the buttons in the grid.
     static var buttonSize: CGFloat { 150 }
-    
+
     /// Layout for the grid items.
     let rows = [
-        GridItem(.adaptive(minimum: buttonSize, maximum: buttonSize))
+        GridItem(.adaptive(minimum: buttonSize, maximum: buttonSize)),
     ]
-    
+
     // MARK: - Methods
-    
+
     /// Processes the result of a purchase attempt.
     ///
     /// - Parameter purchase: The result of the purchase attempt.
     func process(purchase: PurchaseResult) {
         switch purchase {
-        case .success(let product):
+        case let .success(product):
             handleSuccess(for: product)
             completionHandler()
         case .userCancelled:
@@ -76,11 +76,11 @@ final class AppStoreViewModel: DomainViewConstantProtocol, @unchecked Sendable {
             break
         }
     }
-    
+
     /// Handles successful purchase and updates application settings.
     ///
     /// - Parameter product: The product that was successfully purchased.
-    private func handleSuccess(for product: AppProduct) {
+    private func handleSuccess(for _: AppProduct) {
         appSettings.tipped = CryptoModel(value: "1")
     }
 }

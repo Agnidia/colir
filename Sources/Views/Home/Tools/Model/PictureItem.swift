@@ -21,11 +21,11 @@ import AppKit
 ///   - `image`: The image associated with the picture item, represented by an `NSImage`.
 struct PictureItem: Identifiable, Hashable {
     let id = UUID()
-    
+
     let name: String
-    
+
     let tags: [String]
-    
+
     let image: NSImage
 }
 

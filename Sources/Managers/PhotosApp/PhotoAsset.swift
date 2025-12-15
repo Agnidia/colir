@@ -12,19 +12,19 @@ import Photos
 struct PhotoAsset: Identifiable, Sendable {
     /// The unique identifier for the asset.
     var id: String { identifier }
-    
+
     /// The unique identifier for the asset, default is a newly generated UUID string.
     var identifier: String = UUID().uuidString
-    
+
     /// The index of the asset, if available.
     var index: Int?
-    
+
     /// The underlying `PHAsset` object representing the photo asset.
     var phAsset: PHAsset?
-    
+
     /// Type alias for `PHAssetMediaType`.
     typealias MediaType = PHAssetMediaType
-    
+
     /// The media type of the asset.
     var mediaType: MediaType {
         phAsset?.mediaType ?? .unknown
@@ -37,15 +37,15 @@ struct PhotoAsset: Identifiable, Sendable {
     init(phAsset: PHAsset, index: Int?) {
         self.phAsset = phAsset
         self.index = index
-        self.identifier = phAsset.localIdentifier
+        identifier = phAsset.localIdentifier
     }
-    
+
     /// Initializes a `PhotoAsset` with a local identifier.
     /// - Parameter identifier: The local identifier of the photo asset.
     init(identifier: String) {
         self.identifier = identifier
         let fetchedAssets = PHAsset.fetchAssets(withLocalIdentifiers: [identifier], options: nil)
-        self.phAsset = fetchedAssets.firstObject
+        phAsset = fetchedAssets.firstObject
     }
 }
 
@@ -55,8 +55,8 @@ extension PhotoAsset: Equatable {
     ///   - lhs: The left-hand side `PhotoAsset`.
     ///   - rhs: The right-hand side `PhotoAsset`.
     /// - Returns: `true` if the identifiers are equal, otherwise `false`.
-    static func ==(lhs: PhotoAsset, rhs: PhotoAsset) -> Bool {
-        (lhs.identifier == rhs.identifier)
+    static func == (lhs: PhotoAsset, rhs: PhotoAsset) -> Bool {
+        lhs.identifier == rhs.identifier
     }
 }
 

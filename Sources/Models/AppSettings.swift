@@ -58,7 +58,7 @@ final class AppSettings: AppSettingsProtocol, ObservableObject {
     /// - Parameter store: The `UserDefaults` instance to use.
     init(store: UserDefaults = .init(suiteName: Secrets.userDefaultsId)!) {
         AppSettings.userDefaults = store
-        bookmarkData = Data()
+        // bookmarkData = Data()
     }
 
     func setup(uuid _: String) {

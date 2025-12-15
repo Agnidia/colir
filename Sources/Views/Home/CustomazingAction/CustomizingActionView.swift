@@ -79,6 +79,7 @@ struct CustomizingActionView: View {
         case .processing(let progress):
             ProgressView("", value: progress, total: 100)
                 .progressViewStyle(.primary)
+                .clipShape(UnevenRoundedRectangle(cornerRadii: .init(topTrailing: ButtonStyleConstants.cornerRadius)))
         default:
             EmptyView()
         }

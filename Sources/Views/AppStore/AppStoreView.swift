@@ -10,7 +10,6 @@ import SwiftUI
 
 /// A SwiftUI view that presents the app store interface for subscriptions and in-app purchases.
 struct AppStoreView: View {
-
     private enum ButtonsFocusable: Hashable {
         case subscribe
         case tips1
@@ -346,6 +345,8 @@ struct AppStoreView: View {
         .focused($elementFocus, equals: .restore)
         .focusEffectDisabled()
         .help(AppStoreViewDomain.Localization.helpRestore)
+        .accessibilityLabel("Restore purchases")
+        .accessibilityHint("Double tap to restore previous purchases")
     }
 
     @ViewBuilder
@@ -361,6 +362,8 @@ struct AppStoreView: View {
         .focused($elementFocus, equals: .close)
         .focusEffectDisabled()
         .help(AppStoreViewDomain.Localization.helpClose)
+        .accessibilityLabel("Close store")
+        .accessibilityHint("Double tap to close the store window")
     }
 }
 

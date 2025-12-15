@@ -6,24 +6,24 @@
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
-import SwiftUI
 import SwiftCommons
+import SwiftUI
 
 /// A view that displays a list of emoji groups with expandable sections.
 /// Each group of emojis is shown in a `DisclosureGroup`, and individual emojis can be selected.
 ///
 /// This view uses `ToolsEmojisViewModel` as its environment object to manage state, such as which groups are expanded and which emoji is selected.
 struct ToolsEmojisView: View {
-    
     /// The view model responsible for managing the state and settings of the emoji view.
     @EnvironmentObject var viewModel: ToolsEmojisViewModel
-    
+
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
                 ForEach(viewModel.groups, id: \.self) { group in
                     // Check if there are emojis to display for the current group
                     if let emojis = viewModel.emojis[group], emojis.isEmpty == false {
+                        let isExpanded = viewModel.expanded.contains(group)
                         DisclosureGroup(
                             isExpanded: Binding<Bool>(
                                 get: { viewModel.expanded.contains(group) },
@@ -49,13 +49,16 @@ struct ToolsEmojisView: View {
                                     }
                                 }
                         }
+                        .accessibilityElement(children: .contain)
+                        .accessibilityLabel("\(group.name), \(emojis.count) emojis, \(isExpanded ? "expanded" : "collapsed")")
+                        .accessibilityHint(isExpanded ? "Double tap to collapse" : "Double tap to expand")
                     }
                 }
                 .padding(.paddingDefault)
             }
         }
     }
-    
+
     @ViewBuilder
     private func emojiesList(geometry: GeometryProxy, emojis: [Character]) -> some View {
         // Display emojis in a grid within the DisclosureGroup

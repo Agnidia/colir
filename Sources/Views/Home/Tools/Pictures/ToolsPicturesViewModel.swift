@@ -145,7 +145,7 @@ extension ToolsPicturesViewModel {
     static var preview: ToolsPicturesViewModel {
         .init(
             appSettings: AppSettings.preview,
-            picturesFolderManager: PicturesFolderManager(picturesDirectory: URL(string: "")!)
+            picturesFolderManager: PicturesFolderManager(picturesDirectory: URL(string: "/tmp/test-pictures")!)
         )
     }
 }

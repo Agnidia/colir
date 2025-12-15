@@ -17,11 +17,11 @@ enum DropFolderViewConstants {
             // Fallback or handle error if image creation fails
             return NSImage()
         }
-        
+
         // Create the symbol configuration
         var config = NSImage.SymbolConfiguration(textStyle: .body, scale: .large)
         config = config.applying(.init(paletteColors: [.systemGreen, .systemGray]))
-        
+
         // Apply the symbol configuration to the image
         return image.withSymbolConfiguration(config) ?? NSImage()
     }

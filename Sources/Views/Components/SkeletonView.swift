@@ -23,7 +23,6 @@ import SwiftUI
 /// }
 /// ```
 struct SkeletonView: View {
-
     /// The corner radius of the skeleton shape
     let cornerRadius: CGFloat
 
@@ -60,7 +59,7 @@ struct SkeletonView: View {
                 gradient: Gradient(colors: [
                     Color.clear,
                     Color.primaryText.opacity(0.1),
-                    Color.clear
+                    Color.clear,
                 ]),
                 startPoint: .leading,
                 endPoint: .trailing
@@ -85,7 +84,6 @@ struct SkeletonView: View {
 
 /// A skeleton view specifically designed for image placeholders
 struct ImageSkeletonView: View {
-
     let cornerRadius: CGFloat
 
     init(cornerRadius: CGFloat = .radiusSmall) {

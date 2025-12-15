@@ -12,13 +12,12 @@ import AppKit
 ///
 /// This struct contains the name of the image file and the `NSImage` object for the image.
 struct PicturesFolderItem {
-    
     /// The name of the image file.
     let name: String
-    
+
     /// The `NSImage` object representing the image.
     let image: NSImage
-    
+
     /// Initializes a `PicturesFolderItem` with the provided name and image.
     ///
     /// - Parameters:

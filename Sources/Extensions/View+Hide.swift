@@ -6,14 +6,13 @@
 //  Copyright © 2025 IGR Software. All rights reserved.
 //
 
-
 import SwiftUI
 
 extension View {
     @ViewBuilder
     func isHidden(_ shouldHide: Bool) -> some View {
         switch shouldHide {
-        case true:  EmptyView()
+        case true: EmptyView()
         case false: self
         }
     }

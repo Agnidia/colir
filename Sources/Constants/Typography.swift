@@ -57,6 +57,6 @@ extension View {
     /// - Parameter style: The typography font to apply
     /// - Returns: A view with the typography style applied
     func typography(_ style: Font) -> some View {
-        self.font(style)
+        font(style)
     }
 }

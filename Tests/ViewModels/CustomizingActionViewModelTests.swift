@@ -10,6 +10,7 @@
 import Testing
 
 @Suite("CustomizingActionViewModel Tests")
+@MainActor
 struct CustomizingActionViewModelTests {
     // MARK: - Initialization Tests
 

@@ -10,17 +10,16 @@ import SwiftUI
 
 /// A custom `ButtonStyle` that applies a primary color scheme and hover effects to buttons.
 struct PrimaryButtonStyle: ButtonStyle {
-    
     /// A private view that applies the button style, handling hover and enabled/disabled states.
     private struct StyleView<V: View>: View {
         @Environment(\.isEnabled) private var isEnabled: Bool
-        
+
         @State private var isHovered = false
-        
+
         var cornerRadius: CGFloat = ButtonStyleConstants.cornerRadius
-        
+
         let content: () -> V
-        
+
         var body: some View {
             ZStack(alignment: .center) {
                 content()
@@ -29,7 +28,7 @@ struct PrimaryButtonStyle: ButtonStyle {
             .background(content: {
                 if !isEnabled {
                     UnevenRoundedRectangle(cornerRadii: .init(topTrailing: cornerRadius))
-                                        .fill(ButtonStyleConstants.backgroundDisabledColor)
+                        .fill(ButtonStyleConstants.backgroundDisabledColor)
                 } else {
                     UnevenRoundedRectangle(cornerRadii: .init(topTrailing: cornerRadius))
                         .fill(isHovered ? ButtonStyleConstants.backgroundHoveredColor : ButtonStyleConstants.backgroundColor)
@@ -40,19 +39,18 @@ struct PrimaryButtonStyle: ButtonStyle {
             }
         }
     }
-    
+
     /// Creates a view that displays the button with the primary style.
     /// - Parameter configuration: The configuration for the button.
     /// - Returns: A view that applies the primary button style.
     func makeBody(configuration: Self.Configuration) -> some View {
-        StyleView() {
+        StyleView {
             configuration.label
         }
     }
 }
 
 extension ButtonStyle where Self == PrimaryButtonStyle {
-    
     /// A static instance of `PrimaryButtonStyle` for use with `Button`.
     ///
     /// This style applies a primary color scheme to the button with hover and disabled state effects.
@@ -81,7 +79,7 @@ extension ButtonStyle where Self == PrimaryButtonStyle {
         .buttonStyle(.primary)
         .padding(.paddingDefault)
         .disabled(false)
-        
+
         Button(action: {}, label: {
             Text("test")
                 .font(ButtonStyleConstants.font)

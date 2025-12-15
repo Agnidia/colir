@@ -6,11 +6,10 @@
 //  Copyright © 2023 IGR Software. All rights reserved.
 //
 
-import Foundation
 import CommonCrypto
+import Foundation
 
 extension String {
-    
     /// Encrypts the string using AES encryption.
     ///
     /// - Parameters:
@@ -24,14 +23,14 @@ extension String {
                     keyLength: size_t = kCCKeySizeAES128,
                     iv: String = "",
                     options: CCOptions = CCOptions(kCCOptionPKCS7Padding),
-                    algorithm: CCAlgorithm = CCAlgorithm(kCCAlgorithmAES128)) -> String? {
-        
+                    algorithm: CCAlgorithm = CCAlgorithm(kCCAlgorithmAES128)) -> String?
+    {
         if let keyData = key.data(using: .utf8),
-           let data = self.data(using: .utf8),
-           let cryptData = NSMutableData(length: Int(data.count) + kCCBlockSizeAES128) {
-            
+           let data = data(using: .utf8),
+           let cryptData = NSMutableData(length: Int(data.count) + kCCBlockSizeAES128)
+        {
             var numBytesEncrypted: size_t = 0
-            
+
             let cryptStatus = CCCrypt(CCOperation(kCCEncrypt),
                                       algorithm,
                                       options,
@@ -40,20 +39,20 @@ extension String {
                                       (data as NSData).bytes, data.count,
                                       cryptData.mutableBytes, cryptData.length,
                                       &numBytesEncrypted)
-            
+
             guard cryptStatus == kCCSuccess else {
                 return nil
             }
-            
+
             cryptData.length = numBytesEncrypted
             let base64cryptString = cryptData.base64EncodedString(options: .lineLength64Characters)
-            
+
             return base64cryptString
         }
-        
+
         return nil
     }
-    
+
     /// Decrypts the string using AES encryption.
     ///
     /// - Parameters:
@@ -67,14 +66,14 @@ extension String {
                     keyLength: size_t = kCCKeySizeAES128,
                     iv: String = "",
                     options: CCOptions = CCOptions(kCCOptionPKCS7Padding),
-                    algorithm: CCAlgorithm = CCAlgorithm(kCCAlgorithmAES128)) -> String? {
-        
+                    algorithm: CCAlgorithm = CCAlgorithm(kCCAlgorithmAES128)) -> String?
+    {
         if let keyData = key.data(using: .utf8),
            let data = NSData(base64Encoded: self, options: .ignoreUnknownCharacters),
-           let cryptData = NSMutableData(length: Int(data.length) + kCCBlockSizeAES128) {
-            
+           let cryptData = NSMutableData(length: Int(data.length) + kCCBlockSizeAES128)
+        {
             var numBytesEncrypted: size_t = 0
-            
+
             let cryptStatus = CCCrypt(CCOperation(kCCDecrypt),
                                       algorithm,
                                       options,
@@ -83,17 +82,17 @@ extension String {
                                       data.bytes, data.length,
                                       cryptData.mutableBytes, cryptData.length,
                                       &numBytesEncrypted)
-            
+
             guard cryptStatus == kCCSuccess else {
                 return nil
             }
-            
+
             cryptData.length = numBytesEncrypted
             let unencryptedMessage = String(data: cryptData as Data, encoding: .utf8)
-            
+
             return unencryptedMessage
         }
-        
+
         return nil
     }
 }

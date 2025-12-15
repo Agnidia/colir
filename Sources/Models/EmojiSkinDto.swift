@@ -1,5 +1,5 @@
 //
-//  EmojiDto.swift
+//  EmojiSkinDto.swift
 //  colir
 //
 //  Created by Vitalii Parovishnyk on 04.09.2023.
@@ -68,9 +68,9 @@ enum EmojiEmoticonDto: Decodable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        case .string(let value):
+        case let .string(value):
             try container.encode(value)
-        case .stringArray(let values):
+        case let .stringArray(values):
             try container.encode(values)
         }
     }

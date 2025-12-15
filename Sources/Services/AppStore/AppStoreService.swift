@@ -7,23 +7,23 @@
 //
 
 import Foundation
-import StoreKitPlus
+import StoreHelper
 import StoreKit
 
 /// Represents the different in-app products available for purchase.
-public enum AppProduct: String, CaseIterable, Equatable, ProductRepresentable, Sendable {
+public enum AppProduct: String, CaseIterable, Equatable, Sendable {
     case smallTips = "com.igrsoft.colir.small.tips1.subs"
     case middleTips = "com.igrsoft.colir.middle.tips.inapp"
     case bigTips = "com.igrsoft.colir.big.tips.inapp"
-    
+
     /// The unique identifier of the product.
     public var id: String { rawValue }
-    
+
     /// A list of in-app purchase products.
     static var inAppPurchases: [AppProduct] {
         [.middleTips, .bigTips]
     }
-    
+
     /// A list of subscription products.
     static var subscriptions: [AppProduct] {
         [.smallTips]
@@ -31,7 +31,7 @@ public enum AppProduct: String, CaseIterable, Equatable, ProductRepresentable, S
 }
 
 /// Contains information about an App Store product.
-public struct AppStoreProductInfo {
+public struct AppStoreProductInfo: Sendable {
     let name: String
     let description: String
     let price: String
@@ -51,20 +51,21 @@ public enum PurchaseResult: Sendable {
 }
 
 /// A protocol defining the required functionalities for interacting with the App Store.
+@MainActor
 public protocol AppStoreProtocol {
     /// Synchronizes store data with the App Store.
     func syncStoreData() async throws
-    
+
     /// Initiates the purchase of a specified product.
     /// - Parameter product: The product to be purchased.
     /// - Returns: The result of the purchase attempt.
     func purchase(_ product: AppProduct) async throws -> PurchaseResult
-    
+
     /// Retrieves information for a specified product.
     /// - Parameter product: The product to retrieve information for.
     /// - Returns: Information about the product.
     func info(for product: AppProduct) throws -> AppStoreProductInfo
-    
+
     /// Indicates whether the user has full access.
     var hasFullAccess: Bool { get }
 }
@@ -72,123 +73,122 @@ public protocol AppStoreProtocol {
 /// Represents errors that can occur within the `AppStoreService`.
 enum AppStoreServiceError: Error {
     case missedProduct
+    case storeNotStarted
 }
 
-/// A service class that handles interactions with the App Store.
+/// A service class that handles interactions with the App Store using StoreHelper.
+@MainActor
 final class AppStoreService: AppStoreProtocol {
-    
-    private let context = StoreContext()
-    
-    private var storeService: StoreService
-    
-    private var products: [AppProduct: Product]?
-    
-    private var purchasedProducts: Set<AppProduct>?
-    
+    private let storeHelper: StoreHelper
+
     private var log: LogProtocol
-    
+
     /// Initializes the AppStoreService.
-    /// - Parameter logger: An optional logger for logging messages.
-    init(logger: LogProtocol = Log(category: .appStore)) {
-        self.log = logger
-        storeService = StandardStoreService(products: AppProduct.allCases)
+    /// - Parameters:
+    ///   - storeHelper: The StoreHelper instance to use (defaults to shared instance).
+    ///   - logger: An optional logger for logging messages.
+    init(storeHelper: StoreHelper = StoreHelper(), logger: LogProtocol = Log(category: .appStore)) {
+        self.storeHelper = storeHelper
+        log = logger
     }
-    
+
     /// Indicates whether the user has full access.
+    /// Returns true if the user has purchased the subscription product.
     var hasFullAccess: Bool {
-        guard let purchasedProducts, purchasedProducts.isEmpty == false else { return false }
-        return Set(AppProduct.subscriptions).isSuperset(of: purchasedProducts)
+        let subscriptionIds = AppProduct.subscriptions.map(\.id)
+        return storeHelper.purchasedProducts.contains { subscriptionIds.contains($0) }
     }
-    
+
     /// Synchronizes store data with the App Store.
     func syncStoreData() async throws {
         log.debug("Sync Store data")
-        //try await storeService.syncStoreData(to: context)
-        try await fillProducts()
-        fillPurchased()
-        log.debug("restored Purchases")
+
+        // Start StoreHelper if not already started
+        if !storeHelper.hasStarted {
+            await storeHelper.startAsync()
+        }
+
+        // Refresh products from App Store
+        storeHelper.refreshProductsFromAppStore()
+
+        log.debug("Products count: \(storeHelper.products?.count ?? 0)")
+        log.debug("Purchased products: \(storeHelper.purchasedProducts)")
     }
-    
-    /// Fills the products dictionary with the available products.
-    private func fillProducts() async throws {
-        let products = try await storeService.getProducts()
-        self.products = products.reduce(into: [AppProduct: Product](), { partialResult, product in
-            if let id = AppProduct(rawValue: product.id) {
-                partialResult[id] = product
-            }
-        })
-        log.debug("got products: \(products)")
-    }
-    
+
     /// Initiates the purchase of a specified product.
     /// - Parameter product: The product to be purchased.
     /// - Returns: The result of the purchase attempt.
     func purchase(_ product: AppProduct) async throws -> PurchaseResult {
-        guard let appStoreProduct = products?[product] else {
+        // Ensure store is started
+        if !storeHelper.hasStarted {
+            await storeHelper.startAsync()
+        }
+
+        guard let storeProduct = storeHelper.product(from: product.id) else {
+            log.error("Product not found: \(product.id)")
             throw AppStoreServiceError.missedProduct
         }
-        log.debug("purchase product: \(appStoreProduct)")
-        let result = try await storeService.purchase(appStoreProduct).0
-        switch result {
-        case .success(let verificationResult):
-            let productId = try verificationResult.payloadValue.productID
-            guard let appProduct = AppProduct(rawValue: productId) else {
-                return .pending
-            }
-            purchasedProducts?.insert(appProduct)
-            return .success(appProduct)
-        case .userCancelled:
+
+        log.debug("Purchasing product: \(product.id)")
+
+        let (_, purchaseState) = try await storeHelper.purchase(storeProduct)
+
+        log.debug("Purchase state: \(purchaseState)")
+
+        switch purchaseState {
+        case .purchased:
+            return .success(product)
+        case .cancelled:
             return .userCancelled
         case .pending:
             return .pending
-        @unknown default:
+        case .inProgress, .notStarted, .unknown, .notPurchased:
+            return .userCancelled
+        case .userCannotMakePayments:
+            log.info("User cannot make payments")
+            return .userCancelled
+        case .failed, .failedVerification:
+            log.error("Purchase failed or verification failed")
             return .userCancelled
         }
     }
-    
+
     /// Retrieves information for a specified product.
     /// - Parameter product: The product to retrieve information for.
     /// - Returns: Information about the product.
     func info(for product: AppProduct) throws -> AppStoreProductInfo {
-        guard let appStoreProduct = products?[product] else {
+        guard let storeProduct = storeHelper.product(from: product.id) else {
             throw AppStoreServiceError.missedProduct
         }
-        return .init(name: appStoreProduct.displayName, description: appStoreProduct.description, price: appStoreProduct.displayPrice)
-    }
-    
-    /// Fills the purchased products set with the purchased products.
-    private func fillPurchased() {
-        let products = AppProduct.allCases
-        let purchased = products.purchased(in: context)
-        let purchasedProducts = purchased.reduce(into: Set<AppProduct>(), { partialResult, product in
-            if let id = AppProduct(rawValue: product.id) {
-                partialResult.insert(id)
-            }
-        })
-        self.purchasedProducts = purchasedProducts.isEmpty ? nil : purchasedProducts
-        log.debug("got purchased products: \(purchasedProducts)")
+
+        return AppStoreProductInfo(
+            name: storeProduct.displayName,
+            description: storeProduct.description,
+            price: storeProduct.displayPrice
+        )
     }
 }
 
 /// A preview implementation of `AppStoreProtocol` for testing purposes.
+@MainActor
 final class AppStorePreview: AppStoreProtocol {
     /// Initiates the purchase of a specified product.
     /// - Parameter product: The product to be purchased.
     /// - Returns: The result of the purchase attempt.
-    func purchase(_ product: AppProduct) async throws -> PurchaseResult {
+    func purchase(_: AppProduct) async throws -> PurchaseResult {
         .userCancelled
     }
-    
+
     /// Synchronizes store data with the App Store.
     func syncStoreData() async throws {}
-    
+
     /// Retrieves information for a specified product.
     /// - Parameter product: The product to retrieve information for.
     /// - Returns: Information about the product.
-    func info(for product: AppProduct) throws -> AppStoreProductInfo {
+    func info(for _: AppProduct) throws -> AppStoreProductInfo {
         .init(name: "Preview", description: "test", price: "$9.99")
     }
-    
+
     /// Indicates whether the user has full access.
     var hasFullAccess: Bool {
         false

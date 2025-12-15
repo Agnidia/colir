@@ -6,8 +6,8 @@
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
-import Foundation
 import AppKit
+import Foundation
 
 extension Character {
     /// Checks if the character is a simple emoji.
@@ -18,13 +18,13 @@ extension Character {
         }
         return firstScalar.properties.isEmoji && firstScalar.value > 0x238C
     }
-    
+
     /// Checks if the character is combined into an emoji.
     /// An emoji is considered combined if it has multiple scalars and the first scalar is an emoji.
     var isCombinedIntoEmoji: Bool {
         unicodeScalars.count > 1 && unicodeScalars.first?.properties.isEmoji ?? false
     }
-    
+
     /// Checks if the character is an emoji.
     /// A character is an emoji if it is either a simple emoji or a combined emoji.
     var isEmoji: Bool { isSimpleEmoji || isCombinedIntoEmoji }
@@ -40,7 +40,7 @@ extension String {
 extension Character {
     private static let refUnicodeSize: CGFloat = 8
     private static let refUnicodePng = Character("\u{1fff}").png(ofSize: Character.refUnicodeSize)
-    
+
     /// Generates a PNG representation of the character with the specified font size.
     ///
     /// - Parameter fontSize: The size of the font to use for the character.
@@ -49,23 +49,23 @@ extension Character {
         let attributes = [NSAttributedString.Key.font: NSFont.systemFont(ofSize: fontSize)]
         let charStr = "\(self)" as NSString
         let size = charStr.size(withAttributes: attributes)
-        
-        let img = NSImage(size: size, flipped: false) { dstRect in
+
+        let img = NSImage(size: size, flipped: false) { _ in
             charStr.draw(at: CGPoint(x: 0, y: 0), withAttributes: attributes)
             return true
         }
-        
+
         return img.tiffRepresentation
     }
-    
+
     /// Checks if the character's Unicode representation is available.
     ///
     /// - Returns: A Boolean value indicating whether the Unicode representation of the character is available.
     func unicodeAvailable() -> Bool {
-        if let refUnicodePng = Character.refUnicodePng, let myPng = self.png(ofSize: Character.refUnicodeSize) {
+        if let refUnicodePng = Character.refUnicodePng, let myPng = png(ofSize: Character.refUnicodeSize) {
             return refUnicodePng != myPng
         }
-        
+
         return false
     }
 }

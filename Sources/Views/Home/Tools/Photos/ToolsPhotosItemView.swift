@@ -6,8 +6,8 @@
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
-import SwiftUI
 import Photos
+import SwiftUI
 
 /// A SwiftUI view that displays a photo asset from the user's photo library.
 ///
@@ -62,7 +62,7 @@ struct ToolsPhotosItemView: View {
         case .loading:
             loadingView(size: size)
 
-        case .loaded(let image):
+        case let .loaded(image):
             image
                 .resizable()
                 .scaledToFill()

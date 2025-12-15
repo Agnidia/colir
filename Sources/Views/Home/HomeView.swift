@@ -1,13 +1,13 @@
 //
-//  ContentView.swift
+//  HomeView.swift
 //  colir
 //
 //  Created by Vitalii Parovishnyk on 23.07.2023.
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
-import SwiftUI
 import SwiftCommons
+import SwiftUI
 
 /// A view that represents the main screen of the application, displaying various sections
 /// based on the provided `HomeViewModel`. It includes areas for icons, applied styles, and tools.
@@ -16,29 +16,26 @@ import SwiftCommons
 /// and a customization area on the left side, and a tools view on the right side. The layout
 /// adapts to the available space while keeping a fixed width for the left side.
 struct HomeView: View {
-    
     /// The view model that provides data and state management for the `HomeView`.
     @EnvironmentObject var viewModel: HomeViewModel
-    
+
     var body: some View {
-        
         Self.printDebugInfo()
-        
+
         HStack(alignment: .top, spacing: .zero) {
             VStack(alignment: .leading) {
-                
                 // Display the icon folder view provided by the view model
                 iconFolderView()
-                
+
                 // Display the applied styles view provided by the view model
                 appliedStylesView()
-                
+
                 // Display the customize folder view provided by the view model
                 customizeFolderView()
             }
             .frame(minWidth: viewModel.dropZoneSize, maxWidth: viewModel.dropZoneSize, maxHeight: .infinity)
             .clipped()
-            
+
             VStack(alignment: .leading) {
                 // Display the tools view provided by the view model
                 toolsView()
@@ -51,7 +48,7 @@ struct HomeView: View {
             Color.primaryBackground
         }
     }
-    
+
     /// Provides the view for the icon folder.
     @ViewBuilder
     private func iconFolderView() -> some View {
@@ -66,7 +63,7 @@ struct HomeView: View {
             )
             .clipShape(.rect(bottomTrailingRadius: 24))
     }
-    
+
     /// Provides the view for the selected tool.
     @ViewBuilder
     private func toolsView() -> some View {
@@ -90,7 +87,7 @@ struct HomeView: View {
                 .environmentObject(viewModel.webResourcesViewModel)
         }
     }
-    
+
     /// Provides the view for the applied styles.
     @ViewBuilder
     private func appliedStylesView() -> some View {
@@ -99,7 +96,7 @@ struct HomeView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .offset(x: -.paddingHeight)
     }
-    
+
     /// Provides the view for the customization folder.
     @ViewBuilder
     private func customizeFolderView() -> some View {
@@ -115,8 +112,8 @@ struct HomeView: View {
                 Alert(title: Text(HomeViewDomain.Localization.alertPurchaseTitle),
                       message: Text(HomeViewDomain.Localization.alertPurchaseDescription),
                       primaryButton: .default(Text(HomeViewDomain.Localization.alertPurchaseAction), action: {
-                    viewModel.showingAppStoreSheet.toggle()
-                }), secondaryButton: .cancel(Text(HomeViewDomain.Localization.alertPurchaseCancel)))
+                          viewModel.showingAppStoreSheet.toggle()
+                      }), secondaryButton: .cancel(Text(HomeViewDomain.Localization.alertPurchaseCancel)))
             }
             .sheet(isPresented: Binding<Bool>(
                 get: { viewModel.showingAppStoreSheet },

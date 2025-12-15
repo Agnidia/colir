@@ -10,17 +10,16 @@ import SwiftUI
 
 /// A custom `ButtonStyle` that applies accent colors and hover effects to buttons.
 struct AccentButtonStyle: ButtonStyle {
-    
     /// A view that applies the button style with hover and enabled/disabled states.
     private struct StyleView<V: View>: View {
         @Environment(\.isEnabled) private var isEnabled: Bool
-        
+
         @State private var isHovered = false
-        
+
         var cornerRadius: CGFloat = ButtonStyleConstants.cornerRadius
-        
+
         let content: () -> V
-        
+
         var body: some View {
             ZStack(alignment: .center) {
                 content()
@@ -42,19 +41,18 @@ struct AccentButtonStyle: ButtonStyle {
             }
         }
     }
-    
+
     /// Creates a view that displays the button with the accent style.
     /// - Parameter configuration: The configuration for the button.
     /// - Returns: A view that applies the accent button style.
     func makeBody(configuration: Self.Configuration) -> some View {
-        StyleView() {
+        StyleView {
             configuration.label
         }
     }
 }
 
 extension ButtonStyle where Self == AccentButtonStyle {
-    
     /// A static instance of `AccentButtonStyle` for use with `Button`.
     ///
     /// This style applies an accent color to the button with hover and disabled state effects.

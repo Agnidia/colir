@@ -9,11 +9,10 @@
 import SwiftUI
 
 public extension Color {
-    
     static var white0: Color {
         .white.opacity(0.001)
     }
-    
+
     static var black0: Color {
         .black.opacity(0.001)
     }

@@ -6,9 +6,9 @@
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
-import SwiftUI
-import SwiftCommons
 import Combine
+import SwiftCommons
+import SwiftUI
 
 /// View model responsible for managing color selection and display in the `ToolsColorsView`.
 ///
@@ -46,7 +46,7 @@ final class ToolsColorsViewModel: DomainViewConstantProtocol {
         viewSettings.cornerRadius ?? .radiusThin
     }
 
-    var selectedColor: NSColor? = nil {
+    var selectedColor: NSColor? {
         didSet {
             if let color = selectedColor {
                 addToRecentColors(color)

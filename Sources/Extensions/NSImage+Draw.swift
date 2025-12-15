@@ -23,7 +23,7 @@ public extension NSImage {
         img.unlockFocus()
         return img
     }
-    
+
     /// Draws an emoji character onto the current image.
     ///
     /// - Parameter emoji: The emoji character to be drawn.
@@ -33,7 +33,7 @@ public extension NSImage {
         var xOffset: CGFloat = (1 * size.width / 512)
         let yOffset: CGFloat = (18 * size.height / 512)
         var yScale = 4.6
-        
+
         if size.width == 32 {
             fontScale = 2.3
             xOffset += 1
@@ -42,14 +42,14 @@ public extension NSImage {
             fontScale = 2.2
             yScale = 3
         }
-        
+
         let font = NSFont.boldSystemFont(ofSize: size.height / fontScale)
         let textStyle = NSMutableParagraphStyle.default
-        let textFontAttributes: [NSAttributedString.Key : AnyObject] = [
+        let textFontAttributes: [NSAttributedString.Key: AnyObject] = [
             .font: font,
-            .paragraphStyle: textStyle
+            .paragraphStyle: textStyle,
         ]
-        
+
         let img: NSImage = .init(size: size)
         img.lockFocus()
         draw(in: .init(origin: .zero, size: size))

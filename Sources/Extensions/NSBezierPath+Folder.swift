@@ -9,49 +9,48 @@
 import AppKit
 
 extension NSBezierPath {
-    
     static var folderCenterFrame: NSBezierPath {
         let bezierPath = NSBezierPath()
-        
-        //top-left
+
+        // top-left
         bezierPath.move(to: NSPoint(x: 904, y: 768))
-        
-        //top-right
+
+        // top-right
         bezierPath.curve(to: NSPoint(x: 986, y: 690),
                          controlPoint1: NSPoint(x: 904, y: 768),
                          controlPoint2: NSPoint(x: 986, y: 768))
-        //right-top
+        // right-top
         bezierPath.curve(to: NSPoint(x: 986, y: 182),
                          controlPoint1: NSPoint(x: 986, y: 182),
                          controlPoint2: NSPoint(x: 986, y: 182))
-        //right-bottom
+        // right-bottom
         bezierPath.curve(to: NSPoint(x: 904, y: 108),
                          controlPoint1: NSPoint(x: 986, y: 182),
                          controlPoint2: NSPoint(x: 986, y: 108))
-        //bottom-right
+        // bottom-right
         bezierPath.curve(to: NSPoint(x: 120, y: 108),
                          controlPoint1: NSPoint(x: 120, y: 108),
                          controlPoint2: NSPoint(x: 120, y: 108))
-        //bottom-left
+        // bottom-left
         bezierPath.curve(to: NSPoint(x: 38, y: 182),
                          controlPoint1: NSPoint(x: 120, y: 108),
                          controlPoint2: NSPoint(x: 38, y: 108))
-        //left-bottom
+        // left-bottom
         bezierPath.curve(to: NSPoint(x: 38, y: 690),
                          controlPoint1: NSPoint(x: 38, y: 256),
                          controlPoint2: NSPoint(x: 38, y: 690))
-        //left-top
+        // left-top
         bezierPath.curve(to: NSPoint(x: 120, y: 768),
                          controlPoint1: NSPoint(x: 38, y: 768),
                          controlPoint2: NSPoint(x: 38, y: 768))
-        //top-left
+        // top-left
         bezierPath.curve(to: NSPoint(x: 904, y: 768),
                          controlPoint1: NSPoint(x: 120, y: 768),
                          controlPoint2: NSPoint(x: 904, y: 768))
-        
+
         return bezierPath
     }
-    
+
     static func folderLines() {
         //// Color Declarations
         let gradientColor = NSColor(red: 0, green: 0, blue: 0, alpha: 0.118)
@@ -70,7 +69,6 @@ extension NSBezierPath {
         rectanglePath.close()
         gradient.draw(in: rectanglePath, angle: -90)
 
-
         //// Rectangle 2 Drawing
         let rectangle2Path = NSBezierPath()
         rectangle2Path.move(to: NSPoint(x: 45, y: 152.5))
@@ -81,9 +79,8 @@ extension NSBezierPath {
         rectangle2Path.close()
         gradient.draw(in: rectangle2Path, angle: -90)
     }
-    
+
     static func folderBottomShadow() {
-        
         //// Color Declarations
         let gradient2Color = NSColor(red: 0, green: 0, blue: 0, alpha: 0.118)
         let gradient2Color3 = NSColor(red: 1, green: 1, blue: 1, alpha: 0.004)
@@ -102,6 +99,5 @@ extension NSBezierPath {
         bezier2Path.curve(to: NSPoint(x: 40, y: 238), controlPoint1: NSPoint(x: 40, y: 258), controlPoint2: NSPoint(x: 40, y: 238))
         bezier2Path.close()
         gradient2.draw(in: bezier2Path, angle: -90)
-
     }
 }

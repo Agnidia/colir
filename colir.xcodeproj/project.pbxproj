@@ -23,6 +23,7 @@
 		A50AF9662AF67776000C18AB /* DropZoneViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AF9652AF67776000C18AB /* DropZoneViewProtocol.swift */; };
 		A50AF9682AF67865000C18AB /* DropFolderViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A50AF9672AF67865000C18AB /* DropFolderViewConstants.swift */; };
 		A50F2C7C2D5A932200E8041B /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = A50F2C7B2D5A932200E8041B /* Credits.html */; };
+		A50F2C7F2D5A9D2400E8041D /* Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = A50F2C7E2D5A9D2300E8041C /* Products.plist */; };
 		A515FF042AF6BAC1000F0C3B /* ButtonStyleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A515FF032AF6BAC1000F0C3B /* ButtonStyleConstants.swift */; };
 		A515FF082AF6CA9B000F0C3B /* AccentButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A515FF072AF6CA9B000F0C3B /* AccentButtonStyle.swift */; };
 		A515FF0B2AF6CBE6000F0C3B /* CustomizingActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A515FF0A2AF6CBE6000F0C3B /* CustomizingActionView.swift */; };
@@ -170,7 +171,7 @@
 		A5E115EA2AFC105B0023A70C /* NSImage+CutPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115E92AFC105B0023A70C /* NSImage+CutPath.swift */; };
 		A5E115EF2AFEA7760023A70C /* Throttler in Frameworks */ = {isa = PBXBuildFile; productRef = A5E115EE2AFEA7760023A70C /* Throttler */; };
 		A5E115F22AFFD6EA0023A70C /* AppStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115F12AFFD6EA0023A70C /* AppStoreService.swift */; };
-		A5E115F52AFFD70A0023A70C /* StoreKitPlus in Frameworks */ = {isa = PBXBuildFile; productRef = A5E115F42AFFD70A0023A70C /* StoreKitPlus */; };
+		A5E115F52AFFD70A0023A70C /* StoreHelper in Frameworks */ = {isa = PBXBuildFile; productRef = A5E115F42AFFD70A0023A70C /* StoreHelper */; };
 		A5E115F72B0001E20023A70C /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115F62B0001E20023A70C /* Application.swift */; };
 		A5E115FE2B014BC90023A70C /* ExportIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E115FD2B014BC90023A70C /* ExportIconManager.swift */; };
 		A5E116012B0222B20023A70C /* AppStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E116002B0222B20023A70C /* AppStoreView.swift */; };
@@ -240,6 +241,7 @@
 		A50AF9672AF67865000C18AB /* DropFolderViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropFolderViewConstants.swift; sourceTree = "<group>"; };
 		A50F2C7B2D5A932200E8041B /* Credits.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		A50F2C7D2D5A9D2200E8041B /* colir-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "colir-Info.plist"; sourceTree = "<group>"; };
+		A50F2C7E2D5A9D2300E8041C /* Products.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Products.plist; sourceTree = "<group>"; };
 		A515FF032AF6BAC1000F0C3B /* ButtonStyleConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyleConstants.swift; sourceTree = "<group>"; };
 		A515FF072AF6CA9B000F0C3B /* AccentButtonStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccentButtonStyle.swift; sourceTree = "<group>"; };
 		A515FF0A2AF6CBE6000F0C3B /* CustomizingActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizingActionView.swift; sourceTree = "<group>"; };
@@ -453,7 +455,7 @@
 				A57ECAAF2D345F3100288FB5 /* Algorithms in Frameworks */,
 				A5E115EF2AFEA7760023A70C /* Throttler in Frameworks */,
 				A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */,
-				A5E115F52AFFD70A0023A70C /* StoreKitPlus in Frameworks */,
+				A5E115F52AFFD70A0023A70C /* StoreHelper in Frameworks */,
 				A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1220,6 +1222,7 @@
 			children = (
 				A57305652EE2F8C400C4D0F2 /* icon.icon */,
 				A50F2C7D2D5A9D2200E8041B /* colir-Info.plist */,
+				A50F2C7E2D5A9D2300E8041C /* Products.plist */,
 				A504B8602A6D2DAE002A2C8B /* Preview Content */,
 				A5F5CDFC2A6D2BFC008AF959 /* Assets.xcassets */,
 				A50F2C7B2D5A932200E8041B /* Credits.html */,
@@ -1276,7 +1279,7 @@
 				A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */,
 				A5E115C42AFBDBB50023A70C /* DominantColor */,
 				A5E115EE2AFEA7760023A70C /* Throttler */,
-				A5E115F42AFFD70A0023A70C /* StoreKitPlus */,
+				A5E115F42AFFD70A0023A70C /* StoreHelper */,
 				A57ECAAE2D345F3100288FB5 /* Algorithms */,
 			);
 			productName = colir;
@@ -1327,7 +1330,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 2610;
+				LastUpgradeCheck = 2620;
 				ORGANIZATIONNAME = "IGR Software";
 				TargetAttributes = {
 					A5F5CDF42A6D2BFB008AF959 = {
@@ -1358,7 +1361,7 @@
 				A5A00D802AEEFC7E0063FE06 /* XCRemoteSwiftPackageReference "SystemSettingsAccess" */,
 				A5E115C32AFBDBB50023A70C /* XCRemoteSwiftPackageReference "DominantColor" */,
 				A5E115ED2AFEA7760023A70C /* XCRemoteSwiftPackageReference "Throttler" */,
-				A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreKitPlus" */,
+				A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreHelper" */,
 				A57ECAAD2D345F3100288FB5 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 			);
 			productRefGroup = A5F5CDF62A6D2BFB008AF959 /* Products */;
@@ -1382,6 +1385,7 @@
 				A504B8622A6D2DAE002A2C8B /* Preview Assets.xcassets in Resources */,
 				A5F5CDFD2A6D2BFC008AF959 /* Assets.xcassets in Resources */,
 				A50F2C7C2D5A932200E8041B /* Credits.html in Resources */,
+				A50F2C7F2D5A9D2400E8041D /* Products.plist in Resources */,
 				A57305662EE2F8C400C4D0F2 /* icon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1617,7 +1621,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A504B86F2A6D2DCA002A2C8B /* debug.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = DMP42GVPJ3;
 			};
 			name = Debug;
 		};
@@ -1625,7 +1628,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A504B8702A6D2DCA002A2C8B /* release.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = DMP42GVPJ3;
 			};
 			name = Release;
 		};
@@ -1633,9 +1635,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A504B8662A6D2DCA002A2C8B /* app-debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "";
-				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = icon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 			};
 			name = Debug;
 		};
@@ -1643,9 +1642,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A504B8672A6D2DCA002A2C8B /* app-release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "";
-				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=macosx*]" = icon;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 			};
 			name = Release;
 		};
@@ -1759,12 +1755,12 @@
 				minimumVersion = 2.1.3;
 			};
 		};
-		A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreKitPlus" */ = {
+		A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreHelper" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/danielsaidi/StoreKitPlus";
+			repositoryURL = "https://github.com/russell-archer/StoreHelper";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.8.0;
+				minimumVersion = 2.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1795,10 +1791,10 @@
 			package = A5E115ED2AFEA7760023A70C /* XCRemoteSwiftPackageReference "Throttler" */;
 			productName = Throttler;
 		};
-		A5E115F42AFFD70A0023A70C /* StoreKitPlus */ = {
+		A5E115F42AFFD70A0023A70C /* StoreHelper */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreKitPlus" */;
-			productName = StoreKitPlus;
+			package = A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreHelper" */;
+			productName = StoreHelper;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

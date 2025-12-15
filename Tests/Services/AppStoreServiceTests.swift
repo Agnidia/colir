@@ -11,6 +11,7 @@ import StoreKit
 import Testing
 
 @Suite("AppStoreService Tests")
+@MainActor
 struct AppStoreServiceTests {
     // MARK: - AppProduct Tests
 

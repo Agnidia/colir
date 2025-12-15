@@ -12,10 +12,10 @@ import SwiftUI
 extension EnvironmentValues {
     /// The material type for the visual effect view.
     @Entry var visualEffectMaterial: NSVisualEffectView.Material? = nil
-    
+
     /// The blending mode for the visual effect view.
     @Entry var visualEffectBlending: NSVisualEffectView.BlendingMode? = nil
-    
+
     /// Indicates if the visual effect view is emphasized.
     @Entry var visualEffectEmphasized: Bool? = nil
 }
@@ -26,7 +26,7 @@ struct VisualEffectView<Content: View>: NSViewRepresentable {
     private let blendingMode: NSVisualEffectView.BlendingMode
     private let isEmphasized: Bool
     private let content: Content
-    
+
     /// Initializes a `VisualEffectView` with the specified visual effect properties and content.
     ///
     /// - Parameters:
@@ -38,18 +38,19 @@ struct VisualEffectView<Content: View>: NSViewRepresentable {
         content: Content,
         material: NSVisualEffectView.Material,
         blendingMode: NSVisualEffectView.BlendingMode,
-        emphasized: Bool) {
+        emphasized: Bool
+    ) {
         self.content = content
         self.material = material
         self.blendingMode = blendingMode
-        self.isEmphasized = emphasized
+        isEmphasized = emphasized
     }
-    
+
     /// Creates and configures the `NSVisualEffectView` for use in the SwiftUI view hierarchy.
     ///
     /// - Parameter context: The context containing the state and environment values.
     /// - Returns: A configured `NSVisualEffectView` instance.
-    func makeNSView(context: Context) -> NSVisualEffectView {
+    func makeNSView(context _: Context) -> NSVisualEffectView {
         let view = NSVisualEffectView()
         let wrapper = NSHostingView(rootView: content)
         view.state = .active
@@ -58,11 +59,11 @@ struct VisualEffectView<Content: View>: NSViewRepresentable {
         view.alphaValue = 0.25
         wrapper.autoresizingMask = [.width, .height]
         wrapper.frame = view.bounds
-        
+
         view.addSubview(wrapper)
         return view
     }
-    
+
     /// Updates the `NSVisualEffectView` with new properties from the environment.
     ///
     /// - Parameters:

@@ -28,7 +28,7 @@ public extension NSImage {
         }
         return icons
     }
-    
+
     /// Tints the image by replacing a specific color with a target color.
     ///
     /// - Parameters:
@@ -40,21 +40,21 @@ public extension NSImage {
         guard let imageRef = self.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
             return nil
         }
-        
+
         let logger = Log(category: .imageProcessing)
         let startAt = CFAbsoluteTimeGetCurrent()
-        
+
         let searchColorRGB = RGBA32(color: color)
         let (searchColorMin, searchColorMax) = searchColorRGB.colors(tolerance: UInt8(255 * tolerance))
         let replacementColorRGB = RGBA32(color: withColor)
-        
+
         // Graphics context parameters
         let bitsPerComponent = 8
         let colorspace = CGColorSpaceCreateDeviceRGB()
         let bitmapInfo = RGBA32.bitmapInfo
         let width = imageRef.width
         let height = imageRef.height
-        
+
         // Create context for back image
         let backImageBytesPerRow = width * 4
         let backImagePixelCount = width * height
@@ -65,20 +65,21 @@ public extension NSImage {
                                                bytesPerRow: backImageBytesPerRow,
                                                space: colorspace,
                                                bitmapInfo: bitmapInfo),
-              let dataBackImage = contextBackImage.data else {
+            let dataBackImage = contextBackImage.data
+        else {
             logger.debug("Unable to get back image buffer")
             return nil
         }
-        
+
         let bufferBackImage = dataBackImage.bindMemory(to: RGBA32.self, capacity: width * height)
         contextBackImage.draw(imageRef, in: CGRect(x: .zero, y: .zero, width: width, height: height))
-        
+
         // Prepare to iterate over image pixels
         var updatedColors: [RGBA32: RGBA32] = .init(minimumCapacity: backImagePixelCount)
-        
-        for offset in 0..<backImagePixelCount {
+
+        for offset in 0 ..< backImagePixelCount {
             let color = bufferBackImage[offset]
-            
+
             guard let updatedColor = updatedColors[color] else {
                 if color.between(searchColorMin, searchColorMax) {
                     let offsetC = color.colorDiff(otherColor: searchColorRGB)
@@ -90,7 +91,7 @@ public extension NSImage {
             }
             bufferBackImage[offset] = updatedColor
         }
-        
+
         // Retrieve image from memory context
         guard let img = CGContext(data: bufferBackImage,
                                   width: width,
@@ -99,14 +100,15 @@ public extension NSImage {
                                   bytesPerRow: backImageBytesPerRow,
                                   space: colorspace,
                                   bitmapInfo: bitmapInfo),
-              let cgImage = img.makeImage() else {
+            let cgImage = img.makeImage()
+        else {
             logger.debug("Unable to create image from buffer")
             return nil
         }
-        
+
         let finalImage = NSImage(cgImage: cgImage, size: .init(width: width, height: height))
         logger.elapsedTime(startAt: startAt)
-        
+
         return finalImage
     }
 }

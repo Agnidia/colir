@@ -6,8 +6,8 @@
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
-import SwiftUI
 import SwiftCommons
+import SwiftUI
 
 /// ViewModel for managing the state and actions of the `CustomizingActionView`.
 ///
@@ -25,40 +25,40 @@ import SwiftCommons
 ///       // Handle button action
 ///   })
 ///   ```
+@MainActor
 @Observable
 final class CustomizingActionViewModel: DomainViewConstantProtocol {
-    
     // MARK: - DomainViewConstantProtocol
-    
+
     typealias DomainViewConstantType = CustomizingActionViewDomain
-    
-    var viewSettings: DomainViewConstantType = .init()
-    
-    typealias ButtonAction = Commons.EmptyClosure
-    
+
+    nonisolated(unsafe) var viewSettings: DomainViewConstantType = .init()
+
+    typealias ButtonAction = Commons.MainActorEmptyClosure
+
     private let buttonAction: ButtonAction
-    
+
     private(set) var state: ImageDto.ImageState
-    
+
     // MARK: - Variables
-    
+
     /// Initializes a new `CustomizingActionViewModel`.
     /// - Parameters:
     ///   - state: The initial state of the view model. Defaults to `.none`.
     ///   - actionClosure: The action to perform when the button is pressed.
     init(state: ImageDto.ImageState = .none, actionClosure: @escaping ButtonAction) {
         self.state = state
-        self.buttonAction = actionClosure
+        buttonAction = actionClosure
     }
-    
+
     /// Updates the state of the view model.
     /// - Parameter state: The new state to set.
     func update(state: ImageDto.ImageState) {
         self.state = state
     }
-    
+
     // MARK: - Actions
-    
+
     /// Executes the button action.
     ///
     /// This method is called when the button is pressed, triggering the `buttonAction` closure.

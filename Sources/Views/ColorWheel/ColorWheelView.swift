@@ -9,10 +9,9 @@
 import SwiftUI
 
 struct ColorWheelView: NSViewRepresentable {
-    
-    internal final class Coordinator: NSObject, ColorWheelViewDelegate {
+    final class Coordinator: NSObject, ColorWheelViewDelegate {
         var colorWheel: ColorWheelNSView?
-        
+
         func didChangeColor(hue: Double, saturation: Double, brightness: Double) {
             colorWheel?.updateContents(hue: hue, saturation: saturation, brightness: brightness)
         }
@@ -26,15 +25,14 @@ struct ColorWheelView: NSViewRepresentable {
         let colorWheel = ColorWheelNSView()
         colorWheel.frame = .init(origin: .zero, size: .init(width: 200, height: 200))
         colorWheel.layout()
-        
+
         colorWheel.delegate = context.coordinator
         context.coordinator.colorWheel = colorWheel
-        
+
         colorWheel.updateContents(hue: .zero, saturation: .zero, brightness: 1)
-        
+
         return colorWheel
     }
 
-    func updateNSView(_ nsView: ColorWheelNSView, context: Context) {
-    }
+    func updateNSView(_: ColorWheelNSView, context _: Context) {}
 }

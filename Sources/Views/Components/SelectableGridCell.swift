@@ -31,7 +31,6 @@ import SwiftUI
 /// }
 /// ```
 struct SelectableGridCell<Content: View>: View {
-
     let isSelected: Bool
     let cornerRadius: CGFloat
     let content: Content

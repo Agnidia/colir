@@ -9,13 +9,12 @@
 import Foundation
 
 public extension URL {
-    
     /// Determines whether the URL represents a folder (directory).
     var isFolder: Bool {
         var isDir: ObjCBool = false
-        
-        FileManager.default.fileExists(atPath: self.path(percentEncoded: false), isDirectory: &isDir)
-        
+
+        FileManager.default.fileExists(atPath: path(percentEncoded: false), isDirectory: &isDir)
+
         return isDir.boolValue
     }
 }

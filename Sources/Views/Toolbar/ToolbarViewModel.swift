@@ -10,13 +10,12 @@ import SwiftUI
 
 /// ViewModel for managing the toolbar actions and interactions.
 final class ToolbarViewModel: ObservableObject {
-    
     /// Type alias for a callback that handles toolbar actions.
-    typealias ToolbarViewModelActionCallback = (ToolbarView.ToolbarViewDomain.Action) -> ()
-    
+    typealias ToolbarViewModelActionCallback = (ToolbarView.ToolbarViewDomain.Action) -> Void
+
     private let actionCallback: ToolbarViewModelActionCallback
     let undoManager: UndoManager
-    
+
     /// Initializes a `ToolbarViewModel` with an undo manager and a callback for toolbar actions.
     /// - Parameters:
     ///   - undoManager: The undo manager used to handle undo/redo operations.
@@ -25,13 +24,13 @@ final class ToolbarViewModel: ObservableObject {
         self.undoManager = undoManager
         self.actionCallback = actionCallback
     }
-    
+
     /// Handles updates from the undo manager.
     /// - Parameter notification: The notification containing update information.
-    @objc private func undoManagerUpdated(_ notification: Foundation.Notification) {
-        //updateHack.toggle()
+    @objc private func undoManagerUpdated(_: Foundation.Notification) {
+        // updateHack.toggle()
     }
-    
+
     /// Processes the given action and invokes the callback.
     /// - Parameter action: The action to process.
     func perform(_ action: ToolbarView.ToolbarViewDomain.Action) {

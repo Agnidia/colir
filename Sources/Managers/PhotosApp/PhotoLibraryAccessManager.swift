@@ -18,9 +18,8 @@ protocol PhotoLibraryAccessManagerProtocol {
 
 /// A class that manages photo library access and authorization.
 final class PhotoLibraryAccessManager: PhotoLibraryAccessManagerProtocol {
-    
     private let logger: LogProtocol = Log(category: .photoAppAccess)
-    
+
     /// Checks the authorization status for accessing the photo library.
     /// - Returns: A Boolean value indicating whether access is authorized. The method may request authorization if the status is not yet determined.
     func checkAuthorization() async -> Bool {

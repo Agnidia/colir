@@ -28,7 +28,7 @@ import SwiftUI
 ///     to load the images asynchronously.
 struct ToolsPicturesView: View {
     @EnvironmentObject var viewModel: ToolsPicturesViewModel
-    
+
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: viewModel.cellWidth))], spacing: .spacingHeight) {
@@ -36,9 +36,17 @@ struct ToolsPicturesView: View {
             }
             .padding(.paddingDefault)
         }
+        .overlay(content: overlay)
         .task(viewModel.fetchImages)
     }
-    
+
+    @ViewBuilder
+    private func overlay() -> some View {
+        if viewModel.needsAccess {
+            PicturesFolderAccessOverlay(onSelectFolder: viewModel.requestFolderSelection)
+        }
+    }
+
     /// Generates a view for a given `PictureItem`, including a selection indication overlay.
     ///
     /// - Parameter item: The `PictureItem` to be displayed in the grid.
@@ -60,6 +68,35 @@ struct ToolsPicturesView: View {
                 viewModel.selectedImage = nil
             } else {
                 viewModel.selectedImage = item
+            }
+        }
+    }
+}
+
+/// An overlay view displayed when folder access is needed for the Pictures tab.
+///
+/// This view provides a button to trigger folder selection, similar to the Photos
+/// permissions overlay but for file system folder access.
+private struct PicturesFolderAccessOverlay: View {
+    /// Action to perform when the user taps the "Select folder" button.
+    var onSelectFolder: () -> Void
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: .radiusSmall)
+                .fill(Color.secondaryBackground)
+
+            VStack(spacing: .spacingLarge) {
+                Text("permissions.overlay.select-pictures-folder.description")
+                    .font(.title)
+
+                Button(action: onSelectFolder) {
+                    Text("permissions.overlay.select-folder")
+                        .font(ButtonStyleConstants.font)
+                        .padding(ButtonStyleConstants.padding)
+                }
+                .tint(ButtonStyleConstants.backgroundAccentColor)
+                .buttonStyle(.accent)
             }
         }
     }

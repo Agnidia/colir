@@ -6,19 +6,20 @@
 //  Copyright © 2023 IGR Soft. All rights reserved.
 //
 
-import Foundation
 import AppKit
+import Foundation
 
 enum FileAccessManagerError: Error {
     case bookmarkDataNotCreated
     case userNotGivenAccess
+    case userCancelled
     case sandboxAccessError
 }
 
 /// A protocol defining methods for managing file access with security scopes and bookmarks.
 protocol FileAccessManagerProtocol {
     init(with path: URL, bookmarkData: Data)
-    
+
     @MainActor func checkAndSetupDataAccessIfNeeded() throws -> FileAccessData
 }
 
@@ -30,17 +31,16 @@ struct FileAccessData {
 
 /// A manager class for handling file access by using bookmarks and security scopes.
 final class FileAccessManager: FileAccessManagerProtocol {
-    
     private enum K {
         static let promptMessage = "Choose ~/Pictures directory"
     }
-    
+
     /// Bookmark data used to restore access to a specific directory.
     private var bookmarkData: Data
-    
+
     /// The path to the directory for which access is managed.
     private var path: URL
-    
+
     /// Initializes a `FileAccessManager` with a directory path and associated bookmark data.
     /// - Parameters:
     ///   - path: The URL of the directory for which access is managed.
@@ -49,9 +49,10 @@ final class FileAccessManager: FileAccessManagerProtocol {
         self.bookmarkData = bookmarkData
         self.path = path
     }
-    
+
     /// Checks and sets up data access if needed.
-    /// - Throws: Throws an error if access cannot be established.
+    /// - Throws: `FileAccessManagerError.userCancelled` if user cancelled,
+    ///           other errors if access cannot be established.
     /// - Returns: The `FileAccessData` containing the path and bookmark data if access is granted.
     @MainActor
     func checkAndSetupDataAccessIfNeeded() throws -> FileAccessData {
@@ -60,30 +61,32 @@ final class FileAccessManager: FileAccessManagerProtocol {
             if !bookmarkData.isEmpty, let data = try restoreAccess(for: path, bookmarkData: bookmarkData) {
                 accessData = data
             } else {
-                if let path = promptPermission(to: path) {
-                    if let bookmarkData = try? path.bookmarkData(options: [.withSecurityScope]) {
-                        accessData = FileAccessData(path: path, bookmark: bookmarkData)
+                do {
+                    let selectedPath = try promptPermission(to: path)
+                    if let bookmarkData = try? selectedPath.bookmarkData(options: [.withSecurityScope]) {
+                        accessData = FileAccessData(path: selectedPath, bookmark: bookmarkData)
                     } else {
                         throw FileAccessManagerError.bookmarkDataNotCreated
                     }
-                } else {
-                    throw FileAccessManagerError.userNotGivenAccess
+                } catch is NSOpenPanelError {
+                    throw FileAccessManagerError.userCancelled
                 }
             }
         }
-        
+
         return accessData
     }
-    
+
     /// Prompts the user to grant access to a specific directory.
     /// - Parameters:
     ///   - dir: The URL of the directory to prompt for access.
-    /// - Returns: The URL of the directory if access is granted; otherwise, `nil`.
+    /// - Returns: The URL of the directory if access is granted.
+    /// - Throws: `NSOpenPanelError.userCancelled` if the user cancels.
     @MainActor
-    private func promptPermission(to dir: URL) -> URL? {
-        NSOpenPanel.promptPermission(to: dir, message: K.promptMessage)
+    private func promptPermission(to dir: URL) throws -> URL {
+        try NSOpenPanel.promptPermission(to: dir, message: K.promptMessage)
     }
-    
+
     /// Restores access to a directory using a bookmark.
     /// - Parameters:
     ///   - path: The URL of the directory.
@@ -92,12 +95,12 @@ final class FileAccessManager: FileAccessManagerProtocol {
     /// - Returns: The `FileAccessData` if access is restored successfully; otherwise, `nil`.
     private func restoreAccess(for path: URL, bookmarkData: Data) throws -> FileAccessData? {
         var accessData: FileAccessData?
-                
+
         if !path.hasAccess {
             do {
                 var isBookmarkStale = false
                 let bookmarkedUrl = try URL(resolvingBookmarkData: bookmarkData, options: [.withSecurityScope], bookmarkDataIsStale: &isBookmarkStale)
-                
+
                 if !isBookmarkStale {
                     if bookmarkedUrl.hasAccess {
                         accessData = FileAccessData(path: bookmarkedUrl, bookmark: bookmarkData)
@@ -116,7 +119,7 @@ final class FileAccessManager: FileAccessManagerProtocol {
         } else {
             accessData = FileAccessData(path: path, bookmark: bookmarkData)
         }
-        
+
         return accessData
     }
 }

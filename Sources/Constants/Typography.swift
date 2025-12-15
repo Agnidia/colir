@@ -1,9 +1,8 @@
 //
 //  Typography.swift
-//  colir
 //
-//  Created by Claude on 05.12.2024.
-//  Copyright © 2024 IGR Soft. All rights reserved.
+//  Created on 05.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftUI

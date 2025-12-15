@@ -1,0 +1,142 @@
+# SwiftFormat Configuration for u2u
+# Swift 6.2, macOS 15+, iOS 18, tvOS 18, visionOS 2
+# Based on analyzed code style from project
+
+# === Version ===
+--swiftversion 6.2
+
+# === File Exclusions ===
+--exclude .build,DerivedData,build,*.generated.swift,*.xcodeproj
+
+# === Indentation (Observed: consistent 4 spaces) ===
+--indent 4
+--tabwidth 4
+--smarttabs enabled
+--indentcase false
+--ifdef indent
+--xcodeindentation enabled
+
+# === Line Wrapping (Observed: manual wrapping, preserve existing style) ===
+--disable wrap
+--maxwidth 0
+--wraparguments preserve
+--wrapcollections preserve
+--wrapparameters preserve
+--wrapreturntype preserve
+--wrapconditions preserve
+--closingparen balanced
+
+# === Spacing (Observed: standard Swift spacing) ===
+--trimwhitespace nonblank-lines
+--linebreaks lf
+--operatorfunc spaced
+--nospaceoperators ...,..<
+--ranges no-space
+--semicolons never
+--commas inline
+--emptybraces no-space
+
+# === Access Control (Observed: extensive use of private(set), internal(set)) ===
+--extensionacl on-declarations
+
+# === Self Keyword (Observed: minimal self usage) ===
+--self remove
+--selfrequired @autoclosure,@escaping
+
+# === Type Inference (Observed: explicit types for properties, inferred for locals) ===
+--redundanttype infer-locals-only
+
+# === Modern Swift Patterns (Observed: same-line else, auto guard) ===
+--elseposition same-line
+--guardelse auto
+--patternlet inline
+
+# === Organization (Observed: class, struct, enum, extension) ===
+--organizetypes class,struct,enum,extension
+--struct-threshold 0
+--class-threshold 0
+--enum-threshold 0
+--extension-length 0
+
+# === Imports (Observed: Foundation, SwiftUI, Combine, MultiPeerCoordinator) ===
+--importgrouping testable-bottom
+
+# === MARK Comments (Observed: extensive // MARK: - usage) ===
+--marktypes always
+--markextensions always
+--extensionmark "MARK: - %c"
+--categorymark "MARK: %c"
+--beforemarks
+--groupedextension "MARK: %c"
+
+# === Headers (Observed: IGR Soft copyright on all files) ===
+# Header template with file name, dates, and copyright
+# {created} uses git commit date when file was first added to repository
+# {year} uses current year for copyright
+# SwiftFormat has no {updated} token - same date used for both lines
+--header \n {file}\n\n Created on {created}.\n Copyright © {year} IGR Soft. All rights reserved.\n
+--date-format dd.MM.yyyy
+
+# === Documentation (Observed: /// triple-slash comments) ===
+# Preserve all documentation comments
+
+# === Cleanup Rules (Enable) ===
+--enable isEmpty
+--enable sortImports
+--enable blankLinesBetweenScopes
+--enable blankLinesAtStartOfScope
+--enable blankLinesAtEndOfScope
+--enable duplicateImports
+--enable redundantNilInit
+--enable redundantLet
+--enable redundantPattern
+--enable redundantGet
+--enable redundantParens
+--enable redundantRawValues
+--enable redundantVoidReturnType
+--enable redundantBreak
+--enable redundantExtensionACL
+--enable redundantFileprivate
+--enable redundantObjc
+--enable redundantReturn
+--enable strongifiedSelf
+--enable typeSugar
+--enable unusedArguments
+--enable void
+--enable wrapEnumCases
+
+# === Rules to Disable (SwiftUI/Project-specific) ===
+--disable redundantClosure
+--disable trailingClosures
+--disable acronyms
+--disable trailingCommas
+--disable wrapSwitchCases
+--disable indent
+--disable consecutiveSpaces
+--disable spaceAroundOperators
+
+# === Argument Handling (Observed: closure-only pattern) ===
+--stripunusedargs closure-only
+
+# === SwiftUI Specific ===
+--modifierorder
+
+# === Concurrency (Observed: modern async/await patterns) ===
+--asynccapturing
+
+# === Attributes Formatting (Observed: function/type attributes on prev line) ===
+--funcattributes prev-line
+--typeattributes prev-line
+--varattributes preserve
+
+# === Blank Lines (Observed: blank lines between scopes) ===
+# Handled by enabled rules above
+
+# === Numeric Literals (10_000+: grouped, <10000: no grouping) ===
+--decimalgrouping 3,5
+--binarygrouping none
+--octalgrouping none
+--hexgrouping none
+--fractiongrouping disabled
+--exponentgrouping disabled
+--hexliteralcase uppercase

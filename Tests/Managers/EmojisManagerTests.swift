@@ -1,14 +1,13 @@
 //
 //  EmojisManagerTests.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
-@testable import colir
 import Testing
+@testable import colir
 
 @Suite("EmojisManager Tests")
 struct EmojisManagerTests {
@@ -62,10 +61,10 @@ struct EmojisManagerTests {
         let emojis = manager.emojis
 
         // Flatten all emojis and check at least some are real emojis
-        let allEmojis = emojis.values.flatMap { $0 }
+        let allEmojis = emojis.values.flatMap(\.self)
 
         // At least some should be recognized emojis
-        let emojiCount = allEmojis.filter { $0.isEmoji }.count
+        let emojiCount = allEmojis.count(where: { $0.isEmoji })
         #expect(emojiCount > 0, "Should contain actual emoji characters")
     }
 
@@ -131,7 +130,7 @@ struct EmojisManagerTests {
         // People emojis should include skin tone variations
         if let people = emojis[.people] {
             // Should have more entries due to skin tone variations
-            #expect(people.count > 0)
+            #expect(!people.isEmpty)
         }
     }
 
@@ -173,7 +172,7 @@ struct EmojisManagerTests {
 
         // Should have a reasonable number of emojis (hundreds to thousands)
         #expect(totalCount > 100, "Should have at least 100 emojis")
-        #expect(totalCount < 10000, "Should have less than 10000 emojis")
+        #expect(totalCount < 10_000, "Should have less than 10000 emojis")
     }
 
     // MARK: - Unicode Validity Tests

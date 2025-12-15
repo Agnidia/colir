@@ -1,9 +1,8 @@
 //
 //  AppStoreButtonStyle.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 16.11.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 30.10.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftUI
@@ -37,7 +36,7 @@ struct AppStoreButtonStyle: ButtonStyle {
                 }
             })
             .onHover { over in
-                self.isHovered = over
+                isHovered = over
             }
         }
     }

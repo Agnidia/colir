@@ -1,9 +1,8 @@
 //
 //  View+Accessibility.swift
-//  colir
 //
-//  Created by Claude on 15.12.2024.
-//  Copyright © 2024 IGR Soft. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftUI

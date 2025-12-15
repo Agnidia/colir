@@ -1,13 +1,12 @@
 //
 //  StringCryptoTests.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
-@testable import colir
 import Testing
+@testable import colir
 
 @Suite("String Crypto Extension")
 struct StringCryptoTests {
@@ -24,7 +23,7 @@ struct StringCryptoTests {
         #expect(encrypted != plaintext)
 
         // Verify it's valid base64 by attempting to decode
-        if let encrypted = encrypted {
+        if let encrypted {
             let data = Data(base64Encoded: encrypted, options: .ignoreUnknownCharacters)
             #expect(data != nil)
         }
@@ -62,7 +61,7 @@ struct StringCryptoTests {
 
     @Test("AES encrypt handles long strings")
     func aesEncrypt_longStrings() {
-        let plaintext = String(repeating: "A", count: 10000)
+        let plaintext = String(repeating: "A", count: 10_000)
         let encrypted = plaintext.aesEncrypt(key: testKey)
 
         #expect(encrypted != nil)

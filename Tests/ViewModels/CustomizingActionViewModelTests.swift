@@ -1,13 +1,12 @@
 //
 //  CustomizingActionViewModelTests.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
-@testable import colir
 import Testing
+@testable import colir
 
 @Suite("CustomizingActionViewModel Tests")
 @MainActor
@@ -37,7 +36,7 @@ struct CustomizingActionViewModelTests {
     func init_withProcessingState() {
         let viewModel = CustomizingActionViewModel(state: .processing(value: 0.5)) {}
 
-        if case let .processing(value) = viewModel.state {
+        if case .processing(let value) = viewModel.state {
             #expect(value == 0.5)
         } else {
             Issue.record("Expected processing state")
@@ -70,7 +69,7 @@ struct CustomizingActionViewModelTests {
 
         viewModel.update(state: .processing(value: 0.25))
 
-        if case let .processing(value) = viewModel.state {
+        if case .processing(let value) = viewModel.state {
             #expect(value == 0.25)
         } else {
             Issue.record("Expected processing state")

@@ -1,19 +1,18 @@
 //
 //  NSImage+Alpha.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 05.05.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 05.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
 
-public extension NSImage {
+extension NSImage {
     /// Adjusts the alpha value of the image's pixels.
     ///
     /// - Parameter value: The new alpha value, ranging from 0 to 255.
     /// - Returns: A new `NSImage` instance with the adjusted alpha values, or `nil` if the image could not be processed.
-    func alpha(value: UInt8) -> NSImage? {
+    public func alpha(value: UInt8) -> NSImage? {
         guard let imageRef = cgImage(forProposedRect: nil, context: nil, hints: nil) else {
             return nil
         }

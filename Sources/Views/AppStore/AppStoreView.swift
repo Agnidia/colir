@@ -1,9 +1,8 @@
 //
 //  AppStoreView.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 13.11.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 14.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftUI

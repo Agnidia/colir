@@ -1,14 +1,13 @@
 //
 //  NSColorHexTests.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
-@testable import colir
 import Testing
+@testable import colir
 
 @Suite("NSColor Hex Extension")
 struct NSColorHexTests {
@@ -82,7 +81,7 @@ struct NSColorHexTests {
         let hex = color.hexString
 
         // Check that any letters are uppercase
-        let letters = hex.filter { $0.isLetter }
+        let letters = hex.filter(\.isLetter)
         for letter in letters {
             #expect(letter.isUppercase)
         }

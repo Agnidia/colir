@@ -1,14 +1,13 @@
 //
 //  TestFixtures.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
-@testable import colir
 import Foundation
+@testable import colir
 
 // MARK: - Image Fixtures
 

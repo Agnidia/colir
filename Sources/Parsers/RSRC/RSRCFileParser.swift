@@ -1,9 +1,8 @@
 //
 //  RSRCFileParser.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 07.08.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 15.09.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import Foundation
@@ -22,6 +21,6 @@ final class RSRCFileParser {
     /// and convert it into an array of `RSRCResource` objects. If the file cannot be accessed
     /// or if there is an issue with parsing, it will throw an appropriate error.
     func parse(url: URL) throws -> [RSRCResource] {
-        return try ResourceFile.read(from: url)
+        try ResourceFile.read(from: url)
     }
 }

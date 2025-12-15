@@ -1,9 +1,8 @@
 //
 //  ElevationModifier.swift
-//  colir
 //
-//  Created by Claude on 05.12.2024.
-//  Copyright © 2024 IGR Soft. All rights reserved.
+//  Created on 05.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftUI
@@ -33,31 +32,31 @@ enum Elevation {
 
     private var shadowOpacity: Double {
         switch self {
-        case .level0: return 0
-        case .level1: return 0.08
-        case .level2: return 0.12
-        case .level3: return 0.16
-        case .level4: return 0.24
+        case .level0: 0
+        case .level1: 0.08
+        case .level2: 0.12
+        case .level3: 0.16
+        case .level4: 0.24
         }
     }
 
     var radius: CGFloat {
         switch self {
-        case .level0: return 0
-        case .level1: return 2
-        case .level2: return 4
-        case .level3: return 8
-        case .level4: return 16
+        case .level0: 0
+        case .level1: 2
+        case .level2: 4
+        case .level3: 8
+        case .level4: 16
         }
     }
 
     var y: CGFloat {
         switch self {
-        case .level0: return 0
-        case .level1: return 1
-        case .level2: return 2
-        case .level3: return 4
-        case .level4: return 8
+        case .level0: 0
+        case .level1: 1
+        case .level2: 2
+        case .level3: 4
+        case .level4: 8
         }
     }
 }

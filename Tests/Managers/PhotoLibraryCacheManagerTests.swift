@@ -1,15 +1,14 @@
 //
 //  PhotoLibraryCacheManagerTests.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
-@testable import colir
 import Photos
 import Testing
+@testable import colir
 
 @Suite("PhotoLibraryCacheManager Tests")
 struct PhotoLibraryCacheManagerTests {
@@ -29,7 +28,7 @@ struct PhotoLibraryCacheManagerTests {
         let underlyingError = NSError(domain: "test", code: 1)
         let error = PhotoLibraryCacheManager.CachedImageManagerError.error(underlyingError)
 
-        if case let .error(wrapped) = error {
+        if case .error(let wrapped) = error {
             let nsError = wrapped as NSError
             #expect(nsError.domain == "test")
             #expect(nsError.code == 1)
@@ -140,7 +139,7 @@ struct PhotoLibraryCacheManagerTests {
         let manager = PhotoLibraryCacheManager()
 
         // Cancel a dummy request ID
-        await manager.cancelImageRequest(for: 12345)
+        await manager.cancelImageRequest(for: 12_345)
 
         // Should not crash
         #expect(true)

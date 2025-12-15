@@ -1,14 +1,13 @@
 //
 //  URLDirTests.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
-@testable import colir
 import Foundation
 import Testing
+@testable import colir
 
 @Suite("URL Directory Extension")
 struct URLDirTests {

@@ -1,14 +1,13 @@
 //
 //  NSImageDataTests.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
-@testable import colir
 import Testing
+@testable import colir
 
 @Suite("NSImage Data Extension")
 struct NSImageDataTests {
@@ -21,7 +20,7 @@ struct NSImageDataTests {
         let data = image.pngData
 
         #expect(data != nil)
-        #expect(data!.count > 0)
+        #expect(!data!.isEmpty)
     }
 
     @Test("pngData returns valid PNG data")
@@ -32,7 +31,7 @@ struct NSImageDataTests {
 
         #expect(data != nil)
         // PNG magic bytes: 89 50 4E 47
-        if let data = data, data.count >= 4 {
+        if let data, data.count >= 4 {
             #expect(data[0] == 0x89)
             #expect(data[1] == 0x50) // P
             #expect(data[2] == 0x4E) // N
@@ -56,7 +55,7 @@ struct NSImageDataTests {
             let data = image.pngData
 
             #expect(data != nil, "pngData should succeed for size \(size)")
-            #expect(data!.count > 0, "pngData should not be empty for size \(size)")
+            #expect(!data!.isEmpty, "pngData should not be empty for size \(size)")
         }
     }
 
@@ -89,7 +88,7 @@ struct NSImageDataTests {
         let data = bitmap.pngData
 
         #expect(data != nil)
-        #expect(data!.count > 0)
+        #expect(!data!.isEmpty)
     }
 
     // MARK: - Data.bitmap Tests
@@ -160,7 +159,7 @@ struct NSImageDataTests {
 
         #expect(pngData != nil)
 
-        if let pngData = pngData {
+        if let pngData {
             let recreatedImage = NSImage(data: pngData)
             #expect(recreatedImage != nil)
         }
@@ -175,7 +174,7 @@ struct NSImageDataTests {
         let data = image.pngData
 
         #expect(data != nil)
-        #expect(data!.count > 0)
+        #expect(!data!.isEmpty)
     }
 
     @Test("pngData with rectangular image")
@@ -185,7 +184,7 @@ struct NSImageDataTests {
         let data = image.pngData
 
         #expect(data != nil)
-        #expect(data!.count > 0)
+        #expect(!data!.isEmpty)
     }
 
     @Test("pngData with tall rectangular image")
@@ -195,7 +194,7 @@ struct NSImageDataTests {
         let data = image.pngData
 
         #expect(data != nil)
-        #expect(data!.count > 0)
+        #expect(!data!.isEmpty)
     }
 
     @Test("pngData multiple times returns consistent data")

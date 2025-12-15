@@ -1,9 +1,8 @@
 //
 //  String+Emoji.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 04.09.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 15.09.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
@@ -33,7 +32,7 @@ extension Character {
 extension String {
     /// Checks if the string contains any emoji.
     var containsEmoji: Bool {
-        contains(where: { $0.isEmoji })
+        contains(where: \.isEmoji)
     }
 }
 

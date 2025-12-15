@@ -1,14 +1,13 @@
 //
 //  AppStoreServiceTests.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
-@testable import colir
 import StoreKit
 import Testing
+@testable import colir
 
 @Suite("AppStoreService Tests")
 @MainActor
@@ -110,7 +109,7 @@ struct AppStoreServiceTests {
     func purchaseResult_successContainsProduct() {
         let result = PurchaseResult.success(.middleTips)
 
-        if case let .success(product) = result {
+        if case .success(let product) = result {
             #expect(product == .middleTips)
         } else {
             Issue.record("Expected success case")
@@ -125,7 +124,7 @@ struct AppStoreServiceTests {
             result
         }.value
 
-        if case let .success(product) = asyncResult {
+        if case .success(let product) = asyncResult {
             #expect(product == .bigTips)
         } else {
             Issue.record("Expected success case")

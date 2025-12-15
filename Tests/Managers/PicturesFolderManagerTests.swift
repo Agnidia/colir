@@ -1,14 +1,13 @@
 //
 //  PicturesFolderManagerTests.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
-@testable import colir
 import Testing
+@testable import colir
 
 @Suite("PicturesFolderManager Tests")
 struct PicturesFolderManagerTests {
@@ -191,7 +190,7 @@ struct PicturesFolderManagerTests {
         let manager = PicturesFolderManager(picturesDirectory: tempDir)
         let images = try await manager.readImages()
 
-        let names = images.map { $0.name }
+        let names = images.map(\.name)
         #expect(names.contains("my_photo.png"))
         #expect(names.contains("vacation 2024.jpg"))
     }

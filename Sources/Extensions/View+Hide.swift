@@ -1,9 +1,8 @@
 //
 //  View+Hide.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 30.01.2025.
-//  Copyright © 2025 IGR Software. All rights reserved.
+//  Created on 01.02.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftUI

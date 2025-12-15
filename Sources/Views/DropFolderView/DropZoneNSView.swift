@@ -1,15 +1,15 @@
 //
 //  DropZoneNSView.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 04.11.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 07.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
 
 /// A view that supports dropping files
-@objc public final class DropZoneNSView: NSView {
+@objc
+public final class DropZoneNSView: NSView {
     // MARK: - Public Accessors
 
     /// Enable or disable the control
@@ -35,7 +35,8 @@ import AppKit
 
     // MARK: - Action Callbacks
 
-    @objc func selectFiles(_: Any) {
+    @objc
+    func selectFiles(_: Any) {
         guard let userSelectedFiles = dropDelegate?.dropFilesViewWantsSelectFiles else { return }
 
         userSelectedFiles(self)
@@ -44,8 +45,8 @@ import AppKit
 
 // MARK: - UI Layout
 
-private extension DropZoneNSView {
-    func configureControl() {
+extension DropZoneNSView {
+    private func configureControl() {
         wantsLayer = true
         registerForDraggedTypes([.fileURL])
     }
@@ -53,9 +54,9 @@ private extension DropZoneNSView {
 
 // MARK: - Drag and Drop
 
-public extension DropZoneNSView {
+extension DropZoneNSView {
     // Called when the user has dragged a file
-    override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
+    override public func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
         guard isEnabled, let files = filesOnPasteboard(for: sender) else {
             return false
         }
@@ -64,7 +65,7 @@ public extension DropZoneNSView {
     }
 
     // When the user has dragged INTO the view
-    override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
+    override public func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         guard let files = filesOnPasteboard(for: sender), !files.isEmpty else {
             return []
         }
@@ -83,12 +84,12 @@ public extension DropZoneNSView {
     }
 
     // When the user has dragged OUT of the view or drag is cancelled
-    override func draggingExited(_: NSDraggingInfo?) {
+    override public func draggingExited(_: NSDraggingInfo?) {
         dropDelegate?.dropFilesViewExitZone(self)
     }
 
     // Perform the drag operation
-    override func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
+    override public func performDragOperation(_ sender: NSDraggingInfo) -> Bool {
         guard let dropDelegate, let files = filesOnPasteboard(for: sender) else {
             return false
         }

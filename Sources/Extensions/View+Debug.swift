@@ -1,9 +1,8 @@
 //
 //  View+Debug.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 05.12.2025.
-//  Copyright © 2025 IGR Software. All rights reserved.
+//  Created on 05.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftUI

@@ -1,18 +1,19 @@
 //
 //  DropZoneViewProtocol.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 04.11.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 05.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
 
 /// Delegate protocol for a Drop Files View.
-@objc public protocol DropZoneViewProtocol: NSObjectProtocol {
+@objc
+public protocol DropZoneViewProtocol: NSObjectProtocol {
     /// Callback to the owner that the user has clicked the 'Select Files...' button.
     /// - Parameter sender: The `DropZoneNSView` instance that initiated the action.
-    @objc optional func dropFilesViewWantsSelectFiles(_ sender: DropZoneNSView)
+    @objc
+    optional func dropFilesViewWantsSelectFiles(_ sender: DropZoneNSView)
 
     /// Asks the delegate to validate the URLs that the user has dragged onto the control.
     /// - Parameters:

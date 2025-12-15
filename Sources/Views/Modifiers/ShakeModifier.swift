@@ -1,9 +1,8 @@
 //
 //  ShakeModifier.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 07.11.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 08.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftUI
@@ -18,6 +17,6 @@ struct Shake: GeometryEffect {
     func effectValue(size _: CGSize) -> ProjectionTransform {
         ProjectionTransform(CGAffineTransform(translationX:
             amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)),
-            y: .zero))
+                                              y: .zero))
     }
 }

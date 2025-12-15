@@ -1,9 +1,8 @@
 //
 //  AccentButtonStyle.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 04.11.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 30.10.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftUI
@@ -37,7 +36,7 @@ struct AccentButtonStyle: ButtonStyle {
                 }
             })
             .onHover { over in
-                self.isHovered = over
+                isHovered = over
             }
         }
     }

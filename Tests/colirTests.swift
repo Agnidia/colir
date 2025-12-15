@@ -1,13 +1,12 @@
 //
 //  colirTests.swift
-//  colirTests
 //
-//  Created by Vitalii Parovishnyk on 23.07.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 15.09.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
-@testable import colir
 import XCTest
+@testable import colir
 
 final class ColirTests: XCTestCase {
     override func setUpWithError() throws {

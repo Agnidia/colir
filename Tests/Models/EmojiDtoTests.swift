@@ -1,14 +1,13 @@
 //
 //  EmojiDtoTests.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
-@testable import colir
 import Foundation
 import Testing
+@testable import colir
 
 @Suite("Emoji DTO Tests")
 struct EmojiDtoTests {
@@ -102,7 +101,7 @@ struct EmojiDtoTests {
         let data = json.data(using: .utf8)!
         let emoticon = try JSONDecoder().decode(EmojiEmoticonDto.self, from: data)
 
-        if case let .string(value) = emoticon {
+        if case .string(let value) = emoticon {
             #expect(value == ":D")
         } else {
             Issue.record("Expected string case")
@@ -115,7 +114,7 @@ struct EmojiDtoTests {
         let data = json.data(using: .utf8)!
         let emoticon = try JSONDecoder().decode(EmojiEmoticonDto.self, from: data)
 
-        if case let .stringArray(values) = emoticon {
+        if case .stringArray(let values) = emoticon {
             #expect(values.count == 3)
             #expect(values.contains(":D"))
             #expect(values.contains(":)"))
@@ -206,7 +205,7 @@ struct EmojiDtoTests {
 
         #expect(list.emojis(in: .people).count == 1)
         #expect(list.emojis(in: .nature).count == 2)
-        #expect(list.emojis(in: .foods).count == 0)
+        #expect(list.emojis(in: .foods).isEmpty)
     }
 
     // MARK: - EmojiDto with Skins Tests

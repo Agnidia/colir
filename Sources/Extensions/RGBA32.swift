@@ -1,9 +1,8 @@
 //
 //  RGBA32.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 05.11.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 05.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
@@ -15,22 +14,22 @@ public struct RGBA32: Equatable, Hashable {
 
     /// The red component of the color.
     var redComponent: UInt8 {
-        return UInt8((color >> 24) & 255)
+        UInt8((color >> 24) & 255)
     }
 
     /// The green component of the color.
     var greenComponent: UInt8 {
-        return UInt8((color >> 16) & 255)
+        UInt8((color >> 16) & 255)
     }
 
     /// The blue component of the color.
     var blueComponent: UInt8 {
-        return UInt8((color >> 8) & 255)
+        UInt8((color >> 8) & 255)
     }
 
     /// The alpha component of the color.
     var alphaComponent: UInt8 {
-        return UInt8((color >> 0) & 255)
+        UInt8((color >> 0) & 255)
     }
 
     /// Initializes an `RGBA32` instance with a given `NSColor`.

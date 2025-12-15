@@ -1,14 +1,13 @@
 //
 //  PhotoAssetCollectionTests.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
-@testable import colir
 import Photos
 import Testing
+@testable import colir
 
 @Suite("PhotoAssetCollection Tests")
 struct PhotoAssetCollectionTests {
@@ -19,7 +18,7 @@ struct PhotoAssetCollectionTests {
         let fetchResult = PHFetchResult<PHAsset>()
         let collection = PhotoAssetCollection(fetchResult)
 
-        #expect(collection.count == 0)
+        #expect(collection.isEmpty)
         #expect(collection.startIndex == 0)
         #expect(collection.endIndex == 0)
     }
@@ -57,7 +56,7 @@ struct PhotoAssetCollectionTests {
         let fetchResult = PHFetchResult<PHAsset>()
         let collection = PhotoAssetCollection(fetchResult)
 
-        #expect(collection.fetchResult.count == 0)
+        #expect(collection.fetchResult.isEmpty)
     }
 
     // MARK: - phAssets Property Tests
@@ -95,6 +94,6 @@ struct PhotoAssetCollectionTests {
         let collection = PhotoAssetCollection(fetchResult)
 
         // Collection should be empty
-        #expect(collection.count == 0)
+        #expect(collection.isEmpty)
     }
 }

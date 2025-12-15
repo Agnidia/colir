@@ -1,15 +1,22 @@
 //
 //  EmojiSkinDto.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 04.09.2023.
+//  Created on 15.09.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import Foundation
 
 /// Enum defining various emoji groups.
 enum EmojisGroup: CaseIterable {
-    case people, nature, foods, places, activity, objects, symbols, flags
+    case people
+    case nature
+    case foods
+    case places
+    case activity
+    case objects
+    case symbols
+    case flags
 
     var name: String {
         String(describing: self)
@@ -68,9 +75,9 @@ enum EmojiEmoticonDto: Decodable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        case let .string(value):
+        case .string(let value):
             try container.encode(value)
-        case let .stringArray(values):
+        case .stringArray(let values):
             try container.encode(values)
         }
     }

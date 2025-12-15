@@ -1,14 +1,13 @@
 //
 //  IconManagerTests.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
-@testable import colir
 import Testing
+@testable import colir
 
 @Suite("IconManager Tests")
 struct IconManagerTests {
@@ -38,7 +37,7 @@ struct IconManagerTests {
         let error = IconManagerError.scriptError("Test error message")
 
         // Verify the error case contains the message
-        if case let .scriptError(message) = error {
+        if case .scriptError(let message) = error {
             #expect(message == "Test error message")
         } else {
             Issue.record("Expected scriptError case")
@@ -167,7 +166,7 @@ struct IconManagerTests {
         let icnsData = try manager.convertImagesToIcns(images)
 
         // Verify ICNS data structure
-        #expect(icnsData.count > 0)
+        #expect(!icnsData.isEmpty)
 
         // ICNS magic number is "icns" (0x69636E73)
         if icnsData.count >= 4 {

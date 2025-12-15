@@ -1,9 +1,8 @@
 //
 //  HomeViewModel.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 24.07.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 15.09.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
@@ -368,7 +367,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     /// and updating the view with the folder's icon or image.
     /// - Parameter urls: The URLs of the folders to set up.
     func setupFolders(from urls: [URL]) {
-        let folders = urls.filter { $0.isFolder }
+        let folders = urls.filter(\.isFolder)
 
         guard folders.isEmpty == false, let url = folders.first else {
             return

@@ -1,16 +1,15 @@
 //
 //  DropZoneNSView+SwiftUI.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 04.11.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 07.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftUI
 
-public extension DropZoneNSView {
+extension DropZoneNSView {
     /// A SwiftUI wrapper for DropZoneNSView
-    struct SwiftUI {
+    public struct SwiftUI {
         public typealias NSViewType = DropZoneNSView
 
         // MARK: - Types
@@ -76,7 +75,8 @@ public extension DropZoneNSView {
 // MARK: - Coordinator
 
 /// Convenience function for updating a value if it differs from the existing value.
-@inlinable func UpdateIfNotEqual<T>(_ result: inout T, _ val: T) where T: Equatable {
+@inlinable
+func UpdateIfNotEqual<T>(_ result: inout T, _ val: T) where T: Equatable {
     guard result != val else { return }
     result = val
 }
@@ -102,8 +102,8 @@ extension DropZoneNSView.SwiftUI: NSViewRepresentable {
 
 // MARK: - Delegate Handling
 
-public extension DropZoneNSView.SwiftUI {
-    final class Coordinator: NSObject, DropZoneViewProtocol {
+extension DropZoneNSView.SwiftUI {
+    public final class Coordinator: NSObject, DropZoneViewProtocol {
         let parent: DropZoneNSView.SwiftUI
 
         init(_ dropView: DropZoneNSView.SwiftUI) {
@@ -119,11 +119,11 @@ public extension DropZoneNSView.SwiftUI {
         }
 
         public func dropFilesView(_: DropZoneNSView, validateFiles: [URL]) -> NSDragOperation {
-            return parent.validateFiles?(validateFiles) ?? []
+            parent.validateFiles?(validateFiles) ?? []
         }
 
         public func dropFilesView(_: DropZoneNSView, didDropFiles files: [URL]) -> Bool {
-            return parent.dropFiles?(files) ?? false
+            parent.dropFiles?(files) ?? false
         }
 
         public func dropFilesViewWantsSelectFiles(_: DropZoneNSView) {

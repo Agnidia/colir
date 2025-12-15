@@ -1,9 +1,8 @@
 //
 //  AppliedStylesViewModel.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 07.11.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 30.10.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftCommons
@@ -189,7 +188,7 @@ struct StyleTagView: View {
                     .scaledToFill()
                     .frame(width: 28, height: 28)
                     .clipShape(RoundedRectangle(cornerRadius: .radiusThin))
-            } else if !data.text.isEmpty && data.text.hasPrefix("#") {
+            } else if !data.text.isEmpty, data.text.hasPrefix("#") {
                 // Color swatch for hex colors
                 RoundedRectangle(cornerRadius: .radiusThin)
                     .fill(data.color)

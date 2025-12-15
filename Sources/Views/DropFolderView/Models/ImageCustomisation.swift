@@ -1,9 +1,8 @@
 //
 //  ImageCustomisation.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 07.11.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 22.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
@@ -232,6 +231,6 @@ final class ImageCustomisation {
     /// - Returns: The image with the applied emoji.
     private func update(image: NSImage, with emoji: Character) -> NSImage {
         // TODO: Add logic for drawing emoji
-        return image.draw(emoji: emoji)
+        image.draw(emoji: emoji)
     }
 }

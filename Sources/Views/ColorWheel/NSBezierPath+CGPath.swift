@@ -1,17 +1,16 @@
 //
 //  NSBezierPath+CGPath.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 23.11.2023.
-//  Copyright © 2023 IGR Software. All rights reserved.
+//  Created on 23.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
 
-public extension NSBezierPath {
+extension NSBezierPath {
     @available(macOS 12, *)
     @backDeployed(before: macOS 14)
-    final var cgPath: CGPath {
+    public final var cgPath: CGPath {
         let path = CGMutablePath()
         let points = UnsafeMutablePointer<NSPoint>.allocate(capacity: 3)
 

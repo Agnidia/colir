@@ -1,9 +1,8 @@
 //
 //  URL+PathPermission.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 01.05.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 07.10.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import Foundation

@@ -1,9 +1,8 @@
 //
 //  ToolsPhotosItemView.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 10.10.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 10.10.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import Photos
@@ -62,7 +61,7 @@ struct ToolsPhotosItemView: View {
         case .loading:
             loadingView(size: size)
 
-        case let .loaded(image):
+        case .loaded(let image):
             image
                 .resizable()
                 .scaledToFill()

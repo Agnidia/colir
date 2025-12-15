@@ -1,9 +1,8 @@
 //
 //  PhotoLibraryAlbumManager.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 10.10.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 10.10.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import Photos
@@ -87,7 +86,7 @@ final class PhotoLibraryAlbumManager: NSObject, @unchecked Sendable {
     func load() async throws {
         // PHPhotoLibrary.shared().register(self)
 
-        if let smartAlbumType = smartAlbumType {
+        if let smartAlbumType {
             if let assetCollection = PhotoLibraryAlbumManager.getSmartAlbum(subtype: smartAlbumType) {
                 logger.debug("Loaded smart album of type: \(smartAlbumType.rawValue)")
                 self.assetCollection = assetCollection
@@ -125,12 +124,12 @@ final class PhotoLibraryAlbumManager: NSObject, @unchecked Sendable {
         if newFetchResult == nil {
             let fetchOptions = PHFetchOptions()
             fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-            if let assetCollection = assetCollection, let fetchResult = (PHAsset.fetchAssets(in: assetCollection, options: fetchOptions) as AnyObject?) as? PHFetchResult<PHAsset> {
+            if let assetCollection, let fetchResult = (PHAsset.fetchAssets(in: assetCollection, options: fetchOptions) as AnyObject?) as? PHFetchResult<PHAsset> {
                 newFetchResult = fetchResult
             }
         }
 
-        if let newFetchResult = newFetchResult {
+        if let newFetchResult {
             await MainActor.run {
                 photoAssets = PhotoAssetCollection(newFetchResult)
                 logger.debug("PhotoCollection photoAssets refreshed: \(self.photoAssets.count)")

@@ -1,14 +1,13 @@
 //
 //  PhotoLibraryAlbumManagerTests.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
-@testable import colir
 import Photos
 import Testing
+@testable import colir
 
 @Suite("PhotoLibraryAlbumManager Tests")
 struct PhotoLibraryAlbumManagerTests {
@@ -40,7 +39,7 @@ struct PhotoLibraryAlbumManagerTests {
     func error_unableToFindAlbum() {
         let error = PhotoLibraryAlbumManager.PhotoCollectionError.unableToFindAlbum("My Album")
 
-        if case let .unableToFindAlbum(name) = error {
+        if case .unableToFindAlbum(let name) = error {
             #expect(name == "My Album")
         } else {
             Issue.record("Expected unableToFindAlbum case")
@@ -51,7 +50,7 @@ struct PhotoLibraryAlbumManagerTests {
     func error_unableToLoadSmartAlbum() {
         let error = PhotoLibraryAlbumManager.PhotoCollectionError.unableToLoadSmartAlbum(.smartAlbumFavorites)
 
-        if case let .unableToLoadSmartAlbum(subtype) = error {
+        if case .unableToLoadSmartAlbum(let subtype) = error {
             #expect(subtype == .smartAlbumFavorites)
         } else {
             Issue.record("Expected unableToLoadSmartAlbum case")
@@ -97,7 +96,7 @@ struct PhotoLibraryAlbumManagerTests {
     func photoAssets_initiallyEmpty() {
         let manager = PhotoLibraryAlbumManager(albumNamed: "Test")
 
-        #expect(manager.photoAssets.count == 0)
+        #expect(manager.photoAssets.isEmpty)
     }
 
     // MARK: - identifier Tests
@@ -182,7 +181,7 @@ struct PhotoLibraryAlbumManagerTests {
 
         // PhotoLibraryAlbumManager should be @Observable
         // We can verify by checking it compiles with observation
-        #expect(manager.photoAssets.count == 0)
+        #expect(manager.photoAssets.isEmpty)
     }
 
     // MARK: - Sendable Tests

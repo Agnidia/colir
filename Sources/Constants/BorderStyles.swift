@@ -1,9 +1,8 @@
 //
 //  BorderStyles.swift
-//  colir
 //
-//  Created by Claude on 05.12.2024.
-//  Copyright © 2024 IGR Soft. All rights reserved.
+//  Created on 05.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftUI
@@ -29,13 +28,13 @@ enum BorderStyle {
     var width: CGFloat {
         switch self {
         case .default:
-            return 1.5
+            1.5
         case .selected:
-            return 2.5
+            2.5
         case .focus:
-            return 2.0
+            2.0
         case .error:
-            return 1.5
+            1.5
         }
     }
 
@@ -43,13 +42,13 @@ enum BorderStyle {
     var color: Color {
         switch self {
         case .default:
-            return Color.secondaryText.opacity(0.3)
+            Color.secondaryText.opacity(0.3)
         case .selected:
-            return Color.selectedView
+            Color.selectedView
         case .focus:
-            return Color.accentColor
+            Color.accentColor
         case .error:
-            return Color(nsColor: .red500)
+            Color(nsColor: .red500)
         }
     }
 }

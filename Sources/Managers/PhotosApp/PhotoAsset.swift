@@ -1,9 +1,8 @@
 //
 //  PhotoAsset.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 09.10.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 10.10.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import Photos

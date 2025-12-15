@@ -1,9 +1,8 @@
 //
 //  RSRCResource.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 07.08.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 15.09.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
@@ -32,7 +31,8 @@ final class RSRCResource: NSObject {
     ///
     /// - Parameter data: The data to initialize the resource with. If `nil`, the resource will be
     ///                   initialized with no data.
-    @objc init(data: Data) {
+    @objc
+    init(data: Data) {
         self.data = data
     }
 }

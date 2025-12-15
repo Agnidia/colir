@@ -1,9 +1,8 @@
 //
 //  FileAccessManager.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 30.04.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 07.10.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
@@ -20,7 +19,8 @@ enum FileAccessManagerError: Error {
 protocol FileAccessManagerProtocol {
     init(with path: URL, bookmarkData: Data)
 
-    @MainActor func checkAndSetupDataAccessIfNeeded() throws -> FileAccessData
+    @MainActor
+    func checkAndSetupDataAccessIfNeeded() throws -> FileAccessData
 }
 
 /// A struct representing the data needed for file access, including a URL and its associated bookmark data.

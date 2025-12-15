@@ -1,21 +1,20 @@
 //
 //  NSImage+Draw.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 08.11.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 08.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
 
-public extension NSImage {
+extension NSImage {
     /// Draws an image onto the current image at a specified position.
     ///
     /// - Parameters:
     ///   - image: The `NSImage` to be drawn onto the current image.
     ///   - position: The position at which to draw the image. Default is `.zero`.
     /// - Returns: A new `NSImage` with the drawn image.
-    func draw(image: NSImage, at position: CGPoint = .zero) -> NSImage {
+    public func draw(image: NSImage, at position: CGPoint = .zero) -> NSImage {
         let img = NSImage(size: size)
         img.lockFocus()
         draw(in: CGRect(origin: .zero, size: size))
@@ -28,7 +27,7 @@ public extension NSImage {
     ///
     /// - Parameter emoji: The emoji character to be drawn.
     /// - Returns: A new `NSImage` with the drawn emoji.
-    func draw(emoji: Character) -> NSImage {
+    public func draw(emoji: Character) -> NSImage {
         var fontScale: CGFloat = 2.2
         var xOffset: CGFloat = (1 * size.width / 512)
         let yOffset: CGFloat = (18 * size.height / 512)

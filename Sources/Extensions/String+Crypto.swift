@@ -1,9 +1,8 @@
 //
 //  String+Crypto.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 17.11.2023.
-//  Copyright © 2023 IGR Software. All rights reserved.
+//  Created on 17.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import CommonCrypto

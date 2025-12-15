@@ -1,9 +1,8 @@
 //
 //  ToolbarViewModel.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 23.07.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 15.09.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftUI
@@ -27,7 +26,8 @@ final class ToolbarViewModel: ObservableObject {
 
     /// Handles updates from the undo manager.
     /// - Parameter notification: The notification containing update information.
-    @objc private func undoManagerUpdated(_: Foundation.Notification) {
+    @objc
+    private func undoManagerUpdated(_: Foundation.Notification) {
         // updateHack.toggle()
     }
 

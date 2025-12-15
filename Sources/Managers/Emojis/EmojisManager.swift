@@ -1,9 +1,8 @@
 //
 //  EmojisManager.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 04.09.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 15.09.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
@@ -32,7 +31,7 @@ final class EmojisManager {
     /// A dictionary mapping emoji groups to arrays of characters.
     /// - Returns: A dictionary where each key is an `EmojisGroup`, and each value is an array of `Character` representing emojis in that group.
     var emojis: [EmojisGroup: [Character]] {
-        guard let emojisList = emojisList else {
+        guard let emojisList else {
             assertionFailure("Missing emojibase asset")
             return [:]
         }

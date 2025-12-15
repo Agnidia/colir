@@ -1,9 +1,8 @@
 //
 //  PhotoLibraryCacheManager.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 09.10.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 10.10.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import Foundation
@@ -45,7 +44,7 @@ actor PhotoLibraryCacheManager {
     ///   - assets: An array of `PhotoAsset` instances to cache.
     ///   - targetSize: The target size for the cached images.
     func startCaching(for assets: [PhotoAsset], targetSize: CGSize) {
-        let phAssets = assets.compactMap { $0.phAsset }
+        let phAssets = assets.compactMap(\.phAsset)
         for phAsset in phAssets {
             cachedAssetIdentifiers[phAsset.localIdentifier] = true
         }
@@ -57,7 +56,7 @@ actor PhotoLibraryCacheManager {
     ///   - assets: An array of `PhotoAsset` instances to stop caching.
     ///   - targetSize: The target size for the cached images.
     func stopCaching(for assets: [PhotoAsset], targetSize: CGSize) {
-        let phAssets = assets.compactMap { $0.phAsset }
+        let phAssets = assets.compactMap(\.phAsset)
         for phAsset in phAssets {
             cachedAssetIdentifiers.removeValue(forKey: phAsset.localIdentifier)
         }
@@ -97,7 +96,7 @@ actor PhotoLibraryCacheManager {
                 Task { @MainActor in
                     completion(nil)
                 }
-            } else if let image = image {
+            } else if let image {
                 let isLowerQualityImage = (info?[PHImageResultIsDegradedKey] as? NSNumber)?.boolValue ?? false
                 let result = (image: image, isLowerQuality: isLowerQualityImage)
                 Task { @MainActor [result] in

@@ -1,9 +1,8 @@
 //
 //  CustomizingActionView.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 04.11.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 05.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftUI
@@ -76,7 +75,7 @@ struct CustomizingActionView: View {
     @ViewBuilder
     var progressView: some View {
         switch viewModel.state {
-        case let .processing(progress):
+        case .processing(let progress):
             ProgressView("", value: progress, total: 100)
                 .progressViewStyle(.primary)
                 .clipShape(UnevenRoundedRectangle(cornerRadii: .init(topTrailing: ButtonStyleConstants.cornerRadius)))

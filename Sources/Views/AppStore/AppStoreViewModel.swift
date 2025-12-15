@@ -1,9 +1,8 @@
 //
 //  AppStoreViewModel.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 13.11.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 14.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import SwiftCommons
@@ -65,7 +64,7 @@ final class AppStoreViewModel: DomainViewConstantProtocol, @unchecked Sendable {
     /// - Parameter purchase: The result of the purchase attempt.
     func process(purchase: PurchaseResult) {
         switch purchase {
-        case let .success(product):
+        case .success(let product):
             handleSuccess(for: product)
             completionHandler()
         case .userCancelled:

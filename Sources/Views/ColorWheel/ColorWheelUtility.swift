@@ -1,9 +1,8 @@
 //
 //  ColorWheelUtility.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 23.11.2023.
-//  Copyright © 2023 IGR Software. All rights reserved.
+//  Created on 23.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import Cocoa
@@ -27,19 +26,33 @@ func hsv2rgb(_ hsv: HSV) -> RGB {
     let q = hsv.brightness * (1 - f * hsv.saturation)
     let t = hsv.brightness * (1 - (1 - f) * hsv.saturation)
     switch i % 6 {
-    case 0: r = hsv.brightness; g = t; b = p
+    case 0: r = hsv.brightness
+    g = t
+    b = p
 
-    case 1: r = q; g = hsv.brightness; b = p
+    case 1: r = q
+    g = hsv.brightness
+    b = p
 
-    case 2: r = p; g = hsv.brightness; b = t
+    case 2: r = p
+    g = hsv.brightness
+    b = t
 
-    case 3: r = p; g = q; b = hsv.brightness
+    case 3: r = p
+    g = q
+    b = hsv.brightness
 
-    case 4: r = t; g = p; b = hsv.brightness
+    case 4: r = t
+    g = p
+    b = hsv.brightness
 
-    case 5: r = hsv.brightness; g = p; b = q
+    case 5: r = hsv.brightness
+    g = p
+    b = q
 
-    default: r = hsv.brightness; g = t; b = p
+    default: r = hsv.brightness
+    g = t
+    b = p
     }
 
     rgb.red = r

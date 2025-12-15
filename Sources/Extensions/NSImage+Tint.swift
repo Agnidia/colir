@@ -1,19 +1,18 @@
 //
 //  NSImage+Tint.swift
-//  colir
 //
-//  Created by Vitalii Parovishnyk on 05.05.2023.
-//  Copyright © 2023 IGR Soft. All rights reserved.
+//  Created on 05.11.2023.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
 
-public extension NSImage {
+extension NSImage {
     /// Creates a list of tinted icons from the current image.
     ///
     /// - Parameter color: The color to tint the icons.
     /// - Returns: An array of tinted `NSImage` objects.
-    func tintedIcns(_ color: NSColor) -> [NSImage] {
+    public func tintedIcns(_ color: NSColor) -> [NSImage] {
         var icons = [NSImage]()
         for icon in representations {
             let iconSize = icon.size
@@ -36,8 +35,8 @@ public extension NSImage {
     ///   - withColor: The target color to replace the source color.
     ///   - tolerance: The tolerance level for color replacement, ranging from 0 to 1. Default is 0.6.
     /// - Returns: A new `NSImage` with the specified color replaced, or `nil` if the operation fails.
-    func tint(color: NSColor, withColor: NSColor, tolerance: CGFloat = 0.6) -> NSImage? {
-        guard let imageRef = self.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
+    public func tint(color: NSColor, withColor: NSColor, tolerance: CGFloat = 0.6) -> NSImage? {
+        guard let imageRef = cgImage(forProposedRect: nil, context: nil, hints: nil) else {
             return nil
         }
 

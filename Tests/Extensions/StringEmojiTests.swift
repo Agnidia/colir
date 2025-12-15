@@ -1,14 +1,13 @@
 //
 //  StringEmojiTests.swift
-//  colirTests
 //
-//  Created by Claude Code on 2025-12-15.
-//  Copyright (c) 2025 IGR Software. All rights reserved.
+//  Created on 15.12.2025.
+//  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
 import AppKit
-@testable import colir
 import Testing
+@testable import colir
 
 @Suite("String and Character Emoji Extensions")
 struct StringEmojiTests {
@@ -146,7 +145,7 @@ struct StringEmojiTests {
         let pngData = emoji.png(ofSize: 32)
 
         #expect(pngData != nil)
-        #expect(pngData!.count > 0)
+        #expect(!pngData!.isEmpty)
     }
 
     @Test("png generates data for regular character")
@@ -155,7 +154,7 @@ struct StringEmojiTests {
         let pngData = char.png(ofSize: 32)
 
         #expect(pngData != nil)
-        #expect(pngData!.count > 0)
+        #expect(!pngData!.isEmpty)
     }
 
     @Test("png generates different data for different sizes")

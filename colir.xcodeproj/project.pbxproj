@@ -52,6 +52,50 @@
 		A57305662EE2F8C400C4D0F2 /* icon.icon in Resources */ = {isa = PBXBuildFile; fileRef = A57305652EE2F8C400C4D0F2 /* icon.icon */; };
 		A57305962EE311E000C4D0F2 /* View+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57305952EE311E000C4D0F2 /* View+Debug.swift */; };
 		A57ECAAF2D345F3100288FB5 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = A57ECAAE2D345F3100288FB5 /* Algorithms */; };
+		A580CD872EF01A2B00132375 /* StringCryptoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD602EF01A2B00132375 /* StringCryptoTests.swift */; };
+		A580CD882EF01A2B00132375 /* HomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD7F2EF01A2B00132375 /* HomeViewModelTests.swift */; };
+		A580CD892EF01A2B00132375 /* ToolsPhotosViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD842EF01A2B00132375 /* ToolsPhotosViewModelTests.swift */; };
+		A580CD8A2EF01A2B00132375 /* URLDirTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD622EF01A2B00132375 /* URLDirTests.swift */; };
+		A580CD8B2EF01A2B00132375 /* NSImageTintTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD5E2EF01A2B00132375 /* NSImageTintTests.swift */; };
+		A580CD8C2EF01A2B00132375 /* NSImageCutPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD5A2EF01A2B00132375 /* NSImageCutPathTests.swift */; };
+		A580CD8D2EF01A2B00132375 /* PhotoAppItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD6B2EF01A2B00132375 /* PhotoAppItemTests.swift */; };
+		A580CD8E2EF01A2B00132375 /* NSColorListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD582EF01A2B00132375 /* NSColorListTests.swift */; };
+		A580CD8F2EF01A2B00132375 /* RGBA32Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD5F2EF01A2B00132375 /* RGBA32Tests.swift */; };
+		A580CD902EF01A2B00132375 /* NSBezierPathFolderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD562EF01A2B00132375 /* NSBezierPathFolderTests.swift */; };
+		A580CD912EF01A2B00132375 /* PhotoAssetCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD6C2EF01A2B00132375 /* PhotoAssetCollectionTests.swift */; };
+		A580CD922EF01A2B00132375 /* AsyncTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD642EF01A2B00132375 /* AsyncTestHelpers.swift */; };
+		A580CD932EF01A2B00132375 /* AppStoreViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD7C2EF01A2B00132375 /* AppStoreViewModelTests.swift */; };
+		A580CD942EF01A2B00132375 /* ImageCustomisationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD762EF01A2B00132375 /* ImageCustomisationTests.swift */; };
+		A580CD952EF01A2B00132375 /* PermissionsOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD802EF01A2B00132375 /* PermissionsOverlayViewModelTests.swift */; };
+		A580CD962EF01A2B00132375 /* TestFixtures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD652EF01A2B00132375 /* TestFixtures.swift */; };
+		A580CD972EF01A2B00132375 /* PicturesFolderManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD712EF01A2B00132375 /* PicturesFolderManagerTests.swift */; };
+		A580CD982EF01A2B00132375 /* NSColorHexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD572EF01A2B00132375 /* NSColorHexTests.swift */; };
+		A580CD992EF01A2B00132375 /* AppliedStylesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD7B2EF01A2B00132375 /* AppliedStylesViewModelTests.swift */; };
+		A580CD9A2EF01A2B00132375 /* FileAccessManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD692EF01A2B00132375 /* FileAccessManagerTests.swift */; };
+		A580CD9B2EF01A2B00132375 /* ColorValueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD552EF01A2B00132375 /* ColorValueTests.swift */; };
+		A580CD9C2EF01A2B00132375 /* ToolsEmojisViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD832EF01A2B00132375 /* ToolsEmojisViewModelTests.swift */; };
+		A580CD9D2EF01A2B00132375 /* DropZoneViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD7E2EF01A2B00132375 /* DropZoneViewModelTests.swift */; };
+		A580CD9E2EF01A2B00132375 /* ToolsColorsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD822EF01A2B00132375 /* ToolsColorsViewModelTests.swift */; };
+		A580CD9F2EF01A2B00132375 /* NSImageAlphaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD592EF01A2B00132375 /* NSImageAlphaTests.swift */; };
+		A580CDA02EF01A2B00132375 /* IconManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD6A2EF01A2B00132375 /* IconManagerTests.swift */; };
+		A580CDA12EF01A2B00132375 /* PhotoLibraryCacheManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD6F2EF01A2B00132375 /* PhotoLibraryCacheManagerTests.swift */; };
+		A580CDA22EF01A2B00132375 /* ToolbarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD812EF01A2B00132375 /* ToolbarViewModelTests.swift */; };
+		A580CDA32EF01A2B00132375 /* PicturesFolderItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD702EF01A2B00132375 /* PicturesFolderItemTests.swift */; };
+		A580CDA42EF01A2B00132375 /* EmojisManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD672EF01A2B00132375 /* EmojisManagerTests.swift */; };
+		A580CDA52EF01A2B00132375 /* ToolsPicturesViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD852EF01A2B00132375 /* ToolsPicturesViewModelTests.swift */; };
+		A580CDA62EF01A2B00132375 /* PhotoLibraryAlbumManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD6E2EF01A2B00132375 /* PhotoLibraryAlbumManagerTests.swift */; };
+		A580CDA72EF01A2B00132375 /* ImageDtoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD772EF01A2B00132375 /* ImageDtoTests.swift */; };
+		A580CDA82EF01A2B00132375 /* NSImageDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD5B2EF01A2B00132375 /* NSImageDataTests.swift */; };
+		A580CDA92EF01A2B00132375 /* PhotoAssetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD6D2EF01A2B00132375 /* PhotoAssetTests.swift */; };
+		A580CDAA2EF01A2B00132375 /* ExportIconManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD682EF01A2B00132375 /* ExportIconManagerTests.swift */; };
+		A580CDAB2EF01A2B00132375 /* StringEmojiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD612EF01A2B00132375 /* StringEmojiTests.swift */; };
+		A580CDAC2EF01A2B00132375 /* NSImageDrawTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD5C2EF01A2B00132375 /* NSImageDrawTests.swift */; };
+		A580CDAD2EF01A2B00132375 /* CollectionSafeIndexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD542EF01A2B00132375 /* CollectionSafeIndexTests.swift */; };
+		A580CDAE2EF01A2B00132375 /* CustomizingActionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD7D2EF01A2B00132375 /* CustomizingActionViewModelTests.swift */; };
+		A580CDAF2EF01A2B00132375 /* EmojiDtoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD752EF01A2B00132375 /* EmojiDtoTests.swift */; };
+		A580CDB02EF01A2B00132375 /* NSImageScaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD5D2EF01A2B00132375 /* NSImageScaleTests.swift */; };
+		A580CDB12EF01A2B00132375 /* AppStoreServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD792EF01A2B00132375 /* AppStoreServiceTests.swift */; };
+		A580CDB22EF01A2B00132375 /* CryptoModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580CD742EF01A2B00132375 /* CryptoModelTests.swift */; };
 		A58544C22D46CE4B00CACBDF /* Color+Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58544C12D46CE4B00CACBDF /* Color+Value.swift */; };
 		A58544C42D49742D00CACBDF /* Collection+SafeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58544C32D49742D00CACBDF /* Collection+SafeIndex.swift */; };
 		A597E5F92D2C3E7D00F43C48 /* URL+Dir.swift in Sources */ = {isa = PBXBuildFile; fileRef = A597E5F82D2C3E7D00F43C48 /* URL+Dir.swift */; };
@@ -228,6 +272,50 @@
 		A56893282B8A6699001C0B94 /* NSColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+Hex.swift"; sourceTree = "<group>"; };
 		A57305652EE2F8C400C4D0F2 /* icon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = icon.icon; sourceTree = "<group>"; };
 		A57305952EE311E000C4D0F2 /* View+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Debug.swift"; sourceTree = "<group>"; };
+		A580CD542EF01A2B00132375 /* CollectionSafeIndexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionSafeIndexTests.swift; sourceTree = "<group>"; };
+		A580CD552EF01A2B00132375 /* ColorValueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorValueTests.swift; sourceTree = "<group>"; };
+		A580CD562EF01A2B00132375 /* NSBezierPathFolderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSBezierPathFolderTests.swift; sourceTree = "<group>"; };
+		A580CD572EF01A2B00132375 /* NSColorHexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColorHexTests.swift; sourceTree = "<group>"; };
+		A580CD582EF01A2B00132375 /* NSColorListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSColorListTests.swift; sourceTree = "<group>"; };
+		A580CD592EF01A2B00132375 /* NSImageAlphaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImageAlphaTests.swift; sourceTree = "<group>"; };
+		A580CD5A2EF01A2B00132375 /* NSImageCutPathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImageCutPathTests.swift; sourceTree = "<group>"; };
+		A580CD5B2EF01A2B00132375 /* NSImageDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImageDataTests.swift; sourceTree = "<group>"; };
+		A580CD5C2EF01A2B00132375 /* NSImageDrawTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImageDrawTests.swift; sourceTree = "<group>"; };
+		A580CD5D2EF01A2B00132375 /* NSImageScaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImageScaleTests.swift; sourceTree = "<group>"; };
+		A580CD5E2EF01A2B00132375 /* NSImageTintTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSImageTintTests.swift; sourceTree = "<group>"; };
+		A580CD5F2EF01A2B00132375 /* RGBA32Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGBA32Tests.swift; sourceTree = "<group>"; };
+		A580CD602EF01A2B00132375 /* StringCryptoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringCryptoTests.swift; sourceTree = "<group>"; };
+		A580CD612EF01A2B00132375 /* StringEmojiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringEmojiTests.swift; sourceTree = "<group>"; };
+		A580CD622EF01A2B00132375 /* URLDirTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLDirTests.swift; sourceTree = "<group>"; };
+		A580CD642EF01A2B00132375 /* AsyncTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncTestHelpers.swift; sourceTree = "<group>"; };
+		A580CD652EF01A2B00132375 /* TestFixtures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFixtures.swift; sourceTree = "<group>"; };
+		A580CD672EF01A2B00132375 /* EmojisManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojisManagerTests.swift; sourceTree = "<group>"; };
+		A580CD682EF01A2B00132375 /* ExportIconManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportIconManagerTests.swift; sourceTree = "<group>"; };
+		A580CD692EF01A2B00132375 /* FileAccessManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAccessManagerTests.swift; sourceTree = "<group>"; };
+		A580CD6A2EF01A2B00132375 /* IconManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconManagerTests.swift; sourceTree = "<group>"; };
+		A580CD6B2EF01A2B00132375 /* PhotoAppItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAppItemTests.swift; sourceTree = "<group>"; };
+		A580CD6C2EF01A2B00132375 /* PhotoAssetCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAssetCollectionTests.swift; sourceTree = "<group>"; };
+		A580CD6D2EF01A2B00132375 /* PhotoAssetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAssetTests.swift; sourceTree = "<group>"; };
+		A580CD6E2EF01A2B00132375 /* PhotoLibraryAlbumManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryAlbumManagerTests.swift; sourceTree = "<group>"; };
+		A580CD6F2EF01A2B00132375 /* PhotoLibraryCacheManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryCacheManagerTests.swift; sourceTree = "<group>"; };
+		A580CD702EF01A2B00132375 /* PicturesFolderItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicturesFolderItemTests.swift; sourceTree = "<group>"; };
+		A580CD712EF01A2B00132375 /* PicturesFolderManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicturesFolderManagerTests.swift; sourceTree = "<group>"; };
+		A580CD742EF01A2B00132375 /* CryptoModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoModelTests.swift; sourceTree = "<group>"; };
+		A580CD752EF01A2B00132375 /* EmojiDtoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiDtoTests.swift; sourceTree = "<group>"; };
+		A580CD762EF01A2B00132375 /* ImageCustomisationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCustomisationTests.swift; sourceTree = "<group>"; };
+		A580CD772EF01A2B00132375 /* ImageDtoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDtoTests.swift; sourceTree = "<group>"; };
+		A580CD792EF01A2B00132375 /* AppStoreServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreServiceTests.swift; sourceTree = "<group>"; };
+		A580CD7B2EF01A2B00132375 /* AppliedStylesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppliedStylesViewModelTests.swift; sourceTree = "<group>"; };
+		A580CD7C2EF01A2B00132375 /* AppStoreViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreViewModelTests.swift; sourceTree = "<group>"; };
+		A580CD7D2EF01A2B00132375 /* CustomizingActionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizingActionViewModelTests.swift; sourceTree = "<group>"; };
+		A580CD7E2EF01A2B00132375 /* DropZoneViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropZoneViewModelTests.swift; sourceTree = "<group>"; };
+		A580CD7F2EF01A2B00132375 /* HomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTests.swift; sourceTree = "<group>"; };
+		A580CD802EF01A2B00132375 /* PermissionsOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsOverlayViewModelTests.swift; sourceTree = "<group>"; };
+		A580CD812EF01A2B00132375 /* ToolbarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewModelTests.swift; sourceTree = "<group>"; };
+		A580CD822EF01A2B00132375 /* ToolsColorsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsColorsViewModelTests.swift; sourceTree = "<group>"; };
+		A580CD832EF01A2B00132375 /* ToolsEmojisViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsEmojisViewModelTests.swift; sourceTree = "<group>"; };
+		A580CD842EF01A2B00132375 /* ToolsPhotosViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsPhotosViewModelTests.swift; sourceTree = "<group>"; };
+		A580CD852EF01A2B00132375 /* ToolsPicturesViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolsPicturesViewModelTests.swift; sourceTree = "<group>"; };
 		A58544C12D46CE4B00CACBDF /* Color+Value.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Value.swift"; sourceTree = "<group>"; };
 		A58544C32D49742D00CACBDF /* Collection+SafeIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+SafeIndex.swift"; sourceTree = "<group>"; };
 		A597E5F82D2C3E7D00F43C48 /* URL+Dir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Dir.swift"; sourceTree = "<group>"; };
@@ -568,6 +656,99 @@
 				A56811382B0FD55400236EA8 /* ColorWheelView.swift */,
 			);
 			path = ColorWheel;
+			sourceTree = "<group>";
+		};
+		A580CD632EF01A2B00132375 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A580CD542EF01A2B00132375 /* CollectionSafeIndexTests.swift */,
+				A580CD552EF01A2B00132375 /* ColorValueTests.swift */,
+				A580CD562EF01A2B00132375 /* NSBezierPathFolderTests.swift */,
+				A580CD572EF01A2B00132375 /* NSColorHexTests.swift */,
+				A580CD582EF01A2B00132375 /* NSColorListTests.swift */,
+				A580CD592EF01A2B00132375 /* NSImageAlphaTests.swift */,
+				A580CD5A2EF01A2B00132375 /* NSImageCutPathTests.swift */,
+				A580CD5B2EF01A2B00132375 /* NSImageDataTests.swift */,
+				A580CD5C2EF01A2B00132375 /* NSImageDrawTests.swift */,
+				A580CD5D2EF01A2B00132375 /* NSImageScaleTests.swift */,
+				A580CD5E2EF01A2B00132375 /* NSImageTintTests.swift */,
+				A580CD5F2EF01A2B00132375 /* RGBA32Tests.swift */,
+				A580CD602EF01A2B00132375 /* StringCryptoTests.swift */,
+				A580CD612EF01A2B00132375 /* StringEmojiTests.swift */,
+				A580CD622EF01A2B00132375 /* URLDirTests.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A580CD662EF01A2B00132375 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				A580CD642EF01A2B00132375 /* AsyncTestHelpers.swift */,
+				A580CD652EF01A2B00132375 /* TestFixtures.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		A580CD722EF01A2B00132375 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				A580CD672EF01A2B00132375 /* EmojisManagerTests.swift */,
+				A580CD682EF01A2B00132375 /* ExportIconManagerTests.swift */,
+				A580CD692EF01A2B00132375 /* FileAccessManagerTests.swift */,
+				A580CD6A2EF01A2B00132375 /* IconManagerTests.swift */,
+				A580CD6B2EF01A2B00132375 /* PhotoAppItemTests.swift */,
+				A580CD6C2EF01A2B00132375 /* PhotoAssetCollectionTests.swift */,
+				A580CD6D2EF01A2B00132375 /* PhotoAssetTests.swift */,
+				A580CD6E2EF01A2B00132375 /* PhotoLibraryAlbumManagerTests.swift */,
+				A580CD6F2EF01A2B00132375 /* PhotoLibraryCacheManagerTests.swift */,
+				A580CD702EF01A2B00132375 /* PicturesFolderItemTests.swift */,
+				A580CD712EF01A2B00132375 /* PicturesFolderManagerTests.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		A580CD732EF01A2B00132375 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		A580CD782EF01A2B00132375 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A580CD742EF01A2B00132375 /* CryptoModelTests.swift */,
+				A580CD752EF01A2B00132375 /* EmojiDtoTests.swift */,
+				A580CD762EF01A2B00132375 /* ImageCustomisationTests.swift */,
+				A580CD772EF01A2B00132375 /* ImageDtoTests.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A580CD7A2EF01A2B00132375 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A580CD792EF01A2B00132375 /* AppStoreServiceTests.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A580CD862EF01A2B00132375 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				A580CD7B2EF01A2B00132375 /* AppliedStylesViewModelTests.swift */,
+				A580CD7C2EF01A2B00132375 /* AppStoreViewModelTests.swift */,
+				A580CD7D2EF01A2B00132375 /* CustomizingActionViewModelTests.swift */,
+				A580CD7E2EF01A2B00132375 /* DropZoneViewModelTests.swift */,
+				A580CD7F2EF01A2B00132375 /* HomeViewModelTests.swift */,
+				A580CD802EF01A2B00132375 /* PermissionsOverlayViewModelTests.swift */,
+				A580CD812EF01A2B00132375 /* ToolbarViewModelTests.swift */,
+				A580CD822EF01A2B00132375 /* ToolsColorsViewModelTests.swift */,
+				A580CD832EF01A2B00132375 /* ToolsEmojisViewModelTests.swift */,
+				A580CD842EF01A2B00132375 /* ToolsPhotosViewModelTests.swift */,
+				A580CD852EF01A2B00132375 /* ToolsPicturesViewModelTests.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		A5A00D852AEF0CB40063FE06 /* Styles */ = {
@@ -1013,6 +1194,13 @@
 		A5F5CE092A6D2BFC008AF959 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A580CD632EF01A2B00132375 /* Extensions */,
+				A580CD662EF01A2B00132375 /* Helpers */,
+				A580CD722EF01A2B00132375 /* Managers */,
+				A580CD732EF01A2B00132375 /* Mocks */,
+				A580CD782EF01A2B00132375 /* Models */,
+				A580CD7A2EF01A2B00132375 /* Services */,
+				A580CD862EF01A2B00132375 /* ViewModels */,
 				A5F5CE0A2A6D2BFC008AF959 /* colirTests.swift */,
 			);
 			path = Tests;
@@ -1353,6 +1541,50 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5F5CE0B2A6D2BFC008AF959 /* colirTests.swift in Sources */,
+				A580CD872EF01A2B00132375 /* StringCryptoTests.swift in Sources */,
+				A580CD882EF01A2B00132375 /* HomeViewModelTests.swift in Sources */,
+				A580CD892EF01A2B00132375 /* ToolsPhotosViewModelTests.swift in Sources */,
+				A580CD8A2EF01A2B00132375 /* URLDirTests.swift in Sources */,
+				A580CD8B2EF01A2B00132375 /* NSImageTintTests.swift in Sources */,
+				A580CD8C2EF01A2B00132375 /* NSImageCutPathTests.swift in Sources */,
+				A580CD8D2EF01A2B00132375 /* PhotoAppItemTests.swift in Sources */,
+				A580CD8E2EF01A2B00132375 /* NSColorListTests.swift in Sources */,
+				A580CD8F2EF01A2B00132375 /* RGBA32Tests.swift in Sources */,
+				A580CD902EF01A2B00132375 /* NSBezierPathFolderTests.swift in Sources */,
+				A580CD912EF01A2B00132375 /* PhotoAssetCollectionTests.swift in Sources */,
+				A580CD922EF01A2B00132375 /* AsyncTestHelpers.swift in Sources */,
+				A580CD932EF01A2B00132375 /* AppStoreViewModelTests.swift in Sources */,
+				A580CD942EF01A2B00132375 /* ImageCustomisationTests.swift in Sources */,
+				A580CD952EF01A2B00132375 /* PermissionsOverlayViewModelTests.swift in Sources */,
+				A580CD962EF01A2B00132375 /* TestFixtures.swift in Sources */,
+				A580CD972EF01A2B00132375 /* PicturesFolderManagerTests.swift in Sources */,
+				A580CD982EF01A2B00132375 /* NSColorHexTests.swift in Sources */,
+				A580CD992EF01A2B00132375 /* AppliedStylesViewModelTests.swift in Sources */,
+				A580CD9A2EF01A2B00132375 /* FileAccessManagerTests.swift in Sources */,
+				A580CD9B2EF01A2B00132375 /* ColorValueTests.swift in Sources */,
+				A580CD9C2EF01A2B00132375 /* ToolsEmojisViewModelTests.swift in Sources */,
+				A580CD9D2EF01A2B00132375 /* DropZoneViewModelTests.swift in Sources */,
+				A580CD9E2EF01A2B00132375 /* ToolsColorsViewModelTests.swift in Sources */,
+				A580CD9F2EF01A2B00132375 /* NSImageAlphaTests.swift in Sources */,
+				A580CDA02EF01A2B00132375 /* IconManagerTests.swift in Sources */,
+				A580CDA12EF01A2B00132375 /* PhotoLibraryCacheManagerTests.swift in Sources */,
+				A580CDA22EF01A2B00132375 /* ToolbarViewModelTests.swift in Sources */,
+				A580CDA32EF01A2B00132375 /* PicturesFolderItemTests.swift in Sources */,
+				A580CDA42EF01A2B00132375 /* EmojisManagerTests.swift in Sources */,
+				A580CDA52EF01A2B00132375 /* ToolsPicturesViewModelTests.swift in Sources */,
+				A580CDA62EF01A2B00132375 /* PhotoLibraryAlbumManagerTests.swift in Sources */,
+				A580CDA72EF01A2B00132375 /* ImageDtoTests.swift in Sources */,
+				A580CDA82EF01A2B00132375 /* NSImageDataTests.swift in Sources */,
+				A580CDA92EF01A2B00132375 /* PhotoAssetTests.swift in Sources */,
+				A580CDAA2EF01A2B00132375 /* ExportIconManagerTests.swift in Sources */,
+				A580CDAB2EF01A2B00132375 /* StringEmojiTests.swift in Sources */,
+				A580CDAC2EF01A2B00132375 /* NSImageDrawTests.swift in Sources */,
+				A580CDAD2EF01A2B00132375 /* CollectionSafeIndexTests.swift in Sources */,
+				A580CDAE2EF01A2B00132375 /* CustomizingActionViewModelTests.swift in Sources */,
+				A580CDAF2EF01A2B00132375 /* EmojiDtoTests.swift in Sources */,
+				A580CDB02EF01A2B00132375 /* NSImageScaleTests.swift in Sources */,
+				A580CDB12EF01A2B00132375 /* AppStoreServiceTests.swift in Sources */,
+				A580CDB22EF01A2B00132375 /* CryptoModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

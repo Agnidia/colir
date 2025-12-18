@@ -5,6 +5,7 @@
 //  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
+import DeveloperSupportStore
 import SwiftUI
 
 @main
@@ -12,7 +13,16 @@ struct BaseApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @State private var searchText = ""
 
-    @StateObject private var homeViewModel: HomeViewModel = .init(undoManager: UndoManager())
+    @StateObject private var homeViewModel: HomeViewModel
+
+    /// Initializes the app with the shared store service.
+    init() {
+        let storeService = AppStoreServiceHolder.shared.storeService
+        _homeViewModel = StateObject(wrappedValue: HomeViewModel(
+            undoManager: UndoManager(),
+            storeService: storeService
+        ))
+    }
 
     var body: some Scene {
         WindowGroup {
@@ -63,5 +73,23 @@ struct BaseApp: App {
         }
 
         func applicationDidBecomeActive(_: Notification) {}
+    }
+}
+
+/// Holds the shared store service instance for the app lifecycle.
+/// This ensures StoreHelper maintains transaction listeners and purchase state.
+@MainActor
+final class AppStoreServiceHolder {
+    static let shared = AppStoreServiceHolder()
+
+    let storeService: any StoreServiceProtocol
+
+    private init() {
+        storeService = StoreService(configuration: ColirStoreConfiguration())
+
+        // Initialize store service immediately
+        Task {
+            try? await storeService.syncStoreData()
+        }
     }
 }

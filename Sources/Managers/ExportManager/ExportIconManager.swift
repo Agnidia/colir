@@ -25,20 +25,15 @@ final class ExportIconManager: ExportIconManagerProtocol {
     /// The settings related to the application, including export count.
     var appSettings: AppSettingsProtocol
 
-    /// Service for handling app store related operations, such as checking full access.
-    let appStoreService: AppStoreProtocol
-
     /// The manager responsible for converting images to ICNS format and setting icons.
     let iconManager: IconManager
 
     /// Initializes a new instance of `ExportIconManager`.
     /// - Parameters:
     ///   - appSettings: The settings object used for managing export-related settings.
-    ///   - appStoreService: The service used for interacting with the app store.
     ///   - iconManager: The manager responsible for converting images and setting icons. Defaults to a new instance of `IconManager`.
-    init(appSettings: AppSettingsProtocol, appStoreService: AppStoreProtocol, iconManager: IconManager = .init()) {
+    init(appSettings: AppSettingsProtocol, iconManager: IconManager = .init()) {
         self.appSettings = appSettings
-        self.appStoreService = appStoreService
         self.iconManager = iconManager
     }
 

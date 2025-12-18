@@ -25,6 +25,5 @@ final class Application {
     /// Performs the main setup of base objects and logs the setup process.
     func setup() {
         log.info("Application setup started")
-        // Add further setup logic here if needed.
     }
 }

@@ -7,6 +7,7 @@
 
 import AppKit
 import Combine
+import DeveloperSupportStore
 import SwiftCommons
 import SwiftUI
 
@@ -42,8 +43,8 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     /// Manager for exporting icons.
     private var exportIconManager: ExportIconManagerProtocol
 
-    /// Service for app store interactions.
-    private var appStoreService: AppStoreProtocol
+    /// Service for store interactions.
+    let storeService: any StoreServiceProtocol
 
     /// Parser for `.rsrc` files.
     private lazy var rsrcFileParser = RSRCFileParser()
@@ -78,14 +79,14 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     /// - Parameters:
     ///   - undoManager: An `UndoManager` for handling undo/redo actions.
     ///   - appSettings: An optional `AppSettingsProtocol` for configuration.
-    ///   - appStoreService: An optional `AppStoreProtocol` for app store interactions.
+    ///   - storeService: An optional `StoreServiceProtocol` for store interactions.
     ///   - logger: An optional `LogProtocol` for logging.
     ///   - foldersUrls: URLs for folders to be used in the application.
     ///   - folderImage: Optional image for the folder.
     ///   - tools: The initial tool to be selected.
     init(undoManager: UndoManager,
          appSettings: AppSettingsProtocol = AppSettings(),
-         appStoreService: AppStoreProtocol = AppStoreService(),
+         storeService: any StoreServiceProtocol,
          logger: LogProtocol = Log(category: .home),
          foldersUrls: [URL] = [],
          folderImage _: NSImage? = nil,
@@ -93,9 +94,12 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     {
         self.undoManager = undoManager
         self.appSettings = appSettings
-        self.appStoreService = appStoreService
+
+        // Initialize store service with default if not provided
+        self.storeService = storeService
+
         picturesFolderManager = PicturesFolderManager(picturesDirectory: appSettings.userPicturesPath)
-        exportIconManager = ExportIconManager(appSettings: appSettings, appStoreService: appStoreService)
+        exportIconManager = ExportIconManager(appSettings: appSettings)
         log = logger
 
         self.foldersUrls = foldersUrls
@@ -105,11 +109,6 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         setupFolders(from: self.foldersUrls)
 
         addPublishers()
-
-        Task {
-            try? await Task.sleep(for: .seconds(1))
-            await setupAppStoreService()
-        }
 
         #if DEBUG
             Task {
@@ -342,11 +341,6 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     @Published var showingExportAlert = false
     @Published var showingAppStoreSheet = false
 
-    // Lazy instantiation of app store view model.
-    private(set) lazy var appStoreViewModel: AppStoreViewModel = .init(appStoreService: appStoreService, appSettings: appSettings) { [weak self] in
-        self?.showingAppStoreSheet.toggle()
-    }
-
     private func exportIcon() {
         let image = dropZoneViewModel.image
 
@@ -462,21 +456,16 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
         updateHack.toggle()
     }
 
-    /// Sets up the app store service and syncs store data.
-    func setupAppStoreService() async {
-        log.info("setup")
-
-        do {
-            try await appStoreService.syncStoreData()
-        } catch {
-            log.info("products fetch error: \(error.localizedDescription)")
-        }
+    /// Handles a successful purchase by updating app settings.
+    /// - Parameter productId: The identifier of the purchased product.
+    func handlePurchaseSuccess(productId _: String) {
+        appSettings.tipped = CryptoModel(value: "1")
     }
 }
 
 extension HomeViewModel {
     @MainActor
     static var preview: HomeViewModel {
-        HomeViewModel(undoManager: UndoManager(), appStoreService: AppStorePreview())
+        HomeViewModel(undoManager: UndoManager(), storeService: StoreServicePreview())
     }
 }

@@ -5,6 +5,7 @@
 //  Copyright © 2025 IGR Soft. All rights reserved.
 //
 
+import DeveloperSupportStore
 import SwiftCommons
 import SwiftUI
 
@@ -114,14 +115,17 @@ struct HomeView: View {
                           viewModel.showingAppStoreSheet.toggle()
                       }), secondaryButton: .cancel(Text(HomeViewDomain.Localization.alertPurchaseCancel)))
             }
-            .sheet(isPresented: Binding<Bool>(
-                get: { viewModel.showingAppStoreSheet },
-                set: { newState in
-                    viewModel.showingAppStoreSheet = newState
-                }
-            )) {
-                AppStoreView()
-                    .environment(viewModel.appStoreViewModel)
+            .sheet(isPresented: $viewModel.showingAppStoreSheet) {
+                DeveloperSupportStoreView(
+                    configuration: ColirStoreConfiguration(),
+                    storeService: viewModel.storeService,
+                    onPurchaseSuccess: { productId in
+                        viewModel.handlePurchaseSuccess(productId: productId)
+                    },
+                    onDismiss: {
+                        viewModel.showingAppStoreSheet = false
+                    }
+                )
             }
     }
 }

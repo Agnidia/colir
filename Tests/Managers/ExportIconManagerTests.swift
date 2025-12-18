@@ -23,30 +23,12 @@ struct ExportIconManagerTests {
         func setup(uuid _: String) {}
     }
 
-    final class MockAppStoreService: AppStoreProtocol {
-        var hasFullAccess: Bool = false
-
-        func syncStoreData() async throws {}
-
-        func purchase(_: AppProduct) async throws -> PurchaseResult {
-            .userCancelled
-        }
-
-        func info(for _: AppProduct) throws -> AppStoreProductInfo {
-            .init(name: "Mock", description: "Test", price: "$0.99")
-        }
-    }
-
     // MARK: - Protocol Tests
 
     @Test("ExportIconManagerProtocol has expected properties")
     func protocol_hasExpectedProperties() {
         let appSettings = MockAppSettings()
-        let appStoreService = MockAppStoreService()
-        let manager: ExportIconManagerProtocol = ExportIconManager(
-            appSettings: appSettings,
-            appStoreService: appStoreService
-        )
+        let manager: ExportIconManagerProtocol = ExportIconManager(appSettings: appSettings)
 
         _ = manager.canExport
         _ = manager.askTips
@@ -59,26 +41,16 @@ struct ExportIconManagerTests {
     @Test("init sets dependencies correctly")
     func init_setsDependencies() {
         let appSettings = MockAppSettings()
-        let appStoreService = MockAppStoreService()
-        let manager = ExportIconManager(
-            appSettings: appSettings,
-            appStoreService: appStoreService
-        )
+        let manager = ExportIconManager(appSettings: appSettings)
 
         #expect(manager.appSettings is MockAppSettings)
-        #expect(manager.appStoreService is MockAppStoreService)
     }
 
     @Test("init with custom IconManager")
     func init_customIconManager() {
         let appSettings = MockAppSettings()
-        let appStoreService = MockAppStoreService()
         let iconManager = IconManager()
-        let manager = ExportIconManager(
-            appSettings: appSettings,
-            appStoreService: appStoreService,
-            iconManager: iconManager
-        )
+        let manager = ExportIconManager(appSettings: appSettings, iconManager: iconManager)
 
         #expect(manager.iconManager === iconManager)
     }
@@ -88,11 +60,7 @@ struct ExportIconManagerTests {
     @Test("canExport always returns true")
     func canExport_alwaysTrue() {
         let appSettings = MockAppSettings()
-        let appStoreService = MockAppStoreService()
-        let manager = ExportIconManager(
-            appSettings: appSettings,
-            appStoreService: appStoreService
-        )
+        let manager = ExportIconManager(appSettings: appSettings)
 
         #expect(manager.canExport == true)
     }
@@ -101,11 +69,7 @@ struct ExportIconManagerTests {
     func canExport_ignoresExportCount() {
         let appSettings = MockAppSettings()
         appSettings.exportCount = 100
-        let appStoreService = MockAppStoreService()
-        let manager = ExportIconManager(
-            appSettings: appSettings,
-            appStoreService: appStoreService
-        )
+        let manager = ExportIconManager(appSettings: appSettings)
 
         #expect(manager.canExport == true)
     }
@@ -117,11 +81,7 @@ struct ExportIconManagerTests {
         let appSettings = MockAppSettings()
         appSettings.exportCount = 5
         appSettings.tipped = CryptoModel(value: "0")
-        let appStoreService = MockAppStoreService()
-        let manager = ExportIconManager(
-            appSettings: appSettings,
-            appStoreService: appStoreService
-        )
+        let manager = ExportIconManager(appSettings: appSettings)
 
         #expect(manager.askTips == true)
     }
@@ -131,11 +91,7 @@ struct ExportIconManagerTests {
         let appSettings = MockAppSettings()
         appSettings.exportCount = 4
         appSettings.tipped = CryptoModel(value: "0")
-        let appStoreService = MockAppStoreService()
-        let manager = ExportIconManager(
-            appSettings: appSettings,
-            appStoreService: appStoreService
-        )
+        let manager = ExportIconManager(appSettings: appSettings)
 
         #expect(manager.askTips == false)
 
@@ -148,11 +104,7 @@ struct ExportIconManagerTests {
         let appSettings = MockAppSettings()
         appSettings.exportCount = 5
         appSettings.tipped = CryptoModel(value: "1")
-        let appStoreService = MockAppStoreService()
-        let manager = ExportIconManager(
-            appSettings: appSettings,
-            appStoreService: appStoreService
-        )
+        let manager = ExportIconManager(appSettings: appSettings)
 
         #expect(manager.askTips == false)
     }
@@ -162,11 +114,7 @@ struct ExportIconManagerTests {
         let appSettings = MockAppSettings()
         appSettings.exportCount = 0
         appSettings.tipped = CryptoModel(value: "0")
-        let appStoreService = MockAppStoreService()
-        let manager = ExportIconManager(
-            appSettings: appSettings,
-            appStoreService: appStoreService
-        )
+        let manager = ExportIconManager(appSettings: appSettings)
 
         #expect(manager.askTips == false)
     }
@@ -176,11 +124,7 @@ struct ExportIconManagerTests {
     @Test("export with nil URL does nothing")
     func export_nilURL_doesNothing() {
         let appSettings = MockAppSettings()
-        let appStoreService = MockAppStoreService()
-        let manager = ExportIconManager(
-            appSettings: appSettings,
-            appStoreService: appStoreService
-        )
+        let manager = ExportIconManager(appSettings: appSettings)
 
         let initialCount = appSettings.exportCount
         let imageDto = ImageDto()
@@ -197,11 +141,7 @@ struct ExportIconManagerTests {
         // Note: Full export test would require file system setup
         // This tests the export count increment behavior
         let appSettings = MockAppSettings()
-        let appStoreService = MockAppStoreService()
-        let manager = ExportIconManager(
-            appSettings: appSettings,
-            appStoreService: appStoreService
-        )
+        let manager = ExportIconManager(appSettings: appSettings)
 
         let initialCount = appSettings.exportCount
         #expect(initialCount == 0)

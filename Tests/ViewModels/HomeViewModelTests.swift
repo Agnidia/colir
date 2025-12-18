@@ -7,6 +7,7 @@
 
 import AppKit
 import Combine
+import DeveloperSupportStore
 import Testing
 @testable import colir
 
@@ -25,20 +26,20 @@ struct HomeViewModelTests {
         func setup(uuid _: String) {}
     }
 
-    final class MockAppStoreService: AppStoreProtocol {
-        var hasFullAccess: Bool = false
+    final class MockStoreService: StoreServiceProtocol, @unchecked Sendable {
+        var hasActiveSubscription: Bool = false
         var syncStoreCalled = false
 
         func syncStoreData() async throws {
             syncStoreCalled = true
         }
 
-        func purchase(_: AppProduct) async throws -> PurchaseResult {
+        func purchase(_ productId: String) async throws -> StorePurchaseResult {
             .userCancelled
         }
 
-        func info(for _: AppProduct) throws -> AppStoreProductInfo {
-            .init(name: "Mock", description: "Test", price: "$0.99")
+        func info(for _: String) throws -> StoreProductInfo {
+            StoreProductInfo(name: "Mock", description: "Test", price: "$0.99")
         }
     }
 
@@ -68,12 +69,12 @@ struct HomeViewModelTests {
     func init_defaultParameters() {
         let undoManager = UndoManager()
         let appSettings = MockAppSettings()
-        let appStoreService = MockAppStoreService()
+        let storeService = MockStoreService()
 
         let viewModel = HomeViewModel(
             undoManager: undoManager,
             appSettings: appSettings,
-            appStoreService: appStoreService,
+            storeService: storeService,
             tools: .colors
         )
 
@@ -335,23 +336,28 @@ struct HomeViewModelTests {
         #expect(viewModel.customizingActionViewModel is CustomizingActionViewModel)
     }
 
-    @Test("appStoreViewModel is accessible")
-    func appStoreViewModel_accessible() {
-        let viewModel = createViewModel()
+    // MARK: - setupStoreService Tests
 
-        #expect(viewModel.appStoreViewModel is AppStoreViewModel)
+    @Test("setupStoreService calls syncStoreData")
+    func setupStoreService_callsSync() async {
+        let storeService = MockStoreService()
+        let viewModel = createViewModel(storeService: storeService)
+
+        await viewModel.setupStoreService()
+
+        #expect(storeService.syncStoreCalled == true)
     }
 
-    // MARK: - setupAppStoreService Tests
+    // MARK: - handlePurchaseSuccess Tests
 
-    @Test("setupAppStoreService calls syncStoreData")
-    func setupAppStoreService_callsSync() async {
-        let appStoreService = MockAppStoreService()
-        let viewModel = createViewModel(appStoreService: appStoreService)
+    @Test("handlePurchaseSuccess updates appSettings.tipped")
+    func handlePurchaseSuccess_updatesTipped() {
+        let appSettings = MockAppSettings()
+        let viewModel = createViewModel(appSettings: appSettings)
 
-        await viewModel.setupAppStoreService()
+        viewModel.handlePurchaseSuccess(productId: "com.igrsoft.colir.small.tips1.subs")
 
-        #expect(appStoreService.syncStoreCalled == true)
+        #expect(appSettings.tipped.value == "1")
     }
 
     // MARK: - Preview Tests
@@ -396,14 +402,14 @@ struct HomeViewModelTests {
 
     private func createViewModel(
         undoManager: UndoManager = UndoManager(),
-        appStoreService: AppStoreProtocol = MockAppStoreService(),
+        appSettings: MockAppSettings = MockAppSettings(),
+        storeService: (any StoreServiceProtocol)? = nil,
         tools: HomeViewModel.Tools = .colors
     ) -> HomeViewModel {
-        let appSettings = MockAppSettings()
-        return HomeViewModel(
+        HomeViewModel(
             undoManager: undoManager,
             appSettings: appSettings,
-            appStoreService: appStoreService,
+            storeService: storeService ?? MockStoreService(),
             tools: tools
         )
     }

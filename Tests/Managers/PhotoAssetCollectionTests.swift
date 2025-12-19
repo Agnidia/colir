@@ -56,7 +56,7 @@ struct PhotoAssetCollectionTests {
         let fetchResult = PHFetchResult<PHAsset>()
         let collection = PhotoAssetCollection(fetchResult)
 
-        #expect(collection.fetchResult.isEmpty)
+        #expect(collection.fetchResult.count == 0)
     }
 
     // MARK: - phAssets Property Tests

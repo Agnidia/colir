@@ -1340,7 +1340,7 @@
 				A5E115ED2AFEA7760023A70C /* XCRemoteSwiftPackageReference "Throttler" */,
 				A5E115F32AFFD70A0023A70C /* XCRemoteSwiftPackageReference "StoreHelper" */,
 				A57ECAAD2D345F3100288FB5 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
-				E0DSS00012345678901234567 /* XCLocalSwiftPackageReference "Frameworks/DeveloperSupportStore" */,
+				E0DSS00012345678901234567 /* XCRemoteSwiftPackageReference "DeveloperSupportStore" */,
 			);
 			productRefGroup = A5F5CDF62A6D2BFB008AF959 /* Products */;
 			projectDirPath = "";
@@ -1688,13 +1688,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		E0DSS00012345678901234567 /* XCLocalSwiftPackageReference "Frameworks/DeveloperSupportStore" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Frameworks/DeveloperSupportStore;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		A57ECAAD2D345F3100288FB5 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -1744,6 +1737,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		E0DSS00012345678901234567 /* XCRemoteSwiftPackageReference "DeveloperSupportStore" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/IGRSoft/DeveloperSupportStore.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1779,6 +1780,7 @@
 		};
 		E0DSS00112345678901234567 /* DeveloperSupportStore */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = E0DSS00012345678901234567 /* XCRemoteSwiftPackageReference "DeveloperSupportStore" */;
 			productName = DeveloperSupportStore;
 		};
 /* End XCSwiftPackageProductDependency section */

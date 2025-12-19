@@ -1,6 +1,15 @@
 {
-  "originHash" : "2218fd91efda664d915dd28ce109f549a3b51dd03015813f52cbf690467ac56c",
+  "originHash" : "b5478d793913c99b50137d4307e6ea22513ee942f43d8e1bad3aa46e2fe3e064",
   "pins" : [
+    {
+      "identity" : "developersupportstore",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/IGRSoft/DeveloperSupportStore.git",
+      "state" : {
+        "revision" : "14b2b8d3be8e6768f15a279e1d5ba38546c5ab63",
+        "version" : "1.0.0"
+      }
+    },
     {
       "identity" : "dominantcolor",
       "kind" : "remoteSourceControl",

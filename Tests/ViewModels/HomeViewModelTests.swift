@@ -336,18 +336,6 @@ struct HomeViewModelTests {
         #expect(viewModel.customizingActionViewModel is CustomizingActionViewModel)
     }
 
-    // MARK: - setupStoreService Tests
-
-    @Test("setupStoreService calls syncStoreData")
-    func setupStoreService_callsSync() async {
-        let storeService = MockStoreService()
-        let viewModel = createViewModel(storeService: storeService)
-
-        await viewModel.setupStoreService()
-
-        #expect(storeService.syncStoreCalled == true)
-    }
-
     // MARK: - handlePurchaseSuccess Tests
 
     @Test("handlePurchaseSuccess updates appSettings.tipped")

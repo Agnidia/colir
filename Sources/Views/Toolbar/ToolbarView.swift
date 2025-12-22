@@ -87,17 +87,25 @@ struct ToolbarView: CustomizableToolbarContent {
     @ViewBuilder
     func item(for action: ToolbarView.ToolbarViewDomain.Action) -> some View {
         switch action {
-        case .colors, .photos, .emojis, .decals, .pictures, .webResources, .tips:
+        case .colors, .photos, .emojis, .decals, .pictures, .webResources:
             Button {
-                if action != .tips {
-                    currentToolAction = action
-                }
-                viewModel.perform(action)
+                currentToolAction = action
             } label: {
                 Label(action.title, systemImage: action.icon)
                     .font(.title3)
             }
-            .background(RoundedRectangle(cornerRadius: .radiusThin)
+            .background(RoundedRectangle(cornerRadius: .radiusDefault)
+                .fill(currentToolAction == action ? Color.accent.opacity(0.4) : .clear))
+            .help(action.helpTitle)
+        case .tips:
+            Button {
+                viewModel.perform(action)
+            } label: {
+                Label(action.title, systemImage: action.icon)
+                    .font(.title3)
+                    .foregroundStyle(Color.red)
+            }
+            .background(RoundedRectangle(cornerRadius: .radiusDefault)
                 .fill(currentToolAction == action ? Color.accent.opacity(0.4) : .clear))
             .help(action.helpTitle)
         case .spacer:

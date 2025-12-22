@@ -44,8 +44,9 @@ struct HomeView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .fixedSize(horizontal: false, vertical: false)
-        .background {
-            Color.primaryBackground
+        .background { Color.primaryBackground }
+        .task {
+            try? await viewModel.storeService.syncStoreData()
         }
     }
 

@@ -13,18 +13,6 @@ import Foundation
 /// This configuration provides the product IDs, URLs, and styling for the
 /// DeveloperSupportStore package to match the Colir app's design.
 public struct ColirStoreConfiguration: StoreConfigurationProtocol {
-    // MARK: - Products
-
-    public var subscriptionIds: [String] {
-        ["com.igrsoft.colir.small.tips1.subs"]
-    }
-
-    public var inAppPurchaseIds: [String] {
-        [
-            "com.igrsoft.colir.middle.tips.inapp",
-            "com.igrsoft.colir.big.tips.inapp",
-        ]
-    }
 
     // MARK: - URLs
 
@@ -36,6 +24,8 @@ public struct ColirStoreConfiguration: StoreConfigurationProtocol {
         URL(string: "https://igrsoft.com/info/app/colir/terms.html")!
     }
 
+    public var isLoggingEnabled: Bool { false }
+    
     // MARK: - Initialization
 
     public init() {}

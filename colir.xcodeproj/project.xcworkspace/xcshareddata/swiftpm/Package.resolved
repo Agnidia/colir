@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/IGRSoft/DeveloperSupportStore.git",
       "state" : {
-        "revision" : "14b2b8d3be8e6768f15a279e1d5ba38546c5ab63",
-        "version" : "1.0.0"
+        "revision" : "2846c1edff99498099bbbdd5361307aecf07928c",
+        "version" : "1.0.2"
       }
     },
     {

@@ -1593,7 +1593,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A504B86F2A6D2DCA002A2C8B /* debug.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = DMP42GVPJ3;
 			};
 			name = Debug;
 		};
@@ -1601,7 +1600,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A504B8702A6D2DCA002A2C8B /* release.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = DMP42GVPJ3;
 			};
 			name = Release;
 		};

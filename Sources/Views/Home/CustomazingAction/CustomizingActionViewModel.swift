@@ -24,14 +24,13 @@ import SwiftUI
 ///       // Handle button action
 ///   })
 ///   ```
-@MainActor
 @Observable
 final class CustomizingActionViewModel: DomainViewConstantProtocol {
     // MARK: - DomainViewConstantProtocol
 
     typealias DomainViewConstantType = CustomizingActionViewDomain
 
-    nonisolated(unsafe) var viewSettings: DomainViewConstantType = .init()
+    var viewSettings: DomainViewConstantType = .init()
 
     typealias ButtonAction = Commons.MainActorEmptyClosure
 
@@ -61,6 +60,7 @@ final class CustomizingActionViewModel: DomainViewConstantProtocol {
     /// Executes the button action.
     ///
     /// This method is called when the button is pressed, triggering the `buttonAction` closure.
+    @MainActor
     func action() {
         buttonAction()
     }

@@ -14,12 +14,21 @@ struct BaseApp: App {
     @State private var searchText = ""
 
     @StateObject private var homeViewModel: HomeViewModel
-    
+    @StateObject private var toolbarViewModel: ToolbarViewModel
+
     /// Initializes the app with the shared store service.
     init() {
-        _homeViewModel = StateObject(wrappedValue: HomeViewModel(
+        let hvm = HomeViewModel(
             undoManager: UndoManager(),
             storeService: StoreService(isLoggingEnabled: false)
+        )
+        _homeViewModel = StateObject(wrappedValue: hvm)
+        _toolbarViewModel = StateObject(wrappedValue: ToolbarViewModel(
+            undoManager: hvm.undoManager,
+            hasTipped: hvm.hasTipped,
+            actionCallback: { action in
+                hvm.apply(action: action)
+            }
         ))
     }
 
@@ -29,9 +38,12 @@ struct BaseApp: App {
                 .environmentObject(homeViewModel)
                 .frame(minWidth: 640, idealWidth: 1024, minHeight: 480, idealHeight: 768)
                 .toolbar(id: "mainToolbar") {
-                    ToolbarView(viewModel: ToolbarViewModel(undoManager: homeViewModel.undoManager, actionCallback: { action in
-                        homeViewModel.apply(action: action)
-                    }))
+                    ToolbarView(viewModel: toolbarViewModel)
+                }
+                .task {
+                    homeViewModel.onTipped = { [weak toolbarViewModel] in
+                        toolbarViewModel?.hasTipped = true
+                    }
                 }
             // .searchable(text: $searchText)
         }

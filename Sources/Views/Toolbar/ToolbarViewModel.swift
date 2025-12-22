@@ -15,12 +15,17 @@ final class ToolbarViewModel: ObservableObject {
     private let actionCallback: ToolbarViewModelActionCallback
     let undoManager: UndoManager
 
+    /// Indicates whether the user has made a tip purchase.
+    @Published var hasTipped: Bool
+
     /// Initializes a `ToolbarViewModel` with an undo manager and a callback for toolbar actions.
     /// - Parameters:
     ///   - undoManager: The undo manager used to handle undo/redo operations.
+    ///   - hasTipped: Whether the user has made a tip purchase.
     ///   - actionCallback: A closure that handles the toolbar actions.
-    init(undoManager: UndoManager, actionCallback: @escaping ToolbarViewModelActionCallback) {
+    init(undoManager: UndoManager, hasTipped: Bool = false, actionCallback: @escaping ToolbarViewModelActionCallback) {
         self.undoManager = undoManager
+        self.hasTipped = hasTipped
         self.actionCallback = actionCallback
     }
 
@@ -42,6 +47,6 @@ extension ToolbarViewModel {
     /// A preview instance of `ToolbarViewModel` for SwiftUI previews.
     @MainActor
     static var preview: ToolbarViewModel {
-        .init(undoManager: .init()) { _ in }
+        .init(undoManager: .init(), hasTipped: false) { _ in }
     }
 }

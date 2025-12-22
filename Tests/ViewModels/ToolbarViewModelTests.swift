@@ -122,6 +122,31 @@ struct ToolbarViewModelTests {
         #expect(viewModel.undoManager === undoManager)
     }
 
+    // MARK: - hasTipped Tests
+
+    @Test("init with hasTipped false by default")
+    func init_hasTippedDefaultFalse() {
+        let viewModel = ToolbarViewModel(undoManager: UndoManager()) { _ in }
+
+        #expect(viewModel.hasTipped == false)
+    }
+
+    @Test("init with hasTipped true")
+    func init_hasTippedTrue() {
+        let viewModel = ToolbarViewModel(undoManager: UndoManager(), hasTipped: true) { _ in }
+
+        #expect(viewModel.hasTipped == true)
+    }
+
+    @Test("hasTipped can be modified")
+    func hasTipped_canBeModified() {
+        let viewModel = ToolbarViewModel(undoManager: UndoManager(), hasTipped: false) { _ in }
+
+        #expect(viewModel.hasTipped == false)
+        viewModel.hasTipped = true
+        #expect(viewModel.hasTipped == true)
+    }
+
     // MARK: - Preview Tests
 
     @Test("preview creates valid instance")
@@ -130,6 +155,14 @@ struct ToolbarViewModelTests {
         let preview = ToolbarViewModel.preview
 
         #expect(preview.undoManager != nil)
+    }
+
+    @Test("preview has hasTipped false")
+    @MainActor
+    func preview_hasTippedFalse() {
+        let preview = ToolbarViewModel.preview
+
+        #expect(preview.hasTipped == false)
     }
 
     // MARK: - Action Callback Tests

@@ -103,6 +103,7 @@ struct ToolbarView: CustomizableToolbarContent {
             } label: {
                 Label(action.title, systemImage: action.icon)
                     .font(.title3)
+                    .foregroundStyle(viewModel.hasTipped ? .green : .primary)
             }
             .background(RoundedRectangle(cornerRadius: .radiusDefault)
                 .fill(currentToolAction == action ? Color.accent.opacity(0.4) : .clear))

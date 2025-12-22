@@ -8,6 +8,7 @@
 import AppKit
 import Combine
 import DeveloperSupportStore
+import StoreKit
 import Testing
 @testable import colir
 
@@ -29,16 +30,18 @@ struct HomeViewModelTests {
     final class MockStoreService: StoreServiceProtocol, @unchecked Sendable {
         var hasActiveSubscription: Bool = false
         var syncStoreCalled = false
+        var subscriptionProducts: [Product] = []
+        var nonConsumableProducts: [Product] = []
 
         func syncStoreData() async throws {
             syncStoreCalled = true
         }
 
-        func purchase(_ productId: String) async throws -> StorePurchaseResult {
+        func purchase(_ product: Product) async throws -> StorePurchaseResult {
             .userCancelled
         }
 
-        func info(for _: String) throws -> StoreProductInfo {
+        func info(for product: Product) -> StoreProductInfo {
             StoreProductInfo(name: "Mock", description: "Test", price: "$0.99")
         }
     }
@@ -334,6 +337,48 @@ struct HomeViewModelTests {
         let viewModel = createViewModel()
 
         #expect(viewModel.customizingActionViewModel is CustomizingActionViewModel)
+    }
+
+    // MARK: - hasTipped Tests
+
+    @Test("hasTipped returns false when not tipped")
+    func hasTipped_returnsFalse_whenNotTipped() {
+        let appSettings = MockAppSettings()
+        appSettings.tipped = CryptoModel(value: "0")
+        let viewModel = createViewModel(appSettings: appSettings)
+
+        #expect(viewModel.hasTipped == false)
+    }
+
+    @Test("hasTipped returns true when tipped")
+    func hasTipped_returnsTrue_whenTipped() {
+        let appSettings = MockAppSettings()
+        appSettings.tipped = CryptoModel(value: "1")
+        let viewModel = createViewModel(appSettings: appSettings)
+
+        #expect(viewModel.hasTipped == true)
+    }
+
+    // MARK: - onTipped Callback Tests
+
+    @Test("onTipped callback is called on handlePurchaseSuccess")
+    func onTipped_calledOnPurchaseSuccess() {
+        var callbackCalled = false
+        let viewModel = createViewModel()
+        viewModel.onTipped = {
+            callbackCalled = true
+        }
+
+        viewModel.handlePurchaseSuccess(productId: "test")
+
+        #expect(callbackCalled == true)
+    }
+
+    @Test("onTipped callback is nil by default")
+    func onTipped_nilByDefault() {
+        let viewModel = createViewModel()
+
+        #expect(viewModel.onTipped == nil)
     }
 
     // MARK: - handlePurchaseSuccess Tests

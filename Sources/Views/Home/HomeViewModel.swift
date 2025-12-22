@@ -46,6 +46,14 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     /// Service for store interactions.
     let storeService: any StoreServiceProtocol
 
+    /// Whether the user has made a tip purchase.
+    var hasTipped: Bool {
+        appSettings.tipped.value == "1"
+    }
+
+    /// Callback to notify when user has tipped.
+    var onTipped: (() -> Void)?
+
     /// Parser for `.rsrc` files.
     private lazy var rsrcFileParser = RSRCFileParser()
 
@@ -460,6 +468,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     /// - Parameter productId: The identifier of the purchased product.
     func handlePurchaseSuccess(productId _: String) {
         appSettings.tipped = CryptoModel(value: "1")
+        onTipped?()
     }
 }
 

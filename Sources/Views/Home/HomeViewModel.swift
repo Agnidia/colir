@@ -164,16 +164,12 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
             return
         }
 
-        var updateImage = image
-
-        if let realImage = updateImage {
-            let picture = realImage.scaled(to: .init(width: 1024, height: 1024))
-            updateImage = picture.cutImage(by: .folderCenterFrame)
-        }
-
         customizationTask?.cancel()
 
-        customizationTask = Task { [updateImage, dropZoneViewModel] in
+        customizationTask = Task { [dropZoneViewModel, asset, item] in
+            // Process image on background thread using nonisolated helper
+            let updateImage = await Self.processImage(image)
+
             await dropZoneViewModel.image.customisations.apply(picture: updateImage, asset: asset, item: item)
 
             do {
@@ -182,6 +178,17 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
                 print("task canceled")
             }
         }
+    }
+
+    /// Processes an image off the main actor to avoid UI freezes.
+    /// Scales and clips the image for use as a folder icon picture.
+    /// - Parameter image: The source image to process.
+    /// - Returns: The processed image, or nil if input was nil.
+    private nonisolated static func processImage(_ image: NSImage?) async -> NSImage? {
+        guard let realImage = image else { return nil }
+
+        let picture = realImage.scaled(to: .init(width: 1024, height: 1024))
+        return picture.cutImage(by: .folderCenterFrame)
     }
 
     /// Applies an emoji to the current image, handling errors and updating the view.

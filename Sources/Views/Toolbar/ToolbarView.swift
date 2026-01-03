@@ -90,6 +90,7 @@ struct ToolbarView: CustomizableToolbarContent {
         case .colors, .photos, .emojis, .decals, .pictures, .webResources:
             Button {
                 currentToolAction = action
+                viewModel.perform(action)
             } label: {
                 Label(action.title, systemImage: action.icon)
                     .font(.title3)

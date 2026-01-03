@@ -2,7 +2,7 @@
 //  URL+Dir.swift
 //
 //  Created on 06.01.2025.
-//  Copyright © 2025 IGR Soft. All rights reserved.
+//  Copyright © 2026 IGR Soft. All rights reserved.
 //
 
 import Foundation

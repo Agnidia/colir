@@ -2,7 +2,7 @@
 //  NSImageAlphaTests.swift
 //
 //  Created on 15.12.2025.
-//  Copyright © 2025 IGR Soft. All rights reserved.
+//  Copyright © 2026 IGR Soft. All rights reserved.
 //
 
 import AppKit
@@ -60,15 +60,7 @@ struct NSImageAlphaTests {
 
     @Test("alpha preserves image dimensions")
     func alpha_preservesDimensions() {
-        let sizes: [NSSize] = [
-            NSSize(width: 16, height: 16),
-            NSSize(width: 32, height: 32),
-            NSSize(width: 64, height: 64),
-            NSSize(width: 128, height: 128),
-            NSSize(width: 256, height: 256),
-        ]
-
-        for size in sizes {
+        for size in TestConstants.iconSizes {
             let sourceImage = createTestImage(size: size, color: .purple)
             let result = sourceImage.alpha(value: 200)
 
@@ -132,13 +124,9 @@ struct NSImageAlphaTests {
 
     @Test("alpha on transparent image")
     func alpha_transparentImage() {
-        // Create image with transparency
+        // Create image with transparency using TestImageFactory
         let size = NSSize(width: 50, height: 50)
-        let image = NSImage(size: size)
-        image.lockFocus()
-        NSColor.clear.set()
-        NSRect(origin: .zero, size: size).fill()
-        image.unlockFocus()
+        let image = TestImageFactory.transparent(size: size)
 
         let result = image.alpha(value: 128)
 
@@ -168,10 +156,6 @@ struct NSImageAlphaTests {
     // MARK: - Helpers
 
     private func createTestImage(size: NSSize, color: NSColor) -> NSImage {
-        let image = NSImage(size: size)
-        image.lockFocus()
-        color.drawSwatch(in: NSRect(origin: .zero, size: size))
-        image.unlockFocus()
-        return image
+        TestImageFactory.solidColor(size: size, color: color)
     }
 }

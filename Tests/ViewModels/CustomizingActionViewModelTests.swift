@@ -2,7 +2,7 @@
 //  CustomizingActionViewModelTests.swift
 //
 //  Created on 15.12.2025.
-//  Copyright © 2025 IGR Soft. All rights reserved.
+//  Copyright © 2026 IGR Soft. All rights reserved.
 //
 
 import Testing

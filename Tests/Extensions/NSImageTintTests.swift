@@ -2,7 +2,7 @@
 //  NSImageTintTests.swift
 //
 //  Created on 15.12.2025.
-//  Copyright © 2025 IGR Soft. All rights reserved.
+//  Copyright © 2026 IGR Soft. All rights reserved.
 //
 
 import AppKit
@@ -57,15 +57,7 @@ struct NSImageTintTests {
 
     @Test("tint produces valid output for various sizes")
     func tint_preservesDimensions() {
-        let sizes: [NSSize] = [
-            NSSize(width: 16, height: 16),
-            NSSize(width: 32, height: 32),
-            NSSize(width: 64, height: 64),
-            NSSize(width: 128, height: 128),
-            NSSize(width: 256, height: 256),
-        ]
-
-        for size in sizes {
+        for size in TestConstants.iconSizes {
             let sourceImage = createSolidColorImage(size: size, color: .cyan)
             let result = sourceImage.tint(color: .cyan, withColor: .magenta, tolerance: 0.9)
 
@@ -150,13 +142,15 @@ struct NSImageTintTests {
 
     @Test("tint with gradient-like image")
     func tint_multiColorImage() {
-        // Create an image with multiple colors
+        // Create an image with multiple colors using TestImageFactory
         let size = NSSize(width: 100, height: 100)
-        let image = NSImage(size: size)
-        image.lockFocus()
-        NSColor.systemRed.drawSwatch(in: NSRect(x: 0, y: 0, width: 50, height: 100))
-        NSColor.systemBlue.drawSwatch(in: NSRect(x: 50, y: 0, width: 50, height: 100))
-        image.unlockFocus()
+        let image = TestImageFactory.multiColor(
+            size: size,
+            regions: [
+                (rect: CGRect(x: 0, y: 0, width: 50, height: 100), color: .systemRed),
+                (rect: CGRect(x: 50, y: 0, width: 50, height: 100), color: .systemBlue),
+            ]
+        )
 
         let result = image.tint(color: .systemRed, withColor: .systemGreen, tolerance: 0.5)
 
@@ -219,10 +213,6 @@ struct NSImageTintTests {
     // MARK: - Helpers
 
     private func createSolidColorImage(size: NSSize, color: NSColor) -> NSImage {
-        let image = NSImage(size: size)
-        image.lockFocus()
-        color.drawSwatch(in: NSRect(origin: .zero, size: size))
-        image.unlockFocus()
-        return image
+        TestImageFactory.solidColor(size: size, color: color)
     }
 }

@@ -2,7 +2,7 @@
 //  NSImageScaleTests.swift
 //
 //  Created on 15.12.2025.
-//  Copyright © 2025 IGR Soft. All rights reserved.
+//  Copyright © 2026 IGR Soft. All rights reserved.
 //
 
 import AppKit
@@ -204,10 +204,6 @@ struct NSImageScaleTests {
     // MARK: - Helpers
 
     private func createTestImage(size: NSSize, color: NSColor = .red) -> NSImage {
-        let image = NSImage(size: size)
-        image.lockFocus()
-        color.drawSwatch(in: NSRect(origin: .zero, size: size))
-        image.unlockFocus()
-        return image
+        TestImageFactory.solidColor(size: size, color: color)
     }
 }

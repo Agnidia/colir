@@ -2,7 +2,7 @@
 //  PhotoLibraryCacheManager.swift
 //
 //  Created on 10.10.2023.
-//  Copyright © 2025 IGR Soft. All rights reserved.
+//  Copyright © 2026 IGR Soft. All rights reserved.
 //
 
 import Foundation

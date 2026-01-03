@@ -2,7 +2,7 @@
 //  AppliedStylesView.swift
 //
 //  Created on 08.11.2023.
-//  Copyright © 2025 IGR Soft. All rights reserved.
+//  Copyright © 2026 IGR Soft. All rights reserved.
 //
 
 import SwiftUI

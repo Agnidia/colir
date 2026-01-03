@@ -41,16 +41,7 @@ struct NSImageDataTests {
 
     @Test("pngData for different image sizes")
     func pngData_differentSizes() {
-        let sizes: [NSSize] = [
-            NSSize(width: 16, height: 16),
-            NSSize(width: 32, height: 32),
-            NSSize(width: 64, height: 64),
-            NSSize(width: 128, height: 128),
-            NSSize(width: 256, height: 256),
-            NSSize(width: 512, height: 512),
-        ]
-
-        for size in sizes {
+        for size in TestConstants.extendedIconSizes {
             let image = createTestImage(size: size, color: .green)
             let data = image.pngData
 
@@ -145,15 +136,13 @@ struct NSImageDataTests {
 
     @Test("pngData preserves transparency")
     func pngData_preservesTransparency() {
-        // Create an image with transparency
+        // Create an image with transparency using TestImageFactory
         let size = NSSize(width: 100, height: 100)
-        let image = NSImage(size: size)
-        image.lockFocus()
-        NSColor.clear.set()
-        NSRect(origin: .zero, size: size).fill()
-        NSColor.red.withAlphaComponent(0.5).set()
-        NSBezierPath(ovalIn: NSRect(x: 25, y: 25, width: 50, height: 50)).fill()
-        image.unlockFocus()
+        let image = TestImageFactory.transparent(
+            size: size,
+            fillRect: NSRect(x: 25, y: 25, width: 50, height: 50),
+            fillColor: NSColor.red.withAlphaComponent(0.5)
+        )
 
         let pngData = image.pngData
 
@@ -213,9 +202,7 @@ struct NSImageDataTests {
 
     @Test("pngData with different colors")
     func pngData_differentColors() {
-        let colors: [NSColor] = [.red, .green, .blue, .yellow, .purple, .cyan, .magenta, .orange]
-
-        for color in colors {
+        for color in TestConstants.testColors {
             let image = createTestImage(size: NSSize(width: 50, height: 50), color: color)
             let data = image.pngData
 
@@ -244,10 +231,6 @@ struct NSImageDataTests {
     // MARK: - Helpers
 
     private func createTestImage(size: NSSize, color: NSColor) -> NSImage {
-        let image = NSImage(size: size)
-        image.lockFocus()
-        color.drawSwatch(in: NSRect(origin: .zero, size: size))
-        image.unlockFocus()
-        return image
+        TestImageFactory.solidColor(size: size, color: color)
     }
 }

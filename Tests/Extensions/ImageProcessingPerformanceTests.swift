@@ -12,41 +12,31 @@ import Testing
 /// Performance tests for image processing operations.
 /// These tests verify that image scaling and clipping operations
 /// complete within acceptable time limits for various image sizes.
-@Suite("Image Processing Performance")
+@Suite("Image Processing Performance", .serialized)
 struct ImageProcessingPerformanceTests {
-    // MARK: - Performance Thresholds
+    // MARK: - Cached Test Images
 
-    /// Maximum acceptable time for small images (< 1MP)
-    private static let smallImageThreshold: TimeInterval = 0.1 // 100ms
+    /// Pre-created images to avoid setup overhead in measurements.
+    /// Uses lazy initialization via static let (dispatch_once semantics).
+    private static let cachedImages: [String: NSImage] = {
+        [
+            "small": TestImageFactory.solidColor(size: TestConstants.PerformanceSizes.small, color: .blue),
+            "medium": TestImageFactory.solidColor(size: TestConstants.PerformanceSizes.medium, color: .blue),
+            "large": TestImageFactory.solidColor(size: TestConstants.PerformanceSizes.large, color: .blue),
+            "extraLarge": TestImageFactory.solidColor(size: TestConstants.PerformanceSizes.extraLarge, color: .blue),
+        ]
+    }()
 
-    /// Maximum acceptable time for medium images (1-4MP)
-    private static let mediumImageThreshold: TimeInterval = 0.3 // 300ms
-
-    /// Maximum acceptable time for large images (4-12MP)
-    private static let largeImageThreshold: TimeInterval = 0.8 // 800ms
-
-    /// Maximum acceptable time for extra large images (> 12MP)
-    private static let extraLargeImageThreshold: TimeInterval = 2.0 // 2000ms
-
-    // MARK: - Test Image Sizes
-
-    /// Small image: 512x512 (0.26 MP)
-    private static let smallSize = NSSize(width: 512, height: 512)
-
-    /// Medium image: 1920x1080 (2.07 MP)
-    private static let mediumSize = NSSize(width: 1920, height: 1080)
-
-    /// Large image: 4000x3000 (12 MP) - typical high-res photo
-    private static let largeSize = NSSize(width: 4000, height: 3000)
-
-    /// Extra large image: 6000x4000 (24 MP) - professional camera
-    private static let extraLargeSize = NSSize(width: 6000, height: 4000)
+    /// Gets a cached test image for the specified category.
+    private func getCachedImage(for category: String) -> NSImage {
+        Self.cachedImages[category] ?? TestImageFactory.solidColor(size: NSSize(width: 100, height: 100), color: .blue)
+    }
 
     // MARK: - Scaling Performance Tests
 
     @Test("Small image scaling completes within threshold")
     func smallImageScaling_completesWithinThreshold() async {
-        let image = createTestImage(size: Self.smallSize)
+        let image = getCachedImage(for: "small")
         let targetSize = CGSize(width: 1024, height: 1024)
 
         let duration = await measureDuration {
@@ -54,14 +44,14 @@ struct ImageProcessingPerformanceTests {
         }
 
         #expect(
-            duration < Self.smallImageThreshold,
-            "Small image scaling took \(String(format: "%.3f", duration))s, expected < \(Self.smallImageThreshold)s"
+            duration < TestConstants.PerformanceThresholds.small,
+            "Small image scaling took \(String(format: "%.3f", duration))s, expected < \(TestConstants.PerformanceThresholds.small)s"
         )
     }
 
     @Test("Medium image scaling completes within threshold")
     func mediumImageScaling_completesWithinThreshold() async {
-        let image = createTestImage(size: Self.mediumSize)
+        let image = getCachedImage(for: "medium")
         let targetSize = CGSize(width: 1024, height: 1024)
 
         let duration = await measureDuration {
@@ -69,14 +59,14 @@ struct ImageProcessingPerformanceTests {
         }
 
         #expect(
-            duration < Self.mediumImageThreshold,
-            "Medium image scaling took \(String(format: "%.3f", duration))s, expected < \(Self.mediumImageThreshold)s"
+            duration < TestConstants.PerformanceThresholds.medium,
+            "Medium image scaling took \(String(format: "%.3f", duration))s, expected < \(TestConstants.PerformanceThresholds.medium)s"
         )
     }
 
     @Test("Large image scaling completes within threshold")
     func largeImageScaling_completesWithinThreshold() async {
-        let image = createTestImage(size: Self.largeSize)
+        let image = getCachedImage(for: "large")
         let targetSize = CGSize(width: 1024, height: 1024)
 
         let duration = await measureDuration {
@@ -84,14 +74,14 @@ struct ImageProcessingPerformanceTests {
         }
 
         #expect(
-            duration < Self.largeImageThreshold,
-            "Large image scaling took \(String(format: "%.3f", duration))s, expected < \(Self.largeImageThreshold)s"
+            duration < TestConstants.PerformanceThresholds.large,
+            "Large image scaling took \(String(format: "%.3f", duration))s, expected < \(TestConstants.PerformanceThresholds.large)s"
         )
     }
 
     @Test("Extra large image scaling completes within threshold")
     func extraLargeImageScaling_completesWithinThreshold() async {
-        let image = createTestImage(size: Self.extraLargeSize)
+        let image = getCachedImage(for: "extraLarge")
         let targetSize = CGSize(width: 1024, height: 1024)
 
         let duration = await measureDuration {
@@ -99,8 +89,8 @@ struct ImageProcessingPerformanceTests {
         }
 
         #expect(
-            duration < Self.extraLargeImageThreshold,
-            "Extra large image scaling took \(String(format: "%.3f", duration))s, expected < \(Self.extraLargeImageThreshold)s"
+            duration < TestConstants.PerformanceThresholds.extraLarge,
+            "Extra large image scaling took \(String(format: "%.3f", duration))s, expected < \(TestConstants.PerformanceThresholds.extraLarge)s"
         )
     }
 
@@ -108,7 +98,7 @@ struct ImageProcessingPerformanceTests {
 
     @Test("Full image processing pipeline - small image")
     func fullProcessing_smallImage() async {
-        let image = createTestImage(size: Self.smallSize)
+        let image = getCachedImage(for: "small")
 
         let duration = await measureDuration {
             let scaled = image.scaled(to: .init(width: 1024, height: 1024))
@@ -116,14 +106,14 @@ struct ImageProcessingPerformanceTests {
         }
 
         #expect(
-            duration < Self.smallImageThreshold,
-            "Full processing (small) took \(String(format: "%.3f", duration))s, expected < \(Self.smallImageThreshold)s"
+            duration < TestConstants.PerformanceThresholds.small,
+            "Full processing (small) took \(String(format: "%.3f", duration))s, expected < \(TestConstants.PerformanceThresholds.small)s"
         )
     }
 
     @Test("Full image processing pipeline - medium image")
     func fullProcessing_mediumImage() async {
-        let image = createTestImage(size: Self.mediumSize)
+        let image = getCachedImage(for: "medium")
 
         let duration = await measureDuration {
             let scaled = image.scaled(to: .init(width: 1024, height: 1024))
@@ -131,14 +121,14 @@ struct ImageProcessingPerformanceTests {
         }
 
         #expect(
-            duration < Self.mediumImageThreshold,
-            "Full processing (medium) took \(String(format: "%.3f", duration))s, expected < \(Self.mediumImageThreshold)s"
+            duration < TestConstants.PerformanceThresholds.medium,
+            "Full processing (medium) took \(String(format: "%.3f", duration))s, expected < \(TestConstants.PerformanceThresholds.medium)s"
         )
     }
 
     @Test("Full image processing pipeline - large image")
     func fullProcessing_largeImage() async {
-        let image = createTestImage(size: Self.largeSize)
+        let image = getCachedImage(for: "large")
 
         let duration = await measureDuration {
             let scaled = image.scaled(to: .init(width: 1024, height: 1024))
@@ -146,14 +136,14 @@ struct ImageProcessingPerformanceTests {
         }
 
         #expect(
-            duration < Self.largeImageThreshold,
-            "Full processing (large) took \(String(format: "%.3f", duration))s, expected < \(Self.largeImageThreshold)s"
+            duration < TestConstants.PerformanceThresholds.large,
+            "Full processing (large) took \(String(format: "%.3f", duration))s, expected < \(TestConstants.PerformanceThresholds.large)s"
         )
     }
 
     @Test("Full image processing pipeline - extra large image")
     func fullProcessing_extraLargeImage() async {
-        let image = createTestImage(size: Self.extraLargeSize)
+        let image = getCachedImage(for: "extraLarge")
 
         let duration = await measureDuration {
             let scaled = image.scaled(to: .init(width: 1024, height: 1024))
@@ -161,8 +151,8 @@ struct ImageProcessingPerformanceTests {
         }
 
         #expect(
-            duration < Self.extraLargeImageThreshold,
-            "Full processing (extra large) took \(String(format: "%.3f", duration))s, expected < \(Self.extraLargeImageThreshold)s"
+            duration < TestConstants.PerformanceThresholds.extraLarge,
+            "Full processing (extra large) took \(String(format: "%.3f", duration))s, expected < \(TestConstants.PerformanceThresholds.extraLarge)s"
         )
     }
 
@@ -171,7 +161,7 @@ struct ImageProcessingPerformanceTests {
     @Test("Image processing does not block main thread")
     @MainActor
     func imageProcessing_doesNotBlockMainThread() async {
-        let image = createTestImage(size: Self.largeSize)
+        let image = getCachedImage(for: "large")
         var mainThreadBlocked = true
 
         // Start background processing
@@ -193,17 +183,17 @@ struct ImageProcessingPerformanceTests {
 
     @Test("Benchmark: Report processing times for all sizes")
     func benchmark_reportProcessingTimes() async {
-        let sizes: [(String, NSSize)] = [
-            ("512x512 (0.26MP)", Self.smallSize),
-            ("1920x1080 (2.07MP)", Self.mediumSize),
-            ("4000x3000 (12MP)", Self.largeSize),
-            ("6000x4000 (24MP)", Self.extraLargeSize),
+        let sizes: [(String, String)] = [
+            ("512x512 (0.26MP)", "small"),
+            ("1920x1080 (2.07MP)", "medium"),
+            ("4000x3000 (12MP)", "large"),
+            ("6000x4000 (24MP)", "extraLarge"),
         ]
 
         var results: [(String, TimeInterval)] = []
 
-        for (name, size) in sizes {
-            let image = createTestImage(size: size)
+        for (name, category) in sizes {
+            let image = getCachedImage(for: category)
 
             let duration = await measureDuration {
                 let scaled = image.scaled(to: .init(width: 1024, height: 1024))
@@ -225,14 +215,6 @@ struct ImageProcessingPerformanceTests {
     }
 
     // MARK: - Helpers
-
-    private func createTestImage(size: NSSize, color: NSColor = .blue) -> NSImage {
-        let image = NSImage(size: size)
-        image.lockFocus()
-        color.drawSwatch(in: NSRect(origin: .zero, size: size))
-        image.unlockFocus()
-        return image
-    }
 
     private func measureDuration(_ operation: () -> Void) async -> TimeInterval {
         let start = CFAbsoluteTimeGetCurrent()

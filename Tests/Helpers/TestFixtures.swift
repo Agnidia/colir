@@ -12,13 +12,9 @@ import Foundation
 // MARK: - Image Fixtures
 
 enum ImageFixtures {
-    /// Create a solid color test image of specified size
+    /// Create a solid color test image of specified size using CGContext (thread-safe)
     static func solidColorImage(size: NSSize, color: NSColor = .red) -> NSImage {
-        let image = NSImage(size: size)
-        image.lockFocus()
-        color.drawSwatch(in: NSRect(origin: .zero, size: size))
-        image.unlockFocus()
-        return image
+        TestImageFactory.solidColor(size: size, color: color)
     }
 
     /// Create a 16x16 test image

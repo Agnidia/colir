@@ -1140,7 +1140,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
 				LastUpgradeCheck = 2610;
-				ORGANIZATIONNAME = "IGR Software";
+				ORGANIZATIONNAME = "Agnidia";
 				TargetAttributes = {
 					A5F5CDF42A6D2BFB008AF959 = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -1497,7 +1497,7 @@
 		};
 		A5A00D7D2AEEFA8D0063FE06 /* XCRemoteSwiftPackageReference "SwiftCommons" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/IGRSoft/SwiftCommons";
+			repositoryURL = "https://github.com/Agnidia/SwiftCommons";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -1505,7 +1505,7 @@
 		};
 		A5A00D802AEEFC7E0063FE06 /* XCRemoteSwiftPackageReference "SystemSettingsAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/IGRSoft/SystemSettingsAccess";
+			repositoryURL = "https://github.com/Agnidia/SystemSettingsAccess";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;

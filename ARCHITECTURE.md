@@ -365,7 +365,7 @@ Configurations/
 
 - **Product Name**: colir
 - **Bundle ID**: com.igrsoft.colir
-- **Development Team**: DMP42GVPJ3 (IGR Soft)
+- **Development Team**: DMP42GVPJ3 (Agnidia)
 - **Deployment Target**: macOS 14.1
 - **Code Signing**: Automatic with hardened runtime
 - **App Sandbox**: Enabled

@@ -10,7 +10,7 @@ Available on the [Mac App Store](https://apps.apple.com/app/colir/id0000000000)
 
 ## Company Information
 
-**Company Name**: IGR Soft
+**Company Name**: Agnidia
 **Domain**: com.igrsoft
 **Contact**: support@igrsoft.com
 
@@ -289,4 +289,4 @@ For issues or questions:
 
 ---
 
-**Made with care by IGR Soft**
+**Made with care by Agnidia**

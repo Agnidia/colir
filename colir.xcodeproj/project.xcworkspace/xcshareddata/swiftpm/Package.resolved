@@ -4,7 +4,7 @@
     {
       "identity" : "developersupportstore",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/IGRSoft/DeveloperSupportStore.git",
+      "location" : "https://github.com/Agnidia/DeveloperSupportStore.git",
       "state" : {
         "revision" : "c9d8f3282a649273fdbf4d3841e45e10a4951ee4",
         "version" : "1.0.3"
@@ -58,7 +58,7 @@
     {
       "identity" : "swiftcommons",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/IGRSoft/SwiftCommons",
+      "location" : "https://github.com/Agnidia/SwiftCommons",
       "state" : {
         "branch" : "main",
         "revision" : "1e48d407feba12b3d293faaa980602776cf54bb8"
@@ -67,7 +67,7 @@
     {
       "identity" : "systemsettingsaccess",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/IGRSoft/SystemSettingsAccess",
+      "location" : "https://github.com/Agnidia/SystemSettingsAccess",
       "state" : {
         "revision" : "e5a3bc8a33306647e5bdbe883284094cfca2b914",
         "version" : "1.0.0"

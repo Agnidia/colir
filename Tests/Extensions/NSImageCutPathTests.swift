@@ -2,7 +2,7 @@
 //  NSImageCutPathTests.swift
 //
 //  Created on 15.12.2025.
-//  Copyright © 2025 IGR Soft. All rights reserved.
+//  Copyright © 2026 Agnidia. All rights reserved.
 //
 
 import AppKit
@@ -69,15 +69,7 @@ struct NSImageCutPathTests {
 
     @Test("cutImage preserves image dimensions")
     func cutImage_preservesDimensions() {
-        let sizes: [NSSize] = [
-            NSSize(width: 16, height: 16),
-            NSSize(width: 32, height: 32),
-            NSSize(width: 64, height: 64),
-            NSSize(width: 128, height: 128),
-            NSSize(width: 256, height: 256),
-        ]
-
-        for size in sizes {
+        for size in TestConstants.iconSizes {
             let sourceImage = createTestImage(size: size, color: .orange)
             let path = NSBezierPath(ovalIn: NSRect(origin: .zero, size: size))
             let result = sourceImage.cutImage(by: path)
@@ -239,11 +231,7 @@ struct NSImageCutPathTests {
     // MARK: - Helpers
 
     private func createTestImage(size: NSSize, color: NSColor) -> NSImage {
-        let image = NSImage(size: size)
-        image.lockFocus()
-        color.drawSwatch(in: NSRect(origin: .zero, size: size))
-        image.unlockFocus()
-        return image
+        TestImageFactory.solidColor(size: size, color: color)
     }
 
     private func createStarPath(in rect: NSRect, points: Int) -> NSBezierPath {

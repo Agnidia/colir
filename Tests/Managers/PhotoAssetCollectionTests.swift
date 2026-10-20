@@ -2,7 +2,7 @@
 //  PhotoAssetCollectionTests.swift
 //
 //  Created on 15.12.2025.
-//  Copyright © 2025 IGR Soft. All rights reserved.
+//  Copyright © 2026 Agnidia. All rights reserved.
 //
 
 import Photos
@@ -56,7 +56,7 @@ struct PhotoAssetCollectionTests {
         let fetchResult = PHFetchResult<PHAsset>()
         let collection = PhotoAssetCollection(fetchResult)
 
-        #expect(collection.fetchResult.count == 0)
+        #expect(collection.fetchResult.isEmpty)
     }
 
     // MARK: - phAssets Property Tests

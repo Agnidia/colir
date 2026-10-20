@@ -2,7 +2,7 @@
 //  NSColor+Hex.swift
 //
 //  Created on 24.02.2024.
-//  Copyright © 2025 IGR Soft. All rights reserved.
+//  Copyright © 2026 Agnidia. All rights reserved.
 //
 
 import AppKit

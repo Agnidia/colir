@@ -2,7 +2,7 @@
 //  SelectableGridCell.swift
 //
 //  Created on 05.12.2025.
-//  Copyright © 2025 IGR Soft. All rights reserved.
+//  Copyright © 2026 Agnidia. All rights reserved.
 //
 
 import SwiftUI

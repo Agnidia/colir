@@ -2,7 +2,7 @@
 //  ColirStoreConfiguration.swift
 //
 //  Created on 18.12.2025.
-//  Copyright © 2025 IGR Soft. All rights reserved.
+//  Copyright © 2026 Agnidia. All rights reserved.
 //
 
 import DeveloperSupportStore
@@ -13,15 +13,14 @@ import Foundation
 /// This configuration provides the product IDs, URLs, and styling for the
 /// DeveloperSupportStore package to match the Colir app's design.
 public struct ColirStoreConfiguration: StoreConfigurationProtocol {
-
     // MARK: - URLs
 
     public var privacyPolicyURL: URL {
-        URL(string: "https://igrsoft.com/info/app/colir/policy.html")!
+        URL(string: "https://agnidia.com/info/app/colir/policy.html")!
     }
 
     public var termsOfUseURL: URL {
-        URL(string: "https://igrsoft.com/info/app/colir/terms.html")!
+        URL(string: "https://agnidia.com/info/app/colir/terms.html")!
     }
 
     public var isLoggingEnabled: Bool { false }

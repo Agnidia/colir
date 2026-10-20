@@ -1,4 +1,4 @@
-# SwiftFormat Configuration for u2u
+# SwiftFormat Configuration
 # Swift 6.2, macOS 15+, iOS 18, tvOS 18, visionOS 2
 # Based on analyzed code style from project
 
@@ -69,12 +69,12 @@
 --beforemarks
 --groupedextension "MARK: %c"
 
-# === Headers (Observed: IGR Soft copyright on all files) ===
+# === Headers (Observed: Agnidia copyright on all files) ===
 # Header template with file name, dates, and copyright
 # {created} uses git commit date when file was first added to repository
 # {year} uses current year for copyright
 # SwiftFormat has no {updated} token - same date used for both lines
---header \n {file}\n\n Created on {created}.\n Copyright © {year} IGR Soft. All rights reserved.\n
+--header \n {file}\n\n Created on {created}.\n Copyright © {year} Agnidia. All rights reserved.\n
 --date-format dd.MM.yyyy
 
 # === Documentation (Observed: /// triple-slash comments) ===

@@ -3,13 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 71;
+	objectVersion = 100;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		A57ECAAF2D345F3100288FB5 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = A57ECAAE2D345F3100288FB5 /* Algorithms */; };
 		A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D7E2AEEFA8D0063FE06 /* SwiftCommons */; };
 		A5A00D822AEEFC7E0063FE06 /* SystemSettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */; };
+		A5CA00022F40000100000001 /* CustomizedAboutView in Frameworks */ = {isa = PBXBuildFile; productRef = A5CA00022F40000100000003 /* CustomizedAboutView */; };
 		A5D11A662EF461590019F439 /* DeveloperSupportStore in Frameworks */ = {isa = PBXBuildFile; productRef = E0DSS00112345678901234567 /* DeveloperSupportStore */; };
 		A5E115C52AFBDBB50023A70C /* DominantColor in Frameworks */ = {isa = PBXBuildFile; productRef = A5E115C42AFBDBB50023A70C /* DominantColor */; };
 		A5E115EF2AFEA7760023A70C /* Throttler in Frameworks */ = {isa = PBXBuildFile; productRef = A5E115EE2AFEA7760023A70C /* Throttler */; };
@@ -40,7 +41,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		A5D493F22F7C544B00926E42 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		A5D493F22F7C544B00926E42 /* Exceptions for "Sources" folder in "colir" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Views/ColorWheel/ColorWheelNSView.swift,
@@ -50,14 +51,14 @@
 			);
 			target = A5F5CDF42A6D2BFB008AF959 /* colir */;
 		};
-		A5D494062F7C546900926E42 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		A5D494062F7C546900926E42 /* Exceptions for "Resources" folder in "colir" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"colir-Info.plist",
 			);
 			target = A5F5CDF42A6D2BFB008AF959 /* colir */;
 		};
-		A5D494C92F7C547F00926E42 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		A5D494C92F7C547F00926E42 /* Exceptions for "libGraphite" folder in "colir" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				data/data.cpp,
@@ -93,20 +94,57 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A5D492FD2F7C540000926E42 /* Configurations */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Configurations; sourceTree = "<group>"; };
-		A5D4938D2F7C544A00926E42 /* Sources */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (A5D493F22F7C544B00926E42 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Sources; sourceTree = "<group>"; };
-		A5D493F52F7C545100926E42 /* Localization */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Localization; sourceTree = "<group>"; };
-		A5D493FF2F7C546800926E42 /* Resources */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (A5D494062F7C546900926E42 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Resources; sourceTree = "<group>"; };
-		A5D4943A2F7C546F00926E42 /* Tests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Tests; sourceTree = "<group>"; };
-		A5D4946B2F7C547200926E42 /* UITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = UITests; sourceTree = "<group>"; };
-		A5D494AD2F7C547E00926E42 /* libGraphite */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (A5D494C92F7C547F00926E42 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = libGraphite; sourceTree = "<group>"; };
+		A5D492FD2F7C540000926E42 /* Configurations */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		A5D4938D2F7C544A00926E42 /* Sources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A5D493F22F7C544B00926E42 /* Exceptions for "Sources" folder in "colir" target */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		A5D493F52F7C545100926E42 /* Localization */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		A5D493FF2F7C546800926E42 /* Resources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A5D494062F7C546900926E42 /* Exceptions for "Resources" folder in "colir" target */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A5D4943A2F7C546F00926E42 /* Tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		A5D4946B2F7C547200926E42 /* UITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = UITests;
+			sourceTree = "<group>";
+		};
+		A5D494AD2F7C547E00926E42 /* libGraphite */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A5D494C92F7C547F00926E42 /* Exceptions for "libGraphite" folder in "colir" target */,
+			);
+			path = libGraphite;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		A5F5CDF22A6D2BFB008AF959 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
+				A5CA00022F40000100000001 /* CustomizedAboutView in Frameworks */,
 				A5D11A662EF461590019F439 /* DeveloperSupportStore in Frameworks */,
 				A5E115C52AFBDBB50023A70C /* DominantColor in Frameworks */,
 				A57ECAAF2D345F3100288FB5 /* Algorithms in Frameworks */,
@@ -115,21 +153,16 @@
 				A5E115F52AFFD70A0023A70C /* StoreHelper in Frameworks */,
 				A5A00D7F2AEEFA8D0063FE06 /* SwiftCommons in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A5F5CE032A6D2BFC008AF959 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A5F5CE0D2A6D2BFC008AF959 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -187,8 +220,6 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			fileSystemSynchronizedGroups = (
 				A5D4938D2F7C544A00926E42 /* Sources */,
 				A5D493F52F7C545100926E42 /* Localization */,
@@ -196,6 +227,7 @@
 			);
 			name = colir;
 			packageProductDependencies = (
+				A5CA00022F40000100000003 /* CustomizedAboutView */,
 				A5A00D7E2AEEFA8D0063FE06 /* SwiftCommons */,
 				A5A00D812AEEFC7E0063FE06 /* SystemSettingsAccess */,
 				A5E115C42AFBDBB50023A70C /* DominantColor */,
@@ -258,8 +290,8 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 2620;
-				ORGANIZATIONNAME = "Agnidia";
+				LastUpgradeCheck = 2710;
+				ORGANIZATIONNAME = Agnidia;
 				TargetAttributes = {
 					A5F5CDF42A6D2BFB008AF959 = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -275,7 +307,6 @@
 				};
 			};
 			buildConfigurationList = A5F5CDF02A6D2BFB008AF959 /* Build configuration list for PBXProject "colir" */;
-			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -285,6 +316,7 @@
 			);
 			mainGroup = A5F5CDEC2A6D2BFB008AF959;
 			packageReferences = (
+				A5CA00022F40000100000002 /* XCRemoteSwiftPackageReference "CustomizedAboutView" */,
 				A5A00D7D2AEEFA8D0063FE06 /* XCRemoteSwiftPackageReference "SwiftCommons" */,
 				A5A00D802AEEFC7E0063FE06 /* XCRemoteSwiftPackageReference "SystemSettingsAccess" */,
 				A5E115C32AFBDBB50023A70C /* XCRemoteSwiftPackageReference "DominantColor" */,
@@ -293,6 +325,7 @@
 				A57ECAAD2D345F3100288FB5 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 				E0DSS00012345678901234567 /* XCRemoteSwiftPackageReference "DeveloperSupportStore" */,
 			);
+			preferredProjectObjectVersion = 100;
 			productRefGroup = A5F5CDF62A6D2BFB008AF959 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -307,48 +340,36 @@
 /* Begin PBXResourcesBuildPhase section */
 		A5F5CDF32A6D2BFB008AF959 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A5F5CE042A6D2BFC008AF959 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A5F5CE0E2A6D2BFC008AF959 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A5F5CDF12A6D2BFB008AF959 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A5F5CE022A6D2BFC008AF959 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		A5F5CE0C2A6D2BFC008AF959 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -366,7 +387,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		A5F5CE182A6D2BFC008AF959 /* Debug */ = {
+		A5F5CE182A6D2BFC008AF959 /* Debug configuration for PBXProject "colir" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = A5D492FD2F7C540000926E42 /* Configurations */;
 			baseConfigurationReferenceRelativePath = debug.xcconfig;
@@ -374,7 +395,7 @@
 			};
 			name = Debug;
 		};
-		A5F5CE192A6D2BFC008AF959 /* Release */ = {
+		A5F5CE192A6D2BFC008AF959 /* Release configuration for PBXProject "colir" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = A5D492FD2F7C540000926E42 /* Configurations */;
 			baseConfigurationReferenceRelativePath = release.xcconfig;
@@ -382,7 +403,7 @@
 			};
 			name = Release;
 		};
-		A5F5CE1B2A6D2BFC008AF959 /* Debug */ = {
+		A5F5CE1B2A6D2BFC008AF959 /* Debug configuration for PBXNativeTarget "colir" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = A5D492FD2F7C540000926E42 /* Configurations */;
 			baseConfigurationReferenceRelativePath = "app/app-debug.xcconfig";
@@ -390,7 +411,7 @@
 			};
 			name = Debug;
 		};
-		A5F5CE1C2A6D2BFC008AF959 /* Release */ = {
+		A5F5CE1C2A6D2BFC008AF959 /* Release configuration for PBXNativeTarget "colir" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = A5D492FD2F7C540000926E42 /* Configurations */;
 			baseConfigurationReferenceRelativePath = "app/app-release.xcconfig";
@@ -398,7 +419,7 @@
 			};
 			name = Release;
 		};
-		A5F5CE1E2A6D2BFC008AF959 /* Debug */ = {
+		A5F5CE1E2A6D2BFC008AF959 /* Debug configuration for PBXNativeTarget "colirTests" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = A5D492FD2F7C540000926E42 /* Configurations */;
 			baseConfigurationReferenceRelativePath = "tests/test-debug.xcconfig";
@@ -406,7 +427,7 @@
 			};
 			name = Debug;
 		};
-		A5F5CE1F2A6D2BFC008AF959 /* Release */ = {
+		A5F5CE1F2A6D2BFC008AF959 /* Release configuration for PBXNativeTarget "colirTests" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = A5D492FD2F7C540000926E42 /* Configurations */;
 			baseConfigurationReferenceRelativePath = "tests/test-release.xcconfig";
@@ -414,7 +435,7 @@
 			};
 			name = Release;
 		};
-		A5F5CE212A6D2BFC008AF959 /* Debug */ = {
+		A5F5CE212A6D2BFC008AF959 /* Debug configuration for PBXNativeTarget "colirUITests" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = A5D492FD2F7C540000926E42 /* Configurations */;
 			baseConfigurationReferenceRelativePath = "tests/uitest-debug.xcconfig";
@@ -422,7 +443,7 @@
 			};
 			name = Debug;
 		};
-		A5F5CE222A6D2BFC008AF959 /* Release */ = {
+		A5F5CE222A6D2BFC008AF959 /* Release configuration for PBXNativeTarget "colirUITests" */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = A5D492FD2F7C540000926E42 /* Configurations */;
 			baseConfigurationReferenceRelativePath = "tests/uitest-release.xcconfig";
@@ -436,37 +457,33 @@
 		A5F5CDF02A6D2BFB008AF959 /* Build configuration list for PBXProject "colir" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A5F5CE182A6D2BFC008AF959 /* Debug */,
-				A5F5CE192A6D2BFC008AF959 /* Release */,
+				A5F5CE182A6D2BFC008AF959 /* Debug configuration for PBXProject "colir" */,
+				A5F5CE192A6D2BFC008AF959 /* Release configuration for PBXProject "colir" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		A5F5CE1A2A6D2BFC008AF959 /* Build configuration list for PBXNativeTarget "colir" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A5F5CE1B2A6D2BFC008AF959 /* Debug */,
-				A5F5CE1C2A6D2BFC008AF959 /* Release */,
+				A5F5CE1B2A6D2BFC008AF959 /* Debug configuration for PBXNativeTarget "colir" */,
+				A5F5CE1C2A6D2BFC008AF959 /* Release configuration for PBXNativeTarget "colir" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		A5F5CE1D2A6D2BFC008AF959 /* Build configuration list for PBXNativeTarget "colirTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A5F5CE1E2A6D2BFC008AF959 /* Debug */,
-				A5F5CE1F2A6D2BFC008AF959 /* Release */,
+				A5F5CE1E2A6D2BFC008AF959 /* Debug configuration for PBXNativeTarget "colirTests" */,
+				A5F5CE1F2A6D2BFC008AF959 /* Release configuration for PBXNativeTarget "colirTests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		A5F5CE202A6D2BFC008AF959 /* Build configuration list for PBXNativeTarget "colirUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A5F5CE212A6D2BFC008AF959 /* Debug */,
-				A5F5CE222A6D2BFC008AF959 /* Release */,
+				A5F5CE212A6D2BFC008AF959 /* Debug configuration for PBXNativeTarget "colirUITests" */,
+				A5F5CE222A6D2BFC008AF959 /* Release configuration for PBXNativeTarget "colirUITests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
@@ -491,6 +508,14 @@
 		A5A00D802AEEFC7E0063FE06 /* XCRemoteSwiftPackageReference "SystemSettingsAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Agnidia/SystemSettingsAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		A5CA00022F40000100000002 /* XCRemoteSwiftPackageReference "CustomizedAboutView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Agnidia/CustomizedAboutView.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
@@ -545,6 +570,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A5A00D802AEEFC7E0063FE06 /* XCRemoteSwiftPackageReference "SystemSettingsAccess" */;
 			productName = SystemSettingsAccess;
+		};
+		A5CA00022F40000100000003 /* CustomizedAboutView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5CA00022F40000100000002 /* XCRemoteSwiftPackageReference "CustomizedAboutView" */;
+			productName = CustomizedAboutView;
 		};
 		A5E115C42AFBDBB50023A70C /* DominantColor */ = {
 			isa = XCSwiftPackageProductDependency;

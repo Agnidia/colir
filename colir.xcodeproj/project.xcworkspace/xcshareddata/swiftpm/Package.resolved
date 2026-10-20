@@ -1,6 +1,15 @@
 {
-  "originHash" : "b5478d793913c99b50137d4307e6ea22513ee942f43d8e1bad3aa46e2fe3e064",
+  "originHash" : "e048d29bc2bcb227418481f7d278154ed919744fdb9b25a31b267e4a712d8970",
   "pins" : [
+    {
+      "identity" : "customizedaboutview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Agnidia/CustomizedAboutView.git",
+      "state" : {
+        "revision" : "7ef6ba0335954b01ca7ba1d8c15ed69c7a3a05c3",
+        "version" : "1.0.0"
+      }
+    },
     {
       "identity" : "developersupportstore",
       "kind" : "remoteSourceControl",

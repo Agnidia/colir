@@ -6,19 +6,19 @@ Transform your app icons with Colir. Apply colors, gradients, photos, and emojis
 
 ## Download
 
-Available on the [Mac App Store](https://apps.apple.com/app/colir/id0000000000)
+Available on the [Mac App Store](https://apps.apple.com/us/app/colir-folder-customizer/id6471902188)
 
 ## Company Information
 
 **Company Name**: Agnidia
 **Domain**: com.igrsoft
-**Contact**: support@igrsoft.com
+**Contact**: support@agnidia.com
 
 ## Project Information
 
 **Project Name**: Colir
 **Bundle Identifier**: com.igrsoft.colir
-**Current Version**: 1.0.0 (Build 1000)
+**Current Version**: 1.0.3 (Build 1030)
 
 ### Project Description
 
@@ -53,12 +53,13 @@ Colir is a powerful icon customization utility for macOS. It allows users to per
 - **Style History** - Track and reapply previous customizations
 - **Keyboard Shortcuts** - Efficient workflow with shortcuts
 - **Dark Mode** - Native dark mode support
+- **About and Support** - View version details, support links, and more Agnidia apps
 
 ## Technology Stack
 
-- **Language**: Swift 6.2
+- **Language**: Swift 6.3
 - **UI Framework**: SwiftUI with NSView integration
-- **Minimum Platform**: macOS 14.1+
+- **Minimum Platform**: macOS 15.0+
 - **Architecture**: MVVM pattern
 - **Concurrency**: Swift 6 strict concurrency
 - **Storage**: @AppStorage for preferences
@@ -66,10 +67,10 @@ Colir is a powerful icon customization utility for macOS. It allows users to per
 
 ## Requirements
 
-- **macOS**: 14.1 or later
-- **Hardware**: Any Mac running macOS 14.1+
-- **Xcode**: 15+ (for development)
-- **Swift**: 6.2
+- **macOS**: 15.0 or later
+- **Hardware**: Any Mac running macOS 15.0+
+- **Xcode**: 27 or later
+- **Swift**: 6.3
 
 ## Architecture
 
@@ -188,7 +189,7 @@ swiftformat .
 ### AI Agent Configuration
 
 This project includes AI development configuration:
-- [CLAUDE.md](CLAUDE.md) - AI agent configuration for Swift/macOS development
+- [AGENTS.md](AGENTS.md) - AI agent configuration for Swift/macOS development
 - [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture documentation
 
 ### Build Configurations
@@ -263,7 +264,7 @@ docs: improve README
 
 ## License
 
-Copyright 2025 IGR Soft. All rights reserved.
+Copyright 2025 Agnidia. All rights reserved.
 
 See [LICENSE](LICENSE) file for details.
 
@@ -285,7 +286,7 @@ See [LICENSE](LICENSE) file for details.
 
 For issues or questions:
 - Create an issue in this repository
-- Contact: support@igrsoft.com
+- Contact: support@agnidia.com
 
 ---
 

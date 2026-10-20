@@ -2,7 +2,7 @@
 //  Collection+SafeIndex.swift
 //
 //  Created on 29.01.2025.
-//  Copyright © 2026 IGR Soft. All rights reserved.
+//  Copyright © 2026 Agnidia. All rights reserved.
 //
 
 extension Collection {

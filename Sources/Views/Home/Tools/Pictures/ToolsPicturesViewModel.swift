@@ -2,7 +2,7 @@
 //  ToolsPicturesViewModel.swift
 //
 //  Created on 07.10.2023.
-//  Copyright © 2026 IGR Soft. All rights reserved.
+//  Copyright © 2026 Agnidia. All rights reserved.
 //
 
 import SwiftUI

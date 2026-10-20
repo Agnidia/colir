@@ -5,6 +5,8 @@ All notable changes to Colir are documented in this file.
 ## Version 1.0.3
 
 Maintenance:
+- Added a redesigned About window with Agnidia support and app links
+- Updated company and support information for Agnidia
 - Removed old legacy resources
 
 ## Version 1.0.2

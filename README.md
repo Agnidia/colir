@@ -1,28 +1,12 @@
 # Colir
 
-**macOS icon customization application**
+**Colir is a powerful icon customization utility for macOS.**
 
-Transform your app icons with Colir. Apply colors, gradients, photos, and emojis to customize icon appearances with an intuitive drag-and-drop interface. Supports modern and classic Mac icon formats.
+It allows users to personalize app icons by applying color overlays, photo backgrounds, emoji decorations, and visual effects. The app supports drag-and-drop workflow, integrates with the Photos app, and can extract icons from classic Mac OS resource files.
 
 ## Download
 
-Available on the [Mac App Store](https://apps.apple.com/app/colir/id0000000000)
-
-## Company Information
-
-**Company Name**: Agnidia
-**Domain**: com.igrsoft
-**Contact**: support@igrsoft.com
-
-## Project Information
-
-**Project Name**: Colir
-**Bundle Identifier**: com.igrsoft.colir
-**Current Version**: 1.0.0 (Build 1000)
-
-### Project Description
-
-Colir is a powerful icon customization utility for macOS. It allows users to personalize app icons by applying color overlays, photo backgrounds, emoji decorations, and visual effects. The app supports drag-and-drop workflow, integrates with the Photos app, and can extract icons from classic Mac OS resource files.
+Available on the [Mac App Store](https://apps.apple.com/us/app/colir-folder-customizer/id6471902188)
 
 ## Features
 
@@ -30,7 +14,7 @@ Colir is a powerful icon customization utility for macOS. It allows users to per
 - **Photo Integration** - Use photos from your library as icon backgrounds
 - **Emoji Decorations** - Add emoji overlays with skin tone variants
 - **Visual Effects** - Apply tints, gradients, and transparency effects
-- **Drag & Drop** - Simple file-based workflow
+- **Drag &amp; Drop** - Simple file-based workflow
 - **Undo/Redo** - Full history support for all operations
 
 ### Icon Sources
@@ -53,12 +37,13 @@ Colir is a powerful icon customization utility for macOS. It allows users to per
 - **Style History** - Track and reapply previous customizations
 - **Keyboard Shortcuts** - Efficient workflow with shortcuts
 - **Dark Mode** - Native dark mode support
+- **About and Support** - View version details, support links, and more Agnidia apps
 
 ## Technology Stack
 
-- **Language**: Swift 6.2
+- **Language**: Swift 6.3
 - **UI Framework**: SwiftUI with NSView integration
-- **Minimum Platform**: macOS 14.1+
+- **Minimum Platform**: macOS 15.0+
 - **Architecture**: MVVM pattern
 - **Concurrency**: Swift 6 strict concurrency
 - **Storage**: @AppStorage for preferences
@@ -66,10 +51,10 @@ Colir is a powerful icon customization utility for macOS. It allows users to per
 
 ## Requirements
 
-- **macOS**: 14.1 or later
-- **Hardware**: Any Mac running macOS 14.1+
-- **Xcode**: 15+ (for development)
-- **Swift**: 6.2
+- **macOS**: 15.0 or later
+- **Hardware**: Any Mac running macOS 15.0+
+- **Xcode**: 27 or later
+- **Swift**: 6.3
 
 ## Architecture
 
@@ -81,39 +66,6 @@ Colir uses a modern MVVM architecture:
 - **Extensions**: Framework augmentation for images and colors
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed system architecture.
-
-## Project Structure
-
-```
-colir/
-├── Sources/                  # Main application source
-│   ├── AppDelegate/         # App entry point
-│   ├── Constants/           # Constants and type extensions
-│   ├── Extensions/          # Swift extensions (16 files)
-│   ├── Logger/              # Logging infrastructure
-│   ├── Managers/            # Core business logic
-│   ├── Models/              # Data structures
-│   ├── Parsers/             # File format parsers
-│   ├── Services/            # Service layer
-│   └── Views/               # SwiftUI interface
-├── 3rdparty/                # Third-party dependencies
-│   └── Graphite/           # C++ resource parser
-├── Tests/                   # Unit tests
-├── UITests/                 # UI automation tests
-├── Resources/               # Assets and configuration
-├── Localization/            # Multi-language support
-└── Configurations/          # Build configs
-```
-
-## Info.plist Requirements
-
-### Required Permissions
-
-```xml
-<!-- Photo Library access -->
-<key>NSPhotoLibraryUsageDescription</key>
-<string>Colir uses your photo library to apply images to icons.</string>
-```
 
 ## Getting Started
 
@@ -188,15 +140,16 @@ swiftformat .
 ### AI Agent Configuration
 
 This project includes AI development configuration:
-- [CLAUDE.md](CLAUDE.md) - AI agent configuration for Swift/macOS development
+
+- [AGENTS.md](AGENTS.md) - AI agent configuration for Swift/macOS development
 - [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture documentation
 
 ### Build Configurations
 
-| Config | Purpose |
-|--------|---------|
-| Debug | Development with debug symbols |
-| Release | Production optimized |
+| Config  | Purpose                        |
+| ------- | ------------------------------ |
+| Debug   | Development with debug symbols |
+| Release | Production optimized           |
 
 ## Troubleshooting
 
@@ -204,7 +157,8 @@ This project includes AI development configuration:
 
 **Issue**: Cannot access photos from the app
 **Solution**:
-- Check photo library permissions in System Settings > Privacy & Security > Photos
+
+- Check photo library permissions in System Settings &gt; Privacy &amp; Security &gt; Photos
 - Ensure Colir is granted access
 - Restart the app after granting permissions
 
@@ -212,6 +166,7 @@ This project includes AI development configuration:
 
 **Issue**: Dropped icons don't appear
 **Solution**:
+
 - Verify the file is a valid image or .app bundle
 - Check file permissions
 - For .rsrc files, ensure the file contains valid icon resources
@@ -220,6 +175,7 @@ This project includes AI development configuration:
 
 **Issue**: Cannot save exported icons
 **Solution**:
+
 - Verify write permissions for the destination folder
 - Grant file access when prompted
 - Try a different export location
@@ -228,11 +184,12 @@ This project includes AI development configuration:
 
 **Issue**: Color picker doesn't respond to input
 **Solution**:
+
 - Resize the window slightly to refresh the view
 - Check if another app is capturing mouse events
 - Restart the application
 
-## Privacy & Security
+## Privacy &amp; Security
 
 Colir prioritizes your privacy and security:
 
@@ -250,42 +207,18 @@ Colir prioritizes your privacy and security:
 2. **Run tests**: Ensure all tests pass
 3. **Update docs**: If adding features
 
-### Commit Message Format
-
-Follow [Conventional Commits](https://www.conventionalcommits.org/):
-
-```
-feat: add new color effect
-fix: resolve drag-drop issue on Sonoma
-chore: update dependencies
-docs: improve README
-```
-
 ## License
 
-Copyright 2025 IGR Soft. All rights reserved.
+Copyright 2025 Agnidia. All rights reserved.
 
 See [LICENSE](LICENSE) file for details.
-
-## Resources
-
-### Apple Documentation
-
-- [SwiftUI](https://developer.apple.com/xcode/swiftui/)
-- [AppKit](https://developer.apple.com/documentation/appkit)
-- [Photos Framework](https://developer.apple.com/documentation/photos)
-- [Swift Concurrency](https://docs.swift.org/swift-book/LanguageGuide/Concurrency.html)
-
-### Community
-
-- [Swift Forums](https://forums.swift.org)
-- [Stack Overflow](https://stackoverflow.com/questions/tagged/swift)
 
 ## Contact
 
 For issues or questions:
+
 - Create an issue in this repository
-- Contact: support@igrsoft.com
+- Contact: [support@agnidia.com](mailto:support@agnidia.com)
 
 ---
 

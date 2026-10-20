@@ -2,7 +2,7 @@
 //  BaseApp.swift
 //
 //  Created on 15.09.2023.
-//  Copyright © 2026 IGR Soft. All rights reserved.
+//  Copyright © 2026 Agnidia. All rights reserved.
 //
 
 import DeveloperSupportStore
@@ -11,6 +11,7 @@ import SwiftUI
 @main
 struct BaseApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    @Environment(\.openWindow) private var openWindow
     @State private var searchText = ""
 
     @StateObject private var homeViewModel: HomeViewModel
@@ -49,6 +50,14 @@ struct BaseApp: App {
         }
         .windowToolbarStyle(.unifiedCompact(showsTitle: false))
         .commands {
+            CommandGroup(replacing: .appInfo) {
+                Button {
+                    openWindow(id: "about")
+                } label: {
+                    Text("About Colir")
+                }
+            }
+
             CommandGroup(after: .newItem) {
                 Button(action: homeViewModel.openFolder) {
                     Text("menu.open.folder")
@@ -71,6 +80,8 @@ struct BaseApp: App {
                 .disabled(homeViewModel.undoManager.canRedo == false)
             }
         }
+
+        AboutView.window
     }
 
     final class AppDelegate: NSObject, NSApplicationDelegate {

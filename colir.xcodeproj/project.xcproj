@@ -1,0 +1,253 @@
+{
+  "organization": "Agnidia",
+  "default-configuration": "Release",
+  "configurations": [
+    { "name": "Debug", "file": { "anchor": "Configurations", "relative-path": "debug.xcconfig" } },
+    { "name": "Release", "file": { "anchor": "Configurations", "relative-path": "release.xcconfig" } },
+  ],
+  "localizations": {
+    "development": "en",
+    "supported": [
+      "Base",
+      "uk",
+    ],
+  },
+  "packages": [
+    {
+      "kind": "remote",
+      "repository": "https://github.com/Agnidia/CustomizedAboutView.git",
+      "version": {
+        "up-to-next-major-version": "1.0.0",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/Agnidia/SwiftCommons",
+      "version": {
+        "branch": "main",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/Agnidia/SystemSettingsAccess",
+      "version": {
+        "up-to-next-major-version": "1.0.0",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/indragiek/DominantColor",
+      "version": {
+        "up-to-next-major-version": "0.2.2",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/boraseoksoon/Throttler.git",
+      "version": {
+        "up-to-next-major-version": "2.1.3",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/russell-archer/StoreHelper",
+      "version": {
+        "up-to-next-major-version": "2.0.0",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/apple/swift-algorithms.git",
+      "version": {
+        "up-to-next-major-version": "1.2.0",
+      },
+    }, {
+      "kind": "remote",
+      "repository": "https://github.com/Agnidia/DeveloperSupportStore.git",
+      "version": {
+        "up-to-next-major-version": "1.0.0",
+      },
+    },
+  ],
+  "files": [
+    { "kind": "folder", "path": "Configurations" },
+    {
+      "kind": "folder",
+      "path": "Sources",
+      "target-membership": [
+        "colir",
+      ],
+      "membership-exceptions": [
+        {
+          "target": "colir",
+          "exclusions": [
+            "Views/ColorWheel/ColorWheelNSView.swift",
+            "Views/ColorWheel/ColorWheelUtility.swift",
+            "Views/ColorWheel/ColorWheelView.swift",
+            "Views/ColorWheel/NSBezierPath+CGPath.swift",
+          ],
+        },
+      ],
+    },
+    { "kind": "folder", "path": "Localization", "target-membership": [ "colir" ] },
+    {
+      "kind": "group",
+      "path": "3rdparty",
+      "children": [
+        {
+          "kind": "group",
+          "path": "Graphite",
+          "children": [
+            {
+              "kind": "folder",
+              "path": "libGraphite",
+              "membership-exceptions": [
+                {
+                  "target": "colir",
+                  "inclusions": [
+                    "data/data.cpp",
+                    "data/reader.cpp",
+                    "data/writer.cpp",
+                    "encoding/macroman/macroman.cpp",
+                    "quickdraw/cicn.cpp",
+                    "quickdraw/clut.cpp",
+                    "quickdraw/geometry.cpp",
+                    "quickdraw/internal/color.cpp",
+                    "quickdraw/internal/packbits.cpp",
+                    "quickdraw/internal/surface.cpp",
+                    "quickdraw/pict.cpp",
+                    "quickdraw/pixmap.cpp",
+                    "quickdraw/ppat.cpp",
+                    "quickdraw/rle.cpp",
+                    "quicktime/animation.cpp",
+                    "quicktime/imagedesc.cpp",
+                    "quicktime/planar.cpp",
+                    "quicktime/raw.cpp",
+                    "resources/sound.cpp",
+                    "resources/string.cpp",
+                    "rsrc/classic.cpp",
+                    "rsrc/extended.cpp",
+                    "rsrc/file.cpp",
+                    "rsrc/manager.cpp",
+                    "rsrc/resource.cpp",
+                    "rsrc/rez.cpp",
+                    "rsrc/type.cpp",
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    }, {
+      "kind": "folder",
+      "path": "Resources",
+      "target-membership": [
+        "colir",
+      ],
+      "membership-exceptions": [
+        {
+          "target": "colir",
+          "exclusions": [
+            "colir-Info.plist",
+          ],
+        },
+      ],
+    },
+    { "kind": "folder", "path": "Tests", "target-membership": [ "colirTests" ] },
+    { "kind": "folder", "path": "UITests", "target-membership": [ "colirUITests" ] },
+    {
+      "kind": "group",
+      "name": "Products",
+      "children": [
+        { "path": "<PRODUCTS>/colir.app", "id": "A5F5CDF52A6D2BFB008AF959", "type": "wrapper.application", "index": false },
+        { "path": "<PRODUCTS>/colirTests.xctest", "id": "A5F5CE062A6D2BFC008AF959", "type": "wrapper.cfbundle", "index": false },
+        { "path": "<PRODUCTS>/colirUITests.xctest", "id": "A5F5CE102A6D2BFC008AF959", "type": "wrapper.cfbundle", "index": false },
+      ],
+    },
+  ],
+  "targets": [
+    {
+      "name": "colir",
+      "id": "A5F5CDF42A6D2BFB008AF959",
+      "product": "Products/colir.app",
+      "product-type": "application",
+      "specialized-configurations": [
+        { "name": "Debug", "file": { "anchor": "Configurations", "relative-path": "app/app-debug.xcconfig" } },
+        { "name": "Release", "file": { "anchor": "Configurations", "relative-path": "app/app-release.xcconfig" } },
+      ],
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        "resources",
+      ],
+      "package-product-members": [
+        {
+          "package": "CustomizedAboutView",
+          "product-name": "CustomizedAboutView",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "DeveloperSupportStore",
+          "product-name": "DeveloperSupportStore",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "DominantColor",
+          "product-name": "DominantColor",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "StoreHelper",
+          "product-name": "StoreHelper",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "SwiftCommons",
+          "product-name": "SwiftCommons",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "SystemSettingsAccess",
+          "product-name": "SystemSettingsAccess",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "Throttler",
+          "product-name": "Throttler",
+          "build-phase": { "build-phase": "frameworks" },
+        }, {
+          "package": "swift-algorithms",
+          "product-name": "Algorithms",
+          "build-phase": { "build-phase": "frameworks" },
+        },
+      ],
+    }, {
+      "name": "colirTests",
+      "id": "A5F5CE052A6D2BFC008AF959",
+      "product": "Products/colirTests.xctest",
+      "product-type": "bundle.unit-test",
+      "test-host-target": "colir",
+      "specialized-configurations": [
+        { "name": "Debug", "file": { "anchor": "Configurations", "relative-path": "tests/test-debug.xcconfig" } },
+        { "name": "Release", "file": { "anchor": "Configurations", "relative-path": "tests/test-release.xcconfig" } },
+      ],
+      "dependencies": [
+        "colir",
+      ],
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        "resources",
+      ],
+    }, {
+      "name": "colirUITests",
+      "id": "A5F5CE0F2A6D2BFC008AF959",
+      "product": "Products/colirUITests.xctest",
+      "product-type": "bundle.ui-testing",
+      "test-host-target": "colir",
+      "specialized-configurations": [
+        { "name": "Debug", "file": { "anchor": "Configurations", "relative-path": "tests/uitest-debug.xcconfig" } },
+        { "name": "Release", "file": { "anchor": "Configurations", "relative-path": "tests/uitest-release.xcconfig" } },
+      ],
+      "dependencies": [
+        "colir",
+      ],
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        "resources",
+      ],
+    },
+  ],
+  "last-upgrade": "27.1",
+  "last-swift-update": "14.3",
+}

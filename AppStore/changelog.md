@@ -2,6 +2,12 @@
 
 All notable changes to Colir are documented in this file.
 
+## Version 1.0.4
+
+Compatibility:
+- Requires macOS 15.0 (Sequoia) or later
+- Clarified system requirements in the documentation and app listing
+
 ## Version 1.0.3
 
 Maintenance:

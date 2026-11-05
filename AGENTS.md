@@ -8,7 +8,7 @@
 |---------|-------|
 | Platform | macOS |
 | Framework | SwiftUI with NSView integration |
-| Language | Swift 6.2 |
+| Language | Swift 6.4 |
 | Architecture | MVVM pattern |
 | Concurrency | Swift 6 strict concurrency |
 
@@ -85,7 +85,7 @@ com.igrsoft.colir
 ### Target Version
 
 ```
-macOS 14.1+
+macOS 15.0+
 ```
 
 ### Build Configurations

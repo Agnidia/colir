@@ -42,7 +42,7 @@ struct BaseApp: App {
                     ToolbarView(viewModel: toolbarViewModel)
                 }
                 .task {
-                    homeViewModel.onTipped = { [weak toolbarViewModel] in
+                    homeViewModel.onTipped = { [weak toolbarViewModel = toolbarViewModel] in
                         toolbarViewModel?.hasTipped = true
                     }
                 }

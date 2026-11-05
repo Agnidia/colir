@@ -329,7 +329,7 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
 
     // Lazy instantiation of drop zone view model.
     private(set) lazy var dropZoneViewModel: DropZoneViewModel = .init(fileClosure: setupFolders(from:)) { state in
-        Task { @MainActor [weak self] in
+        Task { @MainActor [weak self = self] in
             self?.update(state: state)
         }
     }

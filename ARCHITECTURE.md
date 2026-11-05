@@ -8,9 +8,9 @@ Colir is a macOS application that enables users to customize app icons with colo
 
 ## Technology Stack
 
-- **Language**: Swift 6.2
+- **Language**: Swift 6.4
 - **UI Framework**: SwiftUI with NSView integration
-- **Minimum Platform**: macOS 14.1+
+- **Minimum Platform**: macOS 15.0+
 - **Architecture**: MVVM (Model-View-ViewModel)
 - **Concurrency**: Swift 6 strict concurrency
 - **State Management**: @Published, Combine
@@ -366,7 +366,7 @@ Configurations/
 - **Product Name**: colir
 - **Bundle ID**: com.igrsoft.colir
 - **Development Team**: DMP42GVPJ3 (Agnidia)
-- **Deployment Target**: macOS 14.1
+- **Deployment Target**: macOS 15.0
 - **Code Signing**: Automatic with hardened runtime
 - **App Sandbox**: Enabled
 

@@ -1,3 +1,5 @@
+![Project Logo](logo.png)
+
 # Colir
 
 **Colir is a powerful icon customization utility for macOS.**
@@ -41,7 +43,7 @@ Available on the [Mac App Store](https://apps.apple.com/us/app/colir-folder-cust
 
 ## Technology Stack
 
-- **Language**: Swift 6.3
+- **Language**: Swift 6.4
 - **UI Framework**: SwiftUI with NSView integration
 - **Minimum Platform**: macOS 15.0+
 - **Architecture**: MVVM pattern
@@ -52,9 +54,9 @@ Available on the [Mac App Store](https://apps.apple.com/us/app/colir-folder-cust
 ## Requirements
 
 - **macOS**: 15.0 or later
-- **Hardware**: Any Mac running macOS 15.0+
+- **Hardware**: Any Mac that supports macOS 15.0 (Sequoia) or later; Colir does not run on macOS 14 or earlier
 - **Xcode**: 27 or later
-- **Swift**: 6.3
+- **Swift**: 6.4
 
 ## Architecture
 

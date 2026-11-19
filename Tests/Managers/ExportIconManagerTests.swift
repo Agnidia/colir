@@ -74,6 +74,19 @@ struct ExportIconManagerTests {
         #expect(manager.canExport == true)
     }
 
+    // MARK: - askReview Tests
+
+    @Test("askReview is true only when exportCount is 5")
+    func askReview_onlyAtFifthExport() {
+        let appSettings = MockAppSettings()
+        let manager = ExportIconManager(appSettings: appSettings)
+
+        for (count, expected) in [(0, false), (3, false), (4, false), (5, true), (6, false)] {
+            appSettings.exportCount = count
+            #expect(manager.askReview == expected)
+        }
+    }
+
     // MARK: - askTips Tests
 
     @Test("askTips returns true when exportCount is 5 and not tipped")

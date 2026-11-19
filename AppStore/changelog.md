@@ -2,6 +2,11 @@
 
 All notable changes to Colir are documented in this file.
 
+## Version 1.0.5
+
+Feedback:
+- Colir now asks you to rate the app after your fifth icon
+
 ## Version 1.0.4
 
 Compatibility:

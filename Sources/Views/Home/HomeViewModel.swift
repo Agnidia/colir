@@ -356,10 +356,17 @@ final class HomeViewModel: ObservableObject, DomainViewConstantProtocol {
     @Published var showingExportAlert = false
     @Published var showingAppStoreSheet = false
 
+    /// Incremented when the app should ask the system to show the rating prompt.
+    @Published private(set) var reviewRequestCount = 0
+
     private func exportIcon() {
         let image = dropZoneViewModel.image
 
         exportIconManager.export(image: image)
+
+        if exportIconManager.askReview {
+            reviewRequestCount += 1
+        }
 
         guard exportIconManager.askTips else { return }
 

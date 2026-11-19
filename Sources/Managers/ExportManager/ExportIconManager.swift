@@ -15,6 +15,9 @@ public protocol ExportIconManagerProtocol {
 
     var askTips: Bool { get }
 
+    /// Indicates whether the user should be asked to rate the app.
+    var askReview: Bool { get }
+
     /// Exports the given image.
     /// - Parameter image: The `ImageDto` object containing information about the image to be exported.
     func export(image: ImageDto)
@@ -46,6 +49,13 @@ final class ExportIconManager: ExportIconManagerProtocol {
         appSettings.exportCount == 5 && appSettings.tipped.value == "0"
     }
 
+    /// `true` only right after the fifth successful export; the count never decreases, so it fires once.
+    var askReview: Bool {
+        appSettings.exportCount == Self.reviewExportCount
+    }
+
+    private static let reviewExportCount = 5
+
     /// Exports the given image by converting it to ICNS format and setting it at the specified URL.
     /// - Parameter image: The `ImageDto` object containing information about the image to be exported.
     func export(image: ImageDto) {
@@ -72,6 +82,10 @@ final class ExportIconManagerPreview: ExportIconManagerProtocol {
     }
 
     var askTips: Bool {
+        false
+    }
+
+    var askReview: Bool {
         false
     }
 

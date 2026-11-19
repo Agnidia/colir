@@ -6,6 +6,7 @@
 //
 
 import DeveloperSupportStore
+import StoreKit
 import SwiftCommons
 import SwiftUI
 
@@ -18,6 +19,8 @@ import SwiftUI
 struct HomeView: View {
     /// The view model that provides data and state management for the `HomeView`.
     @EnvironmentObject var viewModel: HomeViewModel
+
+    @Environment(\.requestReview) private var requestReview
 
     var body: some View {
         Self.printDebugInfo()
@@ -104,6 +107,9 @@ struct HomeView: View {
         CustomizingActionView()
             .environment(viewModel.customizingActionViewModel)
             .frame(maxWidth: .infinity)
+            .onChange(of: viewModel.reviewRequestCount) {
+                requestReview()
+            }
             .alert(isPresented: Binding<Bool>(
                 get: { viewModel.showingExportAlert },
                 set: { newState in
